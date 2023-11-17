@@ -21,4 +21,9 @@ if __name__ == '__main__':
     port = 5000
     server = HTTPServer(('localhost', port), SimpleHTTPRequestHandler)
     print(f"Servidor iniciado em http://localhost:{port}")
-    server.serve_forever()
+
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        print("\nEncerramento solicitado pelo usuário. Encerrando o servidor.")
+        server.server_close()
