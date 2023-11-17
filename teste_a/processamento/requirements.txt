@@ -1,0 +1,5 @@
+Flask
+graphene
+Flask-GraphQL
+gevent
+gevent-websocket

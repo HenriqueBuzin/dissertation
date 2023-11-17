@@ -1,5 +1,6 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
+import requests
 
 def handle_POST(request):
     content_length = int(request.headers['Content-Length'])
@@ -8,9 +9,27 @@ def handle_POST(request):
 
     print(f"Dados recebidos: {data}")
 
+    # Enviar dados para o servidor GraphQL
+    graphql_url = 'http://localhost:5001/graphql'  # URL do seu servidor GraphQL
+    graphql_query = """
+        mutation {
+            addData(date: "%s", time: "%s", consumption: %s) {
+                date
+                time
+                consumption
+            }
+        }
+    """ % (data['Date'], data['Time'], data['Consumption_kWh_per_minute'])
+    
+    try:
+        response = requests.post(graphql_url, json={'query': graphql_query})
+        print("Dados enviados para o servidor GraphQL:", response.text)
+    except requests.exceptions.RequestException as e:
+        print("Falha ao enviar para o servidor GraphQL:", e)
+
     request.send_response(200)
     request.end_headers()
-    response = bytes(json.dumps({"message": "Dados recebidos com sucesso!"}), "utf-8")
+    response = bytes(json.dumps({"message": "Dados recebidos e enviados com sucesso!"}), "utf-8")
     request.wfile.write(response)
 
 class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
