@@ -5,7 +5,6 @@ const axios = require('axios');
 const app = express();
 app.use(express.json());
 
-// Definição do esquema GraphQL
 const typeDefs = gql`
   type Query {
     _empty: String
@@ -22,7 +21,6 @@ const typeDefs = gql`
   }
 `;
 
-// Resolvers para o GraphQL
 const resolvers = {
   Query: {
     _empty: () => '',
@@ -35,7 +33,6 @@ const resolvers = {
   },
 };
 
-// Inicializando o servidor Apollo com o esquema e resolvers
 const graphqlServer = new ApolloServer({ typeDefs, resolvers });
 
 async function startServer() {
@@ -46,7 +43,6 @@ async function startServer() {
     const data = req.body;
     console.log("Dados recebidos via webhook:", data);
 
-    // Ajuste para corresponder às chaves recebidas
     const graphqlQuery = {
       query: `
         mutation {
