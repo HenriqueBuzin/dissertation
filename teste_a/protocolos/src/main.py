@@ -9,23 +9,13 @@ def handle_POST(request):
 
     print(f"Dados recebidos: {data}")
 
-    # Enviar dados para o servidor GraphQL
-    graphql_url = 'http://localhost:5001/graphql'  # URL do seu servidor GraphQL
-    graphql_query = """
-        mutation {
-            addData(date: "%s", time: "%s", consumption: %s) {
-                date
-                time
-                consumption
-            }
-        }
-    """ % (data['Date'], data['Time'], data['Consumption_kWh_per_minute'])
-    
+    webhook_url = 'http://localhost:5001/webhook'
+
     try:
-        response = requests.post(graphql_url, json={'query': graphql_query})
-        print("Dados enviados para o servidor GraphQL:", response.text)
+        response = requests.post(webhook_url, json=data)
+        print("Dados enviados para o webhook:", response.text)
     except requests.exceptions.RequestException as e:
-        print("Falha ao enviar para o servidor GraphQL:", e)
+        print("Falha ao enviar para o webhook:", e)
 
     request.send_response(200)
     request.end_headers()
@@ -40,7 +30,6 @@ if __name__ == '__main__':
     port = 5000
     server = HTTPServer(('localhost', port), SimpleHTTPRequestHandler)
     print(f"Servidor iniciado em http://localhost:{port}")
-
     try:
         server.serve_forever()
     except KeyboardInterrupt:
