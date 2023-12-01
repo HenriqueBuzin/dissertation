@@ -13,9 +13,9 @@ def handle_POST(request):
 
     try:
         response = requests.post(webhook_url, json=data)
-        print("Dados enviados para o webhook:", response.text)
+        print("Dados enviados para o webhook:", response.text, "\n")
     except requests.exceptions.RequestException as e:
-        print("Falha ao enviar para o webhook:", e)
+        print("Falha ao enviar para o webhook:", e, "\n")
 
     request.send_response(200)
     request.end_headers()

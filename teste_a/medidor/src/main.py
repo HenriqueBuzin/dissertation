@@ -14,16 +14,19 @@ def send_data(data, url):
         try:
             response = requests.post(url, json=data)
             if response.status_code == 200:
-                print(f"Dados enviados com sucesso: {data}")
+                print(f"Dados enviados com sucesso: {data} \n")
                 break
             else:
-                print(f"Erro ao enviar dados (status code {response.status_code}). Tentando novamente...")
+                print(f"Erro ao enviar dados (status code {response.status_code}). Tentando novamente... \n")
         except requests.exceptions.RequestException as e:
             print(f"Erro ao enviar dados: {e}. Tentando novamente...")
         time.sleep(1)
 
 def start_sending_data(file_name, url):
     for data in read_csv(file_name):
+        # Adiciona o tipo de dado
+        data['type'] = 'consumption'
+
         send_data(data, url)
         time.sleep(1)
 
