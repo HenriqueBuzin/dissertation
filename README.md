@@ -1,9 +1,11 @@
-# dissertation
- Code of UFSC Dissertation
+# Projeto
+Código usado para a dissertação
 
+## Medidor
 <details>
-  <summary>Clique aqui para ver mais</summary>
+  <summary>Clique aqui para ver mais...</summary>
   
-  Aqui está o conteúdo que ficará oculto até que alguém clique no sumário. Você pode adicionar quantas linhas de texto desejar, incluir listas, imagens, código, etc.
-  
+  # O que é? 
+  Um dispositivo
+
 </details>
