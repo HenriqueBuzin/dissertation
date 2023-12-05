@@ -1,0 +1,9 @@
+version: '3.9'
+services:
+  medidor:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - REPLICANUMBER=${REPLICANUMBER}

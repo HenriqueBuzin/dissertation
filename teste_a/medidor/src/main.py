@@ -1,6 +1,7 @@
 import requests
 import time
 import csv
+import os
 
 def read_csv(file_name):
     with open(file_name, newline='') as csvfile:
@@ -23,15 +24,18 @@ def send_data(data, url):
         time.sleep(1)
 
 def start_sending_data(file_name, url):
+
+    replica_id = os.getenv("REPLICANUMBER")
+
     for data in read_csv(file_name):
-        # Adiciona o tipo de dado
         data['type'] = 'consumption'
+        data['id'] = replica_id
 
         send_data(data, url)
         time.sleep(1)
 
 if __name__ == '__main__':
-    url = 'http://localhost:5000'
+    url = 'http://host.docker.internal:5000'
     file_name = 'data.csv'
 
     try:
