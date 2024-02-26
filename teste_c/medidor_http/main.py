@@ -23,8 +23,7 @@ def send_data(data, url):
         time.sleep(1)
 
 def start_sending_data(file_name, url):
-    # Defina aqui o ID único para a réplica
-    replica_id = "unique_replica_id"
+    replica_id = "1"
 
     for data in read_csv(file_name):
         data['type'] = 'consumption'
@@ -34,7 +33,7 @@ def start_sending_data(file_name, url):
         time.sleep(1)
 
 if __name__ == '__main__':
-    url = 'http://host.docker.internal:5000'
+    url = 'http://127.0.0.1:8000'
     file_name = 'data.csv'
 
     try:
