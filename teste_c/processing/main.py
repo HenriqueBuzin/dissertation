@@ -1,6 +1,5 @@
 import asyncio
 import websockets
-import signal
 
 async def echo(websocket):
     async for message in websocket:
@@ -11,10 +10,11 @@ async def main():
     server = await websockets.serve(echo, "localhost", 8765)
     print("Servidor WebSocket iniciado em ws://localhost:8765/")
     
-    stop = asyncio.Future()
-    asyncio.get_running_loop().add_signal_handler(signal.SIGINT, stop.set_result, None)
-    await stop
-
+    try:
+        await asyncio.Future()  # Mantém o servidor rodando até que uma exceção seja capturada.
+    except KeyboardInterrupt:
+        pass  # Captura a interrupção do teclado sem fazer nada, mas permite que o código continue.
+    
     server.close()
     await server.wait_closed()
     print("\nServidor WebSocket encerrado com sucesso.")
