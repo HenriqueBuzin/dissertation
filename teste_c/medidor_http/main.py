@@ -1,23 +1,42 @@
-import asyncio
-import websockets
+import requests
+import time
+import csv
 
-async def echo(websocket):
-    async for message in websocket:
-        print(f"Mensagem recebida: {message}")
-        await websocket.send("Mensagem recebida com sucesso!")
+def read_csv(file_name):
+    with open(file_name, newline='') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=';')
+        for row in reader:
+            yield row
 
-async def main():
-    server = await websockets.serve(echo, "localhost", 8765)
-    print("Servidor WebSocket iniciado em ws://localhost:8765/")
-    
+def send_data(data, url):
+    while True:
+        print(f"Tentando enviar dados: {data}")
+        try:
+            response = requests.post(url, json=data)
+            if response.status_code == 200:
+                print(f"Dados enviados com sucesso: {data} \n")
+                break
+            else:
+                print(f"Erro ao enviar dados (status code {response.status_code}). Tentando novamente... \n")
+        except requests.exceptions.RequestException as e:
+            print(f"Erro ao enviar dados: {e}. Tentando novamente...")
+        time.sleep(1)
+
+def start_sending_data(file_name, url):
+    replica_id = "1"
+
+    for data in read_csv(file_name):
+        data['type'] = 'consumption'
+        data['id'] = replica_id
+
+        send_data(data, url)
+        time.sleep(1)
+
+if __name__ == '__main__':
+    url = 'http://127.0.0.1:8000'
+    file_name = 'data.csv'
+
     try:
-        await asyncio.Future()  # Mantém o servidor rodando até que uma exceção seja capturada.
+        start_sending_data(file_name, url)
     except KeyboardInterrupt:
-        print("\nEncerramento solicitado pelo usuário. Encerrando o script.")  # Mensagem personalizada de encerramento.
-    
-    server.close()
-    await server.wait_closed()
-    print("\nServidor WebSocket encerrado com sucesso.")
-
-if __name__ == "__main__":
-    asyncio.run(main())
+        print("\nEncerramento solicitado pelo usuário. Encerrando o script.")

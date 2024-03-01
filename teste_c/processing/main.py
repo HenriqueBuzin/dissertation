@@ -1,23 +1,21 @@
 import asyncio
 import websockets
 
-async def echo(websocket):
+async def echo(websocket, path):
     async for message in websocket:
         print(f"Mensagem recebida: {message}")
         await websocket.send("Mensagem recebida com sucesso!")
 
 async def main():
-    server = await websockets.serve(echo, "localhost", 8765)
-    print("Servidor WebSocket iniciado em ws://localhost:8765/")
-    
-    try:
-        await asyncio.Future()  # Mantém o servidor rodando até que uma exceção seja capturada.
-    except KeyboardInterrupt:
-        pass  # Captura a interrupção do teclado sem fazer nada, mas permite que o código continue.
-    
-    server.close()
-    await server.wait_closed()
-    print("\nServidor WebSocket encerrado com sucesso.")
+    async with websockets.serve(echo, "localhost", 8765):
+        print("Servidor WebSocket iniciado em ws://localhost:8765/")
+        await asyncio.Future()  # Mantém o servidor em execução até que algo externo cancele essa Future.
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("\nServidor WebSocket encerrando...")
+    finally:
+        # Neste ponto, o `asyncio.run()` já tratou do encerramento do loop de eventos.
+        print("Servidor WebSocket encerrado com sucesso.")
