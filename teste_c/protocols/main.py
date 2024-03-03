@@ -4,10 +4,10 @@ import threading
 import websockets
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from aiocoap.resource import Resource, Site
+import aiocoap.resource as resource
 import aiocoap
 
 ws_url = 'ws://127.0.0.1:8765/'
-
 message_queue = []
 
 async def send_data_websocket():
@@ -17,7 +17,7 @@ async def send_data_websocket():
                 async with websockets.connect(ws_url) as ws:
                     while message_queue:
                         data = message_queue.pop(0)
-                        await ws.send(json.dumps(data))  # Envia diretamente o JSON
+                        await ws.send(json.dumps(data))
                         response = await ws.recv()
                         print(f"Websocket: Dados enviados com sucesso: {json.dumps(data)} \nResposta: {response}")
             except Exception as e:
@@ -26,33 +26,44 @@ async def send_data_websocket():
         else:
             await asyncio.sleep(1)
 
-class SimpleHTTPRequestHandler(BaseHTTPRequestHandler):
-    def do_POST(self):
-        content_length = int(self.headers['Content-Length'])
-        post_data = self.rfile.read(content_length)
-        message = json.loads(post_data.decode())
-        print(f"HTTP: Mensagem HTTP recebida: {message}")
-        message_queue.append(message)
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b"HTTP: Message received")
+def handle_http_post(self):
+    content_length = int(self.headers['Content-Length'])
+    post_data = self.rfile.read(content_length)
+    message = json.loads(post_data.decode())
+    print(f"HTTP: Mensagem HTTP recebida: {message}")
+    message_queue.append(message)
+    self.send_response(200)
+    self.end_headers()
+    self.wfile.write(b"HTTP: Message received")
+
+def create_custom_http_handler():
+    attrs = {'do_POST': handle_http_post}
+    return type('CustomHTTPRequestHandler', (BaseHTTPRequestHandler,), attrs)
 
 def run_http_server():
-    server_address = ('', 8000)
-    httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
-    print('HTTP: Servidor HTTP rodando na porta 8000...')
+    port = 8000
+    server_address = ('', port)
+    handler_class = create_custom_http_handler()
+    httpd = HTTPServer(server_address, handler_class)
+    print(f'HTTP: Servidor HTTP rodando na porta {port}...')
     httpd.serve_forever()
 
-class CoAPResource(Resource):
-    async def render_post(self, request):
-        payload = request.payload.decode('utf8')
-        message = json.loads(payload)
-        print(f'CoAP: Mensagem CoAP recebida: {message}')
-        message_queue.append(message)
-        return aiocoap.Message(code=aiocoap.CHANGED, payload=b"Received")
+# Função que lida com POST requests para CoAP
+async def handle_coap_post(request):
+    payload = request.payload.decode('utf8')
+    message = json.loads(payload)
+    print(f'CoAP: Mensagem CoAP recebida: {message}')
+    return aiocoap.Message(code=aiocoap.CHANGED, payload=b"Received")
+
+def make_coap_resource(handle_post_function):
+    class DynamicCoAPResource(resource.Resource):
+        async def render_post(self, request):
+            return await handle_post_function(request)
+    return DynamicCoAPResource
 
 async def start_coap_server():
-    root = Site()
+    root = resource.Site()
+    CoAPResource = make_coap_resource(handle_coap_post)
     root.add_resource(['coap'], CoAPResource())
     await aiocoap.Context.create_server_context(root, bind=('127.0.0.1', 5683))
 
