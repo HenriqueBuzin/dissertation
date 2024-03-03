@@ -39,9 +39,8 @@ if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\nEncerramento solicitado pelo usuário. Encerrando o script.")
+        print("\nMedidor CoAP encerrando...")
     except Exception as e:
-        print(f"\nErro durante a execução: {e}")
+        print(f"\nErro durante a execução do medidor CoAP: {e}")
     finally:
-        print("Finalizando recursos...")
-        print("Script encerrado.")
+        print("Medidor CoAP encerrado com sucesso.")

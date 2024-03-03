@@ -39,4 +39,8 @@ if __name__ == '__main__':
     try:
         start_sending_data(file_name, url)
     except KeyboardInterrupt:
-        print("\nEncerramento solicitado pelo usuário. Encerrando o script.")
+        print("\nMedidor HTTP encerrando...")
+    except Exception as e:
+        print(f"\nErro durante a execução do medidor HTTP: {e}")
+    finally:
+        print("Medidor HTTP encerrado com sucesso.")
