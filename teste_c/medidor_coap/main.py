@@ -41,6 +41,6 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("\nMedidor CoAP encerrando...")
     except Exception as e:
-        print(f"\nErro durante a execução do medidor CoAP: {e}")
+        print(f"\nErro durante a execução do Medidor CoAP: {e}")
     finally:
         print("Medidor CoAP encerrado com sucesso.")

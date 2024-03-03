@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from pymongo import MongoClient
 import redis
 import graphene
+from aiohttp import web
 
 dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
 load_dotenv(dotenv_path=dotenv_path)
@@ -52,85 +53,85 @@ async def echo(websocket):
     except Exception as e:
         print(f"Erro inesperado: {e}")
 
-class Consumption(graphene.ObjectType):
-    id = graphene.String()
-    date = graphene.String()
-    time = graphene.String()
-    consumptionKwhPerMinute = graphene.Float()
-    type = graphene.String()
+def create_consumption_type():
+    return type('Consumption', (graphene.ObjectType,), {
+        'id': graphene.String(),
+        'date': graphene.String(),
+        'time': graphene.String(),
+        'consumptionKwhPerMinute': graphene.Float(),
+        'type': graphene.String(),
+    })
 
-class Query(graphene.ObjectType):
-    consumption_data = graphene.List(
-        Consumption,
-        id=graphene.String(),
-        date=graphene.String(),
-        time=graphene.String(),
-        type=graphene.String(),
-        limit=graphene.Int(),
-        offset=graphene.Int()
-    )
+def resolve_consumption_data(root, info, **kwargs):
+    query = {}
+    for key in ['id', 'date', 'time', 'type']:
+        if kwargs.get(key) is not None:
+            query[key] = kwargs[key]
 
-    def resolve_consumption_data(self, info, id=None, date=None, time=None, type=None, limit=None, offset=None):
-        query = {}
-        if id is not None:
-            query['id'] = id
-        if date is not None:
-            query['Date'] = date
-        if time is not None:
-            query['Time'] = time
-        if type is not None:
-            query['type'] = type
+    data_query = mongo_collection.find(query)
+    offset = kwargs.get('offset', None)
+    limit = kwargs.get('limit', None)
+    if offset is not None:
+        data_query = data_query.skip(offset)
+    if limit is not None:
+        data_query = data_query.limit(limit)
 
-        data_query = mongo_collection.find(query)
-        if offset is not None:
-            data_query = data_query.skip(offset)
-        if limit is not None:
-            data_query = data_query.limit(limit)
+    return [
+        {
+            'id': str(item["_id"]),
+            'date': item["Date"],
+            'time': item["Time"],
+            'consumptionKwhPerMinute': item["Consumption_kWh_per_minute"],
+            'type': item["type"],
+        } for item in data_query
+    ]
 
-        return [
-            Consumption(
-                date=item["Date"],
-                time=item["Time"],
-                consumptionKwhPerMinute=float(item["Consumption_kWh_per_minute"]),
-                type=item["type"],
-                id=str(item["id"])
-            ) for item in data_query
-        ]
+def create_query_type(Consumption):
+    return type('Query', (graphene.ObjectType,), {
+        'consumption_data': graphene.List(
+            Consumption,
+            id=graphene.String(),
+            date=graphene.String(),
+            time=graphene.String(),
+            type=graphene.String(),
+            limit=graphene.Int(),
+            offset=graphene.Int(),
+            resolver=lambda self, info, **kwargs: resolve_consumption_data(self, info, **kwargs),
+        )
+    })
 
-schema = graphene.Schema(query=Query)
-
-async def echo2(websocket):
-    async for message in websocket:
-        try:
-            data = json.loads(message)
-            query = data.get("query")
-            variables = data.get("variables", {})
-
-            result = await schema.execute_async(query, variable_values=variables)
-
-            print(result)
-                    
-            await websocket.send(json.dumps(result.data))
-        except Exception as e:
-            print(f"Erro ao processar a mensagem: {e}")
-            await websocket.send(json.dumps({"error": "Erro ao processar a consulta"}))
+ConsumptionType = create_consumption_type()
+QueryType = create_query_type(ConsumptionType)
+schema = graphene.Schema(query=QueryType)
 
 async def serve_echo():
     async with websockets.serve(echo, "localhost", 8765):
         await asyncio.Future()
 
-async def serve_echo2():
-    async with websockets.serve(echo2, "localhost", 8766):
-        await asyncio.Future()
+async def graphql_http_handler(request):
+    print(f"Solicitação GraphQL recebida: {await request.text()}")
+    data = await request.json()
+    query = data.get('query')
+    variables = data.get('variables')
+    result = await schema.execute_async(query, variable_values=variables)
+    print(f"Respondendo à solicitação GraphQL com: {json.dumps(result.data)}")
+    return web.Response(text=json.dumps(result.data), content_type='application/json')
 
 async def main():
-    await asyncio.gather(
-        serve_echo(),
-        serve_echo2()
-    )
+    app = web.Application()
+    app.router.add_post('/graphql', graphql_http_handler)
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, 'localhost', 8766)
+    await site.start()
+    await serve_echo()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\nServidor WebSocket encerrado pelo usuário.")
+        print("\Camada de Processamento encerrando...")
+    except Exception as e:
+        print(f"\nErro durante a execução da Camada de Processamento: {e}")
+    finally:
+        print("Camada de Processamento encerrado com sucesso.")

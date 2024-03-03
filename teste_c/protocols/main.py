@@ -78,8 +78,8 @@ if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\nCamada de protocolos encerrando...")
+        print("\nCamada de Protocolos encerrando...")
     except Exception as e:
-        print(f"\nErro durante a execução da camada de protocolos: {e}")
+        print(f"\nErro durante a execução da Camada de Protocolos: {e}")
     finally:
-        print("Camada de protocolos encerrada com sucesso.")
+        print("Camada de Protocolos encerrada com sucesso.")

@@ -41,6 +41,6 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("\nMedidor HTTP encerrando...")
     except Exception as e:
-        print(f"\nErro durante a execução do medidor HTTP: {e}")
+        print(f"\nErro durante a execução do Medidor HTTP: {e}")
     finally:
         print("Medidor HTTP encerrado com sucesso.")
