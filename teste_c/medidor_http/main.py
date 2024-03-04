@@ -27,7 +27,7 @@ def start_sending_data(file_name, url):
 
     for data in read_csv(file_name):
         data['type'] = 'consumption'
-        data['id'] = replica_id
+        data['meterId'] = replica_id
 
         send_data(data, url)
         time.sleep(1)

@@ -13,7 +13,7 @@ load_dotenv(dotenv_path=dotenv_path)
 
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
 REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
-REDIS_DB = int(os.getenv("PROCESSING_REDIS_DB", 0))
+REDIS_DB = int(os.getenv("PROCESSING_REDIS_DB", 1))
 MONGO_HOST = os.getenv("MONGO_HOST", "localhost")
 MONGO_PORT = os.getenv("MONGO_PORT", "27017")
 MONGO_DB = os.getenv("MONGO_DB", "mydatabase")
@@ -60,11 +60,12 @@ def create_consumption_type():
         'time': graphene.String(),
         'consumptionKwhPerMinute': graphene.Float(),
         'type': graphene.String(),
+        'meterId': graphene.String(),
     })
 
 def resolve_consumption_data(root, info, **kwargs):
     query = {}
-    for key in ['id', 'date', 'time', 'type']:
+    for key in ['id', 'date', 'time', 'type', 'meterId']:
         if kwargs.get(key) is not None:
             query[key] = kwargs[key]
 
@@ -83,6 +84,7 @@ def resolve_consumption_data(root, info, **kwargs):
             'time': item["Time"],
             'consumptionKwhPerMinute': item["Consumption_kWh_per_minute"],
             'type': item["type"],
+            'meterId': item.get("meterId"),
         } for item in data_query
     ]
 
@@ -94,6 +96,7 @@ def create_query_type(Consumption):
             date=graphene.String(),
             time=graphene.String(),
             type=graphene.String(),
+            meterId=graphene.String(),
             limit=graphene.Int(),
             offset=graphene.Int(),
             resolver=lambda self, info, **kwargs: resolve_consumption_data(self, info, **kwargs),

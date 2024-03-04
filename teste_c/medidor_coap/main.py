@@ -26,7 +26,7 @@ async def start_sending_data_coap(file_name, coap_url):
     
     for data in read_csv(file_name):
         data['type'] = 'consumption'
-        data['id'] = replica_id
+        data['meterId'] = replica_id
         await send_data_coap(data, coap_url)
         await asyncio.sleep(1)
 

@@ -14,6 +14,7 @@ async def fetch_all_time_and_consumption():
             consumptionKwhPerMinute
             type
             id
+            meterId
         }}
     }}
     """
