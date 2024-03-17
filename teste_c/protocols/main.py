@@ -9,6 +9,9 @@ import aiocoap
 from pymongo import MongoClient
 import redis
 from dotenv import load_dotenv
+import paramiko
+import base64
+import aiofiles
 
 class ProtocolLayer:
     def __init__(self):
@@ -61,6 +64,37 @@ class ProtocolLayer:
         else:
             self.redis_client.lpush("protocols_messages", json.dumps(message))
 
+    async def handle_sftp_details_and_send(self, message):
+        file_content = base64.b64decode(message['file']).decode('utf-8')
+
+        temp_file_path = "temp_file.csv"
+        async with aiofiles.open(temp_file_path, mode='w', encoding='utf-8') as temp_file:
+            await temp_file.write(file_content)
+
+        sftp_details = {
+            'sftp_host': message['sftp_host'],
+            'sftp_port': message['sftp_port'],
+            'sftp_username': message['sftp_username'],
+            'sftp_password': message['sftp_password'],
+            'remote_path': message['remote_path']
+        }
+
+        await self.send_via_sftp(sftp_details, temp_file_path)
+
+    async def send_via_sftp(self, sftp_details, file_path):
+        try:
+            transport = paramiko.Transport((sftp_details['sftp_host'], sftp_details['sftp_port']))
+            transport.connect(username=sftp_details['sftp_username'], password=sftp_details['sftp_password'])
+            sftp = paramiko.SFTPClient.from_transport(transport)
+            
+            sftp.put(file_path, sftp_details['remote_path'])
+            print(f"Arquivo {file_path} enviado com sucesso para {sftp_details['remote_path']}.")
+
+            sftp.close()
+            transport.close()
+        except Exception as e:
+            print(f"Erro ao enviar arquivo via FTP: {e}")
+
 def run_http_server(protocol_layer):
     class CustomHTTPRequestHandler(BaseHTTPRequestHandler):
         def __init__(self, *args, **kwargs):
@@ -70,16 +104,37 @@ def run_http_server(protocol_layer):
         def do_POST(self):
             content_length = int(self.headers['Content-Length'])
             post_data = self.rfile.read(content_length)
-            message = json.loads(post_data.decode())
-            
-            print("Recebendo mensagem HTTP...")
-            print(f"Dados HTTP recebidos: {message}")
-            
-            self.protocol_layer.save_message(message)
-            
-            self.send_response(200)
-            self.end_headers()
-            self.wfile.write(b"HTTP: Message received")
+
+            try:
+                message = json.loads(post_data.decode())
+
+                print("Recebendo mensagem HTTP...")
+                print(f"Dados HTTP recebidos: {message}")
+
+                message_type = message.get('type')
+                if message_type == 'consumption':
+                    print("Processando dados de consumo...")
+                    self.protocol_layer.save_message(message)
+                    response_content = b"HTTP: Consumption data received"
+                elif message_type == 'ftp':
+                    print("Processando detalhes do FTP...")
+                    asyncio.run(self.protocol_layer.handle_sftp_details_and_send(message))
+                    response_content = b"HTTP: FTP details received"
+                else:
+                    self.send_response(400)
+                    self.end_headers()
+                    self.wfile.write(b"HTTP: Unknown message type")
+                    return
+
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(response_content)
+
+            except json.JSONDecodeError as e:
+                print(f"Erro ao decodificar JSON: {e}")
+                self.send_response(400)
+                self.end_headers()
+                self.wfile.write(b"HTTP: Error decoding JSON")
 
     port = 8000
     server_address = ('', port)
