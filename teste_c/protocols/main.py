@@ -92,6 +92,13 @@ class ProtocolLayer:
 
             sftp.close()
             transport.close()
+
+            try:
+                os.remove(file_path)
+                print(f"Arquivo temporário {file_path} removido com sucesso.")
+            except Exception as e:
+                print(f"Erro ao remover o arquivo temporário {file_path}: {e}")
+
         except Exception as e:
             print(f"Erro ao enviar arquivo via FTP: {e}")
 
