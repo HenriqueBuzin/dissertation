@@ -1,13 +1,13 @@
 ﻿IMPORT Std;
 
 consumptionDataLayout := RECORD
-  //UNSIGNED id;
+  UNSIGNED id;
   STRING date;
   STRING time;
   STRING consumption;
 END;
 
-consumptionData := DATASET('~projeto::consumption_per_minute', consumptionDataLayout, CSV(HEADING(1), SEPARATOR([';','\t'])));
+consumptionData := DATASET('~projeto::consumption_per_minute', consumptionDataLayout, CSV(HEADING(1), SEPARATOR([',','\t'])));
 
 OUTPUT(consumptionData, NAMED('DataConsumption'));
 
