@@ -5,7 +5,7 @@ from aiocoap import *
 
 def read_csv(file_name):
     with open(file_name, newline='') as csvfile:
-        reader = csv.DictReader(csvfile, delimiter=',')
+        reader = csv.DictReader(csvfile, delimiter=';')
         for row in reader:
             yield row
 
