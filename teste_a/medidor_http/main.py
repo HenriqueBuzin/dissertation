@@ -4,7 +4,7 @@ import csv
 
 def read_csv(file_name):
     with open(file_name, newline='') as csvfile:
-        reader = csv.DictReader(csvfile, delimiter=';')
+        reader = csv.DictReader(csvfile, delimiter=',')
         for row in reader:
             yield row
 
@@ -23,12 +23,9 @@ def send_data(data, url):
         time.sleep(1)
 
 def start_sending_data(file_name, url):
-    replica_id = "1"
 
     for data in read_csv(file_name):
         data['type'] = 'consumption'
-        data['meterId'] = replica_id
-
         send_data(data, url)
         time.sleep(1)
 

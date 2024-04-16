@@ -5,7 +5,7 @@ from aiocoap import *
 
 def read_csv(file_name):
     with open(file_name, newline='') as csvfile:
-        reader = csv.DictReader(csvfile, delimiter=';')
+        reader = csv.DictReader(csvfile, delimiter=',')
         for row in reader:
             yield row
 
@@ -14,6 +14,7 @@ async def send_data_coap(data, coap_url):
     payload = json.dumps(data).encode('utf-8')
     request = Message(code=POST, payload=payload, uri=coap_url)
 
+    print(f"Tentando enviar dados CoAP: {data}")
     try:
         response = await context.request(request).response
         print(f"Dados enviados com sucesso: {data}")
@@ -22,11 +23,9 @@ async def send_data_coap(data, coap_url):
         print(f"Falha ao enviar dados: {e}")
 
 async def start_sending_data_coap(file_name, coap_url):
-    replica_id = "2"
     
     for data in read_csv(file_name):
         data['type'] = 'consumption'
-        data['meterId'] = replica_id
         await send_data_coap(data, coap_url)
         await asyncio.sleep(1)
 
