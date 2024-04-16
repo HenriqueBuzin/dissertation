@@ -9,10 +9,11 @@ import base64
 async def write_to_csv(data, filename='results.csv'):
     async with aiofiles.open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
-        await file.write(','.join(['Id', 'Date', 'Time', 'Consumption_kWh_per_minute']) + '\n')
+        await file.write(','.join(['ID', 'Street', 'Date', 'Time', 'Consumption_kWh_per_minute']) + '\n')
         for item in data:
             await file.write(','.join([
-                str(item['meterId']),
+                str(item['id']),
+                item['street'],
                 item['date'],
                 item['time'],
                 str(item['consumptionKwhPerMinute'])
@@ -51,12 +52,12 @@ async def fetch_all_time_and_consumption(uri, protocols_url, sftp_host, sftp_por
         query = f"""
         {{
             consumptionData(limit: {limit}, offset: {offset}) {{
+                id
+                street
                 date
                 time
                 consumptionKwhPerMinute
                 type
-                id
-                meterId
             }}
         }}
         """

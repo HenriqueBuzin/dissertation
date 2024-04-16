@@ -56,16 +56,16 @@ async def echo(websocket):
 def create_consumption_type():
     return type('Consumption', (graphene.ObjectType,), {
         'id': graphene.String(),
+        'street': graphene.String(),
         'date': graphene.String(),
         'time': graphene.String(),
         'consumptionKwhPerMinute': graphene.Float(),
-        'type': graphene.String(),
-        'meterId': graphene.String(),
+        'type': graphene.String()
     })
 
 def resolve_consumption_data(root, info, **kwargs):
     query = {}
-    for key in ['id', 'date', 'time', 'type', 'meterId']:
+    for key in ['id', 'street', 'date', 'time', 'consumption_kwh_per_minute', 'type']:
         if kwargs.get(key) is not None:
             query[key] = kwargs[key]
 
@@ -79,12 +79,12 @@ def resolve_consumption_data(root, info, **kwargs):
 
     return [
         {
-            'id': str(item["_id"]),
-            'date': item["Date"],
-            'time': item["Time"],
-            'consumptionKwhPerMinute': item["Consumption_kWh_per_minute"],
-            'type': item["type"],
-            'meterId': item.get("meterId"),
+            'id': str(item["id"]),
+            'street': item.get("street", ""),
+            'date': item["date"],
+            'time': item["time"],
+            'consumptionKwhPerMinute': item["consumption_kwh_per_minute"],
+            'type': item["type"]
         } for item in data_query
     ]
 
@@ -93,10 +93,11 @@ def create_query_type(Consumption):
         'consumption_data': graphene.List(
             Consumption,
             id=graphene.String(),
+            street=graphene.String(),
             date=graphene.String(),
             time=graphene.String(),
+            consumptionKwhPerMinute=graphene.Float(),
             type=graphene.String(),
-            meterId=graphene.String(),
             limit=graphene.Int(),
             offset=graphene.Int(),
             resolver=lambda self, info, **kwargs: resolve_consumption_data(self, info, **kwargs),
