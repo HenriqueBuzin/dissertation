@@ -86,7 +86,7 @@ if __name__ == '__main__':
     sftp_username = 'hpccdemo'
     sftp_password = 'hpccdemo'
     remote_path = '/var/lib/HPCCSystems/mydropzone/consumption.csv'
-    limit = 10
+    limit = 24
     offset = 0
 
     try:
