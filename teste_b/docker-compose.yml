@@ -2,6 +2,17 @@ version: '3.9'
 
 services:
 
+  processing:
+    container_name: processing
+    restart: unless-stopped
+    build:
+      context: ./processing
+    depends_on:
+      - mongo
+      - redis
+    networks:
+      - minha_rede
+
   protocols:
     container_name: protocols
     restart: unless-stopped
@@ -15,17 +26,6 @@ services:
       - minha_rede
     extra_hosts:
       - "sftp_server:192.168.56.101"
-
-  processing:
-    container_name: processing
-    restart: unless-stopped
-    build:
-      context: ./processing
-    depends_on:
-      - mongo
-      - redis
-    networks:
-      - minha_rede
 
   orchestration:
     container_name: orchestration
@@ -42,7 +42,7 @@ services:
     image: redis:7.2.4
     restart: unless-stopped
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - redis-data:/data
     command: redis-server --appendonly yes
@@ -54,7 +54,7 @@ services:
     image: mongo:7.0.6
     restart: unless-stopped
     ports:
-      - "27017:27017"
+      - "27018:27017"
     volumes:
       - mongo-data:/data/db
     environment:
