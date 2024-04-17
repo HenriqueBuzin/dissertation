@@ -81,7 +81,7 @@ if __name__ == '__main__':
     protocols_url = 'http://protocols:8000'
     interval = 10
     delay = 5
-    sftp_host = '192.168.56.101'
+    sftp_host = 'sftp_server'
     sftp_port = 22
     sftp_username = 'hpccdemo'
     sftp_password = 'hpccdemo'

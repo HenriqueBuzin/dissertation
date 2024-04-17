@@ -11,6 +11,10 @@ services:
       - mongo
       - redis
       - processing
+    networks:
+      - minha_rede
+    extra_hosts:
+      - "sftp_server:192.168.56.101"
 
   processing:
     container_name: processing
@@ -20,6 +24,8 @@ services:
     depends_on:
       - mongo
       - redis
+    networks:
+      - minha_rede
 
   orchestration:
     container_name: orchestration
@@ -28,9 +34,11 @@ services:
       context: ./orchestration
     depends_on:
       - processing
+    networks:
+      - minha_rede
 
   redis:
-    container_name: redis
+    container_name: redis_test_b
     image: redis:7.2.4
     restart: unless-stopped
     ports:
@@ -38,9 +46,11 @@ services:
     volumes:
       - redis-data:/data
     command: redis-server --appendonly yes
+    networks:
+      - minha_rede
 
   mongo:
-    container_name: mongo
+    container_name: mongo_test_b
     image: mongo:7.0.6
     restart: unless-stopped
     ports:
@@ -50,7 +60,13 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
+    networks:
+      - minha_rede
       
 volumes:
   redis-data:
   mongo-data:
+
+networks:
+  minha_rede:
+    driver: bridge
