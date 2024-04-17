@@ -6,7 +6,7 @@ import os
 import aiofiles
 import base64
 
-async def write_to_csv(data, filename='results.csv'):
+async def write_to_csv(data, filename='consumption.csv'):
     async with aiofiles.open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
         await file.write(','.join(['ID', 'Street', 'Date', 'Time', 'Consumption_kWh_per_minute']) + '\n')
@@ -85,7 +85,7 @@ if __name__ == '__main__':
     sftp_port = 22
     sftp_username = 'hpccdemo'
     sftp_password = 'hpccdemo'
-    remote_path = '/var/lib/HPCCSystems/mydropzone/results.csv'
+    remote_path = '/var/lib/HPCCSystems/mydropzone/consumption.csv'
     limit = 10
     offset = 0
 

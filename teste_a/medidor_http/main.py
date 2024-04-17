@@ -27,7 +27,7 @@ def start_sending_data(file_name, url):
     for data in read_csv(file_name):
         data['type'] = 'consumption'
         send_data(data, url)
-        time.sleep(1)
+        time.sleep(0.2)
 
 if __name__ == '__main__':
     url = 'http://127.0.0.1:8000'

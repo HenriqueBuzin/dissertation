@@ -31,7 +31,7 @@ class ProtocolLayer:
         self.PROTOCOLS_REDIS_DB = int(os.getenv("PROTOCOLS_REDIS_DB", 0))
         self.MONGO_HOST = os.getenv("MONGO_HOST", "localhost")
         self.MONGO_PORT = os.getenv("MONGO_PORT", "27017")
-        self.MONGO_DB = os.getenv("MONGO_DB", "mydatabase")
+        self.MONGO_DB = os.getenv("MONGO_DB", "fog")
         self.MONGO_USER = os.getenv("MONGO_USER")
         self.MONGO_PASS = os.getenv("MONGO_PASS")
         self.MONGO_URI = f"mongodb://{self.MONGO_USER}:{self.MONGO_PASS}@{self.MONGO_HOST}:{self.MONGO_PORT}/"

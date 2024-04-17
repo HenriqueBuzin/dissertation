@@ -27,7 +27,7 @@ async def start_sending_data_coap(file_name, coap_url):
     for data in read_csv(file_name):
         data['type'] = 'consumption'
         await send_data_coap(data, coap_url)
-        await asyncio.sleep(1)
+        await asyncio.sleep(0.2)
 
 async def main():
     coap_url = 'coap://127.0.0.1:5683/coap'
