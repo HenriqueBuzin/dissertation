@@ -1,9 +1,38 @@
 version: '3.9'
 
 services:
+
+  protocols:
+    container_name: protocols
+    restart: unless-stopped
+    build:
+      context: ./protocols
+    depends_on:
+      - mongo
+      - redis
+      - processing
+
+  processing:
+    container_name: processing
+    restart: unless-stopped
+    build:
+      context: ./processing
+    depends_on:
+      - mongo
+      - redis
+
+  orchestration:
+    container_name: orchestration
+    restart: unless-stopped
+    build:
+      context: ./orchestration
+    depends_on:
+      - processing
+
   redis:
     container_name: redis
     image: redis:7.2.4
+    restart: unless-stopped
     ports:
       - "6379:6379"
     volumes:
@@ -13,6 +42,7 @@ services:
   mongo:
     container_name: mongo
     image: mongo:7.0.6
+    restart: unless-stopped
     ports:
       - "27017:27017"
     volumes:
