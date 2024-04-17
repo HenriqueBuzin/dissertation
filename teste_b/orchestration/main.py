@@ -77,8 +77,8 @@ async def fetch_all_time_and_consumption(uri, protocols_url, sftp_host, sftp_por
         await asyncio.sleep(interval)
 
 if __name__ == '__main__':
-    uri = 'http://localhost:8766/graphql'
-    protocols_url = 'http://127.0.0.1:8000'
+    uri = 'http://processing:8766/graphql'
+    protocols_url = 'http://protocols:8000'
     interval = 10
     delay = 5
     sftp_host = '192.168.56.101'
