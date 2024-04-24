@@ -15,12 +15,14 @@ LZ_Path := '//' + LZ_IP + LZ_Dir;
 RawFile := 'consumption.csv';
 LogicalFileName := '~UFSC::XYZ::FOG::Consumption';
 
-STD.File.SprayDelimited(LZ_IP,
-                        LZ_Path + RawFile,
-                        ,,,, 'mythor',
-                        LogicalFileName, -1, , , 
-												TRUE, TRUE);
+// STD.File.SprayDelimited(LZ_IP,
+                        // LZ_Path + RawFile,
+                        // ,,,, 'mythor',
+                        // LogicalFileName, -1, , , 
+												// TRUE, FALSE);
 
 ConsumptionData := DATASET(LogicalFileName, ConsumptionDataLayout, CSV(SEPARATOR(','), HEADING(1)));
 
 OUTPUT(ConsumptionData, NAMED('DataConsumption'));
+
+// OUTPUT(ConsumptionData, NAMED('DataConsumption'), ALL);

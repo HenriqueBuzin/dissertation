@@ -8,7 +8,6 @@ import aiocoap.resource as resource
 import aiocoap
 from pymongo import MongoClient
 import redis
-from dotenv import load_dotenv
 import paramiko
 import base64
 import aiofiles
@@ -19,23 +18,20 @@ class ProtocolLayer:
         self.redis_client = redis.Redis(host=self.REDIS_HOST, port=self.REDIS_PORT, db=self.PROTOCOLS_REDIS_DB, decode_responses=True)
         self.mongo_client = MongoClient(self.MONGO_URI)
         self.mongo_db = self.mongo_client[self.MONGO_DB]
-        self.mongo_collection = self.mongo_db["protocols_data"]
+        self.mongo_collection = self.mongo_db[os.getenv('PROTOCOLS_MONGO_COLLECTION')]
         self.ws_url = 'ws://processing:8765/'
 
     def load_env(self):
-        base_dir = os.path.dirname(os.path.abspath(__file__)) if '__file__' in locals() else os.getcwd()
-        dotenv_path = os.path.join(base_dir, '..', '.env')
-        load_dotenv(dotenv_path=dotenv_path)
-        self.REDIS_HOST = os.getenv("REDIS_HOST", "redis")
-        self.REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
-        self.PROTOCOLS_REDIS_DB = int(os.getenv("PROTOCOLS_REDIS_DB", 0))
-        self.MONGO_HOST = os.getenv("MONGO_HOST", "mongo")
-        self.MONGO_PORT = os.getenv("MONGO_PORT", "27017")
-        self.MONGO_DB = os.getenv("MONGO_DB", "fog")
+        self.REDIS_HOST = os.getenv("REDIS_HOST")
+        self.REDIS_PORT = int(os.getenv("REDIS_PORT"))
+        self.PROTOCOLS_REDIS_DB = int(os.getenv("PROTOCOLS_REDIS_DB"))
+        self.MONGO_HOST = os.getenv("MONGO_HOST")
+        self.MONGO_PORT = os.getenv("MONGO_PORT")
+        self.MONGO_DB = os.getenv("MONGO_DB")
         self.MONGO_USER = os.getenv("MONGO_USER")
         self.MONGO_PASS = os.getenv("MONGO_PASS")
         self.MONGO_URI = f"mongodb://{self.MONGO_USER}:{self.MONGO_PASS}@{self.MONGO_HOST}:{self.MONGO_PORT}/"
-        self.PROTOCOLS_PERSIST = int(os.getenv("PROTOCOLS_PERSIST", 1))
+        self.PROTOCOLS_PERSIST = int(os.getenv("PROTOCOLS_PERSIST"))
 
     async def send_data_websocket(self):
         while True:
@@ -167,7 +163,7 @@ async def start_coap_server(protocol_layer):
     root = resource.Site()
     coap_resource = CoAPServerResource(protocol_layer)
     root.add_resource(['coap'], coap_resource)
-    await aiocoap.Context.create_server_context(root, bind=('127.0.0.1', 5683))
+    await aiocoap.Context.create_server_context(root, bind=('0.0.0.0', 5683))
 
 async def main():
     protocol_layer = ProtocolLayer()

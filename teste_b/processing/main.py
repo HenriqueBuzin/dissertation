@@ -2,34 +2,26 @@ import asyncio
 import json
 import os
 import websockets
-from dotenv import load_dotenv
 from pymongo import MongoClient
 import redis
 import graphene
 from aiohttp import web
 
-dotenv_path = os.path.join(os.path.dirname(__file__), '..', '.env')
-load_dotenv(dotenv_path=dotenv_path)
-
-REDIS_HOST = os.getenv("REDIS_HOST", "redis")
-REDIS_PORT = int(os.getenv("REDIS_PORT", 6379))
-REDIS_DB = int(os.getenv("PROCESSING_REDIS_DB", 1))
-MONGO_HOST = os.getenv("MONGO_HOST", "mongo")
-MONGO_PORT = os.getenv("MONGO_PORT", "27017")
-MONGO_DB = os.getenv("MONGO_DB", "fog")
+REDIS_HOST = os.getenv("REDIS_HOST")
+REDIS_PORT = int(os.getenv("REDIS_PORT"))
+REDIS_DB = int(os.getenv("PROCESSING_REDIS_DB"))
+MONGO_HOST = os.getenv("MONGO_HOST")
+MONGO_PORT = os.getenv("MONGO_PORT")
+MONGO_DB = os.getenv("MONGO_DB")
 MONGO_USER = os.getenv("MONGO_USER")
 MONGO_PASS = os.getenv("MONGO_PASS")
 MONGO_URI = f"mongodb://{MONGO_USER}:{MONGO_PASS}@{MONGO_HOST}:{MONGO_PORT}/"
 
 mongo_client = MongoClient(MONGO_URI)
 mongo_db = mongo_client[MONGO_DB]
-mongo_collection = mongo_db["messages"]
+mongo_collection = mongo_db[os.getenv('PROCESSING_MONGO_COLLECTION')]
 
-PROCESSING_PERSIST = int(os.getenv("PROCESSING_PERSIST", 0))
-
-mongo_client = MongoClient(MONGO_URI)
-mongo_db = mongo_client[MONGO_DB]
-mongo_collection = mongo_db["messages"]
+PROCESSING_PERSIST = int(os.getenv("PROCESSING_PERSIST"))
 
 redis_client = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB, decode_responses=True)
 

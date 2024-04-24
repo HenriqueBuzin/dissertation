@@ -8,7 +8,7 @@ EXPORT IDX_Consumption := MODULE
     RECORDOF(STD_Consumption) AND NOT [RecId];
   END;
 //
-  SHARED Filename         := '~UFSC::XYZ::FOG::OUT_Consumption';
+  SHARED Filename         := '~UFSC::XYZ::FOG::Consumption';
   EXPORT File 	          := DATASET(Filename,Layout,FLAT);
 	EXPORT IDX_Time_Id_Date := INDEX(File,{Time,Id,Date},{File},'~UFSC::XYZ::KEY::IDX_Time_Id_Date');
 END;

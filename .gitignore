@@ -3,3 +3,7 @@ teste_a/orchestration/consumption.csv
 teste_a/protocols/temp_file.csv
 ECL/Spray's/Spray Automático/*
 !ECL/Spray's/Spray Automático/spray-automatico.ECL
+.vscode/
+ECL/Consulta Roxie/GPUCache/*
+ECL/Consulta Roxie/debug.log
+ECL/eclcc.log

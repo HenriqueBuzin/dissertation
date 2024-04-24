@@ -1,5 +1,15 @@
 version: '3.9'
 
+x-global-env: &global-env
+  REDIS_HOST: ${REDIS_HOST}
+  REDIS_PORT: ${REDIS_PORT}
+
+  MONGO_HOST: ${MONGO_HOST}
+  MONGO_PORT: ${MONGO_PORT}
+  MONGO_DB: ${MONGO_DB}
+  MONGO_USER: ${MONGO_USER}
+  MONGO_PASS: ${MONGO_PASS}
+
 services:
 
   processing:
@@ -7,23 +17,39 @@ services:
     restart: unless-stopped
     build:
       context: ./processing
+    environment:
+      <<: *global-env
+      PROCESSING_MONGO_COLLECTION: ${PROCESSING_MONGO_COLLECTION}
+      PROCESSING_REDIS_DB: ${PROCESSING_REDIS_DB}
+      PROCESSING_PERSIST: ${PROCESSING_PERSIST}
+    ports:
+      - "8765:8765"
+      - "8766:8766"
     depends_on:
       - mongo
       - redis
     networks:
-      - minha_rede
+      - fog_network
 
   protocols:
     container_name: protocols
     restart: unless-stopped
     build:
       context: ./protocols
+    environment:
+      <<: *global-env
+      PROTOCOLS_REDIS_DB: ${PROTOCOLS_REDIS_DB}
+      PROTOCOLS_PERSIST: ${PROTOCOLS_PERSIST}
+      PROTOCOLS_MONGO_COLLECTION: ${PROTOCOLS_MONGO_COLLECTION}
+    ports:
+      - "5683:5683"
+      - "8000:8000"
     depends_on:
       - mongo
       - redis
       - processing
     networks:
-      - minha_rede
+      - fog_network
     extra_hosts:
       - "sftp_server:192.168.56.101"
 
@@ -35,7 +61,7 @@ services:
     depends_on:
       - processing
     networks:
-      - minha_rede
+      - fog_network
 
   redis:
     container_name: redis_test_b
@@ -47,26 +73,26 @@ services:
       - redis-data:/data
     command: redis-server --appendonly yes
     networks:
-      - minha_rede
+      - fog_network
 
   mongo:
     container_name: mongo_test_b
     image: mongo:7.0.6
     restart: unless-stopped
     ports:
-      - "27018:27017"
+      - "27017:27017"
     volumes:
       - mongo-data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASS}
     networks:
-      - minha_rede
+      - fog_network
       
 volumes:
   redis-data:
   mongo-data:
 
 networks:
-  minha_rede:
+  fog_network:
     driver: bridge
