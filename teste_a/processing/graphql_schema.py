@@ -6,14 +6,13 @@ def create_consumption_type():
         'id': graphene.String(),
         'street': graphene.String(),
         'date': graphene.String(),
-        'time': graphene.String(),
         'consumptionKwhPerMinute': graphene.Float(),
         'type': graphene.String()
     })
 
 def resolve_consumption_data(root, info, **kwargs):
     query = {}
-    for key in ['id', 'street', 'date', 'time', 'consumption_kwh_per_minute', 'type']:
+    for key in ['id', 'street', 'date', 'consumption_kwh_per_minute', 'type']:
         if kwargs.get(key) is not None:
             query[key] = kwargs[key]
 
@@ -30,7 +29,6 @@ def resolve_consumption_data(root, info, **kwargs):
             'id': str(item["id"]),
             'street': item.get("street", ""),
             'date': item["date"],
-            'time': item["time"],
             'consumptionKwhPerMinute': item["consumption_kwh_per_minute"],
             'type': item["type"]
         } for item in data_query
@@ -43,7 +41,6 @@ def create_query_type(Consumption):
             id=graphene.String(),
             street=graphene.String(),
             date=graphene.String(),
-            time=graphene.String(),
             consumptionKwhPerMinute=graphene.Float(),
             type=graphene.String(),
             limit=graphene.Int(),
