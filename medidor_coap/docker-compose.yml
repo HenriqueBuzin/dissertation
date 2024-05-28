@@ -1,0 +1,13 @@
+version: '3.9'
+services:
+  coap_sender:
+    build: .
+    environment:
+      - FILE=${FILE}
+      - URL=${URL}
+      - INSTANCE_ID=${INSTANCE_ID}
+    deploy:
+      replicas: 1
+    command: >
+      bash -c "python main.py --file $${FILE} --url $${URL} --instance_id $${INSTANCE_ID}"
+    env_file: .env
