@@ -10,20 +10,38 @@ Código usado para a dissertação
 
 </details>
 
-## Teste A
+## Energy Fog Local
 <details>
-  <summary>Clique aqui para ver mais sobre a pasta teste_a...</summary>
+  <summary>Clique aqui para ver mais sobre a pasta energy_fog_local...</summary>
   
   ### O que é? 
-  A pasta teste_a é a implementação principal.
+  A pasta energy_fog_loca é a implementação da névoa de energia.
 
 </details>
 
-## Teste B
+## Energy Fog Docker
 <details>
-  <summary>Clique aqui para ver mais sobre a pasta teste_b...</summary>
+  <summary>Clique aqui para ver mais sobre a pasta energy_fog_docker...</summary>
   
   ### O que é? 
-  A pasta teste_b é a implementação da névoa em Docker.
+  A pasta energy_fog_docker é a implementação da névoa de energia em Docker.
+
+</details>
+
+## Water Fog Local
+<details>
+  <summary>Clique aqui para ver mais sobre a pasta water_fog_local...</summary>
+  
+  ### O que é? 
+  A pasta water_fog_local é a implementação da névoa de água.
+
+</details>
+
+## Water Fog Docker
+<details>
+  <summary>Clique aqui para ver mais sobre a pasta water_fog_docker...</summary>
+  
+  ### O que é? 
+  A pasta water_fog_docker é a implementação da névoa de água em Docker.
 
 </details>
