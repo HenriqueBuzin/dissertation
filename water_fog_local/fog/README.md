@@ -50,12 +50,12 @@ Teste A
 </details>
 
 
-## Serviço
+## Orquestração
 <details>
-  <summary>Clique aqui para ver mais sobre a camada de serviço..</summary>
+  <summary>Clique aqui para ver mais sobre a camada de orquestração..</summary>
   
   ### O que é? 
-  A camada onde vai ser executado o serviço.
+  A camada onde vai ser executado os containers de serviços.
 
   ### Qual o nível da camada?
   4
