@@ -58,7 +58,7 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
                         
                         if filtered_data:
                             print(f"Escrevendo dados no arquivo CSV para o dia {current_date.strftime('%Y-%m-%d')}")
-                            file_path = await write_to_csv(filtered_data, f"consumption_data_{current_date.strftime('%Y-%m-%d')}.csv")
+                            file_path = await write_to_csv(filtered_data, f"consumption_energy_{current_date.strftime('%Y-%m-%d')}.csv")
                             print(f"Arquivo CSV criado: {file_path}")
                             await send_file_and_data_http(file_path, sftp_host, sftp_port, sftp_username, sftp_password, remote_path, protocols_url, delay)
                         offset += limit
