@@ -9,16 +9,6 @@ from aiocoap import *
 CSV_FILE = 'data.csv'
 COAP_SERVER_URL = 'coap://127.0.0.1:5683/coap'
 
-STREETS = [
-    "1st Street", "2nd Street", "3rd Street", "4th Street", "5th Street",
-    "6th Street", "7th Street", "8th Street", "9th Street", "10th Street",
-    "11th Street", "12th Street", "13th Street", "14th Street", "15th Street",
-    "16th Street", "17th Street", "18th Street", "19th Street", "20th Street"
-]
-
-class DevNull:
-    def write(self, msg):
-        pass
 
 def read_csv(file_name):
     with open(file_name, newline='') as csvfile:
@@ -26,10 +16,11 @@ def read_csv(file_name):
         for row in reader:
             yield row
 
+
 async def send_data_coap(data, coap_url):
     context = await Context.create_client_context()
     payload = json.dumps(data).encode('utf-8')
-    request = Message(code=POST, payload=payload, uri=coap_url) # type: ignore
+    request = Message(code=POST, payload=payload, uri=coap_url)  # type: ignore
 
     print(f"Tentando enviar dados CoAP: {data}")
     try:
@@ -39,43 +30,57 @@ async def send_data_coap(data, coap_url):
     except Exception as e:
         print(f"Falha ao enviar dados: {e}")
 
+
 async def start_sending_data_coap(file_name, coap_url, instance_id, stop_event):
-    street = STREETS[(instance_id - 1) % len(STREETS)]
+    street = f"{instance_id}st Street"
     stop_flag = False
 
-    for data in read_csv(file_name):
-        if stop_event.is_set():
-            print(f"Processo {instance_id} encerrando...")
-            break
+    try:
+        for data in read_csv(file_name):
+            if stop_event.is_set():
+                print(f"Processo {instance_id} encerrando...")
+                break
 
-        data['type'] = 'consumption'
-        data['id'] = instance_id
-        data['street'] = street
+            data['type'] = 'consumption'
+            data['id'] = instance_id
+            data['street'] = street
 
-        try:
-            await send_data_coap(data, coap_url)
-            await asyncio.sleep(1)
-        except KeyboardInterrupt:
-            print("Interrupção do teclado detectada. Finalizando o processo...")
-            stop_flag = True
-            break
+            try:
+                await send_data_coap(data, coap_url)
+                # Check stop event before sleep
+                if stop_event.is_set():
+                    break
+                await asyncio.sleep(1)
+            except KeyboardInterrupt:
+                print("Interrupção do teclado detectada. Finalizando o processo...")
+                stop_flag = True
+                break
+    except asyncio.CancelledError:
+        print(f"Processo {instance_id} cancelado.")
+    finally:
+        if stop_flag:
+            print(f"Processo {instance_id} encerrado com sucesso.")
 
-    if stop_flag:
-        print(f"Processo {instance_id} encerrado com sucesso.")
 
 def signal_handler(signal, frame, processes, stop_event):
-    print("\nCtrl+C detected! Stopping all processes...")
+    print("\nCtrl+C detectado! Parando todos os processos...")
     stop_event.set()
     for process in processes:
         process.join()
     print("Medidor CoAP encerrado com sucesso.")
     sys.exit(0)
 
+
 def run_process(instance_id, stop_event):
-    asyncio.run(start_sending_data_coap(CSV_FILE, COAP_SERVER_URL, instance_id, stop_event))
+    try:
+        asyncio.run(start_sending_data_coap(CSV_FILE, COAP_SERVER_URL, instance_id, stop_event))
+    except KeyboardInterrupt:
+        pass
+
 
 if __name__ == '__main__':
     import argparse
+
     parser = argparse.ArgumentParser(description="CoAP Data Sender")
     parser.add_argument('instances', type=int, help='Number of instances to start')
     args = parser.parse_args()
@@ -95,9 +100,7 @@ if __name__ == '__main__':
         for process in processes:
             process.join()
     except KeyboardInterrupt:
-        print("\nCtrl+C detected! Stopping all processes...")
-        stop_event.set()
-        for process in processes:
-            process.join()
+        # KeyboardInterrupt is handled gracefully within signal_handler
+        pass
     finally:
         print("Medidor CoAP encerrado com sucesso.")

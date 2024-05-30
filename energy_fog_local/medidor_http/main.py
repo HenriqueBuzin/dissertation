@@ -1,21 +1,13 @@
-import os
-import asyncio
 import csv
 import json
 import multiprocessing
 import signal
 import sys
-from aiocoap import *
+import requests
+import time
 
 CSV_FILE = 'data.csv'
-COAP_SERVER_URL = 'coap://localhost:5683'
-
-STREETS = [
-    "1st Street", "2nd Street", "3rd Street", "4th Street", "5th Street",
-    "6th Street", "7th Street", "8th Street", "9th Street", "10th Street",
-    "11th Street", "12th Street", "13th Street", "14th Street", "15th Street",
-    "16th Street", "17th Street", "18th Street", "19th Street", "20th Street"
-]
+HTTP_SERVER_URL = 'http://localhost:8000'  # URL do servidor HTTP
 
 class DevNull:
     def write(self, msg):
@@ -27,21 +19,20 @@ def read_csv(file_name):
         for row in reader:
             yield row
 
-async def send_data_coap(data, coap_url):
-    context = await Context.create_client_context()
-    payload = json.dumps(data).encode('utf-8')
-    request = Message(code=POST, payload=payload, uri=coap_url) # type: ignore
+def send_data_http(data, http_url):
+    payload = json.dumps(data)
+    headers = {'Content-Type': 'application/json'}
 
-    print(f"Tentando enviar dados CoAP: {data}")
+    print(f"Tentando enviar dados HTTP: {data}")
     try:
-        response = await context.request(request).response
+        response = requests.post(http_url, data=payload, headers=headers)
         print(f"Dados enviados com sucesso: {data}")
-        print(f"Resposta do CoAP server: {response.code}, {response.payload.decode()}")
+        print(f"Resposta do servidor HTTP: {response.status_code}, {response.text}")
     except Exception as e:
         print(f"Falha ao enviar dados: {e}")
 
-async def start_sending_data_coap(file_name, coap_url, instance_id, stop_event):
-    street = STREETS[(instance_id - 1) % len(STREETS)]
+def start_sending_data_http(file_name, http_url, instance_id, stop_event):
+    street = f"{instance_id}st Street"
     stop_flag = False
 
     for data in read_csv(file_name):
@@ -54,8 +45,8 @@ async def start_sending_data_coap(file_name, coap_url, instance_id, stop_event):
         data['street'] = street
 
         try:
-            await send_data_coap(data, coap_url)
-            await asyncio.sleep(1)
+            send_data_http(data, http_url)
+            time.sleep(1)
         except KeyboardInterrupt:
             print("Interrupção do teclado detectada. Finalizando o processo...")
             stop_flag = True
@@ -69,15 +60,15 @@ def signal_handler(signal, frame, processes, stop_event):
     stop_event.set()
     for process in processes:
         process.join()
-    print("Medidor CoAP encerrado com sucesso.")
+    print("Medidor HTTP encerrado com sucesso.")
     sys.exit(0)
 
 def run_process(instance_id, stop_event):
-    asyncio.run(start_sending_data_coap(CSV_FILE, COAP_SERVER_URL, instance_id, stop_event))
+    start_sending_data_http(CSV_FILE, HTTP_SERVER_URL, instance_id, stop_event)
 
 if __name__ == '__main__':
     import argparse
-    parser = argparse.ArgumentParser(description="CoAP Data Sender")
+    parser = argparse.ArgumentParser(description="HTTP Data Sender")
     parser.add_argument('instances', type=int, help='Number of instances to start')
     args = parser.parse_args()
 
@@ -101,4 +92,4 @@ if __name__ == '__main__':
         for process in processes:
             process.join()
     finally:
-        print("Medidor CoAP encerrado com sucesso.")
+        print("Medidor HTTP encerrado com sucesso.")
