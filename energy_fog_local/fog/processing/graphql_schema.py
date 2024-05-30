@@ -40,7 +40,7 @@ class Query(graphene.ObjectType):
 
         return [
             {
-                'id': str(item["_id"]),
+                'id': str(item["id"]),
                 'street': item.get("street", ""),
                 'date': item["date"],
                 'consumptionKwhPerMinute': item["consumption_kwh_per_minute"],
