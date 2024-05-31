@@ -9,13 +9,11 @@ from aiocoap import *
 CSV_FILE = 'data.csv'
 COAP_SERVER_URL = 'coap://127.0.0.1:5683/coap'
 
-
 def read_csv(file_name):
     with open(file_name, newline='') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=';')
         for row in reader:
             yield row
-
 
 async def send_data_coap(data, coap_url):
     context = await Context.create_client_context()
@@ -29,7 +27,6 @@ async def send_data_coap(data, coap_url):
         print(f"Resposta do CoAP server: {response.code}, {response.payload.decode()}")
     except Exception as e:
         print(f"Falha ao enviar dados: {e}")
-
 
 async def start_sending_data_coap(file_name, coap_url, instance_id, stop_event):
     street = f"{instance_id}st Street"
@@ -47,7 +44,6 @@ async def start_sending_data_coap(file_name, coap_url, instance_id, stop_event):
 
             try:
                 await send_data_coap(data, coap_url)
-                # Check stop event before sleep
                 if stop_event.is_set():
                     break
                 await asyncio.sleep(1)
@@ -61,7 +57,6 @@ async def start_sending_data_coap(file_name, coap_url, instance_id, stop_event):
         if stop_flag:
             print(f"Processo {instance_id} encerrado com sucesso.")
 
-
 def signal_handler(signal, frame, processes, stop_event):
     print("\nCtrl+C detectado! Parando todos os processos...")
     stop_event.set()
@@ -70,13 +65,11 @@ def signal_handler(signal, frame, processes, stop_event):
     print("Medidor CoAP encerrado com sucesso.")
     sys.exit(0)
 
-
 def run_process(instance_id, stop_event):
     try:
         asyncio.run(start_sending_data_coap(CSV_FILE, COAP_SERVER_URL, instance_id, stop_event))
     except KeyboardInterrupt:
         pass
-
 
 if __name__ == '__main__':
     import argparse
@@ -100,7 +93,6 @@ if __name__ == '__main__':
         for process in processes:
             process.join()
     except KeyboardInterrupt:
-        # KeyboardInterrupt is handled gracefully within signal_handler
         pass
     finally:
         print("Medidor CoAP encerrado com sucesso.")

@@ -2,6 +2,7 @@ import aiohttp
 import aiofiles
 import base64
 import asyncio
+import os
 
 async def send_file_and_data_http(file_path, sftp_host, sftp_port, sftp_username, sftp_password, remote_path, url, delay):
     print(f"Iniciando o envio do arquivo: {file_path}")
@@ -30,6 +31,8 @@ async def send_file_and_data_http(file_path, sftp_host, sftp_port, sftp_username
                         if response.status == 200:
                             print(f"Status da resposta: {response.status}")
                             print(f"Arquivo {file_path} enviado com sucesso.")
+                            os.remove(file_path)
+                            print(f"Arquivo {file_path} removido.")
                             return
                         else:
                             print(f"Erro ao enviar. Status da resposta: {response.status}. Tentando novamente em {delay} segundos.")
