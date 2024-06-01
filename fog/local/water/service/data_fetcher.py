@@ -51,7 +51,6 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
                         print(f"Não há mais dados para coletar para o dia {current_date.strftime('%Y-%m-%d')}. Avançando para o próximo dia.")
                         current_date = next_date
                     else:
-                        # Agregar dados por ID
                         aggregated_data = {}
                         for item in data:
                             id = item['id']
