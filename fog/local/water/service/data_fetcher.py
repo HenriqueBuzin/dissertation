@@ -9,16 +9,16 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
 
     while True:
         next_date = current_date + timedelta(days=1)
-        print(f"Coletando dados para o dia: {current_date.strftime('%Y-%m-%d')}")
+        print(f"Coletando dados de água para o dia: {current_date.strftime('%Y-%m-%d')}")
 
         query = f"""
         {{
-            energyConsumptionData(date: "{current_date.strftime('%Y-%m-%d')}") {{
+            waterConsumptionData(date: "{current_date.strftime('%Y-%m-%d')}") {{
                 id
                 street
                 date
                 time
-                consumptionKwhPerHour
+                consumptionM3PerHour
             }}
         }}
         """
@@ -40,12 +40,12 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
                         print(f"Erro ao decodificar JSON: {str(e)}")
                         result_json = None
 
-                    if not result_json or 'energyConsumptionData' not in result_json:
+                    if not result_json or 'waterConsumptionData' not in result_json:
                         print("Resposta JSON vazia ou inválida. Reiniciando a paginação.")
                         await asyncio.sleep(interval)
                         continue
 
-                    data = result_json['energyConsumptionData']
+                    data = result_json['waterConsumptionData']
 
                     if not data:
                         print(f"Não há mais dados para coletar para o dia {current_date.strftime('%Y-%m-%d')}. Avançando para o próximo dia.")
