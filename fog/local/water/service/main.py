@@ -12,12 +12,10 @@ if __name__ == '__main__':
     sftp_username = 'hpccdemo'
     sftp_password = 'hpccdemo'
     remote_path = '/var/lib/HPCCSystems/mydropzone'
-    limit = 24
-    offset = 0
-    start_date = '2006-12-16'
+    start_date = '2007-01-01'
 
     try:
-        asyncio.run(fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_username, sftp_password, remote_path, interval, limit, offset, delay, start_date))
+        asyncio.run(fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_username, sftp_password, remote_path, interval, delay, start_date))
     except KeyboardInterrupt:
         print("\nColeta de dados encerrando via interrupção pelo usuário...")
     except Exception as e:

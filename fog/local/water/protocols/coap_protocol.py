@@ -20,4 +20,6 @@ async def start_coap_server(protocol_layer):
     root = resource.Site()
     coap_resource = CoAPServerResource(protocol_layer)
     root.add_resource(['coap'], coap_resource)
-    await aiocoap.Context.create_server_context(root, bind=('127.0.0.1', 5683))
+    port = 5683
+    print(f'CoAP: Servidor CoAP rodando na porta {port}...')
+    await aiocoap.Context.create_server_context(root, bind=('127.0.0.1', port))

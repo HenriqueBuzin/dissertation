@@ -9,7 +9,7 @@ async def graphql_http_handler(request):
     query = data.get('query')
     variables = data.get('variables')
     result = await schema.execute_async(query, variable_values=variables)
-    print(f"Respondendo à solicitação GraphQL com: {json.dumps(result.data)}")
+    # print(f"Respondendo à solicitação GraphQL com: {json.dumps(result.data)}")
     return web.Response(text=json.dumps(result.data), content_type='application/json')
 
 async def main():
