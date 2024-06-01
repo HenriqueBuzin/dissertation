@@ -6,14 +6,14 @@ class EnergyConsumptionType(graphene.ObjectType):
     street = graphene.String()
     date = graphene.String()
     time = graphene.String()
-    consumptionKwhPerHour = graphene.String()  # Adjusted to camelCase
+    consumptionKwhPerHour = graphene.String()
 
 class WaterConsumptionType(graphene.ObjectType):
     id = graphene.Int()
     street = graphene.String()
     date = graphene.String()
     time = graphene.String()
-    consumptionM3PerHour = graphene.String()  # Adjusted to camelCase
+    consumptionM3PerHour = graphene.String()
 
 class Query(graphene.ObjectType):
     energy_consumption_data = graphene.List(
@@ -22,7 +22,7 @@ class Query(graphene.ObjectType):
         street=graphene.String(),
         date=graphene.String(),
         time=graphene.String(),
-        consumptionKwhPerHour=graphene.String(),  # Adjusted to camelCase
+        consumptionKwhPerHour=graphene.String()
     )
 
     water_consumption_data = graphene.List(
@@ -31,7 +31,7 @@ class Query(graphene.ObjectType):
         street=graphene.String(),
         date=graphene.String(),
         time=graphene.String(),
-        consumptionM3PerHour=graphene.String()  # Adjusted to camelCase
+        consumptionM3PerHour=graphene.String()
     )
 
     def resolve_energy_consumption_data(self, info, **kwargs):
@@ -45,12 +45,11 @@ class Query(graphene.ObjectType):
         else:
             query['consumption_kwh_per_hour'] = {'$exists': True}
 
-        print(f"Query: {query}")  # Debug: Print the query being used
+        print(f"Query: {query}")
 
         data_query = mongo_collection.find(query)
         items = list(data_query)
 
-        # Debug: Print the retrieved data from MongoDB
         for item in items:
             print(f"MongoDB Item: {item}")
             print(f"consumption_kwh_per_hour exists: {'consumption_kwh_per_hour' in item}")
@@ -64,7 +63,7 @@ class Query(graphene.ObjectType):
                     street=item.get("street", ""),
                     date=item.get("date", ""),
                     time=item.get("time", ""),
-                    consumptionKwhPerHour=str(item['consumption_kwh_per_hour'])  # Ajustado para camelCase
+                    consumptionKwhPerHour=str(item['consumption_kwh_per_hour'])
                 ))
         
         # Debug: Print the result before returning
@@ -81,6 +80,8 @@ class Query(graphene.ObjectType):
 
         if kwargs.get('consumptionM3PerHour') is not None:
             query['consumption_m3_per_hour'] = kwargs['consumptionM3PerHour']
+        else:
+            query['consumption_m3_per_hour'] = {'$exists': True}
 
         print(f"Query: {query}")  # Debug: Print the query being used
 
@@ -97,7 +98,7 @@ class Query(graphene.ObjectType):
                 street=item.get("street", ""),
                 date=item.get("date", ""),
                 time=item.get("time", ""),
-                consumptionM3PerHour=str(item.get("consumption_m3_per_hour", ""))  # Ajustado para camelCase
+                consumptionM3PerHour=str(item.get("consumption_m3_per_hour", ""))
             ) for item in items
         ]
 
