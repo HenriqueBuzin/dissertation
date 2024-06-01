@@ -51,8 +51,26 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
                         print(f"Não há mais dados para coletar para o dia {current_date.strftime('%Y-%m-%d')}. Avançando para o próximo dia.")
                         current_date = next_date
                     else:
+                        # Agregar dados por ID
+                        aggregated_data = {}
+                        for item in data:
+                            id = item['id']
+                            if id not in aggregated_data:
+                                aggregated_data[id] = {
+                                    'id': id,
+                                    'street': item['street'],
+                                    'date': item['date'],
+                                    'consumptionM3PerDay': 0.0
+                                }
+                            try:
+                                aggregated_data[id]['consumptionM3PerDay'] += float(item['consumptionM3PerHour'])
+                            except ValueError:
+                                print(f"Valor inválido encontrado em 'consumptionM3PerHour': {item['consumptionM3PerHour']}. Definido como 0.")
+                                aggregated_data[id]['consumptionM3PerDay'] += 0.0
+
+                        aggregated_data_list = list(aggregated_data.values())
                         print(f"Escrevendo dados no arquivo CSV para o dia {current_date.strftime('%Y-%m-%d')}")
-                        file_path = await write_to_csv(data, f"consumption_water_{current_date.strftime('%Y-%m-%d')}.csv")
+                        file_path = await write_to_csv(aggregated_data_list, f"consumption_water_{current_date.strftime('%Y-%m-%d')}.csv")
                         print(f"Arquivo CSV criado: {file_path}")
                         await send_file_and_data_http(file_path, sftp_host, sftp_port, sftp_username, sftp_password, remote_path, protocols_url, delay)
 
