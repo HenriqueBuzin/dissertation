@@ -8,6 +8,7 @@ from aiocoap import *
 
 CSV_FILE = 'data.csv'
 COAP_SERVER_URL = 'coap://127.0.0.1:5683/coap'
+INSTANCE_DATA_FILE = 'instance_data.json'
 
 def read_csv(file_name):
     with open(file_name, newline='') as csvfile:
@@ -28,8 +29,10 @@ async def send_data_coap(data, coap_url):
     except Exception as e:
         print(f"Falha ao enviar dados: {e}")
 
-async def start_sending_data_coap(file_name, coap_url, instance_id, stop_event):
-    street = f"{instance_id}st Street"
+async def start_sending_data_coap(file_name, coap_url, instance_id, stop_event, instance_data):
+    instance_info = instance_data[str(instance_id)]
+    street = instance_info["street"]
+    unique_id = instance_info["id"]
     stop_flag = False
 
     try:
@@ -39,7 +42,7 @@ async def start_sending_data_coap(file_name, coap_url, instance_id, stop_event):
                 break
 
             data['type'] = 'consumption'
-            data['id'] = instance_id
+            data['id'] = unique_id
             data['street'] = street
 
             try:
@@ -65,9 +68,9 @@ def signal_handler(signal, frame, processes, stop_event):
     print("Medidor CoAP encerrado com sucesso.")
     sys.exit(0)
 
-def run_process(instance_id, stop_event):
+def run_process(instance_id, stop_event, instance_data):
     try:
-        asyncio.run(start_sending_data_coap(CSV_FILE, COAP_SERVER_URL, instance_id, stop_event))
+        asyncio.run(start_sending_data_coap(CSV_FILE, COAP_SERVER_URL, instance_id, stop_event, instance_data))
     except KeyboardInterrupt:
         pass
 
@@ -78,13 +81,16 @@ if __name__ == '__main__':
     parser.add_argument('instances', type=int, help='Number of instances to start')
     args = parser.parse_args()
 
+    with open(INSTANCE_DATA_FILE) as f:
+        instance_data = json.load(f)
+
     stop_event = multiprocessing.Event()
     processes = []
 
     try:
         for i in range(args.instances):
             instance_id = i + 1
-            process = multiprocessing.Process(target=run_process, args=(instance_id, stop_event))
+            process = multiprocessing.Process(target=run_process, args=(instance_id, stop_event, instance_data))
             processes.append(process)
             process.start()
 

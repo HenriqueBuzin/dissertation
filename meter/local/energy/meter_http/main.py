@@ -7,7 +7,8 @@ import requests
 import time
 
 CSV_FILE = 'data.csv'
-HTTP_SERVER_URL = 'http://localhost:8000'  # URL do servidor HTTP
+HTTP_SERVER_URL = 'http://localhost:8000'
+INSTANCE_DATA_FILE = 'instance_data.json'
 
 class DevNull:
     def write(self, msg):
@@ -31,8 +32,10 @@ def send_data_http(data, http_url):
     except Exception as e:
         print(f"Falha ao enviar dados: {e}")
 
-def start_sending_data_http(file_name, http_url, instance_id, stop_event):
-    street = f"{instance_id}st Street"
+def start_sending_data_http(file_name, http_url, instance_id, stop_event, instance_data):
+    instance_info = instance_data[str(instance_id)]
+    street = instance_info["street"]
+    unique_id = instance_info["id"]
     stop_flag = False
 
     for data in read_csv(file_name):
@@ -41,7 +44,7 @@ def start_sending_data_http(file_name, http_url, instance_id, stop_event):
             break
 
         data['type'] = 'consumption'
-        data['id'] = instance_id
+        data['id'] = unique_id
         data['street'] = street
 
         try:
@@ -63,8 +66,8 @@ def signal_handler(signal, frame, processes, stop_event):
     print("Medidor HTTP encerrado com sucesso.")
     sys.exit(0)
 
-def run_process(instance_id, stop_event):
-    start_sending_data_http(CSV_FILE, HTTP_SERVER_URL, instance_id, stop_event)
+def run_process(instance_id, stop_event, instance_data):
+    start_sending_data_http(CSV_FILE, HTTP_SERVER_URL, instance_id, stop_event, instance_data)
 
 if __name__ == '__main__':
     import argparse
@@ -72,13 +75,16 @@ if __name__ == '__main__':
     parser.add_argument('instances', type=int, help='Number of instances to start')
     args = parser.parse_args()
 
+    with open(INSTANCE_DATA_FILE) as f:
+        instance_data = json.load(f)
+
     stop_event = multiprocessing.Event()
     processes = []
 
     try:
         for i in range(args.instances):
             instance_id = i + 1
-            process = multiprocessing.Process(target=run_process, args=(instance_id, stop_event))
+            process = multiprocessing.Process(target=run_process, args=(instance_id, stop_event, instance_data))
             processes.append(process)
             process.start()
 
