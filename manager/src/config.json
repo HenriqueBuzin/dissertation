@@ -1,0 +1,12 @@
+{
+    "containers": [
+        {
+            "name": "nginx",
+            "image": "nginx"
+        },
+        {
+            "name": "teste",
+            "image": "nginx"
+        }
+    ]
+}

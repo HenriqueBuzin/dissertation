@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container-fluid mt-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Gerenciamento de Imagens e Nomes de Contêineres</h2>
+    </div>
+
+    <!-- Formulário para adicionar nova configuração de contêiner -->
+    <div class="card my-4">
+        <div class="card-header bg-primary text-white">Adicionar Nova Configuração</div>
+        <div class="card-body">
+            <form action="{{ url_for('manage') }}" method="post" class="row g-3">
+                <div class="col-md-6">
+                    <label for="name" class="form-label">Nome do Contêiner</label>
+                    <input type="text" name="name" id="name" class="form-control" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="image" class="form-label">Imagem Docker</label>
+                    <input type="text" name="image" id="image" class="form-control" required>
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Adicionar Configuração</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabela de configurações existentes -->
+    <h3 class="mt-4">Configurações Existentes</h3>
+
+    <div class="card my-4">
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover mb-0">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Nome do Contêiner</th>
+                        <th>Imagem</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in config.containers %}
+                        <tr>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.image }}</td>
+                            <td>
+                                <a href="{{ url_for('delete_config', name=item.name) }}" class="btn btn-danger btn-sm">
+                                    Excluir
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

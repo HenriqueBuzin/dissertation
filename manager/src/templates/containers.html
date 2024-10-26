@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Containers</h2>
+    
+    <!-- Formulário para criar um novo container -->
+    <form method="POST" action="{{ url_for('list_containers') }}" class="mb-4">
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="text" class="form-control" id="image" name="image" required>
+        </div>
+        <div class="mb-3">
+            <label for="port" class="form-label">Port</label>
+            <input type="number" class="form-control" id="port" name="port" required>
+        </div>
+        <button type="submit" class="btn btn-success">Create Container</button>
+    </form>
+
+    <!-- Tabela para listar containers -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for container in containers %}
+            <tr>
+                <td>{{ container.short_id }}</td>
+                <td>{{ container.name }}</td>
+                <td>{{ container.status }}</td>
+                <td>{{ container.image.tags[0] if container.image.tags else "N/A" }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('remove_container', container_id=container.short_id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
