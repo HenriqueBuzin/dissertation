@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container-fluid mt-4">
+    <h2>Seleção de Bairros</h2>
+    <p>Escolha um bairro para gerenciar os contêineres específicos.</p>
+    
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Bairro</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for bairro in bairros %}
+            <tr>
+                <td>{{ bairro }}</td>
+                <td>
+                    <a href="{{ url_for('manage_containers', bairro=bairro) }}" class="btn btn-primary btn-sm">Gerenciar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

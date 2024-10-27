@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <h2>Monitoramento de Logs do Contêiner</h2>
+    <div id="logs">
+        <p>Carregando logs do contêiner <strong>{{ container_id }}</strong>...</p>
+    </div>
+</div>
+
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script>
+    const containerId = "{{ container_id }}";
+    const logsDiv = document.getElementById("logs");
+
+    // Conecta ao Socket.IO
+    const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    // Função para solicitar logs periodicamente
+    function getLogs() {
+        socket.emit('get_logs', { container_id: containerId });
+    }
+
+    // Solicita logs a cada 5 segundos
+    setInterval(getLogs, 5000);
+
+    // Recebe e exibe logs do contêiner
+    socket.on('log_update', function(data) {
+        if (data.container_id === containerId) {
+            logsDiv.innerHTML = `<pre>${data.logs}</pre>`;
+        }
+    });
+
+    // Chama a função de logs ao carregar a página pela primeira vez
+    getLogs();
+</script>
+{% endblock %}

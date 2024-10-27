@@ -7,8 +7,6 @@ import sys
 from aiocoap import *
 
 CSV_FILE = 'data.csv'
-COAP_SERVER_URL = 'coap://127.0.0.1:5683/coap'
-INSTANCE_DATA_FILE = 'instance_data.json'
 
 def read_csv(file_name):
     with open(file_name, newline='') as csvfile:
@@ -29,10 +27,10 @@ async def send_data_coap(data, coap_url):
     except Exception as e:
         print(f"Falha ao enviar dados: {e}")
 
-async def start_sending_data_coap(file_name, coap_url, instance_id, stop_event, instance_data):
-    instance_info = instance_data[str(instance_id)]
+async def start_sending_data_coap(file_name, instance_id, stop_event, instance_info, coap_url):
     street = instance_info["street"]
     unique_id = instance_info["id"]
+    
     stop_flag = False
 
     try:
@@ -68,9 +66,12 @@ def signal_handler(signal, frame, processes, stop_event):
     print("Medidor CoAP encerrado com sucesso.")
     sys.exit(0)
 
-def run_process(instance_id, stop_event, instance_data):
+def run_process(instance_id, stop_event, bairro, docker_id, coap_url):
+    with open(f'{bairro}.json') as f:
+        instance_data = json.load(f)
+    instance_info = instance_data["nodes"][str(docker_id)]
     try:
-        asyncio.run(start_sending_data_coap(CSV_FILE, COAP_SERVER_URL, instance_id, stop_event, instance_data))
+        asyncio.run(start_sending_data_coap(CSV_FILE, instance_id, stop_event, instance_info, coap_url))
     except KeyboardInterrupt:
         pass
 
@@ -79,10 +80,10 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser(description="CoAP Data Sender")
     parser.add_argument('instances', type=int, help='Number of instances to start')
+    parser.add_argument('bairro', type=str, help='Bairro name to locate the data file')
+    parser.add_argument('docker_id', type=int, help='Docker ID for the specific instance')
+    parser.add_argument('coap_url', type=str, help='CoAP server URL for data sending')
     args = parser.parse_args()
-
-    with open(INSTANCE_DATA_FILE) as f:
-        instance_data = json.load(f)
 
     stop_event = multiprocessing.Event()
     processes = []
@@ -90,7 +91,10 @@ if __name__ == '__main__':
     try:
         for i in range(args.instances):
             instance_id = i + 1
-            process = multiprocessing.Process(target=run_process, args=(instance_id, stop_event, instance_data))
+            process = multiprocessing.Process(
+                target=run_process,
+                args=(instance_id, stop_event, args.bairro, args.docker_id, args.coap_url)
+            )
             processes.append(process)
             process.start()
 
