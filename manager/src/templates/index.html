@@ -32,11 +32,25 @@
             </div>
         </div>        
 
+        <div class="row mb-4">
+            <div class="col text-end">
+                <form method="POST" action="{{ url_for('stop_all') }}">
+                    <button type="submit" class="btn btn-danger">Parar Todos os Contêineres</button>
+                </form>
+            </div>
+        </div>
+
         <!-- Exibir tabelas separadas para cada serviço com cabeçalho azul claro -->
         <div id="service-tables">
             {% for service_name, containers in service_containers.items() %}
                 
                 <h3 class="mt-5">{{ service_name | capitalize }}</h3>
+
+                <div class="mb-3">
+                    <form method="POST" action="{{ url_for('stop_service', service_name=service_name) }}" class="d-inline-block">
+                        <button type="submit" class="btn btn-warning">Parar Todos do Grupo {{ service_name | capitalize }}</button>
+                    </form>
+                </div>
             
                 <div class="card mb-5 mt-3 service-table">
 

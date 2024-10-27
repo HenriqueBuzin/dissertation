@@ -105,5 +105,24 @@ def delete_config(name):
     save_config(config)
     return redirect(url_for("manage"))
 
+@app.route("/stop_all", methods=["POST"])
+def stop_all():
+    for container in client.containers.list():
+        container.stop()
+    
+    client.containers.prune()
+
+    return redirect(url_for("index"))
+
+@app.route("/stop_service/<service_name>", methods=["POST"])
+def stop_service(service_name):
+    for container in client.containers.list(all=True):
+        if container.name.startswith(service_name):
+            container.stop()
+    
+    client.containers.prune()
+    
+    return redirect(url_for("index"))
+
 if __name__ == "__main__":
     socketio.run(app, debug=True)
