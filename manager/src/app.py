@@ -87,56 +87,15 @@ def manage_containers(bairro):
 def start_container(container_id, bairro):
     try:
         container = client.containers.get(container_id)
-        
-        # Verificar o status do contêiner e agir de acordo
         if container.status == "paused":
-            container.unpause()  # Se está pausado, despausa
+            container.unpause()  # Despausa, se está pausado
         else:
             container.start()  # Caso contrário, inicia normalmente
-            
     except docker.errors.NotFound:
         print(f"Contêiner {container_id} não encontrado.")
     except docker.errors.APIError as e:
-        print(f"Erro na API do Docker ao iniciar contêiner {container_id}: {e}")
+        print(f"Erro ao iniciar contêiner {container_id}: {e}")
 
-    return redirect(url_for("manage_containers", bairro=bairro))
-
-@app.route("/pause_container/<container_id>/<bairro>", methods=["POST"])
-def pause_container(container_id, bairro):
-    try:
-        container = client.containers.get(container_id)
-        container.pause()
-    except docker.errors.NotFound:
-        print(f"Contêiner {container_id} não encontrado.")
-    return redirect(url_for("manage_containers", bairro=bairro))
-
-@app.route("/stop_container/<container_id>/<bairro>", methods=["POST"])
-def stop_container(container_id, bairro):
-    try:
-        container = client.containers.get(container_id)
-        container.stop()
-        container.remove()  # Remove o contêiner da lista após pará-lo
-    except docker.errors.NotFound:
-        print(f"Contêiner {container_id} não encontrado.")
-    return redirect(url_for("manage_containers", bairro=bairro))
-
-# Parar todos os contêineres de um grupo específico (imagem e nome de configuração)
-@app.route("/stop_group/<image_name>/<config_name>/<bairro>", methods=["POST"])
-def stop_group(image_name, config_name, bairro):
-    containers = client.containers.list(all=True)
-    for container in containers:
-        if container.image.tags and container.image.tags[0] == image_name and config_name in container.name:
-            container.stop()
-            container.remove()  # Remove o contêiner da lista após pará-lo
-    return redirect(url_for("manage_containers", bairro=bairro))
-
-# Parar todos os contêineres
-@app.route("/stop_all/<bairro>", methods=["POST"])
-def stop_all(bairro):
-    containers = client.containers.list(all=True)
-    for container in containers:
-        container.stop()
-        container.remove()  # Remove o contêiner da lista após pará-lo
     return redirect(url_for("manage_containers", bairro=bairro))
 
 # Rota de Monitoramento Específico
@@ -152,6 +111,75 @@ def handle_get_logs(data):
     container = client.containers.get(container_id)
     logs = container.logs(tail=50).decode('utf-8')  # Pega os últimos 50 registros
     socketio.emit('log_update', {'container_id': container_id, 'logs': logs})
+
+@app.route("/pause_container/<container_id>/<bairro>", methods=["POST"])
+def pause_container(container_id, bairro):
+    try:
+        container = client.containers.get(container_id)
+        if container.status == "running":
+            container.pause()
+        else:
+            print(f"Contêiner {container_id} não está em execução e não pode ser pausado.")
+    except docker.errors.NotFound:
+        print(f"Contêiner {container_id} não encontrado. Ignorando.")
+    except docker.errors.APIError as e:
+        if "is not running" in str(e):
+            print(f"Contêiner {container_id} já está pausado. Ignorando.")
+        else:
+            print(f"Erro ao pausar contêiner {container_id}: {e}")
+    return redirect(url_for("manage_containers", bairro=bairro))
+
+# Parar contêiner individualmente
+@app.route("/stop_container/<container_id>/<bairro>", methods=["POST"])
+def stop_container(container_id, bairro):
+    try:
+        container = client.containers.get(container_id)
+        if container.status in ["running", "paused"]:
+            container.stop()
+        container.remove()
+    except docker.errors.NotFound:
+        print(f"Contêiner {container_id} não encontrado. Ignorando.")
+    except docker.errors.APIError as e:
+        if "No such container" in str(e):
+            print(f"Contêiner {container_id} já foi removido. Ignorando.")
+        else:
+            print(f"Erro ao parar contêiner {container_id}: {e}")
+    return redirect(url_for("manage_containers", bairro=bairro))
+
+@app.route("/stop_group/<image_name>/<config_name>/<bairro>", methods=["POST"])
+def stop_group(image_name, config_name, bairro):
+    containers = client.containers.list(all=True)
+    for container in containers:
+        if container.image.tags and container.image.tags[0] == image_name and config_name in container.name:
+            try:
+                if container.status in ["running", "paused"]:
+                    container.stop()
+                container.remove()
+            except docker.errors.NotFound:
+                print(f"Contêiner {container.name} já foi removido.")
+            except docker.errors.APIError as e:
+                if "No such container" in str(e):
+                    print(f"Contêiner {container.name} já foi removido. Ignorando.")
+                else:
+                    print(f"Erro ao parar contêiner {container.name}: {e}")
+    return redirect(url_for("manage_containers", bairro=bairro))
+
+@app.route("/stop_all/<bairro>", methods=["POST"])
+def stop_all(bairro):
+    containers = client.containers.list(all=True)
+    for container in containers:
+        try:
+            if container.status in ["running", "paused"]:
+                container.stop()
+            container.remove()
+        except docker.errors.NotFound:
+            print(f"Contêiner {container.name} já foi removido.")
+        except docker.errors.APIError as e:
+            if "No such container" in str(e):
+                print(f"Contêiner {container.name} já foi removido. Ignorando.")
+            else:
+                print(f"Erro ao parar contêiner {container.name}: {e}")
+    return redirect(url_for("manage_containers", bairro=bairro))
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)
