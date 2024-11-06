@@ -2,11 +2,13 @@
     "containers": [
         {
             "name": "nginx",
-            "image": "nginx"
+            "image": "nginx",
+            "type": 1
         },
         {
             "name": "teste",
-            "image": "nginx"
+            "image": "nginx",
+            "type": 2
         }
     ]
 }

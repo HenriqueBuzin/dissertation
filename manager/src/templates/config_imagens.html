@@ -12,9 +12,17 @@
                     <label for="name" class="form-label">Nome do Contêiner</label>
                     <input type="text" name="name" id="name" class="form-control" required>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <label for="image" class="form-label">Imagem Docker</label>
                     <input type="text" name="image" id="image" class="form-control" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="type" class="form-label">Tipo de Contêiner</label>
+                    <select name="type" id="type" class="form-control" required>
+                        <option value="load_balancer">Load Balancer</option>
+                        <option value="medidor">Medidor</option>
+                        <option value="nodo_nevoa">Nó de Névoa</option>
+                    </select>
                 </div>
                 <div class="col-12 d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Adicionar Configuração</button>

@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="container-fluid mt-4">
+
     <h2>Gerenciamento de Contêineres - {{ bairro | capitalize }}</h2>
 
     <!-- Formulário para adicionar novos contêineres -->
@@ -13,14 +14,15 @@
                     <div class="col-md-6">
                         <label for="container_name" class="form-label">Configuração de Contêiner</label>
                         <select name="container_name" id="container_name" class="form-control" required>
-                            {% for item in config.containers %}
+                            {% for item in select_options %}
                                 <option value="{{ item.name }}">{{ item.name }} ({{ item.image }})</option>
                             {% endfor %}
-                        </select>
-                    </div>
+                        </select>                                                                                                                             
+                    </div>                    
                     <div class="col-md-6">
                         <label for="quantity" class="form-label">Quantidade</label>
-                        <input type="number" name="quantity" id="quantity" class="form-control" min="1" required>
+                        <input type="number" name="quantity" id="quantity" class="form-control" min="1" required
+                               value="1" {% if not has_load_balancer %}readonly{% endif %}>
                     </div>
                 </div>
                 <div class="row mt-3">

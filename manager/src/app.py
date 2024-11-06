@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_socketio import SocketIO
+import unicodedata
 import docker
 import json
 import os
@@ -10,6 +11,12 @@ socketio = SocketIO(app)
 client = docker.from_env()
 
 CONFIG_FILE = 'config.json'
+
+def normalize_container_name(name):
+    # Remove acentos e caracteres especiais do nome
+    name = unicodedata.normalize('NFKD', name).encode('ASCII', 'ignore').decode('ASCII')
+    # Substitui espaços por sublinhados
+    return name.replace(" ", "_")
 
 def load_config():
     if os.path.exists(CONFIG_FILE):
@@ -40,8 +47,9 @@ def config_imagens():
     if request.method == "POST":
         new_name = request.form.get("name")
         new_image = request.form.get("image")
+        new_type = request.form.get("type")
         if new_name and new_image:
-            config["containers"].append({"name": new_name, "image": new_image})
+            config["containers"].append({"name": new_name, "image": new_image, "type": new_type})
             save_config(config)
         return redirect(url_for("config_imagens"))
     return render_template("config_imagens.html", config=config)
@@ -50,24 +58,67 @@ def config_imagens():
 @app.route("/manage/<bairro>", methods=["GET", "POST"])
 def manage_containers(bairro):
     config = load_config()
-    containers = client.containers.list(all=True, filters={"name": bairro})
+    containers = client.containers.list(all=True, filters={"name": normalize_container_name(bairro)})
+
+    # Verifica se já existe um load_balancer para o bairro
+    has_load_balancer = any(
+        container for container in containers
+        if container.attrs["Config"]["Labels"].get("type") == "1"  # Checa se o tipo é 1 (load_balancer)
+    )
+    print(f"Debug - Bairro: {bairro} | Has Load Balancer: {has_load_balancer}")
+
+    # Prepara `select_options` de acordo com `has_load_balancer`
+    select_options = []
+    for item in config["containers"]:
+        if not has_load_balancer and item["type"] == 1:
+            select_options.append(item)
+            print(f"Adicionado {item['name']} (tipo: load_balancer) ao select_options")
+        elif has_load_balancer and item["type"] != 1:
+            select_options.append(item)
+            print(f"Adicionado {item['name']} (tipo: nodo_nevoa ou outro) ao select_options")
+
+    print("Opções finais para o select:", [f"{i['name']} (tipo: {i['type']})" for i in select_options])
 
     if request.method == "POST":
         container_name = request.form.get("container_name")
-        quantity = int(request.form.get("quantity", 1))
+        container_type = next((c["type"] for c in config["containers"] if c["name"] == container_name), None)
+        quantity = 1 if not has_load_balancer and container_type == 1 else int(request.form.get("quantity", 1))
         image = next((c["image"] for c in config["containers"] if c["name"] == container_name), None)
-        
-        if image:
-            for i in range(quantity):
-                try:
-                    full_container_name = f"{bairro}_{container_name}_{i+1}"
-                    client.containers.run(image, name=full_container_name, detach=True)
-                except docker.errors.APIError as e:
-                    print(f"Erro ao criar contêiner {full_container_name}: {e}")
-        
+
+        # Bloqueia a criação de outro load_balancer
+        if container_type == 1 and has_load_balancer:
+            print("Um load balancer já existe para este bairro. Ignorando criação.")
+            return redirect(url_for("manage_containers", bairro=bairro))
+
+        # Verifica se a imagem foi encontrada
+        if not image:
+            print(f"Imagem não encontrada para {container_name}. Verifique a configuração.")
+            return redirect(url_for("manage_containers", bairro=bairro))
+
+        print(f"Iniciando criação do container '{container_name}' com a imagem '{image}'")
+
+        # Loop de criação de containers
+        for i in range(quantity):
+            full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
+            try:
+                print(f"Tentando criar container: {full_container_name}")
+                client.containers.run(
+                    image,
+                    name=full_container_name,
+                    detach=True,
+                    labels={"type": str(container_type)}
+                )
+                print(f"Container {full_container_name} criado com sucesso.")
+            except docker.errors.APIError as e:
+                print(f"Erro ao criar container {full_container_name}: {e}")
+                return redirect(url_for("manage_containers", bairro=bairro))
+
+        if container_type == 1:
+            has_load_balancer = True
+
         return redirect(url_for("manage_containers", bairro=bairro))
 
-    # Agrupar contêineres por imagem e nome configurado
+    # Agrupa contêineres por imagem e nome configurado
     grouped_containers = {}
     for container in containers:
         image_name = container.image.tags[0] if container.image.tags else "Sem Imagem"
@@ -77,10 +128,17 @@ def manage_containers(bairro):
             grouped_containers[image_name] = {}
         if config_name not in grouped_containers[image_name]:
             grouped_containers[image_name][config_name] = []
-        
+
         grouped_containers[image_name][config_name].append(container)
 
-    return render_template("manage_containers.html", config=config, grouped_containers=grouped_containers, bairro=bairro)
+    return render_template(
+        "manage_containers.html",
+        config=config,
+        select_options=select_options,
+        grouped_containers=grouped_containers,
+        bairro=bairro,
+        has_load_balancer=has_load_balancer
+    )
 
 # Funções para iniciar, pausar e parar contêineres
 @app.route("/start_container/<container_id>/<bairro>", methods=["POST"])
