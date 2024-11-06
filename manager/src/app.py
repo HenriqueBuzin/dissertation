@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_socketio import SocketIO
 import unicodedata
+import socket
 import docker
 import json
 import os
@@ -11,6 +12,14 @@ socketio = SocketIO(app)
 client = docker.from_env()
 
 CONFIG_FILE = 'config.json'
+
+def get_available_port(start_port=5000, end_port=6000):
+    """Encontra uma porta disponível entre o intervalo especificado."""
+    for port in range(start_port, end_port):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            if sock.connect_ex(('localhost', port)) != 0:  # Se a porta está livre
+                return port
+    raise RuntimeError("Não há portas disponíveis no intervalo especificado.")
 
 def normalize_container_name(name):
     # Remove acentos e caracteres especiais do nome
@@ -60,14 +69,12 @@ def manage_containers(bairro):
     config = load_config()
     containers = client.containers.list(all=True, filters={"name": normalize_container_name(bairro)})
 
-    # Verifica se já existe um load_balancer para o bairro
     has_load_balancer = any(
         container for container in containers
         if container.attrs["Config"]["Labels"].get("type") == "1"  # Checa se o tipo é 1 (load_balancer)
     )
     print(f"Debug - Bairro: {bairro} | Has Load Balancer: {has_load_balancer}")
 
-    # Prepara `select_options` de acordo com `has_load_balancer`
     select_options = []
     for item in config["containers"]:
         if not has_load_balancer and item["type"] == 1:
@@ -98,20 +105,41 @@ def manage_containers(bairro):
         print(f"Iniciando criação do container '{container_name}' com a imagem '{image}'")
 
         # Loop de criação de containers
-        for i in range(quantity):
-            full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
+        if container_type == 1 and not has_load_balancer:
+            port = get_available_port()
+            print(f"Iniciando criação do load balancer '{container_name}' na porta {port} com imagem '{image}'")
+            full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
             try:
-                print(f"Tentando criar container: {full_container_name}")
                 client.containers.run(
                     image,
                     name=full_container_name,
                     detach=True,
+                    environment={"LOAD_BALANCER_PORT": str(port)},
+                    ports={"5000/tcp": port},
                     labels={"type": str(container_type)}
                 )
-                print(f"Container {full_container_name} criado com sucesso.")
+                print(f"Load balancer {full_container_name} criado com sucesso na porta {port}.")
+                has_load_balancer = True
             except docker.errors.APIError as e:
-                print(f"Erro ao criar container {full_container_name}: {e}")
+                print(f"Erro ao criar load balancer {full_container_name}: {e}")
                 return redirect(url_for("manage_containers", bairro=bairro))
+        elif has_load_balancer:
+            quantity = int(request.form.get("quantity", 1))
+            load_balancer_url = f"http://localhost:{port}/receive_data"
+            for i in range(quantity):
+                full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
+                try:
+                    client.containers.run(
+                        image,
+                        name=full_container_name,
+                        detach=True,
+                        environment={"HTTP_SERVER_URL": load_balancer_url},
+                        labels={"type": str(container_type)}
+                    )
+                    print(f"Container {full_container_name} criado com sucesso com URL do load balancer: {load_balancer_url}")
+                except docker.errors.APIError as e:
+                    print(f"Erro ao criar container {full_container_name}: {e}")
+                    return redirect(url_for("manage_containers", bairro=bairro))
 
         if container_type == 1:
             has_load_balancer = True
