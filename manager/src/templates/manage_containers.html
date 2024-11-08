@@ -15,10 +15,10 @@
                         <label for="container_name" class="form-label">Configuração de Contêiner</label>
                         <select name="container_name" id="container_name" class="form-control" required>
                             {% for item in select_options %}
-                                <option value="{{ item.name }}">{{ item.name }} ({{ item.image }})</option>
+                                <option value="{{ item.name }}">{{ item.display_name }} ({{ item.name }})</option>
                             {% endfor %}
-                        </select>                                                                                                                             
-                    </div>                    
+                        </select>
+                    </div>
                     <div class="col-md-6">
                         <label for="quantity" class="form-label">Quantidade</label>
                         <input type="number" name="quantity" id="quantity" class="form-control" min="1" required
@@ -50,7 +50,7 @@
         
         <!-- Tabelas separadas para cada nome personalizado dentro do grupo da imagem -->
         {% for config_name, containers in name_groups.items() %}
-            <h4 class="mt-3">Configuração: {{ config_name | capitalize }}</h4>
+            <h4 class="mt-3">Grupo: {{ containers[0].type_name }}</h4>  <!-- Exibe o display_name do primeiro container -->
 
             <!-- Botão para parar todos os contêineres de um grupo específico -->
             <div class="mb-3">
@@ -74,9 +74,9 @@
                         <tbody>
                             {% for container in containers %}
                             <tr id="container-{{ container.short_id }}">
-                                <td>{{ container.short_id }}</td>
-                                <td>{{ container.name }}</td>
-                                <td>{{ container.status }}</td>
+                                <td>{{ container.container.short_id }}</td>
+                                <td>{{ container.container.name }}</td>
+                                <td>{{ container.container.status }}</td>
                                 <td>
                                     <form method="POST" action="{{ url_for('start_container', container_id=container.short_id, bairro=bairro) }}" style="display:inline;">
                                         <button type="submit" class="btn btn-success btn-sm">Iniciar</button>

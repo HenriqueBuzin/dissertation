@@ -16,9 +16,9 @@ client = docker.from_env()
 CONFIG_FILE = 'config.json'
 
 CONTAINER_TYPES = {
-    "load_balancer": 1,
-    "nodo_nevoa": 2,
-    "medidor": 3
+    "load_balancer": {"id": 1, "display_name": "Load Balancer"},
+    "nodo_nevoa": {"id": 2, "display_name": "Nodo de Nevoa"},
+    "medidor": {"id": 3, "display_name": "Medidor"}
 }
 
 CSV_FILE_PATH = os.path.join(os.getcwd(), 'data.csv')
@@ -62,8 +62,12 @@ def normalize_container_name(name):
 def load_config():
     if os.path.exists(CONFIG_FILE):
         with open(CONFIG_FILE, encoding='utf-8') as f:
-            return json.load(f)
-    return {"containers": []}
+            try:
+                return json.load(f) or {"containers": []}  # Retorna dicionário vazio se o conteúdo for vazio
+            except json.JSONDecodeError:
+                print("Erro ao decodificar config.json, retornando configuração padrão.")
+                return {"containers": []}  # Retorna configuração padrão em caso de erro
+    return {"containers": []}  # Retorna configuração padrão se o arquivo não existir
 
 def save_config(data):
     with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
@@ -89,12 +93,19 @@ def config_imagens():
         new_name = request.form.get("name")
         new_image = request.form.get("image")
         new_type_str = request.form.get("type")
-        new_type = CONTAINER_TYPES.get(new_type_str)
-        if new_name and new_image:
-            config["containers"].append({"name": new_name, "image": new_image, "type": new_type})
+        new_type_data = CONTAINER_TYPES.get(new_type_str)
+        
+        if new_name and new_image and new_type_data:
+            config["containers"].append({
+                "name": new_name,
+                "image": new_image,
+                "type": new_type_data["id"], 
+                "type_name": new_type_data["display_name"]
+            })
             save_config(config)
         return redirect(url_for("config_imagens"))
-    return render_template("config_imagens.html", config=config)
+    # Passa CONTAINER_TYPES para o template
+    return render_template("config_imagens.html", config=config, CONTAINER_TYPES=CONTAINER_TYPES)
 
 # Gerenciamento de contêineres para um bairro específico
 @app.route("/manage/<bairro>", methods=["GET", "POST"])
@@ -117,20 +128,21 @@ def manage_containers(bairro):
                 break
 
     select_options = []
-    for item in config["containers"]:
-        if not has_load_balancer and item["type"] == CONTAINER_TYPES["load_balancer"]:
-            select_options.append(item)
-        elif has_load_balancer and item["type"] != CONTAINER_TYPES["load_balancer"]:
-            select_options.append(item)
+    for item_key, item_data in CONTAINER_TYPES.items():
+        if not has_load_balancer and item_data["id"] == CONTAINER_TYPES["load_balancer"]["id"]:
+            select_options.append({"name": item_key, "display_name": item_data["display_name"]})
+        elif has_load_balancer and item_data["id"] != CONTAINER_TYPES["load_balancer"]["id"]:
+            select_options.append({"name": item_key, "display_name": item_data["display_name"]})
 
     if request.method == "POST":
         container_name = request.form.get("container_name")
-        container_type = next((c["type"] for c in config["containers"] if c["name"] == container_name), None)
-        image = next((c["image"] for c in config["containers"] if c["name"] == container_name), None)
-        quantity = 1 if container_type == CONTAINER_TYPES["load_balancer"] else int(request.form.get("quantity", 1))
+        container_data = next((c for c in config["containers"] if c["name"] == container_name), None)
+        container_type = container_data["type"] if container_data else None
+        image = container_data["image"] if container_data else None
+        quantity = 1 if container_type == CONTAINER_TYPES["load_balancer"]["id"] else int(request.form.get("quantity", 1))
 
         # Verifica se já existe um load balancer e impede a criação de mais de um
-        if container_type == CONTAINER_TYPES["load_balancer"] and has_load_balancer:
+        if container_type == CONTAINER_TYPES["load_balancer"]["id"] and has_load_balancer:
             print("Um load balancer já existe para este bairro. Ignorando criação.")
             return redirect(url_for("manage_containers", bairro=bairro))
 
@@ -141,7 +153,7 @@ def manage_containers(bairro):
 
         print(f"Iniciando criação do container '{container_name}' com a imagem '{image}'")
 
-        if container_type == CONTAINER_TYPES["load_balancer"] and not has_load_balancer:
+        if container_type == CONTAINER_TYPES["load_balancer"]["id"] and not has_load_balancer:
             port = get_available_port()
             load_balancer_port = port
             print(f"Iniciando criação do load balancer '{container_name}' na porta {port} com imagem '{image}'")
@@ -211,7 +223,10 @@ def manage_containers(bairro):
         if config_name not in grouped_containers[image_name]:
             grouped_containers[image_name][config_name] = []
 
-        grouped_containers[image_name][config_name].append(container)
+        grouped_containers[image_name][config_name].append({
+            "container": container,
+            "type_name": next((ct["display_name"] for key, ct in CONTAINER_TYPES.items() if str(ct["id"]) == container.attrs["Config"]["Labels"].get("type")), "Desconhecido")
+        })
 
     return render_template(
         "manage_containers.html",

@@ -19,10 +19,10 @@
                 <div class="col-md-3">
                     <label for="type" class="form-label">Tipo de Contêiner</label>
                     <select name="type" id="type" class="form-control" required>
-                        <option value="load_balancer">Load Balancer</option>
-                        <option value="medidor">Medidor</option>
-                        <option value="nodo_nevoa">Nó de Névoa</option>
-                    </select>
+                        {% for key, type_info in CONTAINER_TYPES.items() %}
+                            <option value="{{ key }}">{{ type_info.display_name }}</option>
+                        {% endfor %}
+                    </select>                    
                 </div>
                 <div class="col-12 d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Adicionar Configuração</button>
