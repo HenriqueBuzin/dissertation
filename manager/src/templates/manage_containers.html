@@ -35,13 +35,15 @@
     </div>
 
     <!-- Botão para parar todos os contêineres -->
-    <div class="row mb-4">
-        <div class="col text-end">
-            <form method="POST" action="{{ url_for('stop_all', bairro=bairro) }}">
-                <button type="submit" class="btn btn-danger">Parar Todos os Contêineres</button>
-            </form>
+    {% if grouped_containers %}
+        <div class="row mb-4">
+            <div class="col text-end">
+                <form method="POST" action="{{ url_for('stop_all', bairro=bairro) }}">
+                    <button type="submit" class="btn btn-danger">Parar Todos os Contêineres</button>
+                </form>
+            </div>
         </div>
-    </div>
+    {% endif %}
 
     <!-- Tabelas de contêineres agrupados por imagem e nome personalizado -->
     {% for image_name, name_groups in grouped_containers.items() %}

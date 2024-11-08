@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_socketio import SocketIO
 import unicodedata
+import tempfile
 import socket
 import docker
 import json
+import csv
 import os
 
 app = Flask(__name__)
@@ -13,18 +15,48 @@ client = docker.from_env()
 
 CONFIG_FILE = 'config.json'
 
+CONTAINER_TYPES = {
+    "load_balancer": 1,
+    "nodo_nevoa": 2,
+    "medidor": 3
+}
+
+CSV_FILE_PATH = os.path.join(os.getcwd(), 'data.csv')
+BAIRROS_MEDIDORES_FILE = os.path.join(os.getcwd(), 'bairros_medidores.json')
+
+def load_bairro_data(bairro):
+    if os.path.exists(BAIRROS_MEDIDORES_FILE):
+        with open(BAIRROS_MEDIDORES_FILE, encoding='utf-8') as f:
+            bairros_data = json.load(f)
+        return bairros_data.get(bairro, {}).get("nodes", {})
+    return {}
+
+def create_instance_data_file(bairro, instance_id, instance_data):
+    """Cria um arquivo temporário para armazenar dados específicos de cada medidor."""
+    temp_dir = os.path.join(tempfile.gettempdir(), 'medidores', bairro)
+    os.makedirs(temp_dir, exist_ok=True)
+    file_path = os.path.join(temp_dir, f"instance_{instance_id}.json")
+    with open(file_path, 'w', encoding='utf-8') as f:
+        json.dump(instance_data, f)
+    return file_path
+
+def load_csv_data(file_path):
+    data = []
+    with open(file_path, newline='') as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=';')
+        for row in reader:
+            data.append(row)
+    return data
+
 def get_available_port(start_port=5000, end_port=6000):
-    """Encontra uma porta disponível entre o intervalo especificado."""
     for port in range(start_port, end_port):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            if sock.connect_ex(('localhost', port)) != 0:  # Se a porta está livre
+            if sock.connect_ex(('localhost', port)) != 0:
                 return port
     raise RuntimeError("Não há portas disponíveis no intervalo especificado.")
 
 def normalize_container_name(name):
-    # Remove acentos e caracteres especiais do nome
     name = unicodedata.normalize('NFKD', name).encode('ASCII', 'ignore').decode('ASCII')
-    # Substitui espaços por sublinhados
     return name.replace(" ", "_")
 
 def load_config():
@@ -56,7 +88,8 @@ def config_imagens():
     if request.method == "POST":
         new_name = request.form.get("name")
         new_image = request.form.get("image")
-        new_type = request.form.get("type")
+        new_type_str = request.form.get("type")
+        new_type = CONTAINER_TYPES.get(new_type_str)
         if new_name and new_image:
             config["containers"].append({"name": new_name, "image": new_image, "type": new_type})
             save_config(config)
@@ -69,31 +102,35 @@ def manage_containers(bairro):
     config = load_config()
     containers = client.containers.list(all=True, filters={"name": normalize_container_name(bairro)})
 
+    # Verificar se já existe um load_balancer e capturar a porta dele
+    load_balancer_port = None
     has_load_balancer = any(
         container for container in containers
-        if container.attrs["Config"]["Labels"].get("type") == "1"  # Checa se o tipo é 1 (load_balancer)
+        if container.attrs["Config"]["Labels"].get("type") == str(CONTAINER_TYPES["load_balancer"])
     )
-    print(f"Debug - Bairro: {bairro} | Has Load Balancer: {has_load_balancer}")
+
+    # Se tiver um load balancer, captura a porta dele
+    if has_load_balancer:
+        for container in containers:
+            if container.attrs["Config"]["Labels"].get("type") == str(CONTAINER_TYPES["load_balancer"]):
+                load_balancer_port = container.attrs["NetworkSettings"]["Ports"]["5000/tcp"][0]["HostPort"]
+                break
 
     select_options = []
     for item in config["containers"]:
-        if not has_load_balancer and item["type"] == 1:
+        if not has_load_balancer and item["type"] == CONTAINER_TYPES["load_balancer"]:
             select_options.append(item)
-            print(f"Adicionado {item['name']} (tipo: load_balancer) ao select_options")
-        elif has_load_balancer and item["type"] != 1:
+        elif has_load_balancer and item["type"] != CONTAINER_TYPES["load_balancer"]:
             select_options.append(item)
-            print(f"Adicionado {item['name']} (tipo: nodo_nevoa ou outro) ao select_options")
-
-    print("Opções finais para o select:", [f"{i['name']} (tipo: {i['type']})" for i in select_options])
 
     if request.method == "POST":
         container_name = request.form.get("container_name")
         container_type = next((c["type"] for c in config["containers"] if c["name"] == container_name), None)
-        quantity = 1 if not has_load_balancer and container_type == 1 else int(request.form.get("quantity", 1))
         image = next((c["image"] for c in config["containers"] if c["name"] == container_name), None)
+        quantity = 1 if container_type == CONTAINER_TYPES["load_balancer"] else int(request.form.get("quantity", 1))
 
-        # Bloqueia a criação de outro load_balancer
-        if container_type == 1 and has_load_balancer:
+        # Verifica se já existe um load balancer e impede a criação de mais de um
+        if container_type == CONTAINER_TYPES["load_balancer"] and has_load_balancer:
             print("Um load balancer já existe para este bairro. Ignorando criação.")
             return redirect(url_for("manage_containers", bairro=bairro))
 
@@ -104,9 +141,9 @@ def manage_containers(bairro):
 
         print(f"Iniciando criação do container '{container_name}' com a imagem '{image}'")
 
-        # Loop de criação de containers
-        if container_type == 1 and not has_load_balancer:
+        if container_type == CONTAINER_TYPES["load_balancer"] and not has_load_balancer:
             port = get_available_port()
+            load_balancer_port = port
             print(f"Iniciando criação do load balancer '{container_name}' na porta {port} com imagem '{image}'")
             full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
             try:
@@ -123,26 +160,43 @@ def manage_containers(bairro):
             except docker.errors.APIError as e:
                 print(f"Erro ao criar load balancer {full_container_name}: {e}")
                 return redirect(url_for("manage_containers", bairro=bairro))
-        elif has_load_balancer:
-            quantity = int(request.form.get("quantity", 1))
-            load_balancer_url = f"http://localhost:{port}/receive_data"
+        # No trecho que cria os contêineres de medidor no app.py
+        if has_load_balancer and load_balancer_port:
+            with open(BAIRROS_MEDIDORES_FILE, 'r', encoding='utf-8') as f:
+                bairros_data = json.load(f)  # Carrega todo o JSON
+
+            # Carrega o conteúdo do CSV como uma lista de dicionários
+            csv_data = load_csv_data(CSV_FILE_PATH)
+            load_balancer_url = f"http://localhost:{load_balancer_port}/receive_data"
+            
             for i in range(quantity):
+                unique_node_id = str(i + 1)
                 full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
+
+                # Extrai apenas os dados do bairro e do nó específico
+                instance_data = bairros_data.get(bairro, {}).get("nodes", {}).get(unique_node_id, {})
+
+                print(instance_data)
+                print(11111111111111111111111111111)
+
                 try:
                     client.containers.run(
                         image,
                         name=full_container_name,
                         detach=True,
-                        environment={"HTTP_SERVER_URL": load_balancer_url},
+                        environment={
+                            "HTTP_SERVER_URL": load_balancer_url,
+                            "CSV_CONTENTS": json.dumps(csv_data),  # Passa o conteúdo do CSV diretamente
+                            "INSTANCE_DATA": json.dumps(instance_data),  # Passa apenas os dados específicos do `INSTANCE_DATA`
+                            "BAIRRO": bairro,  # Identificador do bairro específico
+                            "NODE_ID": unique_node_id  # ID único do medidor
+                        },
                         labels={"type": str(container_type)}
                     )
                     print(f"Container {full_container_name} criado com sucesso com URL do load balancer: {load_balancer_url}")
                 except docker.errors.APIError as e:
                     print(f"Erro ao criar container {full_container_name}: {e}")
                     return redirect(url_for("manage_containers", bairro=bairro))
-
-        if container_type == 1:
-            has_load_balancer = True
 
         return redirect(url_for("manage_containers", bairro=bairro))
 
@@ -266,6 +320,14 @@ def stop_all(bairro):
             else:
                 print(f"Erro ao parar contêiner {container.name}: {e}")
     return redirect(url_for("manage_containers", bairro=bairro))
+
+@app.route("/delete_config_imagem/<name>", methods=["POST"])
+def delete_config_imagem(name):
+    config = load_config()
+    # Filtra a configuração removendo a que tem o nome correspondente
+    config["containers"] = [c for c in config["containers"] if c["name"] != name]
+    save_config(config)
+    return redirect(url_for("config_imagens"))
 
 if __name__ == "__main__":
     socketio.run(app, debug=True)

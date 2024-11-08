@@ -39,6 +39,7 @@
                     <tr>
                         <th>Nome do Contêiner</th>
                         <th>Imagem</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,6 +47,11 @@
                     <tr>
                         <td>{{ item.name }}</td>
                         <td>{{ item.image }}</td>
+                        <td>
+                            <form action="{{ url_for('delete_config_imagem', name=item.name) }}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
