@@ -117,21 +117,23 @@ def manage_containers(bairro):
     load_balancer_port = None
     has_load_balancer = any(
         container for container in containers
-        if container.attrs["Config"]["Labels"].get("type") == str(CONTAINER_TYPES["load_balancer"])
+        if container.attrs["Config"]["Labels"].get("type") == str(CONTAINER_TYPES["load_balancer"]["id"])
     )
 
     # Se tiver um load balancer, captura a porta dele
     if has_load_balancer:
         for container in containers:
-            if container.attrs["Config"]["Labels"].get("type") == str(CONTAINER_TYPES["load_balancer"]):
+            if container.attrs["Config"]["Labels"].get("type") == str(CONTAINER_TYPES["load_balancer"]["id"]):
                 load_balancer_port = container.attrs["NetworkSettings"]["Ports"]["5000/tcp"][0]["HostPort"]
                 break
 
     select_options = []
     for item_key, item_data in CONTAINER_TYPES.items():
         if not has_load_balancer and item_data["id"] == CONTAINER_TYPES["load_balancer"]["id"]:
+            # Se o Load Balancer não existir, permite apenas a seleção do Load Balancer
             select_options.append({"name": item_key, "display_name": item_data["display_name"]})
         elif has_load_balancer and item_data["id"] != CONTAINER_TYPES["load_balancer"]["id"]:
+            # Se o Load Balancer existir, permite os outros tipos
             select_options.append({"name": item_key, "display_name": item_data["display_name"]})
 
     if request.method == "POST":
@@ -154,11 +156,20 @@ def manage_containers(bairro):
         print(f"Iniciando criação do container '{container_name}' com a imagem '{image}'")
 
         if container_type == CONTAINER_TYPES["load_balancer"]["id"] and not has_load_balancer:
-            port = get_available_port()
-            load_balancer_port = port
-            print(f"Iniciando criação do load balancer '{container_name}' na porta {port} com imagem '{image}'")
             full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
+            
+            # Verifique e remova contêiner existente antes de criar
+            existing_containers = client.containers.list(all=True, filters={"name": full_container_name})
+            if existing_containers:
+                for existing_container in existing_containers:
+                    print(f"Removendo contêiner existente: {full_container_name}")
+                    existing_container.stop()  # Parar o contêiner
+                    existing_container.remove()  # Remover o contêiner
+                    print(f"Contêiner {full_container_name} removido com sucesso.")
+
+            # Tenta criar o contêiner novamente
             try:
+                port = get_available_port()
                 client.containers.run(
                     image,
                     name=full_container_name,
@@ -168,10 +179,24 @@ def manage_containers(bairro):
                     labels={"type": str(container_type)}
                 )
                 print(f"Load balancer {full_container_name} criado com sucesso na porta {port}.")
-                has_load_balancer = True
+                has_load_balancer = True  # Atualiza após criação bem-sucedida
+
             except docker.errors.APIError as e:
                 print(f"Erro ao criar load balancer {full_container_name}: {e}")
-                return redirect(url_for("manage_containers", bairro=bairro))
+                if "Conflict" in str(e):
+                    print(f"Conflito detectado ao criar {full_container_name}. Marcando has_load_balancer como True.")
+                    has_load_balancer = True  # Se houver um conflito mesmo após remoção, considere o contêiner em uso
+                else:
+                    return redirect(url_for("manage_containers", bairro=bairro))
+
+            # Verificação final para garantir que o contêiner existe
+            containers_after_creation = client.containers.list(all=True, filters={"name": full_container_name})
+            if containers_after_creation:
+                print(f"Contêiner {full_container_name} está ativo, atualizando has_load_balancer para True.")
+                has_load_balancer = True
+            else:
+                print(f"Contêiner {full_container_name} não foi encontrado após tentativa de criação.")
+
         # No trecho que cria os contêineres de medidor no app.py
         if has_load_balancer and load_balancer_port:
             with open(BAIRROS_MEDIDORES_FILE, 'r', encoding='utf-8') as f:
@@ -228,6 +253,8 @@ def manage_containers(bairro):
             "type_name": next((ct["display_name"] for key, ct in CONTAINER_TYPES.items() if str(ct["id"]) == container.attrs["Config"]["Labels"].get("type")), "Desconhecido")
         })
 
+    print(has_load_balancer)
+    print(33333333333333333)
     return render_template(
         "manage_containers.html",
         config=config,
