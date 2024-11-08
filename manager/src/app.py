@@ -167,7 +167,7 @@ def manage_containers(bairro):
 
             # Carrega o conteúdo do CSV como uma lista de dicionários
             csv_data = load_csv_data(CSV_FILE_PATH)
-            load_balancer_url = f"http://localhost:{load_balancer_port}/receive_data"
+            load_balancer_url = f"http://host.docker.internal:{load_balancer_port}/receive_data"
             
             for i in range(quantity):
                 unique_node_id = str(i + 1)
@@ -176,7 +176,7 @@ def manage_containers(bairro):
                 # Extrai apenas os dados do bairro e do nó específico
                 instance_data = bairros_data.get(bairro, {}).get("nodes", {}).get(unique_node_id, {})
 
-                print(instance_data)
+                print(csv_data)
                 print(11111111111111111111111111111)
 
                 try:
