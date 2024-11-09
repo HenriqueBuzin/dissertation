@@ -36,16 +36,17 @@ def load_config():
     if os.path.exists(CONFIG_FILE):
         with open(CONFIG_FILE, encoding='utf-8') as f:
             try:
-                return json.load(f) or {"containers": []}  # Retorna dicionário vazio se o conteúdo for vazio
+                return json.load(f) or {"containers": []}
             except json.JSONDecodeError:
                 print("Erro ao decodificar config.json, retornando configuração padrão.")
-                return {"containers": []}  # Retorna configuração padrão em caso de erro
-    return {"containers": []}  # Retorna configuração padrão se o arquivo não existir
+                return {"containers": []}
+    return {"containers": []}
 
 def save_config(data):
     with open(CONFIG_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4)
 
+# Rota inicial que redireciona para a lista de bairros
 @app.route("/")
 def index():
     return redirect(url_for("bairros"))
@@ -77,7 +78,7 @@ def config_imagens():
             })
             save_config(config)
         return redirect(url_for("config_imagens"))
-    # Passa CONTAINER_TYPES para o template
+    
     return render_template("config_imagens.html", config=config, CONTAINER_TYPES=CONTAINER_TYPES)
 
 # Gerenciamento de contêineres para um bairro específico
@@ -86,14 +87,12 @@ def manage_containers(bairro):
     config = load_config()
     containers = client.containers.list(all=True, filters={"name": normalize_container_name(bairro)})
 
-    # Verificar se já existe um load_balancer e capturar a porta dele
     load_balancer_port = None
     has_load_balancer = any(
         container for container in containers
         if container.attrs["Config"]["Labels"].get("type") == str(CONTAINER_TYPES["load_balancer"]["id"])
     )
 
-    # Se tiver um load balancer, captura a porta dele
     if has_load_balancer:
         for container in containers:
             if container.attrs["Config"]["Labels"].get("type") == str(CONTAINER_TYPES["load_balancer"]["id"]):
@@ -103,10 +102,8 @@ def manage_containers(bairro):
     select_options = []
     for item_key, item_data in CONTAINER_TYPES.items():
         if not has_load_balancer and item_data["id"] == CONTAINER_TYPES["load_balancer"]["id"]:
-            # Se o Load Balancer não existir, permite apenas a seleção do Load Balancer
             select_options.append({"name": item_key, "display_name": item_data["display_name"]})
         elif has_load_balancer and item_data["id"] != CONTAINER_TYPES["load_balancer"]["id"]:
-            # Se o Load Balancer existir, permite os outros tipos
             select_options.append({"name": item_key, "display_name": item_data["display_name"]})
 
     if request.method == "POST":
@@ -116,12 +113,10 @@ def manage_containers(bairro):
         image = container_data["image"] if container_data else None
         quantity = 1 if container_type == CONTAINER_TYPES["load_balancer"]["id"] else int(request.form.get("quantity", 1))
 
-        # Verifica se já existe um load balancer e impede a criação de mais de um
         if container_type == CONTAINER_TYPES["load_balancer"]["id"] and has_load_balancer:
             print("Um load balancer já existe para este bairro. Ignorando criação.")
             return redirect(url_for("manage_containers", bairro=bairro))
 
-        # Verifica se a imagem foi encontrada
         if not image:
             print(f"Imagem não encontrada para {container_name}. Verifique a configuração.")
             return redirect(url_for("manage_containers", bairro=bairro))
@@ -131,16 +126,14 @@ def manage_containers(bairro):
         if container_type == CONTAINER_TYPES["load_balancer"]["id"] and not has_load_balancer:
             full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
             
-            # Verifique e remova contêiner existente antes de criar
             existing_containers = client.containers.list(all=True, filters={"name": full_container_name})
             if existing_containers:
                 for existing_container in existing_containers:
                     print(f"Removendo contêiner existente: {full_container_name}")
-                    existing_container.stop()  # Parar o contêiner
-                    existing_container.remove()  # Remover o contêiner
+                    existing_container.stop()
+                    existing_container.remove()
                     print(f"Contêiner {full_container_name} removido com sucesso.")
 
-            # Tenta criar o contêiner novamente
             try:
                 port = get_available_port()
                 client.containers.run(
@@ -152,17 +145,16 @@ def manage_containers(bairro):
                     labels={"type": str(container_type)}
                 )
                 print(f"Load balancer {full_container_name} criado com sucesso na porta {port}.")
-                has_load_balancer = True  # Atualiza após criação bem-sucedida
+                has_load_balancer = True
 
             except docker.errors.APIError as e:
                 print(f"Erro ao criar load balancer {full_container_name}: {e}")
                 if "Conflict" in str(e):
                     print(f"Conflito detectado ao criar {full_container_name}. Marcando has_load_balancer como True.")
-                    has_load_balancer = True  # Se houver um conflito mesmo após remoção, considere o contêiner em uso
+                    has_load_balancer = True
                 else:
                     return redirect(url_for("manage_containers", bairro=bairro))
 
-            # Verificação final para garantir que o contêiner existe
             containers_after_creation = client.containers.list(all=True, filters={"name": full_container_name})
             if containers_after_creation:
                 print(f"Contêiner {full_container_name} está ativo, atualizando has_load_balancer para True.")
@@ -170,10 +162,9 @@ def manage_containers(bairro):
             else:
                 print(f"Contêiner {full_container_name} não foi encontrado após tentativa de criação.")
 
-        # No trecho que cria os contêineres de medidor no app.py
         if has_load_balancer and load_balancer_port:
             with open(BAIRROS_MEDIDORES_FILE, 'r', encoding='utf-8') as f:
-                bairros_data = json.load(f)  # Carrega todo o JSON
+                bairros_data = json.load(f)
 
             load_balancer_url = f"http://host.docker.internal:{load_balancer_port}/receive_data"
             
@@ -181,7 +172,6 @@ def manage_containers(bairro):
                 unique_node_id = str(i + 1)
                 full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
 
-                # Extrai apenas os dados do bairro e do nó específico
                 instance_data = bairros_data.get(bairro, {}).get("nodes", {}).get(unique_node_id, {})
 
                 try:
@@ -191,10 +181,10 @@ def manage_containers(bairro):
                         detach=True,
                         environment={
                             "HTTP_SERVER_URL": load_balancer_url,
-                            "CSV_CONTENTS": CSV_DOWNLOAD_URL,  # Passa o conteúdo do CSV diretamente
-                            "INSTANCE_DATA": json.dumps(instance_data),  # Passa apenas os dados específicos do `INSTANCE_DATA`
-                            "BAIRRO": bairro,  # Identificador do bairro específico
-                            "NODE_ID": unique_node_id  # ID único do medidor
+                            "CSV_CONTENTS": CSV_DOWNLOAD_URL,
+                            "INSTANCE_DATA": json.dumps(instance_data),
+                            "BAIRRO": bairro,
+                            "NODE_ID": unique_node_id
                         },
                         labels={"type": str(container_type)}
                     )
@@ -205,7 +195,6 @@ def manage_containers(bairro):
 
         return redirect(url_for("manage_containers", bairro=bairro))
 
-    # Agrupa contêineres por imagem e nome configurado
     grouped_containers = {}
     for container in containers:
         image_name = container.image.tags[0] if container.image.tags else "Sem Imagem"
@@ -221,8 +210,6 @@ def manage_containers(bairro):
             "type_name": next((ct["display_name"] for key, ct in CONTAINER_TYPES.items() if str(ct["id"]) == container.attrs["Config"]["Labels"].get("type")), "Desconhecido")
         })
 
-    print(has_load_balancer)
-    print(33333333333333333)
     return render_template(
         "manage_containers.html",
         config=config,
@@ -238,9 +225,9 @@ def start_container(container_id, bairro):
     try:
         container = client.containers.get(container_id)
         if container.status == "paused":
-            container.unpause()  # Despausa, se está pausado
+            container.unpause()
         else:
-            container.start()  # Caso contrário, inicia normalmente
+            container.start()
     except docker.errors.NotFound:
         print(f"Contêiner {container_id} não encontrado.")
     except docker.errors.APIError as e:
@@ -259,9 +246,10 @@ def monitoramento():
 def handle_get_logs(data):
     container_id = data.get('container_id')
     container = client.containers.get(container_id)
-    logs = container.logs(tail=50).decode('utf-8')  # Pega os últimos 50 registros
+    logs = container.logs(tail=50).decode('utf-8')
     socketio.emit('log_update', {'container_id': container_id, 'logs': logs})
 
+# Pausar contêiner
 @app.route("/pause_container/<container_id>/<bairro>", methods=["POST"])
 def pause_container(container_id, bairro):
     try:
@@ -296,6 +284,7 @@ def stop_container(container_id, bairro):
             print(f"Erro ao parar contêiner {container_id}: {e}")
     return redirect(url_for("manage_containers", bairro=bairro))
 
+# Parar grupo de contêineres
 @app.route("/stop_group/<image_name>/<config_name>/<bairro>", methods=["POST"])
 def stop_group(image_name, config_name, bairro):
     containers = client.containers.list(all=True)
@@ -314,6 +303,7 @@ def stop_group(image_name, config_name, bairro):
                     print(f"Erro ao parar contêiner {container.name}: {e}")
     return redirect(url_for("manage_containers", bairro=bairro))
 
+# Parar todos os contêineres
 @app.route("/stop_all/<bairro>", methods=["POST"])
 def stop_all(bairro):
     containers = client.containers.list(all=True)
@@ -331,10 +321,10 @@ def stop_all(bairro):
                 print(f"Erro ao parar contêiner {container.name}: {e}")
     return redirect(url_for("manage_containers", bairro=bairro))
 
+# Deletar imagem da configuração
 @app.route("/delete_config_imagem/<name>", methods=["POST"])
 def delete_config_imagem(name):
     config = load_config()
-    # Filtra a configuração removendo a que tem o nome correspondente
     config["containers"] = [c for c in config["containers"] if c["name"] != name]
     save_config(config)
     return redirect(url_for("config_imagens"))
