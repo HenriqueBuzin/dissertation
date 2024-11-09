@@ -1,11 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_socketio import SocketIO
 import unicodedata
-import tempfile
 import socket
 import docker
 import json
-import csv
 import os
 
 app = Flask(__name__)
@@ -14,39 +12,14 @@ socketio = SocketIO(app)
 client = docker.from_env()
 
 CONFIG_FILE = 'config.json'
+BAIRROS_MEDIDORES_FILE = os.path.join(os.getcwd(), 'bairros_medidores.json')
+CSV_DOWNLOAD_URL = "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/manager/src/data.csv"
 
 CONTAINER_TYPES = {
     "load_balancer": {"id": 1, "display_name": "Load Balancer"},
     "nodo_nevoa": {"id": 2, "display_name": "Nodo de Nevoa"},
     "medidor": {"id": 3, "display_name": "Medidor"}
 }
-
-CSV_FILE_PATH = os.path.join(os.getcwd(), 'data.csv')
-BAIRROS_MEDIDORES_FILE = os.path.join(os.getcwd(), 'bairros_medidores.json')
-
-def load_bairro_data(bairro):
-    if os.path.exists(BAIRROS_MEDIDORES_FILE):
-        with open(BAIRROS_MEDIDORES_FILE, encoding='utf-8') as f:
-            bairros_data = json.load(f)
-        return bairros_data.get(bairro, {}).get("nodes", {})
-    return {}
-
-def create_instance_data_file(bairro, instance_id, instance_data):
-    """Cria um arquivo temporário para armazenar dados específicos de cada medidor."""
-    temp_dir = os.path.join(tempfile.gettempdir(), 'medidores', bairro)
-    os.makedirs(temp_dir, exist_ok=True)
-    file_path = os.path.join(temp_dir, f"instance_{instance_id}.json")
-    with open(file_path, 'w', encoding='utf-8') as f:
-        json.dump(instance_data, f)
-    return file_path
-
-def load_csv_data(file_path):
-    data = []
-    with open(file_path, newline='') as csvfile:
-        reader = csv.DictReader(csvfile, delimiter=';')
-        for row in reader:
-            data.append(row)
-    return data
 
 def get_available_port(start_port=5000, end_port=6000):
     for port in range(start_port, end_port):
@@ -202,8 +175,6 @@ def manage_containers(bairro):
             with open(BAIRROS_MEDIDORES_FILE, 'r', encoding='utf-8') as f:
                 bairros_data = json.load(f)  # Carrega todo o JSON
 
-            # Carrega o conteúdo do CSV como uma lista de dicionários
-            csv_data = load_csv_data(CSV_FILE_PATH)
             load_balancer_url = f"http://host.docker.internal:{load_balancer_port}/receive_data"
             
             for i in range(quantity):
@@ -213,9 +184,6 @@ def manage_containers(bairro):
                 # Extrai apenas os dados do bairro e do nó específico
                 instance_data = bairros_data.get(bairro, {}).get("nodes", {}).get(unique_node_id, {})
 
-                print(csv_data)
-                print(11111111111111111111111111111)
-
                 try:
                     client.containers.run(
                         image,
@@ -223,7 +191,7 @@ def manage_containers(bairro):
                         detach=True,
                         environment={
                             "HTTP_SERVER_URL": load_balancer_url,
-                            "CSV_CONTENTS": json.dumps(csv_data),  # Passa o conteúdo do CSV diretamente
+                            "CSV_CONTENTS": CSV_DOWNLOAD_URL,  # Passa o conteúdo do CSV diretamente
                             "INSTANCE_DATA": json.dumps(instance_data),  # Passa apenas os dados específicos do `INSTANCE_DATA`
                             "BAIRRO": bairro,  # Identificador do bairro específico
                             "NODE_ID": unique_node_id  # ID único do medidor
