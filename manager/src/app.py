@@ -101,16 +101,17 @@ def manage_containers(bairro):
                 load_balancer_port = container.attrs["NetworkSettings"]["Ports"]["5000/tcp"][0]["HostPort"]
                 break
 
-    allowed_types = {c["type"] for c in config["containers"]}
+    # Monta select_options com base no config.json e CONTAINER_TYPES
     select_options = [
-        {"name": key, "display_name": data["display_name"]}
-        for key, data in CONTAINER_TYPES.items() if data["id"] in allowed_types
-    ]
-
-    select_options = [
-        option for option in select_options
-        if (not has_load_balancer and option["name"] == "load_balancer") or 
-           (has_load_balancer and option["name"] != "load_balancer")
+        {
+            "name": container["name"],
+            "display_name": CONTAINER_TYPES[next(
+                key for key, val in CONTAINER_TYPES.items() if val["id"] == container["type"]
+            )]["display_name"]
+        }
+        for container in config["containers"]
+        if (not has_load_balancer and container["type"] == CONTAINER_TYPES["load_balancer"]["id"]) or
+           (has_load_balancer and container["type"] != CONTAINER_TYPES["load_balancer"]["id"])
     ]
 
     if request.method == "POST":
@@ -126,6 +127,7 @@ def manage_containers(bairro):
 
         print(f"Iniciando criação do container '{container_name}' com a imagem '{image}'")
 
+        # Criação do Load Balancer, se necessário
         if container_type == CONTAINER_TYPES["load_balancer"]["id"] and not has_load_balancer:
             full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
             
@@ -171,12 +173,17 @@ def manage_containers(bairro):
                 bairros_data = json.load(f)
 
             load_balancer_url = f"http://host.docker.internal:{load_balancer_port}/receive_data"
-            
+            print(f"URL do Load Balancer para medidores: {load_balancer_url}")
+
+            # Início da criação dos medidores
+            print(f"Iniciando criação dos medidores para o bairro: {bairro}")
             for i in range(quantity):
                 unique_node_id = str(i + 1)
                 full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
 
+                # Verifica se os dados do bairro e do nó estão corretos
                 instance_data = bairros_data.get(bairro, {}).get("nodes", {}).get(unique_node_id, {})
+                print(f"Instance data para {unique_node_id}: {instance_data}")
 
                 try:
                     client.containers.run(
@@ -192,13 +199,14 @@ def manage_containers(bairro):
                         },
                         labels={"type": str(container_type)}
                     )
-                    print(f"Container {full_container_name} criado com sucesso com URL do load balancer: {load_balancer_url}")
+                    print(f"Medidor {full_container_name} criado com sucesso com URL do load balancer: {load_balancer_url}")
                 except docker.errors.APIError as e:
-                    print(f"Erro ao criar container {full_container_name}: {e}")
+                    print(f"Erro ao criar medidor {full_container_name}: {e}")
                     return redirect(url_for("manage_containers", bairro=bairro))
 
         return redirect(url_for("manage_containers", bairro=bairro))
 
+    # Agrupamento dos contêineres para exibição
     grouped_containers = {}
     for container in containers:
         image_name = container.image.tags[0] if container.image.tags else "Sem Imagem"
