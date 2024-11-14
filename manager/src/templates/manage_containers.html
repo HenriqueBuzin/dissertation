@@ -54,9 +54,9 @@
 
             <!-- Botão para parar todos os contêineres de um grupo específico -->
             <div class="mb-3">
-                <form method="POST" action="{{ url_for('stop_group', image_name=image_name, config_name=config_name, bairro=bairro) }}" class="d-inline-block">
+                <form method="POST" action="{{ url_for('stop_group', image_name=image_name|replace('/', '%2F')|replace(':', '%3A'), config_name=config_name, bairro=bairro) }}" class="d-inline-block">
                     <button type="submit" class="btn btn-warning">Parar Todos do Grupo {{ config_name }}</button>
-                </form>
+                </form>                              
             </div>
             
             <div class="card mb-5 mt-3">
@@ -78,16 +78,16 @@
                                 <td>{{ container.container.name }}</td>
                                 <td>{{ container.container.status }}</td>
                                 <td>
-                                    <form method="POST" action="{{ url_for('start_container', container_id=container.short_id, bairro=bairro) }}" style="display:inline;">
+                                    <form method="POST" action="{{ url_for('start_container', container_id=container.container.id, bairro=bairro) }}" style="display:inline;">
                                         <button type="submit" class="btn btn-success btn-sm">Iniciar</button>
                                     </form>
-                                    <form method="POST" action="{{ url_for('pause_container', container_id=container.short_id, bairro=bairro) }}" style="display:inline;">
+                                    <form method="POST" action="{{ url_for('pause_container', container_id=container.container.id, bairro=bairro) }}" style="display:inline;">
                                         <button type="submit" class="btn btn-warning btn-sm">Pausar</button>
                                     </form>
-                                    <form method="POST" action="{{ url_for('stop_container', container_id=container.short_id, bairro=bairro) }}" style="display:inline;">
+                                    <form method="POST" action="{{ url_for('stop_container', container_id=container.container.id, bairro=bairro) }}" style="display:inline;">
                                         <button type="submit" class="btn btn-danger btn-sm">Parar</button>
                                     </form>
-                                </td>
+                                </td>                                
                                 <td>
                                     <button onclick="fetchLogs('{{ container.container.short_id }}')" class="btn btn-info btn-sm">Ver Logs</button>
                                 </td>
