@@ -86,10 +86,9 @@ def config_imagens():
 # Gerenciamento de contêineres para um bairro específico
 @app.route("/manage/<bairro>", methods=["GET", "POST"])
 def manage_containers(bairro):
-    config = load_config()  # Carrega o config.json
+    config = load_config()
     containers = client.containers.list(all=True, filters={"name": normalize_container_name(bairro)})
 
-    # Verificar se já existe um load_balancer e capturar a porta dele
     load_balancer_port = None
     has_load_balancer = any(
         container for container in containers
@@ -102,14 +101,12 @@ def manage_containers(bairro):
                 load_balancer_port = container.attrs["NetworkSettings"]["Ports"]["5000/tcp"][0]["HostPort"]
                 break
 
-    # Carregar opções de contêineres com base nos dados em config.json
     allowed_types = {c["type"] for c in config["containers"]}
     select_options = [
         {"name": key, "display_name": data["display_name"]}
         for key, data in CONTAINER_TYPES.items() if data["id"] in allowed_types
     ]
 
-    # Ajustar as opções com base na existência de load_balancer
     select_options = [
         option for option in select_options
         if (not has_load_balancer and option["name"] == "load_balancer") or 
@@ -129,11 +126,9 @@ def manage_containers(bairro):
 
         print(f"Iniciando criação do container '{container_name}' com a imagem '{image}'")
 
-        # Criação do Load Balancer, se necessário
         if container_type == CONTAINER_TYPES["load_balancer"]["id"] and not has_load_balancer:
             full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
             
-            # Verifica e remove contêiner existente antes de criar
             existing_containers = client.containers.list(all=True, filters={"name": full_container_name})
             if existing_containers:
                 for existing_container in existing_containers:
@@ -171,7 +166,6 @@ def manage_containers(bairro):
             else:
                 print(f"Contêiner {full_container_name} não foi encontrado após tentativa de criação.")
 
-        # Criação dos contêineres de "nodo_nevoa" e "medidor", se um load balancer estiver ativo
         if has_load_balancer and load_balancer_port:
             with open(BAIRROS_MEDIDORES_FILE, 'r', encoding='utf-8') as f:
                 bairros_data = json.load(f)
@@ -182,7 +176,6 @@ def manage_containers(bairro):
                 unique_node_id = str(i + 1)
                 full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
 
-                # Extrai apenas os dados do bairro e do nó específico
                 instance_data = bairros_data.get(bairro, {}).get("nodes", {}).get(unique_node_id, {})
 
                 try:
@@ -302,10 +295,8 @@ def stop_container(container_id, bairro):
 # Parar grupo de contêineres
 @app.route("/stop_group/<image_name>/<config_name>/<bairro>", methods=["POST"])
 def stop_group(image_name, config_name, bairro):
-    # Decodifique `image_name` para o valor original com barras e dois pontos
     image_name = unquote(image_name)
 
-    # Processa a parada do grupo de contêineres com o nome de imagem decodificado
     containers = client.containers.list(all=True)
     for container in containers:
         if container.image.tags and container.image.tags[0] == image_name and config_name in container.name:
