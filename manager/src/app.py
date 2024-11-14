@@ -101,7 +101,6 @@ def manage_containers(bairro):
                 load_balancer_port = container.attrs["NetworkSettings"]["Ports"]["5000/tcp"][0]["HostPort"]
                 break
 
-    # Monta select_options com base no config.json e CONTAINER_TYPES
     select_options = [
         {
             "name": container["name"],
@@ -127,7 +126,6 @@ def manage_containers(bairro):
 
         print(f"Iniciando criação do container '{container_name}' com a imagem '{image}'")
 
-        # Criação do Load Balancer, se necessário
         if container_type == CONTAINER_TYPES["load_balancer"]["id"] and not has_load_balancer:
             full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
             
@@ -175,13 +173,11 @@ def manage_containers(bairro):
             load_balancer_url = f"http://host.docker.internal:{load_balancer_port}/receive_data"
             print(f"URL do Load Balancer para medidores: {load_balancer_url}")
 
-            # Início da criação dos medidores
             print(f"Iniciando criação dos medidores para o bairro: {bairro}")
             for i in range(quantity):
                 unique_node_id = str(i + 1)
                 full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
 
-                # Verifica se os dados do bairro e do nó estão corretos
                 instance_data = bairros_data.get(bairro, {}).get("nodes", {}).get(unique_node_id, {})
                 print(f"Instance data para {unique_node_id}: {instance_data}")
 
@@ -206,7 +202,6 @@ def manage_containers(bairro):
 
         return redirect(url_for("manage_containers", bairro=bairro))
 
-    # Agrupamento dos contêineres para exibição
     grouped_containers = {}
     for container in containers:
         image_name = container.image.tags[0] if container.image.tags else "Sem Imagem"
