@@ -188,7 +188,7 @@ def manage_containers(bairro):
                         detach=True,
                         environment={
                             "HTTP_SERVER_URL": load_balancer_url,
-                            "CSV_CONTENTS": CSV_DOWNLOAD_URL,
+                            "CSV_URL": CSV_DOWNLOAD_URL,
                             "INSTANCE_DATA": json.dumps(instance_data),
                             "BAIRRO": bairro,
                             "NODE_ID": unique_node_id
