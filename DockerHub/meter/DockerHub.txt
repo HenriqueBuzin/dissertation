@@ -1,0 +1,5 @@
+docker login
+
+docker build -t henriqueabv/http_data_sender:latest .
+
+docker push henriqueabv/http_data_sender:latest

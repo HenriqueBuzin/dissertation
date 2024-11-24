@@ -1,0 +1,5 @@
+docker login
+
+docker build -t henriqueabv/load_balancer:latest .
+
+docker push henriqueabv/load_balancer:latest
