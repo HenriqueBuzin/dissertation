@@ -26,7 +26,7 @@ DOWNLOAD_URLS_FILE = os.path.join(JSON_PATH, 'download_urls.json')
 
 CONTAINER_TYPES = {
     "load_balancer": {"id": 1, "display_name": "Load Balancer"},
-    "nodo_nevoa": {"id": 2, "display_name": "Nodo de Nevoa"},
+    "nodo_nevoa": {"id": 2, "display_name": "Nodo de Névoa"},
     "medidor": {"id": 3, "display_name": "Medidor"}
 }
 
@@ -120,8 +120,9 @@ def manage_containers(bairro):
     config = load_config()
     containers = client.containers.list(all=True, filters={"name": normalize_container_name(bairro)})
 
-    load_balancer_port = get_load_balancer_port(containers)
-    has_load_balancer = load_balancer_port is not None
+    # Obtém as portas do Load Balancer
+    load_balancer_http_port, load_balancer_coap_port = get_load_balancer_ports(containers)
+    has_load_balancer = load_balancer_http_port is not None and load_balancer_coap_port is not None
 
     # Monta as opções para o select
     select_options = [
@@ -151,13 +152,18 @@ def manage_containers(bairro):
 
         # Criação do Load Balancer
         if container_type == CONTAINER_TYPES["load_balancer"]["id"] and not has_load_balancer:
-            create_load_balancer(bairro, container_name, image)
-            load_balancer_port = get_load_balancer_port(client.containers.list(all=True, filters={"name": normalize_container_name(bairro)}))
-            has_load_balancer = True
+            http_port, coap_port = create_load_balancer(bairro, container_name, image)
+            if http_port and coap_port:
+                load_balancer_http_port = http_port
+                load_balancer_coap_port = coap_port
+                has_load_balancer = True
+            else:
+                print("Erro ao criar o Load Balancer.")
+                return redirect(url_for("manage_containers", bairro=bairro))
 
         # Criação dos Medidores
-        if has_load_balancer and load_balancer_port:
-            create_measurement_nodes(bairro, container_name, image, quantity, load_balancer_port)
+        if has_load_balancer:
+            create_measurement_nodes(bairro, container_name, image, quantity, load_balancer_http_port, load_balancer_coap_port)
 
         return redirect(url_for("manage_containers", bairro=bairro))
 
@@ -303,27 +309,51 @@ def group_containers_for_display(containers):
     return grouped_containers
 
 def create_load_balancer(bairro, container_name, image):
-    """Cria o Load Balancer."""
+    """Cria o Load Balancer com suporte a HTTP e CoAP."""
     try:
-        port = get_available_port()
+        # Obter portas disponíveis
+        http_port = get_available_port()
+        coap_port = get_available_port(http_port + 1)  # Porta subsequente para evitar conflitos
+
+        full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
+
+        # Remover contêineres antigos com o mesmo nome, se existirem
+        existing_containers = client.containers.list(all=True, filters={"name": full_container_name})
+        for container in existing_containers:
+            print(f"Removendo contêiner antigo: {full_container_name}")
+            container.stop()
+            container.remove()
+
+        # Criar o Load Balancer com ambas as portas
         client.containers.run(
             image,
-            name=f"{normalize_container_name(bairro)}_{container_name}_1",
+            name=full_container_name,
             detach=True,
-            environment={"LOAD_BALANCER_PORT": str(port)},
-            ports={"5000/tcp": port},
+            environment={
+                "LOAD_BALANCER_HTTP_PORT": str(http_port),
+                "LOAD_BALANCER_COAP_PORT": str(coap_port)
+            },
+            ports={
+                "5000/tcp": http_port,    # Porta HTTP
+                "5683/udp": coap_port     # Porta CoAP
+            },
             labels={"type": str(CONTAINER_TYPES["load_balancer"]["id"])}
         )
-        print(f"Load balancer criado na porta {port}.")
+        print(f"Load Balancer criado com sucesso. HTTP: {http_port}, CoAP: {coap_port}.")
+        return http_port, coap_port
     except docker.errors.APIError as e:
         print(f"Erro ao criar Load Balancer: {e}")
+        return None, None
 
-def create_measurement_nodes(bairro, container_name, image, quantity, load_balancer_port):
+def create_measurement_nodes(bairro, container_name, image, quantity, load_balancer_http_port, load_balancer_coap_port):
     """Cria os nós de medição."""
     with open(BAIRROS_MEDIDORES_FILE, 'r', encoding='utf-8') as f:
         bairros_data = json.load(f)
 
-    load_balancer_url = f"http://host.docker.internal:{load_balancer_port}/receive_data"
+    # URLs do Load Balancer para HTTP e CoAP
+    load_balancer_http_url = f"http://host.docker.internal:{load_balancer_http_port}/receive_data"
+    load_balancer_coap_url = f"coap://host.docker.internal:{load_balancer_coap_port}/receive_data"
+
     for i in range(quantity):
         unique_node_id = str(i + 1)
         full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
@@ -332,7 +362,7 @@ def create_measurement_nodes(bairro, container_name, image, quantity, load_balan
         # Encontra a URL de download associada ao medidor
         download_url = next(
             (c.get("download_url") for c in load_config()["containers"] if c["name"] == container_name),
-            None  # Valor padrão é None se não encontrado
+            None
         )
 
         if not download_url:
@@ -345,17 +375,33 @@ def create_measurement_nodes(bairro, container_name, image, quantity, load_balan
                 name=full_container_name,
                 detach=True,
                 environment={
-                    "HTTP_SERVER_URL": load_balancer_url,
-                    "CSV_URL": download_url,  # Usando a URL de download
+                    "HTTP_SERVER_URL": load_balancer_http_url,
+                    "COAP_SERVER_URL": load_balancer_coap_url,
+                    "CSV_URL": download_url,
                     "INSTANCE_DATA": json.dumps(instance_data),
                     "BAIRRO": bairro,
                     "NODE_ID": unique_node_id
                 },
                 labels={"type": str(CONTAINER_TYPES["medidor"]["id"])}
             )
-            print(f"Medidor {full_container_name} criado com sucesso com a URL de dados {download_url}.")
+            print(f"Medidor {full_container_name} criado com sucesso com URLs HTTP e CoAP.")
         except docker.errors.APIError as e:
             print(f"Erro ao criar medidor {full_container_name}: {e}")
+
+def get_load_balancer_ports(containers):
+    """Obtém as portas HTTP e CoAP do Load Balancer de um dos contêineres."""
+    for container in containers:
+        try:
+            ports = container.attrs.get("NetworkSettings", {}).get("Ports", {})
+            http_port = ports.get("5000/tcp", [{}])[0].get("HostPort")
+            coap_port = ports.get("5683/udp", [{}])[0].get("HostPort")
+
+            if http_port and coap_port:
+                return http_port, coap_port
+        except (KeyError, TypeError, IndexError):
+            continue
+    print("Erro: Portas do Load Balancer não encontradas.")
+    return None, None
 
 # === INICIALIZAÇÃO DA APLICAÇÃO ===
 
