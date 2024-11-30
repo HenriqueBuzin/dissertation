@@ -26,15 +26,14 @@
                     </select>
                 </div>
 
-                <!-- Campo Condicional para Arquivo de Dados -->
-                <div class="col-md-12" id="downloadField" style="display:none;">
-                    <label for="download_url" class="form-label">URL para Download</label>
-                    <select name="download_url" id="download_url" class="form-control">
-                        <option value="">Selecione uma URL</option>
-                        {% for url in download_urls %}
-                            <option value="{{ url }}">{{ url }}</option>
+                <div class="col-md-12" id="dataField" style="display:none;">
+                    <label for="data_id" class="form-label">Tipo de Dados</label>
+                    <select name="data_id" id="data_id" class="form-control">
+                        <option value="">Selecione um tipo de dados</option>
+                        {% for data_id, data_url in data_mapping.items() %}
+                            <option value="{{ data_id }}">{{ data_id }} ({{ data_url }})</option>
                         {% endfor %}
-                    </select>
+                    </select>                    
                 </div>
 
                 <div class="col-12 d-flex justify-content-end">
@@ -54,7 +53,7 @@
                         <th>Nome do Contêiner</th>
                         <th>Imagem</th>
                         <th>Tipo</th>
-                        <th>URL</th>
+                        <th>Data Nome</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -71,12 +70,12 @@
                             {% endfor %}
                         </td>
                         <td>
-                            {% if item.download_url %}
-                                {{ item.download_url }}
+                            {% if item.data_id %}
+                                {{ item.data_id }}
                             {% else %}
                                 N/A
                             {% endif %}
-                        </td>
+                        </td>                        
                         <td>
                             <form action="{{ url_for('delete_config_imagem', name=item.name) }}" method="post" style="display:inline;">
                                 <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
@@ -85,16 +84,35 @@
                     </tr>
                     {% endfor %}
                 </tbody>
-            </table>            
+            </table>
         </div>
     </div>
 </div>
 
 <script>
-    // Exibe o campo de URL somente para medidores
-    document.getElementById('type').addEventListener('change', function() {
-        const downloadField = document.getElementById('downloadField');
-        downloadField.style.display = this.value === "medidor" ? "block" : "none";
+    document.getElementById('type').addEventListener('change', function () {
+        const dataField = document.getElementById('dataField');
+        const dataIdSelect = document.getElementById('data_id');
+
+        if (this.value === "medidor") {
+            dataField.style.display = "block";
+            dataIdSelect.setAttribute('required', 'required'); // Torna obrigatório
+        } else {
+            dataField.style.display = "none";
+            dataIdSelect.removeAttribute('required'); // Remove a obrigatoriedade
+            dataIdSelect.value = ""; // Reseta o valor selecionado
+        }
+    });
+
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const typeSelect = document.getElementById('type');
+        const dataIdSelect = document.getElementById('data_id');
+
+        if (typeSelect.value === "medidor" && !dataIdSelect.value) {
+            e.preventDefault(); // Impede o envio do formulário
+            alert("Por favor, selecione um tipo de dados para o medidor."); // Exibe alerta
+        }
     });
 </script>
+
 {% endblock %}

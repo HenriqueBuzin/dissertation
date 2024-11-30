@@ -98,34 +98,34 @@ def delete_data_config(data_id):
 def config_imagens():
     """Configura as imagens dos contêineres."""
     config = load_config()
-    
-    # Carrega as URLs de download do arquivo de configuração
-    download_urls = load_download_urls()
+
+    # Carrega o mapeamento de data_id para URLs
+    data_mapping = load_download_urls()
 
     if request.method == "POST":
         new_name = request.form.get("name")
         new_image = request.form.get("image")
         new_type_str = request.form.get("type")
-        download_url = request.form.get("download_url")  # Obtém a URL associada
+        data_id = request.form.get("data_id")  # Obtém o ID do tipo de dados
         new_type_data = CONTAINER_TYPES.get(new_type_str)
-        
+
         if new_name and new_image and new_type_data:
             container_config = {
                 "name": new_name,
                 "image": new_image,
                 "type": new_type_data["id"]
             }
-            if new_type_str == "medidor" and download_url:  # Associa URL para medidores
-                container_config["download_url"] = download_url
+            if new_type_str == "medidor" and data_id:  # Associa o data_id para medidores
+                container_config["data_id"] = data_id
             config["containers"].append(container_config)
             save_config(config)
         return redirect(url_for("config_imagens"))
-    
+
     return render_template(
         "config_imagens.html",
         config=config,
         CONTAINER_TYPES=CONTAINER_TYPES,
-        download_urls=download_urls
+        data_mapping=data_mapping  # Passando o data_mapping ao template
     )
 
 def load_download_urls():
