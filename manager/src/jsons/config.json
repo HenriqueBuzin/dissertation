@@ -8,13 +8,14 @@
         {
             "name": "medidor_http_energia",
             "image": "henriqueabv/http_data_sender",
-            "type": 3
+            "type": 3,
+            "data_id": "energy_data"
         },
         {
             "name": "teste",
             "image": "henriqueabv/http_data_sender",
             "type": 3,
-            "download_url": "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/data/data_energy.csv"
+            "data_id": "energy_data"
         }
     ]
 }

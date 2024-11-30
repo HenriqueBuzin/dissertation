@@ -66,6 +66,34 @@ def delete_config_imagem(name):
     save_config(config)
     return redirect(url_for("config_imagens"))
 
+@app.route("/config_dados", methods=["GET", "POST"])
+def config_dados():
+    """Configura os tipos de dados e URLs associadas."""
+    data_config = load_download_urls()
+
+    if request.method == "POST":
+        new_data_id = request.form.get("data_id")
+        new_data_url = request.form.get("data_url")
+
+        if new_data_id and new_data_url:
+            data_config[new_data_id] = new_data_url
+            save_download_urls(data_config)
+
+        return redirect(url_for("config_dados"))
+
+    return render_template("config_dados.html", data_config=data_config)
+
+@app.route("/delete_data_config/<data_id>", methods=["POST"])
+def delete_data_config(data_id):
+    """Deleta um identificador de dados (data_id)."""
+    data_config = load_download_urls()
+
+    if data_id in data_config:
+        del data_config[data_id]
+        save_download_urls(data_config)
+
+    return redirect(url_for("config_dados"))
+
 @app.route("/config_imagens", methods=["GET", "POST"])
 def config_imagens():
     """Configura as imagens dos contêineres."""
@@ -101,16 +129,16 @@ def config_imagens():
     )
 
 def load_download_urls():
-    """Carrega as URLs de download do arquivo download_urls.json."""
+    """Carrega as URLs de download associadas aos identificadores de dados."""
     if os.path.exists(DOWNLOAD_URLS_FILE):
         with open(DOWNLOAD_URLS_FILE, 'r', encoding='utf-8') as f:
             try:
                 return json.load(f)
             except json.JSONDecodeError:
-                print("Erro ao decodificar download_urls.json. Retornando lista vazia.")
-                return []
-    print("Arquivo download_urls.json não encontrado. Retornando lista vazia.")
-    return []
+                print("Erro ao decodificar download_urls.json. Retornando dicionário vazio.")
+                return {}
+    print("Arquivo download_urls.json não encontrado. Retornando dicionário vazio.")
+    return {}
 
 # === ROTAS DE GERENCIAMENTO DE CONTÊINERES ===
 
@@ -350,6 +378,9 @@ def create_measurement_nodes(bairro, container_name, image, quantity, load_balan
     with open(BAIRROS_MEDIDORES_FILE, 'r', encoding='utf-8') as f:
         bairros_data = json.load(f)
 
+    # Carregar o mapeamento de URLs
+    data_urls = load_download_urls()
+
     # URLs do Load Balancer para HTTP e CoAP
     load_balancer_http_url = f"http://host.docker.internal:{load_balancer_http_port}/receive_data"
     load_balancer_coap_url = f"coap://host.docker.internal:{load_balancer_coap_port}/receive_data"
@@ -359,14 +390,13 @@ def create_measurement_nodes(bairro, container_name, image, quantity, load_balan
         full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
         instance_data = bairros_data.get(bairro, {}).get("nodes", {}).get(unique_node_id, {})
 
-        # Encontra a URL de download associada ao medidor
-        download_url = next(
-            (c.get("download_url") for c in load_config()["containers"] if c["name"] == container_name),
-            None
-        )
+        # Encontra o identificador de dados no container config
+        container_data = next((c for c in load_config()["containers"] if c["name"] == container_name), None)
+        data_id = container_data.get("data_id") if container_data else None
+        download_url = data_urls.get(data_id)
 
         if not download_url:
-            print(f"Erro: Nenhuma URL de download configurada para o medidor '{container_name}'.")
+            print(f"Erro: Nenhuma URL encontrada para o identificador de dados '{data_id}' no medidor '{container_name}'.")
             continue
 
         try:
@@ -402,6 +432,11 @@ def get_load_balancer_ports(containers):
             continue
     print("Erro: Portas do Load Balancer não encontradas.")
     return None, None
+
+def save_download_urls(data):
+    """Salva as URLs de download associadas aos identificadores de dados."""
+    with open(DOWNLOAD_URLS_FILE, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4)
 
 # === INICIALIZAÇÃO DA APLICAÇÃO ===
 

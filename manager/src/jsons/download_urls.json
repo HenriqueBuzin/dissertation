@@ -1,4 +1,4 @@
-[
-    "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/data/data_energy.csv",
-    "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/data/data_water.csv"
-]
+{
+    "energy_data": "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/data/data_energy.csv",
+    "water_data": "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/data/data_water.csv"
+}
