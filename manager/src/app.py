@@ -17,8 +17,12 @@ from utils import (
 )
 
 # Configurações e constantes globais
-CONFIG_FILE = 'config.json'
-BAIRROS_MEDIDORES_FILE = os.path.join(os.getcwd(), 'bairros_medidores.json')
+BASE_PATH = os.getcwd()  # Diretório base
+JSON_PATH = os.path.join(BASE_PATH, 'jsons')  # Caminho para a pasta JSONs
+
+CONFIG_FILE = os.path.join(JSON_PATH, 'config.json')
+BAIRROS_MEDIDORES_FILE = os.path.join(JSON_PATH, 'bairros_medidores.json')
+DOWNLOAD_URLS_FILE = os.path.join(JSON_PATH, 'download_urls.json')
 
 CONTAINER_TYPES = {
     "load_balancer": {"id": 1, "display_name": "Load Balancer"},
@@ -44,10 +48,13 @@ def index():
 @app.route("/bairros")
 def bairros():
     """Exibe a lista de bairros disponíveis."""
-    with open(BAIRROS_MEDIDORES_FILE, encoding='utf-8') as f:
-        bairros_data = json.load(f)
-    bairros = bairros_data.keys()
-    return render_template("bairros.html", bairros=bairros)
+    if os.path.exists(BAIRROS_MEDIDORES_FILE):
+        with open(BAIRROS_MEDIDORES_FILE, 'r', encoding='utf-8') as f:
+            bairros_data = json.load(f)
+        bairros = bairros_data.keys()
+        return render_template("bairros.html", bairros=bairros)
+    print("Erro: Arquivo bairros_medidores.json não encontrado.")
+    return render_template("bairros.html", bairros=[])
 
 # === ROTAS DE CONFIGURAÇÃO ===
 
@@ -94,16 +101,15 @@ def config_imagens():
     )
 
 def load_download_urls():
-    """Carrega as URLs de download do arquivo JSON."""
-    download_urls_file = os.path.join(os.getcwd(), 'download_urls.json')
-    if os.path.exists(download_urls_file):
-        with open(download_urls_file, 'r', encoding='utf-8') as f:
+    """Carrega as URLs de download do arquivo download_urls.json."""
+    if os.path.exists(DOWNLOAD_URLS_FILE):
+        with open(DOWNLOAD_URLS_FILE, 'r', encoding='utf-8') as f:
             try:
                 return json.load(f)
             except json.JSONDecodeError:
-                print("Erro ao decodificar o arquivo de URLs de download.")
+                print("Erro ao decodificar download_urls.json. Retornando lista vazia.")
                 return []
-    print("Arquivo de URLs de download não encontrado.")
+    print("Arquivo download_urls.json não encontrado. Retornando lista vazia.")
     return []
 
 # === ROTAS DE GERENCIAMENTO DE CONTÊINERES ===

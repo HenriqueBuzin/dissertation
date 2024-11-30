@@ -14,7 +14,7 @@
             "name": "teste",
             "image": "henriqueabv/http_data_sender",
             "type": 3,
-            "download_url": "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/manager/src/data/data_energy.csv"
+            "download_url": "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/data/data_energy.csv"
         }
     ]
 }
