@@ -68,23 +68,48 @@ def delete_config_imagem(name):
 def config_imagens():
     """Configura as imagens dos contêineres."""
     config = load_config()
+    
+    # Carrega as URLs de download do arquivo de configuração
+    download_urls = load_download_urls()
+
     if request.method == "POST":
         new_name = request.form.get("name")
         new_image = request.form.get("image")
         new_type_str = request.form.get("type")
+        download_url = request.form.get("download_url")  # Obtém a URL associada
         new_type_data = CONTAINER_TYPES.get(new_type_str)
         
         if new_name and new_image and new_type_data:
-            config["containers"].append({
+            container_config = {
                 "name": new_name,
                 "image": new_image,
                 "type": new_type_data["id"]
-            })
+            }
+            if new_type_str == "medidor" and download_url:  # Associa URL para medidores
+                container_config["download_url"] = download_url
+            config["containers"].append(container_config)
             save_config(config)
         return redirect(url_for("config_imagens"))
     
-    return render_template("config_imagens.html", config=config, CONTAINER_TYPES=CONTAINER_TYPES)
+    return render_template(
+        "config_imagens.html",
+        config=config,
+        CONTAINER_TYPES=CONTAINER_TYPES,
+        download_urls=download_urls
+    )
 
+def load_download_urls():
+    """Carrega as URLs de download do arquivo JSON."""
+    download_urls_file = os.path.join(os.getcwd(), 'download_urls.json')
+    if os.path.exists(download_urls_file):
+        with open(download_urls_file, 'r', encoding='utf-8') as f:
+            try:
+                return json.load(f)
+            except json.JSONDecodeError:
+                print("Erro ao decodificar o arquivo de URLs de download.")
+                return []
+    print("Arquivo de URLs de download não encontrado.")
+    return []
 
 # === ROTAS DE GERENCIAMENTO DE CONTÊINERES ===
 
@@ -295,7 +320,6 @@ def create_load_balancer(bairro, container_name, image):
     except docker.errors.APIError as e:
         print(f"Erro ao criar Load Balancer: {e}")
 
-
 def create_measurement_nodes(bairro, container_name, image, quantity, load_balancer_port):
     """Cria os nós de medição."""
     with open(BAIRROS_MEDIDORES_FILE, 'r', encoding='utf-8') as f:
@@ -306,6 +330,14 @@ def create_measurement_nodes(bairro, container_name, image, quantity, load_balan
         unique_node_id = str(i + 1)
         full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
         instance_data = bairros_data.get(bairro, {}).get("nodes", {}).get(unique_node_id, {})
+
+        # Encontra o arquivo de dados associado ao medidor
+        data_file = next(
+            (c.get("data_file") for c in load_config()["containers"] if c["name"] == container_name),
+            "data_energy.csv"  # Valor padrão
+        )
+        data_file_path = os.path.join(os.getcwd(), 'data', data_file)
+
         try:
             client.containers.run(
                 image,
@@ -313,17 +345,16 @@ def create_measurement_nodes(bairro, container_name, image, quantity, load_balan
                 detach=True,
                 environment={
                     "HTTP_SERVER_URL": load_balancer_url,
-                    "CSV_URL": CSV_DOWNLOAD_URL,
+                    "CSV_URL": f"file://{data_file_path}",
                     "INSTANCE_DATA": json.dumps(instance_data),
                     "BAIRRO": bairro,
                     "NODE_ID": unique_node_id
                 },
                 labels={"type": str(CONTAINER_TYPES["medidor"]["id"])}
             )
-            print(f"Medidor {full_container_name} criado com sucesso.")
+            print(f"Medidor {full_container_name} criado com sucesso com o arquivo de dados {data_file}.")
         except docker.errors.APIError as e:
             print(f"Erro ao criar medidor {full_container_name}: {e}")
-
 
 # === INICIALIZAÇÃO DA APLICAÇÃO ===
 

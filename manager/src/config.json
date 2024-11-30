@@ -9,6 +9,11 @@
             "name": "medidor_http_energia",
             "image": "henriqueabv/http_data_sender",
             "type": 3
+        },
+        {
+            "name": "teste",
+            "image": "teste",
+            "type": 3
         }
     ]
 }

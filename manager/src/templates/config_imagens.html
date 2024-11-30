@@ -4,6 +4,7 @@
     <h2>Configuração de Imagens Docker</h2>
     <p>Defina um nome para cada imagem Docker utilizada.</p>
 
+    <!-- Formulário para Adicionar Nova Configuração -->
     <div class="card my-4">
         <div class="card-header bg-primary text-white">Adicionar Nova Configuração de Imagem</div>
         <div class="card-body">
@@ -18,12 +19,24 @@
                 </div>
                 <div class="col-md-3">
                     <label for="type" class="form-label">Tipo de Contêiner</label>
-                    <select name="type" id="type" class="form-control" required>
+                    <select name="type" id="type" class="form-control" required onchange="toggleDataField()">
                         {% for key, type_info in CONTAINER_TYPES.items() %}
                             <option value="{{ key }}">{{ type_info.display_name }}</option>
                         {% endfor %}
-                    </select>                    
+                    </select>
                 </div>
+
+                <!-- Campo Condicional para Arquivo de Dados -->
+                <div class="col-md-12" id="downloadField" style="display:none;">
+                    <label for="download_url" class="form-label">URL para Download</label>
+                    <select name="download_url" id="download_url" class="form-control">
+                        <option value="">Selecione uma URL</option>
+                        {% for url in download_urls %}
+                            <option value="{{ url }}">{{ url }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
                 <div class="col-12 d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Adicionar Configuração</button>
                 </div>
@@ -31,6 +44,7 @@
         </div>
     </div>
 
+    <!-- Tabela de Configurações Existentes -->
     <h3 class="mt-4">Configurações de Imagens Existentes</h3>
     <div class="card my-4">
         <div class="card-body p-0">
@@ -39,6 +53,8 @@
                     <tr>
                         <th>Nome do Contêiner</th>
                         <th>Imagem</th>
+                        <th>Tipo</th>
+                        <th>URL</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -47,6 +63,14 @@
                     <tr>
                         <td>{{ item.name }}</td>
                         <td>{{ item.image }}</td>
+                        <td>{{ CONTAINER_TYPES | selectattr('id', 'equalto', item.type) | map(attribute='display_name') | first }}</td>
+                        <td>
+                            {% if item.download_url %}
+                                {{ item.download_url }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
                         <td>
                             <form action="{{ url_for('delete_config_imagem', name=item.name) }}" method="post" style="display:inline;">
                                 <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
@@ -55,8 +79,16 @@
                     </tr>
                     {% endfor %}
                 </tbody>
-            </table>
+            </table>            
         </div>
     </div>
 </div>
+
+<script>
+    // Exibe o campo de URL somente para medidores
+    document.getElementById('type').addEventListener('change', function() {
+        const downloadField = document.getElementById('downloadField');
+        downloadField.style.display = this.value === "medidor" ? "block" : "none";
+    });
+</script>
 {% endblock %}
