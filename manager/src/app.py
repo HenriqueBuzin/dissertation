@@ -1,8 +1,6 @@
 # Importações padrão
 import os
 import json
-import socket
-import unicodedata
 
 # Importações de terceiros
 from flask import Flask, render_template, request, redirect, url_for
@@ -21,7 +19,6 @@ from utils import (
 # Configurações e constantes globais
 CONFIG_FILE = 'config.json'
 BAIRROS_MEDIDORES_FILE = os.path.join(os.getcwd(), 'bairros_medidores.json')
-CSV_DOWNLOAD_URL = "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/manager/src/data.csv"
 
 CONTAINER_TYPES = {
     "load_balancer": {"id": 1, "display_name": "Load Balancer"},
@@ -37,7 +34,6 @@ socketio = SocketIO(app)
 # Cliente Docker
 client = docker.from_env()
 
-
 # === ROTAS DE NAVEGAÇÃO ===
 
 @app.route("/")
@@ -52,7 +48,6 @@ def bairros():
         bairros_data = json.load(f)
     bairros = bairros_data.keys()
     return render_template("bairros.html", bairros=bairros)
-
 
 # === ROTAS DE CONFIGURAÇÃO ===
 
@@ -171,7 +166,6 @@ def manage_containers(bairro):
         has_load_balancer=has_load_balancer
     )
 
-
 # === ROTAS DE CONTROLE DE CONTÊINERES ===
 
 @socketio.on('get_logs')
@@ -256,7 +250,6 @@ def start_container(container_id, bairro):
         print(f"Contêiner {container_id} não encontrado.")
     return redirect(url_for("manage_containers", bairro=bairro))
 
-
 @app.route("/stop_container/<container_id>/<bairro>", methods=["POST"])
 def stop_container(container_id, bairro):
     """Para e remove um contêiner."""
@@ -303,7 +296,6 @@ def group_containers_for_display(containers):
         })
     return grouped_containers
 
-
 def create_load_balancer(bairro, container_name, image):
     """Cria o Load Balancer."""
     try:
@@ -331,12 +323,15 @@ def create_measurement_nodes(bairro, container_name, image, quantity, load_balan
         full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"
         instance_data = bairros_data.get(bairro, {}).get("nodes", {}).get(unique_node_id, {})
 
-        # Encontra o arquivo de dados associado ao medidor
-        data_file = next(
-            (c.get("data_file") for c in load_config()["containers"] if c["name"] == container_name),
-            "data_energy.csv"  # Valor padrão
+        # Encontra a URL de download associada ao medidor
+        download_url = next(
+            (c.get("download_url") for c in load_config()["containers"] if c["name"] == container_name),
+            None  # Valor padrão é None se não encontrado
         )
-        data_file_path = os.path.join(os.getcwd(), 'data', data_file)
+
+        if not download_url:
+            print(f"Erro: Nenhuma URL de download configurada para o medidor '{container_name}'.")
+            continue
 
         try:
             client.containers.run(
@@ -345,14 +340,14 @@ def create_measurement_nodes(bairro, container_name, image, quantity, load_balan
                 detach=True,
                 environment={
                     "HTTP_SERVER_URL": load_balancer_url,
-                    "CSV_URL": f"file://{data_file_path}",
+                    "CSV_URL": download_url,  # Usando a URL de download
                     "INSTANCE_DATA": json.dumps(instance_data),
                     "BAIRRO": bairro,
                     "NODE_ID": unique_node_id
                 },
                 labels={"type": str(CONTAINER_TYPES["medidor"]["id"])}
             )
-            print(f"Medidor {full_container_name} criado com sucesso com o arquivo de dados {data_file}.")
+            print(f"Medidor {full_container_name} criado com sucesso com a URL de dados {download_url}.")
         except docker.errors.APIError as e:
             print(f"Erro ao criar medidor {full_container_name}: {e}")
 

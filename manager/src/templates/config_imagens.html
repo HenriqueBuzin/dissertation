@@ -63,12 +63,18 @@
                     <tr>
                         <td>{{ item.name }}</td>
                         <td>{{ item.image }}</td>
-                        <td>{{ CONTAINER_TYPES | selectattr('id', 'equalto', item.type) | map(attribute='display_name') | first }}</td>
+                        <td>
+                            {% for key, type_info in CONTAINER_TYPES.items() %}
+                                {% if type_info.id == item.type %}
+                                    {{ type_info.display_name }}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
                         <td>
                             {% if item.download_url %}
                                 {{ item.download_url }}
                             {% else %}
-                                -
+                                N/A
                             {% endif %}
                         </td>
                         <td>
