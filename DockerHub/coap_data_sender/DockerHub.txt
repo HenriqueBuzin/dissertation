@@ -1,0 +1,5 @@
+docker login
+
+docker build -t henriqueabv/coap_data_sender:latest .
+
+docker push henriqueabv/coap_data_sender:latest

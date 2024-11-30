@@ -10,6 +10,24 @@
             "image": "henriqueabv/http_data_sender",
             "type": 3,
             "data_id": "data_energy"
+        },
+        {
+            "name": "medidor_coap_energia",
+            "image": "henriqueabv/coap_data_sender",
+            "type": 3,
+            "data_id": "data_energy"
+        },
+        {
+            "name": "medidor_http_agua",
+            "image": "henriqueabv/http_data_sender",
+            "type": 3,
+            "data_id": "data_water"
+        },
+        {
+            "name": "medidor_coap_agua",
+            "image": "henriqueabv/coap_data_sender",
+            "type": 3,
+            "data_id": "data_water"
         }
     ]
 }
