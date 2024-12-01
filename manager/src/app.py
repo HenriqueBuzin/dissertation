@@ -23,12 +23,7 @@ JSON_PATH = os.path.join(BASE_PATH, 'jsons')  # Caminho para a pasta JSONs
 CONFIG_FILE = os.path.join(JSON_PATH, 'config.json')
 BAIRROS_MEDIDORES_FILE = os.path.join(JSON_PATH, 'bairros_medidores.json')
 DOWNLOAD_URLS_FILE = os.path.join(JSON_PATH, 'download_urls.json')
-
-CONTAINER_TYPES = {
-    "load_balancer": {"id": 1, "display_name": "Load Balancer"},
-    "nodo_nevoa": {"id": 2, "display_name": "Nodo de Névoa"},
-    "medidor": {"id": 3, "display_name": "Medidor"}
-}
+CONTAINER_TYPES_FILE = os.path.join(JSON_PATH, 'container_types.json')
 
 # Inicialização do Flask e SocketIO
 app = Flask(__name__)
@@ -96,36 +91,50 @@ def delete_data_config(data_id):
 
 @app.route("/config_imagens", methods=["GET", "POST"])
 def config_imagens():
-    """Configura as imagens dos contêineres."""
     config = load_config()
-
-    # Carrega o mapeamento de data_id para URLs
     data_mapping = load_download_urls()
+    container_types = load_container_types()
+
+    # Mapear os tipos diretamente no backend
+    for container in config["containers"]:
+        container["type_display"] = None  # Inicializa com None
+        container["type"] = int(container["type"]) if isinstance(container["type"], (str, float)) else container["type"]
+        # Busca pelo display_name correspondente
+        for key, type_info in container_types.items():
+            if type_info["id"] == container["type"]:
+                container["type_display"] = type_info["display_name"]  # Agora usa o display_name
 
     if request.method == "POST":
         new_name = request.form.get("name")
         new_image = request.form.get("image")
-        new_type_str = request.form.get("type")
-        data_id = request.form.get("data_id")  # Obtém o ID do tipo de dados
-        new_type_data = CONTAINER_TYPES.get(new_type_str)
+        new_type_key = request.form.get("type")
+        data_id = request.form.get("data_id")
 
-        if new_name and new_image and new_type_data:
-            container_config = {
-                "name": new_name,
-                "image": new_image,
-                "type": new_type_data["id"]
-            }
-            if new_type_str == "medidor" and data_id:  # Associa o data_id para medidores
-                container_config["data_id"] = data_id
-            config["containers"].append(container_config)
-            save_config(config)
+        if new_type_key not in container_types:
+            print(f"Erro: Tipo de contêiner '{new_type_key}' não encontrado.")
+            return redirect(url_for("config_imagens"))
+
+        new_type_data = container_types[new_type_key]
+
+        container_config = {
+            "name": new_name,
+            "image": new_image,
+            "type": new_type_data["id"]
+        }
+
+        if new_type_key == "medidor" and data_id:
+            container_config["data_id"] = data_id
+
+        config["containers"].append(container_config)
+        save_config(config)
+
         return redirect(url_for("config_imagens"))
 
     return render_template(
         "config_imagens.html",
         config=config,
-        CONTAINER_TYPES=CONTAINER_TYPES,
-        data_mapping=data_mapping  # Passando o data_mapping ao template
+        container_types=container_types,
+        data_mapping=data_mapping
     )
 
 def load_download_urls():
@@ -142,10 +151,38 @@ def load_download_urls():
 
 # === ROTAS DE GERENCIAMENTO DE CONTÊINERES ===
 
+@app.route("/manage_types", methods=["GET", "POST"])
+def manage_types():
+    container_types = load_container_types()
+
+    if request.method == "POST":
+        action = request.form.get("action")
+        group_key = request.form.get("group_key")
+        display_name = request.form.get("display_name")
+        description = request.form.get("description", "Sem descrição")
+
+        if action == "add" and group_key and display_name:
+            if group_key not in container_types:
+                new_id = max((ct["id"] for ct in container_types.values()), default=0) + 1
+                container_types[group_key] = {
+                    "id": new_id,
+                    "display_name": display_name,
+                    "description": description
+                }
+                save_container_types(container_types)
+        elif action == "delete" and group_key in container_types:
+            del container_types[group_key]
+            save_container_types(container_types)
+
+        return redirect(url_for("manage_types"))
+
+    return render_template("manage_types.html", container_types=container_types)
+
 @app.route("/manage/<bairro>", methods=["GET", "POST"])
 def manage_containers(bairro):
     """Gerencia os contêineres de um bairro específico."""
     config = load_config()
+    container_types = load_container_types()  # Carrega os tipos de contêineres do JSON
     containers = client.containers.list(all=True, filters={"name": normalize_container_name(bairro)})
 
     # Obtém as portas do Load Balancer
@@ -156,13 +193,14 @@ def manage_containers(bairro):
     select_options = [
         {
             "name": container["name"],
-            "display_name": CONTAINER_TYPES[next(
-                key for key, val in CONTAINER_TYPES.items() if val["id"] == container["type"]
-            )]["display_name"]
+            "display_name": next(
+                (type_info["display_name"] for key, type_info in container_types.items() if type_info["id"] == container["type"]),
+                "Desconhecido"
+            )
         }
         for container in config["containers"]
-        if (not has_load_balancer and container["type"] == CONTAINER_TYPES["load_balancer"]["id"]) or
-           (has_load_balancer and container["type"] != CONTAINER_TYPES["load_balancer"]["id"])
+        if (not has_load_balancer and container["type"] == container_types.get("load_balancer", {}).get("id")) or
+           (has_load_balancer and container["type"] != container_types.get("load_balancer", {}).get("id"))
     ]
 
     if request.method == "POST":
@@ -170,7 +208,7 @@ def manage_containers(bairro):
         container_data = next((c for c in config["containers"] if c["name"] == container_name), None)
         container_type = container_data["type"] if container_data else None
         image = container_data["image"] if container_data else None
-        quantity = 1 if container_type == CONTAINER_TYPES["load_balancer"]["id"] else int(request.form.get("quantity", 1))
+        quantity = 1 if container_type == container_types.get("load_balancer", {}).get("id") else int(request.form.get("quantity", 1))
 
         if not image:
             print(f"Imagem não encontrada para {container_name}. Verifique a configuração.")
@@ -179,7 +217,7 @@ def manage_containers(bairro):
         print(f"Iniciando criação do container '{container_name}' com a imagem '{image}'")
 
         # Criação do Load Balancer
-        if container_type == CONTAINER_TYPES["load_balancer"]["id"] and not has_load_balancer:
+        if container_type == container_types.get("load_balancer", {}).get("id") and not has_load_balancer:
             http_port, coap_port = create_load_balancer(bairro, container_name, image)
             if http_port and coap_port:
                 load_balancer_http_port = http_port
@@ -318,7 +356,9 @@ def get_load_balancer_port(containers):
 
 def group_containers_for_display(containers):
     """Agrupa os contêineres para exibição na interface."""
+    container_types = load_container_types()  # Carrega os tipos de contêineres do JSON
     grouped_containers = {}
+
     for container in containers:
         image_name = container.image.tags[0] if container.image.tags else "Sem Imagem"
         config_name = container.name.split('_')[1] if '_' in container.name else container.name
@@ -331,8 +371,10 @@ def group_containers_for_display(containers):
         grouped_containers[image_name][config_name].append({
             "container": container,
             "type_name": next(
-                (ct["display_name"] for key, ct in CONTAINER_TYPES.items()
-                 if str(ct["id"]) == container.attrs["Config"]["Labels"].get("type")), "Desconhecido")
+                (type_info["display_name"] for key, type_info in container_types.items()
+                 if str(type_info["id"]) == container.attrs["Config"]["Labels"].get("type", "")),
+                "Desconhecido"
+            )
         })
     return grouped_containers
 
@@ -436,6 +478,21 @@ def get_load_balancer_ports(containers):
 def save_download_urls(data):
     """Salva as URLs de download associadas aos identificadores de dados."""
     with open(DOWNLOAD_URLS_FILE, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=4)
+
+def load_container_types():
+    """Carrega os tipos de contêineres do arquivo JSON."""
+    if os.path.exists(CONTAINER_TYPES_FILE):
+        try:
+            with open(CONTAINER_TYPES_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            print(f"Erro: Arquivo {CONTAINER_TYPES_FILE} está corrompido.")
+    return {}
+
+def save_container_types(data):
+    """Salva os tipos de contêineres no arquivo JSON."""
+    with open(CONTAINER_TYPES_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4)
 
 # === INICIALIZAÇÃO DA APLICAÇÃO ===

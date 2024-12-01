@@ -27,6 +27,9 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.endpoint == 'config_dados' %}active{% endif %}" href="{{ url_for('config_dados') }}">Configurar Tipos de Dados</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'manage_types' %}active{% endif %}" href="{{ url_for('manage_types') }}">Gerenciar Tipos</a>
+                    </li>                    
                 </ul>                
             </div>
         </div>

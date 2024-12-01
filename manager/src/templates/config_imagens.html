@@ -20,11 +20,11 @@
                 <div class="col-md-3">
                     <label for="type" class="form-label">Tipo de Contêiner</label>
                     <select name="type" id="type" class="form-control" required onchange="toggleDataField()">
-                        {% for key, type_info in CONTAINER_TYPES.items() %}
+                        {% for key, type_info in container_types.items() %}
                             <option value="{{ key }}">{{ type_info.display_name }}</option>
                         {% endfor %}
                     </select>
-                </div>
+                </div>                
 
                 <div class="col-md-12" id="dataField" style="display:none;">
                     <label for="data_id" class="form-label">Tipo de Dados</label>
@@ -62,13 +62,11 @@
                     <tr>
                         <td>{{ item.name }}</td>
                         <td>{{ item.image }}</td>
+                        
                         <td>
-                            {% for key, type_info in CONTAINER_TYPES.items() %}
-                                {% if type_info.id == item.type %}
-                                    {{ type_info.display_name }}
-                                {% endif %}
-                            {% endfor %}
-                        </td>
+                            {{ item.type_display if item.type_display else "Tipo não encontrado: " ~ item.type }}
+                        </td>                        
+                                                                              
                         <td>
                             {% if item.data_id %}
                                 {{ item.data_id }}

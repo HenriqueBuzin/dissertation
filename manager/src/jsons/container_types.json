@@ -1,0 +1,17 @@
+{
+    "load_balancer": {
+        "id": 1,
+        "display_name": "Load Balancer",
+        "description": "Gerencia o balanceamento de carga HTTP e CoAP"
+    },
+    "nodo_nevoa": {
+        "id": 2,
+        "display_name": "Nodo de N\u00e9voa",
+        "description": "Gerencia os nodos de n\u00e9voa para processamento distribu\u00eddo"
+    },
+    "medidor": {
+        "id": 3,
+        "display_name": "Medidor",
+        "description": "Gerencia os medidores de \u00e1gua e energia"
+    }
+}

@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container-fluid mt-4">
+    <h2>Gerenciamento de Tipos de Contêiner</h2>
+    <p>Adicione, edite ou remova tipos de contêiner para o sistema.</p>
+
+    <!-- Formulário para Adicionar Novo Tipo -->
+    <div class="card my-4">
+        <div class="card-header bg-primary text-white">Adicionar Novo Tipo</div>
+        <div class="card-body">
+            <form action="{{ url_for('manage_types') }}" method="post" class="row g-3">
+                <input type="hidden" name="action" value="add">
+                <div class="col-md-4">
+                    <label for="group_key" class="form-label">Identificador</label>
+                    <input type="text" name="group_key" id="group_key" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="display_name" class="form-label">Nome Exibido</label>
+                    <input type="text" name="display_name" id="display_name" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="description" class="form-label">Descrição</label>
+                    <input type="text" name="description" id="description" class="form-control">
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Adicionar Tipo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabela de Tipos Existentes -->
+    <h3 class="mt-4">Tipos de Contêiner Existentes</h3>
+    <div class="card my-4">
+        <div class="card-body p-0">
+            <table class="table table-striped table-hover mb-0">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Identificador</th>
+                        <th>Nome Exibido</th>
+                        <th>Descrição</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, type_info in container_types.items() %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ type_info.display_name }}</td>
+                        <td>{{ type_info.description }}</td>
+                        <td>
+                            <form action="{{ url_for('manage_types') }}" method="post" style="display:inline;">
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="group_key" value="{{ key }}">
+                                <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
