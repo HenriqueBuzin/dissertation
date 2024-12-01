@@ -2,7 +2,7 @@
 {% block content %}
 <div class="container-fluid mt-4">
     <h2>Gerenciamento de Tipos de Contêiner</h2>
-    <p>Adicione, edite ou remova tipos de contêiner para o sistema.</p>
+    <p>Adicione ou remova tipos de contêiner para o sistema.</p>
 
     <!-- Formulário para Adicionar Novo Tipo -->
     <div class="card my-4">
@@ -10,17 +10,13 @@
         <div class="card-body">
             <form action="{{ url_for('manage_types') }}" method="post" class="row g-3">
                 <input type="hidden" name="action" value="add">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="group_key" class="form-label">Identificador</label>
                     <input type="text" name="group_key" id="group_key" class="form-control" required>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="display_name" class="form-label">Nome Exibido</label>
                     <input type="text" name="display_name" id="display_name" class="form-control" required>
-                </div>
-                <div class="col-md-4">
-                    <label for="description" class="form-label">Descrição</label>
-                    <input type="text" name="description" id="description" class="form-control">
                 </div>
                 <div class="col-12 d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Adicionar Tipo</button>
@@ -38,7 +34,6 @@
                     <tr>
                         <th>Identificador</th>
                         <th>Nome Exibido</th>
-                        <th>Descrição</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -47,7 +42,6 @@
                     <tr>
                         <td>{{ key }}</td>
                         <td>{{ type_info.display_name }}</td>
-                        <td>{{ type_info.description }}</td>
                         <td>
                             <form action="{{ url_for('manage_types') }}" method="post" style="display:inline;">
                                 <input type="hidden" name="action" value="delete">
