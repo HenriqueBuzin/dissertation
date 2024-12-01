@@ -355,27 +355,31 @@ def get_load_balancer_port(containers):
     return None
 
 def group_containers_for_display(containers):
-    """Agrupa os contêineres para exibição na interface."""
+    """Agrupa os contêineres diretamente pelo valor do tipo (type)."""
     container_types = load_container_types()  # Carrega os tipos de contêineres do JSON
     grouped_containers = {}
 
     for container in containers:
-        image_name = container.image.tags[0] if container.image.tags else "Sem Imagem"
-        config_name = container.name.split('_')[1] if '_' in container.name else container.name
+        # Obtém o tipo do contêiner pelo label
+        container_type = container.attrs["Config"]["Labels"].get("type", "unknown")
+        type_name = next(
+            (type_info["display_name"] for key, type_info in container_types.items()
+             if str(type_info["id"]) == container_type),
+            "Desconhecido"
+        )
 
-        if image_name not in grouped_containers:
-            grouped_containers[image_name] = {}
-        if config_name not in grouped_containers[image_name]:
-            grouped_containers[image_name][config_name] = []
+        # Usa o tipo como chave de agrupamento
+        if container_type not in grouped_containers:
+            grouped_containers[container_type] = {
+                "type_name": type_name,
+                "containers": []
+            }
 
-        grouped_containers[image_name][config_name].append({
+        grouped_containers[container_type]["containers"].append({
             "container": container,
-            "type_name": next(
-                (type_info["display_name"] for key, type_info in container_types.items()
-                 if str(type_info["id"]) == container.attrs["Config"]["Labels"].get("type", "")),
-                "Desconhecido"
-            )
+            "type_name": type_name
         })
+
     return grouped_containers
 
 def create_load_balancer(bairro, container_name, image, container_types):
