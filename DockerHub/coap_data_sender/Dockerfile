@@ -1,10 +1,14 @@
-# Dockerfile para o HTTP Data Sender
-FROM python:3.9
+# Dockerfile para CoAP Sender em Node.js
+FROM node:16
 
 WORKDIR /app
 
-COPY coap_data_sender.py /app
+# Instalar dependências
+COPY package.json /app
+RUN npm install
 
-RUN pip install requests aiocoap
+# Copiar o script para o contêiner
+COPY coap_data_sender.js /app
 
-CMD ["python", "coap_data_sender.py"]
+# Comando de inicialização
+CMD ["node", "coap_data_sender.js"]

@@ -431,6 +431,8 @@ def create_measurement_nodes(bairro, container_name, image, quantity, load_balan
     load_balancer_http_url = f"http://host.docker.internal:{load_balancer_http_port}/receive_data"
     load_balancer_coap_url = f"coap://host.docker.internal:{load_balancer_coap_port}/receive_data"
 
+    print(load_balancer_coap_url)
+
     for i in range(quantity):
         unique_node_id = str(i + 1)
         full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{i+1}"

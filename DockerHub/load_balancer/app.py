@@ -1,19 +1,25 @@
-from flask import Flask, request, jsonify
-import os
+import asyncio
+from http_server import start_http_server
+from coap_server import start_coap_server
+import logging
 
-app = Flask(__name__)
+# Configura o log
+logging.basicConfig(level=logging.INFO)
 
-@app.route('/', methods=['GET'])
-def status():
-    return jsonify({"status": "Load Balancer is running"}), 200
+async def main():
+    http_port = 5000  # Porta HTTP
+    coap_port = 5683  # Porta CoAP
 
-@app.route('/receive_data', methods=['POST'])
-def receive_data():
-    data = request.json
-    print(f"Dados recebidos: {data}")
-    return jsonify({"status": "received"}), 200
+    logging.info("Iniciando servidores HTTP e CoAP...")
 
-if __name__ == '__main__':
-    port = int(os.getenv("LOAD_BALANCER_PORT", 5000))
-    print(f"Iniciando Load Balancer na porta {port}")
-    app.run(debug=True, port=port)
+    # Inicia ambos os servidores em paralelo
+    await asyncio.gather(
+        start_http_server(http_port),
+        start_coap_server(coap_port),
+    )
+
+if __name__ == "__main__":
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        logging.info("\nEncerrando Load Balancer.")
