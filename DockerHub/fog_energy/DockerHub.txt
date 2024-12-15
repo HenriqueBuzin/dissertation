@@ -1,0 +1,5 @@
+docker login
+
+docker build -t henriqueabv/fog_energy:latest .
+
+docker push henriqueabv/fog_energy:latest
