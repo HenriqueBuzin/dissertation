@@ -233,7 +233,7 @@ def manage_containers(bairro):
 
         return redirect(url_for("manage_containers", bairro=bairro))
 
-    grouped_containers = group_containers_for_display(containers)
+    grouped_containers = group_containers_for_display(containers, container_types)  # Passando container_types
 
     return render_template(
         "manage_containers.html",
@@ -278,17 +278,20 @@ def pause_container(container_id, bairro):
         print(f"Erro ao pausar o contêiner {container_id}: {e}")
     return redirect(url_for("manage_containers", bairro=bairro))
 
-@app.route("/stop_group/<image_name>/<config_name>/<bairro>", methods=["POST"])
-def stop_group(image_name, config_name, bairro):
-    image_name = unquote(image_name)
+@app.route("/stop_group/<container_type>/<bairro>", methods=["POST"])
+def stop_group(container_type, bairro):
+    """Para e remove todos os contêineres de um grupo específico."""
+    container_type = unquote(container_type)
     containers = client.containers.list(all=True)
 
     for container in containers:
-        if container.image.tags and container.image.tags[0] == image_name and config_name in container.name:
+        # Verifica se o tipo do contêiner corresponde ao solicitado
+        if container.attrs["Config"]["Labels"].get("type") == container_type:
             try:
                 if container.status in ["running", "paused"]:
                     container.stop()
                 container.remove()
+                print(f"Contêiner {container.name} do tipo {container_type} removido com sucesso.")
             except docker.errors.NotFound:
                 print(f"Contêiner {container.name} já foi removido.")
             except docker.errors.APIError as e:
@@ -354,30 +357,34 @@ def get_load_balancer_port(containers):
     print("Erro: Porta do Load Balancer não encontrada.")
     return None
 
-def group_containers_for_display(containers):
-    """Agrupa os contêineres diretamente pelo valor do tipo (type)."""
-    container_types = load_container_types()  # Carrega os tipos de contêineres do JSON
+def group_containers_for_display(containers, container_types):
+    """Agrupa os contêineres para exibição na interface."""
     grouped_containers = {}
 
     for container in containers:
-        # Obtém o tipo do contêiner pelo label
-        container_type = container.attrs["Config"]["Labels"].get("type", "unknown")
-        type_name = next(
-            (type_info["display_name"] for key, type_info in container_types.items()
-             if str(type_info["id"]) == container_type),
-            "Desconhecido"
-        )
+        container_type_id = container.attrs.get("Config", {}).get("Labels", {}).get("type")
+        if not container_type_id:
+            continue
 
-        # Usa o tipo como chave de agrupamento
-        if container_type not in grouped_containers:
-            grouped_containers[container_type] = {
-                "type_name": type_name,
+        type_info = next((type_info for type_info in container_types.values() if str(type_info["id"]) == container_type_id), None)
+        if not type_info:
+            continue
+
+        type_name = type_info["display_name"]
+        group_key = type_info["id"]
+
+        if group_key not in grouped_containers:
+            grouped_containers[group_key] = {
+                "id": group_key,
+                "display_name": type_name,
                 "containers": []
             }
 
-        grouped_containers[container_type]["containers"].append({
-            "container": container,
-            "type_name": type_name
+        grouped_containers[group_key]["containers"].append({
+            "short_id": container.short_id,
+            "name": container.name,
+            "status": container.status,
+            "id": container.id,
         })
 
     return grouped_containers
