@@ -1,5 +1,5 @@
 import graphene
-from database import mongo_collection
+from processing.database import mongo_collection
 
 class EnergyConsumptionType(graphene.ObjectType):
     id = graphene.String()

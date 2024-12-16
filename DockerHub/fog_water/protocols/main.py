@@ -1,22 +1,23 @@
 import asyncio
-import threading
-from websocket_protocol import WebSocketProtocol
-from http_protocol import run_http_server
-from coap_protocol import start_coap_server
+from protocols.http_protocol import run_http_server
+from protocols.coap_protocol import start_coap_server
+from protocols.websocket_protocol import WebSocketProtocol
 
-async def main():
-    protocol_layer = WebSocketProtocol()
-    http_thread = threading.Thread(target=lambda: run_http_server(protocol_layer), daemon=True)
-    http_thread.start()
-    await start_coap_server(protocol_layer)
-    await protocol_layer.send_data_websocket()
+def main():
+    async def protocols_task():
+        protocol_layer = WebSocketProtocol()
+        print("Camada de Protocolos iniciada.")
 
-if __name__ == '__main__':
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        print("\nCamada de Protocolos encerrando...")
-    except Exception as e:
-        print(f"\nErro durante a execução da Camada de Protocolos: {e}")
-    finally:
-        print("Camada de Protocolos encerrada com sucesso.")
+        http_server_task = asyncio.create_task(run_http_server(protocol_layer))
+        coap_server_task = asyncio.create_task(start_coap_server(protocol_layer))
+
+        try:
+            await asyncio.Event().wait()  # Mantém o loop até o encerramento
+        finally:
+            print("Camada de Protocolos encerrando...")
+            http_server_task.cancel()
+            coap_server_task.cancel()
+            await asyncio.gather(http_server_task, coap_server_task, return_exceptions=True)
+            print("Camada de Protocolos encerrada.")
+
+    asyncio.run(protocols_task())

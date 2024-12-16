@@ -1,7 +1,7 @@
 import asyncio
 from aiohttp import web
 import json
-from graphql_schema import schema
+from processing.graphql_schema import schema
 
 async def graphql_http_handler(request):
     print(f"Solicitação GraphQL recebida: {await request.text()}")

@@ -3,7 +3,7 @@ import json
 import websockets
 from pymongo import MongoClient
 import redis
-from utils import load_env
+from protocols.utils import load_env
 
 class WebSocketProtocol:
     def __init__(self):

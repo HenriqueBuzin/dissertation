@@ -1,8 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 import asyncio
-from websocket_protocol import WebSocketProtocol
-from sftp_handler import handle_sftp_details_and_send
+from protocols.sftp_handler import handle_sftp_details_and_send
 
 def run_http_server(protocol_layer):
     class CustomHTTPRequestHandler(BaseHTTPRequestHandler):

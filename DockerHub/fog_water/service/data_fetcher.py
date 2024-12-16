@@ -1,8 +1,8 @@
 import asyncio
 import aiohttp
 from datetime import datetime, timedelta
-from csv_writer import write_to_csv
-from http_sender import send_file_and_data_http
+from service.csv_writer import write_to_csv
+from service.http_sender import send_file_and_data_http
 
 async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_username, sftp_password, remote_path, interval, delay, start_date):
     current_date = datetime.strptime(start_date, '%Y-%m-%d')

@@ -1,6 +1,6 @@
 from pymongo import MongoClient
 import redis
-import config
+from processing import config
 
 MONGO_URI = f"mongodb://{config.MONGO_USER}:{config.MONGO_PASS}@{config.MONGO_HOST}:{config.MONGO_PORT}/"
 mongo_client = MongoClient(MONGO_URI)
