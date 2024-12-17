@@ -4,12 +4,12 @@ import json
 from processing.graphql_schema import schema
 
 async def graphql_http_handler(request):
-    print(f"Solicitação GraphQL recebida: {await request.text()}")
+    print(f"Solicitação GraphQL recebida: {await request.text()}", flush=True)
     data = await request.json()
     query = data.get('query')
     variables = data.get('variables')
     result = await schema.execute_async(query, variable_values=variables)
-    print(f"Respondendo à solicitação GraphQL com: {json.dumps(result.data)}")
+    print(f"Respondendo à solicitação GraphQL com: {json.dumps(result.data)}", flush=True)
     return web.Response(text=json.dumps(result.data), content_type='application/json')
 
 async def main():
@@ -26,8 +26,8 @@ if __name__ == '__main__':
     try:
         asyncio.run(main())
     except KeyboardInterrupt:
-        print("\nCamada de Processamento encerrando...")
+        print("\nCamada de Processamento encerrando...", flush=True)
     except Exception as e:
-        print(f"\nErro durante a execução da Camada de Processamento: {e}")
+        print(f"\nErro durante a execução da Camada de Processamento: {e}", flush=True)
     finally:
-        print("Camada de Processamento encerrado com sucesso.")
+        print("Camada de Processamento encerrado com sucesso.", flush=True)

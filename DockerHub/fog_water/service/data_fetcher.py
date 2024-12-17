@@ -9,7 +9,7 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
 
     while True:
         next_date = current_date + timedelta(days=1)
-        print(f"Coletando dados de água para o dia: {current_date.strftime('%Y-%m-%d')}")
+        print(f"Coletando dados de água para o dia: {current_date.strftime('%Y-%m-%d')}", flush=True)
 
         query = f"""
         {{
@@ -26,29 +26,29 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
             try:
                 async with session.post(uri, json={'query': query}) as response:
                     if response.status != 200:
-                        print(f"Erro na solicitação: Status {response.status}")
+                        print(f"Erro na solicitação: Status {response.status}", flush=True)
                         await asyncio.sleep(interval)
                         continue
 
                     try:
                         result_json = await response.json()
-                        print(f"Resposta JSON: {result_json}")
+                        print(f"Resposta JSON: {result_json}", flush=True)
                     except aiohttp.ContentTypeError as e:
-                        print(f"Erro ao decodificar JSON (ContentTypeError): {str(e)}")
+                        print(f"Erro ao decodificar JSON (ContentTypeError): {str(e)}", flush=True)
                         result_json = None
                     except Exception as e:
-                        print(f"Erro ao decodificar JSON: {str(e)}")
+                        print(f"Erro ao decodificar JSON: {str(e)}", flush=True)
                         result_json = None
 
                     if not result_json or 'waterConsumptionData' not in result_json:
-                        print("Resposta JSON vazia ou inválida. Reiniciando a paginação.")
+                        print("Resposta JSON vazia ou inválida. Reiniciando a paginação.", flush=True)
                         await asyncio.sleep(interval)
                         continue
 
                     data = result_json['waterConsumptionData']
 
                     if not data:
-                        print(f"Não há mais dados para coletar para o dia {current_date.strftime('%Y-%m-%d')}. Avançando para o próximo dia.")
+                        print(f"Não há mais dados para coletar para o dia {current_date.strftime('%Y-%m-%d')}. Avançando para o próximo dia.", flush=True)
                         current_date = next_date
                     else:
                         aggregated_data = {}
@@ -64,18 +64,18 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
                             try:
                                 aggregated_data[id]['consumptionM3PerDay'] += float(item['consumptionM3PerHour'])
                             except ValueError:
-                                print(f"Valor inválido encontrado em 'consumptionM3PerHour': {item['consumptionM3PerHour']}. Definido como 0.")
+                                print(f"Valor inválido encontrado em 'consumptionM3PerHour': {item['consumptionM3PerHour']}. Definido como 0.", flush=True)
                                 aggregated_data[id]['consumptionM3PerDay'] += 0.0
 
                         aggregated_data_list = list(aggregated_data.values())
-                        print(f"Escrevendo dados no arquivo CSV para o dia {current_date.strftime('%Y-%m-%d')}")
+                        print(f"Escrevendo dados no arquivo CSV para o dia {current_date.strftime('%Y-%m-%d')}", flush=True)
                         file_path = await write_to_csv(aggregated_data_list, f"consumption_water_{current_date.strftime('%Y-%m-%d')}.csv")
-                        print(f"Arquivo CSV criado: {file_path}")
+                        print(f"Arquivo CSV criado: {file_path}", flush=True)
                         await send_file_and_data_http(file_path, sftp_host, sftp_port, sftp_username, sftp_password, remote_path, protocols_url, delay)
 
             except Exception as e:
-                print(f"Erro ao fazer a solicitação ou processar a resposta: {str(e)}")
+                print(f"Erro ao fazer a solicitação ou processar a resposta: {str(e)}", flush=True)
 
-        print(f"Esperando {interval} segundos para a próxima coleta de dados.")
+        print(f"Esperando {interval} segundos para a próxima coleta de dados.", flush=True)
         await asyncio.sleep(interval)
         current_date = next_date

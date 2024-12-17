@@ -28,7 +28,7 @@ class WebSocketProtocol:
                 async with websockets.connect(self.ws_url) as ws:
                     await self.send_messages(ws)
             except Exception as e:
-                print(f"WebSocket: Erro ao conectar ou enviar dados: {e}. Tentando novamente em 1 segundo...")
+                print(f"WebSocket: Erro ao conectar ou enviar dados: {e}. Tentando novamente em 1 segundo...", flush=True)
                 await asyncio.sleep(1)
 
     async def send_messages(self, ws):

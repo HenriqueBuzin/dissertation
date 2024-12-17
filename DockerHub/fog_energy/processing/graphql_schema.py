@@ -45,15 +45,15 @@ class Query(graphene.ObjectType):
         else:
             query['consumption_kwh_per_hour'] = {'$exists': True}
 
-        print(f"Query: {query}")
+        print(f"Query: {query}", flush=True)
 
         data_query = mongo_collection.find(query)
         items = list(data_query)
 
         for item in items:
-            print(f"MongoDB Item: {item}")
-            print(f"consumption_kwh_per_hour exists: {'consumption_kwh_per_hour' in item}")
-            print(f"consumption_kwh_per_hour value: {item.get('consumption_kwh_per_hour', None)}")
+            print(f"MongoDB Item: {item}", flush=True)
+            print(f"consumption_kwh_per_hour exists: {'consumption_kwh_per_hour' in item}", flush=True)
+            print(f"consumption_kwh_per_hour value: {item.get('consumption_kwh_per_hour', None)}", flush=True)
         
         result = []
         for item in items:
@@ -68,7 +68,7 @@ class Query(graphene.ObjectType):
         
         # Debug: Print the result before returning
         for res in result:
-            print(f"GraphQL Result Item: {res}")
+            print(f"GraphQL Result Item: {res}", flush=True)
 
         return result
 
@@ -83,14 +83,14 @@ class Query(graphene.ObjectType):
         else:
             query['consumption_m3_per_hour'] = {'$exists': True}
 
-        print(f"Query: {query}")  # Debug: Print the query being used
+        print(f"Query: {query}", flush=True)  # Debug: Print the query being used
 
         data_query = mongo_collection.find(query)
         items = list(data_query)
 
         # Debug: Print the retrieved data from MongoDB
         for item in items:
-            print(f"MongoDB Item: {item}")
+            print(f"MongoDB Item: {item}", flush=True)
         
         result = [
             WaterConsumptionType(
@@ -104,7 +104,7 @@ class Query(graphene.ObjectType):
 
         # Debug: Print the result before returning
         for res in result:
-            print(f"GraphQL Result Item: {res}")
+            print(f"GraphQL Result Item: {res}", flush=True)
 
         return result
 

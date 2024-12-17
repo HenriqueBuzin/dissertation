@@ -19,12 +19,12 @@ def main():
         site = web.TCPSite(runner, "0.0.0.0", 8766)
         await site.start()
 
-        print("Camada de Processamento iniciada.")
+        print("Camada de Processamento iniciada.", flush=True)
         try:
             await asyncio.Event().wait()  # Mantém o loop até o encerramento
         finally:
-            print("Camada de Processamento encerrando...")
+            print("Camada de Processamento encerrando...", flush=True)
             await runner.cleanup()
-            print("Camada de Processamento encerrada.")
+            print("Camada de Processamento encerrada.", flush=True)
 
     asyncio.run(processing_task())

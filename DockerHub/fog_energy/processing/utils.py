@@ -5,7 +5,7 @@ from processing import config
 def save_message(message):
     if config.PROCESSING_PERSIST == 1:
         mongo_collection.insert_one(json.loads(message))
-        print("Mensagem salva no MongoDB.")
+        print("Mensagem salva no MongoDB.", flush=True)
     else:
         redis_client.lpush("messages", message)
-        print("Mensagem salva no Redis.")
+        print("Mensagem salva no Redis.", flush=True)

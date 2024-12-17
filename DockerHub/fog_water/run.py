@@ -6,26 +6,26 @@ from protocols.main import main as protocols_main
 from service.main import main as orchestration_main
 
 def start_service(service_main, service_name):
-    print(f"{service_name} iniciando...")
+    print(f"{service_name} iniciando...", flush=True)
     try:
         service_main()
     except Exception as e:
-        print(f"Erro no {service_name}: {e}")
+        print(f"Erro no {service_name}: {e}", flush=True)
     finally:
-        print(f"{service_name} encerrado.")
+        print(f"{service_name} encerrado.", flush=True)
 
 def stop_services(processes):
-    print("\nSinal de interrupção recebido. Encerrando os serviços...")
+    print("\nSinal de interrupção recebido. Encerrando os serviços...", flush=True)
     for name, process in processes.items():
         if process.is_alive():
-            print(f"Encerrando {name}...")
+            print(f"Encerrando {name}...", flush=True)
             process.terminate()
             process.join(timeout=5)
             if process.is_alive():
-                print(f"{name} não respondeu ao encerramento.")
+                print(f"{name} não respondeu ao encerramento.", flush=True)
             else:
-                print(f"{name} encerrado.")
-    print("Todos os serviços foram encerrados.")
+                print(f"{name} encerrado.", flush=True)
+    print("Todos os serviços foram encerrados.", flush=True)
 
 if __name__ == "__main__":
     try:
@@ -49,7 +49,7 @@ if __name__ == "__main__":
         signal.signal(signal.SIGINT, signal_handler)
         signal.signal(signal.SIGTERM, signal_handler)
 
-        print("Iniciando os serviços...")
+        print("Iniciando os serviços...", flush=True)
         for name, process in processes.items():
             process.start()
 
@@ -57,6 +57,6 @@ if __name__ == "__main__":
             process.join()
 
     except Exception as e:
-        print(f"Erro na execução principal: {e}")
+        print(f"Erro na execução principal: {e}", flush=True)
     finally:
-        print("Execução encerrada.")
+        print("Execução encerrada.", flush=True)

@@ -14,7 +14,7 @@ def main():
         remote_path = '/var/lib/HPCCSystems/mydropzone'
         start_date = '2007-01-01'
 
-        print("Camada de Serviço iniciada.")
+        print("Camada de Serviço iniciada.", flush=True)
         try:
             while True:
                 await fetch_all_consumption(
@@ -23,7 +23,7 @@ def main():
                 )
                 await asyncio.sleep(interval)
         finally:
-            print("Camada de Serviço encerrando...")
-            print("Camada de Serviço encerrada.")
+            print("Camada de Serviço encerrando...", flush=True)
+            print("Camada de Serviço encerrada.", flush=True)
 
     asyncio.run(orchestration_task())
