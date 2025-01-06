@@ -1,51 +1,59 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import json
+# protocols/http_protocol.py
+
 import asyncio
+from aiohttp import web
 from protocols.sftp_handler import handle_sftp_details_and_send
 
-def run_http_server(protocol_layer):
-    class CustomHTTPRequestHandler(BaseHTTPRequestHandler):
-        def __init__(self, *args, **kwargs):
-            self.protocol_layer = protocol_layer
-            super().__init__(*args, **kwargs)
-            
-        def do_POST(self):
-            content_length = int(self.headers['Content-Length'])
-            post_data = self.rfile.read(content_length)
+async def run_http_server(protocol_layer):
+    """
+    Cria e inicia um servidor HTTP assíncrono usando aiohttp.
+    """
 
-            try:
-                message = json.loads(post_data.decode())
+    async def handle_post(request):
+        """
+        Esta função lida com requisições POST na rota '/receive_data'.
+        """
+        try:
+            # Lê o body como JSON
+            message = await request.json()
+        except Exception as e:
+            print(f"Erro ao decodificar JSON: {e}", flush=True)
+            return web.Response(status=400, text="HTTP: Error decoding JSON")
 
-                print("Recebendo mensagem HTTP...", flush=True)
-                print(f"Dados HTTP recebidos: {message}", flush=True)
+        print("Recebendo mensagem HTTP...", flush=True)
+        print(f"Dados HTTP recebidos: {message}", flush=True)
 
-                message_type = message.get('type')
-                if message_type == 'consumption':
-                    print("Processando dados de consumo...", flush=True)
-                    self.protocol_layer.save_message(message)
-                    response_content = b"HTTP: Consumption data received"
-                elif message_type == 'ftp':
-                    print("Processando detalhes do FTP...", flush=True)
-                    asyncio.run(handle_sftp_details_and_send(message))
-                    response_content = b"HTTP: FTP details received"
-                else:
-                    self.send_response(400)
-                    self.end_headers()
-                    self.wfile.write(b"HTTP: Unknown message type")
-                    return
+        # Identifica o tipo da mensagem
+        message_type = message.get('type')
 
-                self.send_response(200)
-                self.end_headers()
-                self.wfile.write(response_content)
+        # Fluxo de decisão com base no tipo
+        if message_type == 'consumption':
+            print("Processando dados de consumo...", flush=True)
+            # Salva na camada de protocolo (Mongo ou Redis)
+            protocol_layer.save_message(message)
+            return web.Response(text="HTTP: Consumption data received")
 
-            except json.JSONDecodeError as e:
-                print(f"Erro ao decodificar JSON: {e}", flush=True)
-                self.send_response(400)
-                self.end_headers()
-                self.wfile.write(b"HTTP: Error decoding JSON")
+        elif message_type == 'ftp':
+            print("Processando detalhes do FTP...", flush=True)
+            # Se handle_sftp_details_and_send for assíncrono:
+            await handle_sftp_details_and_send(message)
+            return web.Response(text="HTTP: FTP details received")
 
-    port = 8000
-    server_address = ('', port)
-    httpd = HTTPServer(server_address, CustomHTTPRequestHandler)
-    print(f'HTTP: Servidor HTTP rodando na porta {port}...', flush=True)
-    httpd.serve_forever()
+        else:
+            return web.Response(status=400, text="HTTP: Unknown message type")
+
+    # Cria a aplicação aiohttp
+    app = web.Application()
+
+    # Ajuste a rota para '/receive_data'
+    app.router.add_post('/receive_data', handle_post)
+
+    # Configura e inicia o servidor na porta 8000
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, host='0.0.0.0', port=8000)
+    print("HTTP: Servidor HTTP rodando na porta 8000...", flush=True)
+    await site.start()
+
+    # Mantém a corrotina "viva" até o cancelamento ou encerramento manual
+    await asyncio.Event().wait()

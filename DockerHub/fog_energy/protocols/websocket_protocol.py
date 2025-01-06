@@ -1,3 +1,5 @@
+# protocols/websocket_protocol.py
+
 import asyncio
 import json
 import websockets
@@ -20,9 +22,11 @@ class WebSocketProtocol:
         self.mongo_client = MongoClient(self.MONGO_URI)
         self.mongo_db = self.mongo_client[self.MONGO_DB]
         self.mongo_collection = self.mongo_db[self.PROTOCOLS_MONGO_COLLECTION]
-        self.ws_url = 'ws://localhost:8765/'
+        self.ws_url = 'ws://127.0.0.1:8765/'
+        print("Criando tarefa WebSocket...", flush=True)
 
     async def send_data_websocket(self):
+        print(f"Chamou: send_data_websocket", flush=True)
         while True:
             try:
                 async with websockets.connect(self.ws_url) as ws:

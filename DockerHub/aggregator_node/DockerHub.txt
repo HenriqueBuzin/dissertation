@@ -1,0 +1,5 @@
+docker login
+
+docker build -t henriqueabv/aggregator_node:latest .
+
+docker push henriqueabv/aggregator_node:latest

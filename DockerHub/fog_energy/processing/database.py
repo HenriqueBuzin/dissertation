@@ -1,3 +1,5 @@
+# processing/database.py
+
 from pymongo import MongoClient
 import redis
 from processing import config
@@ -16,7 +18,7 @@ print(f"REDIS_DB: {config.REDIS_DB}", flush=True)
 
 # URI do MongoDB com suporte à autenticação e authSource
 MONGO_URI = f"mongodb://{config.MONGO_USER}:{config.MONGO_PASS}@{config.MONGO_HOST}:{config.MONGO_PORT}/"
-print(f"\nTentando conectar ao MongoDB com URI: {MONGO_URI}")
+print(f"\nTentando conectar ao MongoDB com URI: {MONGO_URI}", flush=True)
 
 # Conexão com MongoDB
 try:
@@ -39,7 +41,7 @@ try:
         decode_responses=True
     )
     # Teste da conexão com Redis
-    redis_client.set("test_key", "connection_successful", flush=True)
+    redis_client.set("test_key", "connection_successful")
     print("Conexão com Redis bem-sucedida!", flush=True)
     print("Valor salvo no Redis (test_key):", redis_client.get("test_key"), flush=True)
 except Exception as e:

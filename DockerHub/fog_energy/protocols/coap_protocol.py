@@ -1,3 +1,5 @@
+# protocols/coap_protocol.py
+
 import aiocoap.resource as resource
 import aiocoap
 import json
@@ -17,6 +19,7 @@ class CoAPServerResource(resource.Resource):
         return aiocoap.Message(code=aiocoap.CHANGED, payload=b"Received")
 
 async def start_coap_server(protocol_layer):
+    print("Iniciando coap server", flush=True)
     root = resource.Site()
     coap_resource = CoAPServerResource(protocol_layer)
     root.add_resource(['coap'], coap_resource)

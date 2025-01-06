@@ -1,3 +1,5 @@
+# processing/graphql_schema.py
+
 import graphene
 from processing.database import mongo_collection
 

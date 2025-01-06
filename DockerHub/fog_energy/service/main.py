@@ -1,3 +1,5 @@
+# service/main.py
+
 import asyncio
 from service.data_fetcher import fetch_all_consumption
 

@@ -3,3 +3,5 @@ docker login
 docker build -t henriqueabv/fog_energy:latest .
 
 docker push henriqueabv/fog_energy:latest
+
+docker run -it --rm --network fog_network -p 8765:8765 -p 8766:8766 -p 8000:8000 -p 5683:5683/udp --add-host "sftp_server:192.168.56.101" -e REDIS_HOST=redis -e REDIS_PORT=6379 -e MONGO_HOST=mongo -e MONGO_PORT=27017 -e MONGO_DB=fog -e MONGO_USER=root -e MONGO_PASS=root henriqueabv/fog_energy:latest
