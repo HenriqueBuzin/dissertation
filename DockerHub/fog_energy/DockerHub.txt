@@ -8,4 +8,8 @@ docker run -it --rm --network fog_network -p 8765:8765 -p 8766:8766 -p 8000:8000
 
 docker run -it --rm --network fog_network -p 8765:8765 -p 8766:8766 -p 8000:8000 -p 27017:27017 -p 5683:5683/udp --add-host "sftp_server:192.168.56.101" henriqueabv/fog_energy:latest
 
-docker run -it --rm --network fog_network -p 8765:8765 -p 8766:8766 -p 8000:8000 -p 27017:27017 -p 5683:5683/udp --add-host "sftp_server:192.168.56.101" -v /c/Users/henri/Documents/GitHub/dissertation/DockerHub/fog_energy/service:/app/csv henriqueabv/fog_energy:latest
+docker run -it --rm --network fog_network -p 8765:8765 -p 8766:8766 -p 8000:8000 -p 27017:27017 -p 5683:5683/udp --add-host "sftp_server:192.168.56.101" -v /c/Users/henri/Documents/GitHub/dissertation/DockerHub/fog_energy:/app henriqueabv/fog_energy:latest
+
+
+
+docker run -it --rm --network fog_network -p 8765:8765 -p 8766:8766 -p 8000:8000 -p 27017:27017 -p 5683:5683/udp -v /c/Users/henri/Documents/GitHub/dissertation/DockerHub/fog_energy:/app henriqueabv/fog_energy:latest
