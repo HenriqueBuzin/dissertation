@@ -10,6 +10,10 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
     current_date = datetime.strptime(start_date, '%Y-%m-%d')
 
     while True:
+        # Aguarda o intervalo antes de iniciar a próxima coleta
+        print(f"Esperando {interval} segundos antes de coletar dados.", flush=True)
+        await asyncio.sleep(interval)
+
         next_date = current_date + timedelta(days=1)
         print(f"Coletando dados de energia para o dia: {current_date.strftime('%Y-%m-%d')}", flush=True)
 
@@ -29,7 +33,6 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
                 async with session.post(uri, json={'query': query}) as response:
                     if response.status != 200:
                         print(f"Erro na solicitação: Status {response.status}", flush=True)
-                        await asyncio.sleep(interval)
                         continue
 
                     try:
@@ -44,7 +47,6 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
 
                     if not result_json or 'energyConsumptionData' not in result_json:
                         print("Resposta JSON vazia ou inválida. Reiniciando a paginação.", flush=True)
-                        await asyncio.sleep(interval)
                         continue
 
                     data = result_json['energyConsumptionData']
@@ -78,6 +80,5 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
             except Exception as e:
                 print(f"Erro ao fazer a solicitação ou processar a resposta: {str(e)}", flush=True)
 
-        print(f"Esperando {interval} segundos para a próxima coleta de dados.", flush=True)
-        await asyncio.sleep(interval)
+        # Atualiza para o próximo dia após a consulta
         current_date = next_date
