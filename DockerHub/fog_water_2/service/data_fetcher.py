@@ -1,5 +1,3 @@
-# service/data_fetcher.py
-
 import asyncio
 import aiohttp
 from datetime import datetime, timedelta
@@ -10,10 +8,6 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
     current_date = datetime.strptime(start_date, '%Y-%m-%d')
 
     while True:
-        # Aguarda o intervalo antes de iniciar a próxima coleta
-        print(f"Esperando {interval} segundos antes de coletar dados.", flush=True)
-        await asyncio.sleep(interval)
-
         next_date = current_date + timedelta(days=1)
         print(f"Coletando dados de água para o dia: {current_date.strftime('%Y-%m-%d')}", flush=True)
 
@@ -33,6 +27,7 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
                 async with session.post(uri, json={'query': query}) as response:
                     if response.status != 200:
                         print(f"Erro na solicitação: Status {response.status}", flush=True)
+                        await asyncio.sleep(interval)
                         continue
 
                     try:
@@ -46,7 +41,8 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
                         result_json = None
 
                     if not result_json or 'waterConsumptionData' not in result_json:
-                        print("Resposta JSON vazia ou inválida. Reiniciando a coleta.", flush=True)
+                        print("Resposta JSON vazia ou inválida. Reiniciando a paginação.", flush=True)
+                        await asyncio.sleep(interval)
                         continue
 
                     data = result_json['waterConsumptionData']
@@ -73,12 +69,13 @@ async def fetch_all_consumption(uri, protocols_url, sftp_host, sftp_port, sftp_u
 
                         aggregated_data_list = list(aggregated_data.values())
                         print(f"Escrevendo dados no arquivo CSV para o dia {current_date.strftime('%Y-%m-%d')}", flush=True)
-                        file_path = await write_to_csv(aggregated_data_list, f"consumption_water_{current_date.strftime('%Y%m%d')}.csv")
+                        file_path = await write_to_csv(aggregated_data_list, f"consumption_water_{current_date.strftime('%Y-%m-%d')}.csv")
                         print(f"Arquivo CSV criado: {file_path}", flush=True)
                         await send_file_and_data_http(file_path, sftp_host, sftp_port, sftp_username, sftp_password, remote_path, protocols_url, delay)
 
             except Exception as e:
                 print(f"Erro ao fazer a solicitação ou processar a resposta: {str(e)}", flush=True)
 
-        # Atualiza para o próximo dia após a consulta
+        print(f"Esperando {interval} segundos para a próxima coleta de dados.", flush=True)
+        await asyncio.sleep(interval)
         current_date = next_date

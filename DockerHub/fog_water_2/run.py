@@ -1,8 +1,9 @@
 import multiprocessing
 import signal
+import time
 from processing.main import main as processing_main
 from protocols.main import main as protocols_main
-from service.main import main as service_main
+from service.main import main as orchestration_main
 
 def start_service(service_main, service_name):
     print(f"{service_name} iniciando...", flush=True)
@@ -36,7 +37,7 @@ if __name__ == "__main__":
                 target=start_service, args=(protocols_main, "Camada de Protocolos")
             ),
             "Camada de Serviço": multiprocessing.Process(
-                target=start_service, args=(service_main, "Camada de Serviço")
+                target=start_service, args=(orchestration_main, "Camada de Serviço")
             ),
         }
 

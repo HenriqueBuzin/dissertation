@@ -1,5 +1,3 @@
-# protocols/sftp_handler.py
-
 import base64
 import paramiko
 import aiofiles
