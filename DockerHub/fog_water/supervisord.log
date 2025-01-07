@@ -1,257 +1,28 @@
-2025-01-06 18:09:10,516 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 18:09:10,522 INFO supervisord started with pid 1
-2025-01-06 18:09:11,524 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 18:09:11,528 INFO spawned: 'mongodb' with pid 8
-2025-01-06 18:09:11,533 INFO spawned: 'redis' with pid 9
-2025-01-06 18:09:12,644 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 18:09:12,645 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 18:09:12,645 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 18:09:27,101 WARN received SIGINT indicating exit request
-2025-01-06 18:09:27,102 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 18:09:27,122 INFO stopped: redis (exit status 0)
-2025-01-06 18:09:27,185 INFO stopped: mongodb (exit status 0)
-2025-01-06 18:09:27,758 INFO stopped: fog_energy (exit status 0)
-2025-01-06 18:11:43,618 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 18:11:43,623 INFO supervisord started with pid 1
-2025-01-06 18:11:44,625 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 18:11:44,628 INFO spawned: 'mongodb' with pid 8
-2025-01-06 18:11:44,630 INFO spawned: 'redis' with pid 9
-2025-01-06 18:11:45,707 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 18:11:45,708 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 18:11:45,708 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:05:17,213 WARN received SIGINT indicating exit request
-2025-01-06 19:05:17,214 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 19:05:17,282 INFO stopped: redis (exit status 0)
-2025-01-06 19:05:17,364 INFO stopped: mongodb (exit status 0)
-2025-01-06 19:05:20,370 INFO waiting for fog_energy to die
-2025-01-06 19:05:23,404 INFO waiting for fog_energy to die
-2025-01-06 19:05:26,419 INFO waiting for fog_energy to die
-2025-01-06 19:05:27,425 WARN killing 'fog_energy' (7) with SIGKILL
-2025-01-06 19:05:27,425 INFO reaped unknown pid 56 (exit status 0)
-2025-01-06 19:05:28,428 INFO stopped: fog_energy (terminated by SIGKILL)
-2025-01-06 19:05:28,429 INFO reaped unknown pid 58 (exit status 0)
-2025-01-06 19:16:47,344 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 19:16:47,350 INFO supervisord started with pid 1
-2025-01-06 19:16:48,353 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 19:16:48,356 INFO spawned: 'mongodb' with pid 8
-2025-01-06 19:16:48,358 INFO spawned: 'redis' with pid 9
-2025-01-06 19:16:49,357 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:16:49,358 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:16:49,358 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:17:18,335 WARN received SIGINT indicating exit request
-2025-01-06 19:17:18,335 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 19:17:18,343 INFO stopped: redis (exit status 0)
-2025-01-06 19:17:18,415 INFO stopped: mongodb (exit status 0)
-2025-01-06 19:17:18,997 INFO stopped: fog_energy (exit status 0)
-2025-01-06 19:17:31,071 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 19:17:31,078 INFO supervisord started with pid 1
-2025-01-06 19:17:32,081 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 19:17:32,083 INFO spawned: 'mongodb' with pid 8
-2025-01-06 19:17:32,085 INFO spawned: 'redis' with pid 9
-2025-01-06 19:17:33,208 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:17:33,209 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:17:33,209 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:17:50,544 WARN received SIGINT indicating exit request
-2025-01-06 19:17:50,544 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 19:17:50,556 INFO stopped: redis (exit status 0)
-2025-01-06 19:17:50,629 INFO stopped: mongodb (exit status 0)
-2025-01-06 19:17:51,200 INFO stopped: fog_energy (exit status 0)
-2025-01-06 19:35:27,143 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 19:35:27,155 INFO supervisord started with pid 1
-2025-01-06 19:35:28,158 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 19:35:28,160 INFO spawned: 'mongodb' with pid 8
-2025-01-06 19:35:28,162 INFO spawned: 'redis' with pid 9
-2025-01-06 19:35:29,180 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:35:29,180 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:35:29,180 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:35:29,540 WARN received SIGINT indicating exit request
-2025-01-06 19:35:29,540 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 19:35:29,559 INFO stopped: redis (exit status 0)
-2025-01-06 19:35:29,577 INFO stopped: mongodb (exit status 0)
-2025-01-06 19:35:29,581 INFO stopped: fog_energy (terminated by SIGTERM)
-2025-01-06 19:47:10,299 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 19:47:10,305 INFO supervisord started with pid 1
-2025-01-06 19:47:11,308 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 19:47:11,311 INFO spawned: 'mongodb' with pid 8
-2025-01-06 19:47:11,314 INFO spawned: 'redis' with pid 9
-2025-01-06 19:47:12,315 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:47:12,316 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:47:12,316 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:47:13,588 WARN received SIGINT indicating exit request
-2025-01-06 19:47:13,591 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 19:47:13,686 INFO stopped: redis (exit status 0)
-2025-01-06 19:47:13,694 WARN received SIGINT indicating exit request
-2025-01-06 19:47:13,750 INFO stopped: mongodb (exit status 0)
-2025-01-06 19:47:14,324 INFO stopped: fog_energy (exit status 0)
-2025-01-06 19:47:14,324 WARN received SIGINT indicating exit request
-2025-01-06 19:47:23,329 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 19:47:23,336 INFO supervisord started with pid 1
-2025-01-06 19:47:24,339 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 19:47:24,348 INFO spawned: 'mongodb' with pid 8
-2025-01-06 19:47:24,352 INFO spawned: 'redis' with pid 9
-2025-01-06 19:47:25,356 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:47:25,356 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:47:25,357 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:47:38,835 WARN received SIGINT indicating exit request
-2025-01-06 19:47:38,836 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 19:47:38,846 INFO stopped: redis (exit status 0)
-2025-01-06 19:47:38,914 INFO stopped: mongodb (exit status 0)
-2025-01-06 19:47:39,492 INFO stopped: fog_energy (exit status 0)
-2025-01-06 19:55:55,074 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 19:55:55,081 INFO supervisord started with pid 1
-2025-01-06 19:55:56,084 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 19:55:56,086 INFO spawned: 'mongodb' with pid 8
-2025-01-06 19:55:56,090 INFO spawned: 'redis' with pid 9
-2025-01-06 19:55:57,142 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:55:57,143 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:55:57,144 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:56:09,276 WARN received SIGINT indicating exit request
-2025-01-06 19:56:09,277 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 19:56:09,331 INFO stopped: redis (exit status 0)
-2025-01-06 19:56:09,409 INFO stopped: mongodb (exit status 0)
-2025-01-06 19:56:10,001 INFO stopped: fog_energy (exit status 0)
-2025-01-06 19:57:01,537 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 19:57:01,545 INFO supervisord started with pid 1
-2025-01-06 19:57:02,548 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 19:57:02,550 INFO spawned: 'mongodb' with pid 8
-2025-01-06 19:57:02,555 INFO spawned: 'redis' with pid 9
-2025-01-06 19:57:03,566 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:57:03,567 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:57:03,567 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:58:19,901 WARN received SIGINT indicating exit request
-2025-01-06 19:58:19,901 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 19:58:19,926 INFO stopped: redis (exit status 0)
-2025-01-06 19:58:19,997 INFO stopped: mongodb (exit status 0)
-2025-01-06 19:58:20,590 INFO stopped: fog_energy (exit status 0)
-2025-01-06 19:58:28,739 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 19:58:28,746 INFO supervisord started with pid 1
-2025-01-06 19:58:29,748 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 19:58:29,751 INFO spawned: 'mongodb' with pid 8
-2025-01-06 19:58:29,754 INFO spawned: 'redis' with pid 9
-2025-01-06 19:58:30,765 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:58:30,765 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:58:30,766 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:59:01,629 WARN received SIGINT indicating exit request
-2025-01-06 19:59:01,630 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 19:59:01,638 INFO stopped: redis (exit status 0)
-2025-01-06 19:59:01,712 INFO stopped: mongodb (exit status 0)
-2025-01-06 19:59:04,726 INFO waiting for fog_energy to die
-2025-01-06 19:59:07,732 INFO waiting for fog_energy to die
-2025-01-06 19:59:10,737 INFO waiting for fog_energy to die
-2025-01-06 19:59:11,735 WARN killing 'fog_energy' (7) with SIGKILL
-2025-01-06 19:59:12,740 INFO stopped: fog_energy (terminated by SIGKILL)
-2025-01-06 19:59:12,741 INFO reaped unknown pid 56 (exit status 0)
-2025-01-06 19:59:12,741 INFO reaped unknown pid 58 (exit status 0)
-2025-01-06 19:59:45,566 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 19:59:45,572 INFO supervisord started with pid 1
-2025-01-06 19:59:46,574 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 19:59:46,576 INFO spawned: 'mongodb' with pid 8
-2025-01-06 19:59:46,579 INFO spawned: 'redis' with pid 9
-2025-01-06 19:59:47,606 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:59:47,606 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 19:59:47,607 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:12:35,450 WARN received SIGINT indicating exit request
-2025-01-06 20:12:35,452 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 20:12:35,462 INFO stopped: redis (exit status 0)
-2025-01-06 20:12:35,515 WARN received SIGINT indicating exit request
-2025-01-06 20:12:35,522 INFO stopped: mongodb (exit status 0)
-2025-01-06 20:12:36,121 INFO stopped: fog_energy (exit status 0)
-2025-01-06 20:12:36,122 WARN received SIGINT indicating exit request
-2025-01-06 20:12:43,821 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 20:12:43,826 INFO supervisord started with pid 1
-2025-01-06 20:12:44,829 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 20:12:44,832 INFO spawned: 'mongodb' with pid 8
-2025-01-06 20:12:44,834 INFO spawned: 'redis' with pid 9
-2025-01-06 20:12:45,858 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:12:45,858 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:12:45,859 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:13:00,231 WARN received SIGINT indicating exit request
-2025-01-06 20:13:00,232 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 20:13:00,300 INFO stopped: redis (exit status 0)
-2025-01-06 20:13:00,366 INFO stopped: mongodb (exit status 0)
-2025-01-06 20:13:00,960 INFO stopped: fog_energy (exit status 0)
-2025-01-06 20:24:29,731 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 20:24:29,752 INFO supervisord started with pid 1
-2025-01-06 20:24:30,755 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 20:24:30,759 INFO spawned: 'mongodb' with pid 8
-2025-01-06 20:24:30,763 INFO spawned: 'redis' with pid 9
-2025-01-06 20:24:31,773 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:24:31,773 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:24:31,773 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:24:47,638 WARN received SIGINT indicating exit request
-2025-01-06 20:24:47,640 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 20:24:47,711 WARN received SIGINT indicating exit request
-2025-01-06 20:24:47,714 INFO stopped: redis (exit status 0)
-2025-01-06 20:24:47,790 INFO stopped: mongodb (exit status 0)
-2025-01-06 20:24:48,394 INFO stopped: fog_energy (exit status 0)
-2025-01-06 20:24:48,394 WARN received SIGINT indicating exit request
-2025-01-06 20:37:03,563 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 20:37:03,571 INFO supervisord started with pid 1
-2025-01-06 20:37:04,574 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 20:37:04,578 INFO spawned: 'mongodb' with pid 8
-2025-01-06 20:37:04,582 INFO spawned: 'redis' with pid 9
-2025-01-06 20:37:05,595 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:37:05,596 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:37:05,596 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:37:20,107 WARN received SIGINT indicating exit request
-2025-01-06 20:37:20,108 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 20:37:20,208 INFO stopped: redis (exit status 0)
-2025-01-06 20:37:20,269 WARN received SIGINT indicating exit request
-2025-01-06 20:37:20,291 INFO stopped: mongodb (exit status 0)
-2025-01-06 20:37:20,865 INFO stopped: fog_energy (exit status 0)
-2025-01-06 20:42:49,167 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-06 20:42:49,174 INFO supervisord started with pid 1
-2025-01-06 20:42:50,176 INFO spawned: 'fog_energy' with pid 7
-2025-01-06 20:42:50,179 INFO spawned: 'mongodb' with pid 8
-2025-01-06 20:42:50,183 INFO spawned: 'redis' with pid 9
-2025-01-06 20:42:51,332 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:42:51,333 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:42:51,333 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-06 20:43:03,688 WARN received SIGINT indicating exit request
-2025-01-06 20:43:03,689 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-06 20:43:03,719 INFO stopped: redis (exit status 0)
-2025-01-06 20:43:03,798 INFO stopped: mongodb (exit status 0)
-2025-01-06 20:43:04,382 INFO stopped: fog_energy (exit status 0)
-2025-01-07 13:36:51,144 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-07 13:36:51,151 INFO supervisord started with pid 1
-2025-01-07 13:36:52,155 INFO spawned: 'fog_energy' with pid 7
-2025-01-07 13:36:52,162 INFO spawned: 'mongodb' with pid 8
-2025-01-07 13:36:52,167 INFO spawned: 'redis' with pid 9
-2025-01-07 13:36:53,156 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-07 13:36:53,176 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-07 13:36:53,177 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-07 13:37:09,128 WARN received SIGINT indicating exit request
-2025-01-07 13:37:09,129 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-07 13:37:09,172 WARN received SIGINT indicating exit request
-2025-01-07 13:37:09,173 INFO stopped: redis (exit status 0)
-2025-01-07 13:37:09,241 INFO stopped: mongodb (exit status 0)
-2025-01-07 13:37:09,831 INFO stopped: fog_energy (exit status 0)
-2025-01-07 13:41:02,350 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-07 13:41:02,364 INFO supervisord started with pid 1
-2025-01-07 13:41:03,367 INFO spawned: 'fog_energy' with pid 7
-2025-01-07 13:41:03,372 INFO spawned: 'mongodb' with pid 8
-2025-01-07 13:41:03,378 INFO spawned: 'redis' with pid 9
-2025-01-07 13:41:04,379 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-07 13:41:04,380 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-07 13:41:04,380 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-07 13:42:30,641 WARN received SIGINT indicating exit request
-2025-01-07 13:42:30,643 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-07 13:42:30,695 WARN received SIGINT indicating exit request
-2025-01-07 13:42:31,706 INFO stopped: redis (exit status 0)
-2025-01-07 13:42:31,707 WARN received SIGINT indicating exit request
-2025-01-07 13:42:31,769 INFO stopped: mongodb (exit status 0)
-2025-01-07 13:42:32,347 INFO stopped: fog_energy (exit status 0)
-2025-01-07 13:42:32,348 WARN received SIGINT indicating exit request
-2025-01-07 13:42:37,875 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2025-01-07 13:42:37,883 INFO supervisord started with pid 1
-2025-01-07 13:42:38,886 INFO spawned: 'fog_energy' with pid 7
-2025-01-07 13:42:38,888 INFO spawned: 'mongodb' with pid 8
-2025-01-07 13:42:38,891 INFO spawned: 'redis' with pid 9
-2025-01-07 13:42:39,886 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-07 13:42:39,902 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-07 13:42:39,902 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2025-01-07 13:43:49,211 WARN received SIGINT indicating exit request
-2025-01-07 13:43:49,212 INFO waiting for fog_energy, mongodb, redis to die
-2025-01-07 13:43:49,280 INFO stopped: redis (exit status 0)
-2025-01-07 13:43:49,352 INFO stopped: mongodb (exit status 0)
-2025-01-07 13:43:49,936 INFO stopped: fog_energy (exit status 0)
+2025-01-07 18:31:23,531 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2025-01-07 18:31:23,539 INFO supervisord started with pid 1
+2025-01-07 18:31:24,544 INFO spawned: 'fog_energy' with pid 7
+2025-01-07 18:31:24,553 INFO spawned: 'mongodb' with pid 8
+2025-01-07 18:31:24,561 INFO spawned: 'redis' with pid 9
+2025-01-07 18:31:25,630 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-07 18:31:25,631 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-07 18:31:25,633 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-07 18:31:35,875 WARN received SIGINT indicating exit request
+2025-01-07 18:31:35,875 INFO waiting for fog_energy, mongodb, redis to die
+2025-01-07 18:31:35,973 INFO stopped: redis (exit status 0)
+2025-01-07 18:31:36,097 WARN received SIGINT indicating exit request
+2025-01-07 18:31:36,102 INFO stopped: mongodb (exit status 0)
+2025-01-07 18:31:36,699 INFO stopped: fog_energy (exit status 0)
+2025-01-07 18:31:36,699 WARN received SIGINT indicating exit request
+2025-01-07 18:31:49,033 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2025-01-07 18:31:49,048 INFO supervisord started with pid 1
+2025-01-07 18:31:50,050 INFO spawned: 'fog_energy' with pid 7
+2025-01-07 18:31:50,052 INFO spawned: 'mongodb' with pid 8
+2025-01-07 18:31:50,056 INFO spawned: 'redis' with pid 9
+2025-01-07 18:31:51,127 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-07 18:31:51,128 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-07 18:31:51,128 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-07 18:32:54,946 WARN received SIGINT indicating exit request
+2025-01-07 18:32:54,946 INFO waiting for fog_energy, mongodb, redis to die
+2025-01-07 18:32:55,003 INFO stopped: redis (exit status 0)
+2025-01-07 18:32:55,089 INFO stopped: mongodb (exit status 0)
+2025-01-07 18:32:55,736 INFO stopped: fog_energy (exit status 0)
