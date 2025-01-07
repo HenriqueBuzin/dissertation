@@ -212,3 +212,25 @@
 2025-01-06 20:43:03,719 INFO stopped: redis (exit status 0)
 2025-01-06 20:43:03,798 INFO stopped: mongodb (exit status 0)
 2025-01-06 20:43:04,382 INFO stopped: fog_energy (exit status 0)
+2025-01-07 13:36:51,144 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2025-01-07 13:36:51,151 INFO supervisord started with pid 1
+2025-01-07 13:36:52,155 INFO spawned: 'fog_energy' with pid 7
+2025-01-07 13:36:52,162 INFO spawned: 'mongodb' with pid 8
+2025-01-07 13:36:52,167 INFO spawned: 'redis' with pid 9
+2025-01-07 13:36:53,156 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-07 13:36:53,176 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-07 13:36:53,177 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-07 13:37:09,128 WARN received SIGINT indicating exit request
+2025-01-07 13:37:09,129 INFO waiting for fog_energy, mongodb, redis to die
+2025-01-07 13:37:09,172 WARN received SIGINT indicating exit request
+2025-01-07 13:37:09,173 INFO stopped: redis (exit status 0)
+2025-01-07 13:37:09,241 INFO stopped: mongodb (exit status 0)
+2025-01-07 13:37:09,831 INFO stopped: fog_energy (exit status 0)
+2025-01-07 13:41:02,350 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2025-01-07 13:41:02,364 INFO supervisord started with pid 1
+2025-01-07 13:41:03,367 INFO spawned: 'fog_energy' with pid 7
+2025-01-07 13:41:03,372 INFO spawned: 'mongodb' with pid 8
+2025-01-07 13:41:03,378 INFO spawned: 'redis' with pid 9
+2025-01-07 13:41:04,379 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-07 13:41:04,380 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-07 13:41:04,380 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

@@ -4,8 +4,4 @@ docker build -t henriqueabv/aggregator_node:latest .
 
 docker push henriqueabv/aggregator_node:latest
 
-docker run -p 2222:22 -v /c/Users/henri/Documents/GitHub/dissertation/DockerHub/aggregator_node/data:/home/aggregator_user/data henriqueabv/aggregator_node:latest
-
-
-
 docker run --name sftp_server --network fog_network -p 2222:22 -v /c/Users/henri/Documents/GitHub/dissertation/DockerHub/aggregator_node/data:/home/aggregator_user/data henriqueabv/aggregator_node:latest
