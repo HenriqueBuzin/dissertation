@@ -4,6 +4,7 @@
 import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_socketio import SocketIO
+from dotenv import load_dotenv
 from utils import (
     create_load_balancer,
     create_measurement_nodes,
@@ -12,20 +13,22 @@ from utils import (
     save_json,
     normalize_container_name,
     group_containers_for_display,
-    create_aggregator,
-    get_available_port,
     get_load_balancer_ports,
     get_docker_client
 )
 
-# Configurações globais
-BASE_PATH = os.getcwd()
-JSON_PATH = os.path.join(BASE_PATH, "jsons")
+# Carregar variáveis do arquivo .env
+load_dotenv()
 
-CONFIG_FILE = os.path.join(JSON_PATH, "config.json")
-BAIRROS_MEDIDORES_FILE = os.path.join(JSON_PATH, "bairros_medidores.json")
-DOWNLOAD_URLS_FILE = os.path.join(JSON_PATH, "download_urls.json")
-CONTAINER_TYPES_FILE = os.path.join(JSON_PATH, "container_types.json")
+# Configurações globais usando .env
+CONFIG_FILE = os.getenv("CONFIG_FILE")
+BAIRROS_MEDIDORES_FILE = os.getenv("BAIRROS_MEDIDORES_FILE")
+DOWNLOAD_URLS_FILE = os.getenv("DOWNLOAD_URLS_FILE")
+CONTAINER_TYPES_FILE = os.getenv("CONTAINER_TYPES_FILE")
+
+# Verificação de variáveis essenciais
+if not all([CONFIG_FILE, BAIRROS_MEDIDORES_FILE, DOWNLOAD_URLS_FILE, CONTAINER_TYPES_FILE]):
+    raise ValueError("As variáveis CONFIG_FILE, BAIRROS_MEDIDORES_FILE, DOWNLOAD_URLS_FILE e CONTAINER_TYPES_FILE precisam estar definidas no arquivo .env.")
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "secret!"
@@ -211,7 +214,15 @@ def stop_all(bairro):
 @app.route("/stop_group/<container_type>/<bairro>", methods=["POST"])
 def stop_group(container_type, bairro):
     """Para e remove todos os contêineres de um tipo específico em um bairro."""
+    if not container_type or container_type == "null":
+        print("Erro: Tipo de contêiner não fornecido.")
+        return "Tipo de contêiner não fornecido.", 400
+
     containers = list_containers(filters={"label": f"type={container_type}"})
+    if not containers:
+        print(f"Nenhum contêiner encontrado para o tipo {container_type} no bairro {bairro}.")
+        return redirect(url_for("manage_containers", bairro=bairro))
+
     for container in containers:
         try:
             if container.status in ["running", "paused"]:

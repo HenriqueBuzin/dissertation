@@ -10,7 +10,6 @@ def group_containers_for_display(containers, container_types):
         grouped_containers[container_type_id]["containers"].append(
             {
                 "id": container.id,
-                "short_id": container.short_id,
                 "name": container.name,
                 "status": container.status,
             }
