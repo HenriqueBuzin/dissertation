@@ -3,31 +3,36 @@
         {
             "name": "load_balancer",
             "image": "henriqueabv/load_balancer",
-            "type": 1
+            "type": 1,
+            "type_display": "Load Balancer"
         },
         {
             "name": "medidor_http_energia",
             "image": "henriqueabv/http_data_sender",
             "type": 3,
-            "data_id": "data_energy"
+            "data_id": "data_energy",
+            "type_display": "Medidor"
         },
         {
             "name": "medidor_coap_energia",
             "image": "henriqueabv/coap_data_sender",
             "type": 3,
-            "data_id": "data_energy"
+            "data_id": "data_energy",
+            "type_display": "Medidor"
         },
         {
             "name": "medidor_http_agua",
             "image": "henriqueabv/http_data_sender",
             "type": 3,
-            "data_id": "data_water"
+            "data_id": "data_water",
+            "type_display": "Medidor"
         },
         {
             "name": "medidor_coap_agua",
             "image": "henriqueabv/coap_data_sender",
             "type": 3,
-            "data_id": "data_water"
+            "data_id": "data_water",
+            "type_display": "Medidor"
         }
     ]
 }
