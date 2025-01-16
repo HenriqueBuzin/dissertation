@@ -1,3 +1,5 @@
+# app.py
+
 # Importações padrão
 import os
 import json
@@ -455,11 +457,13 @@ def create_measurement_nodes(bairro, container_name, image, quantity, load_balan
             continue
 
         try:
+            network_name = create_network_for_bairro(bairro)
             client.containers.run(
                 image,
                 name=full_container_name,
                 detach=True,
                 environment={
+                    "AGGREGATOR_URL": f"http://{bairro}_aggregator:8000",
                     "HTTP_SERVER_URL": load_balancer_http_url,
                     "COAP_SERVER_URL": load_balancer_coap_url,
                     "CSV_URL": download_url,
@@ -507,6 +511,37 @@ def save_container_types(data):
     """Salva os tipos de contêineres no arquivo JSON."""
     with open(CONTAINER_TYPES_FILE, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4)
+
+def create_network_for_bairro(bairro):
+    """Cria uma rede Docker para o bairro, se não existir."""
+    network_name = f"{bairro}_network"
+    existing_networks = [net.name for net in client.networks.list()]
+    if network_name not in existing_networks:
+        client.networks.create(network_name, driver="bridge")
+        print(f"Rede '{network_name}' criada com sucesso.")
+    return network_name
+
+def create_aggregator(bairro):
+    network_name = create_network_for_bairro(bairro)
+    aggregator_name = f"{bairro}_aggregator"
+    existing_aggregators = client.containers.list(all=True, filters={"name": aggregator_name})
+
+    if not existing_aggregators:
+        client.containers.run(
+            "henriqueabv/aggregator_node:latest",
+            name=aggregator_name,
+            detach=True,
+            network=network_name,
+            environment={
+                "AGGREGATOR_PORT": 8000,
+                "BAIRRO": bairro,
+            },
+            ports={"8000/tcp": None},  # Mapeamento dinâmico
+            labels={"type": "aggregator"}
+        )
+        print(f"Agregador criado para o bairro '{bairro}'.")
+    else:
+        print(f"Agregador já existe para o bairro '{bairro}'.")
 
 # === INICIALIZAÇÃO DA APLICAÇÃO ===
 
