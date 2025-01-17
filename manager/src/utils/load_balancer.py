@@ -1,5 +1,6 @@
 # utils/load_balancer.py
 
+import docker
 from .docker_utils import client
 from .network import get_available_port
 from .general import normalize_container_name

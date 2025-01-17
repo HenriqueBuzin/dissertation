@@ -16,6 +16,7 @@ CONFIG_FILE = os.getenv("CONFIG_FILE")
 BAIRROS_MEDIDORES_FILE = os.getenv("BAIRROS_MEDIDORES_FILE")
 DOWNLOAD_URLS_FILE = os.getenv("DOWNLOAD_URLS_FILE")
 
+# Verificar se todas as variáveis necessárias estão definidas
 if not CONFIG_FILE or not BAIRROS_MEDIDORES_FILE or not DOWNLOAD_URLS_FILE:
     raise ValueError("As variáveis CONFIG_FILE, BAIRROS_MEDIDORES_FILE e DOWNLOAD_URLS_FILE precisam ser definidas no .env.")
 
@@ -33,6 +34,9 @@ def create_measurement_nodes(
         load_balancer_http_port (int): Porta HTTP do Load Balancer.
         load_balancer_coap_port (int): Porta CoAP do Load Balancer.
         container_types (dict): Tipos de contêineres disponíveis.
+
+    Raises:
+        ValueError: Caso haja problemas com a configuração ou URLs.
     """
     # Carregar os dados de configuração e URLs
     config_data = load_json(CONFIG_FILE, default={})
@@ -41,26 +45,22 @@ def create_measurement_nodes(
     # URLs do Load Balancer
     load_balancer_http_url = f"http://host.docker.internal:{load_balancer_http_port}/receive_data"
     load_balancer_coap_url = f"coap://host.docker.internal:{load_balancer_coap_port}/receive_data"
-
     print(f"[DEBUG] URLs do Load Balancer: HTTP: {load_balancer_http_url}, CoAP: {load_balancer_coap_url}")
 
     # Buscar o contêiner correspondente no config.json
     container_data = next((c for c in config_data.get("containers", []) if c["name"] == container_name), None)
     if not container_data:
-        print(f"Erro: Contêiner {container_name} não encontrado em {CONFIG_FILE}.")
-        return
+        raise ValueError(f"Erro: Contêiner {container_name} não encontrado em {CONFIG_FILE}.")
 
     # Obter o data_id do contêiner
     data_id = container_data.get("data_id")
     if not data_id:
-        print(f"Erro: Nenhum 'data_id' configurado para o contêiner {container_name}.")
-        return
+        raise ValueError(f"Erro: Nenhum 'data_id' configurado para o contêiner {container_name}.")
 
     # Buscar a URL correspondente ao data_id
     download_url = data_urls.get(data_id)
     if not download_url:
-        print(f"Erro: Nenhuma URL encontrada para 'data_id'={data_id} no contêiner {container_name}.")
-        return
+        raise ValueError(f"Erro: Nenhuma URL encontrada para 'data_id'={data_id} no contêiner {container_name}.")
 
     # Obter todos os IDs existentes para evitar duplicatas
     existing_containers = list_containers(filters={"name": f"{normalize_container_name(bairro)}_{container_name}_"})
@@ -70,6 +70,9 @@ def create_measurement_nodes(
         if container.name.startswith(f"{normalize_container_name(bairro)}_{container_name}_")
     }
 
+    # Determinar o tipo para os labels
+    container_type = container_data.get("type", "unknown")
+
     # Criar novos nós sequenciais
     for _ in range(quantity):
         # Encontrar o próximo ID disponível
@@ -77,7 +80,6 @@ def create_measurement_nodes(
         existing_ids.add(node_id)
 
         full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{node_id}"
-
         print(f"[DEBUG] Criando nó {full_container_name} com URL de download {download_url}")
 
         # Configurar as variáveis de ambiente
@@ -90,9 +92,14 @@ def create_measurement_nodes(
             "NODE_ID": str(node_id),
         }
 
+        # Configurar os labels
+        labels = {
+            "type": str(container_type)
+        }
+
         # Criar o nó usando a função `create_node`
         try:
-            create_node(bairro, full_container_name, image, environment)
+            create_node(bairro, full_container_name, image, environment, labels=labels)
             print(f"[SUCESSO] Nó {full_container_name} criado com sucesso.")
         except Exception as e:
-            print(f"Erro ao criar o nó {full_container_name}: {e}")
+            print(f"[ERRO] Falha ao criar o nó {full_container_name}: {e}")

@@ -48,13 +48,15 @@
     {% endif %}
 
     <!-- Tabelas de contêineres agrupados por tipo -->
-    {% for group in grouped_containers.values() %}
+    {% for group_key, group in grouped_containers.items() %}
         <h4 class="mt-3">Grupo: {{ group.display_name }}</h4> <!-- Exibe o display_name do grupo -->
 
-        <!-- Botão para parar todos os contêineres de um grupo -->
+         <!-- Botão para parar todos os contêineres de um grupo -->
         <div class="mb-3">
-            <form method="POST" action="{{ url_for('stop_group', container_type=group.id, bairro=bairro) }}" class="d-inline-block">
-                <button type="submit" class="btn btn-warning">Parar Todos do Grupo {{ group.display_name }}</button>
+            <form method="POST" action="{{ url_for('stop_group', container_type=group_key, bairro=bairro) }}" class="d-inline-block">
+                <button type="submit" class="btn btn-warning">
+                    Parar Todos do Grupo {{ group.display_name }}
+                </button>
             </form>
         </div>
 

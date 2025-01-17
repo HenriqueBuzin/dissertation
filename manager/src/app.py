@@ -14,7 +14,8 @@ from utils import (
     normalize_container_name,
     group_containers_for_display,
     get_load_balancer_ports,
-    get_docker_client
+    get_docker_client,
+    find_display_name_by_id
 )
 
 # Carregar variáveis do arquivo .env
@@ -46,61 +47,71 @@ def bairros():
 @app.route("/manage/<bairro>", methods=["GET", "POST"])
 def manage_containers(bairro):
     """Gerencia os contêineres de um bairro específico."""
+    # Carrega configurações e tipos
     config = load_json(CONFIG_FILE, default={"containers": []})
     container_types = load_json(CONTAINER_TYPES_FILE, default={})
     containers = list_containers(filters={"name": normalize_container_name(bairro)})
 
-    # Obtém as portas do Load Balancer
+    # Verifica se já existe LB
     load_balancer_http_port, load_balancer_coap_port = get_load_balancer_ports(containers)
     has_load_balancer = load_balancer_http_port is not None and load_balancer_coap_port is not None
+    
+    # Descobre qual ID corresponde ao "load_balancer"
+    lb_id = container_types.get("load_balancer", {}).get("id")
 
-    # Monta as opções para o select
-    select_options = [
-        {
-            "name": container["name"],
-            "display_name": next(
-                (type_info["display_name"] for key, type_info in container_types.items() if type_info["id"] == container["type"]),
-                "Desconhecido"
-            )
-        }
-        for container in config["containers"]
-        if (not has_load_balancer and container["type"] == container_types.get("load_balancer", {}).get("id")) or
-           (has_load_balancer and container["type"] != container_types.get("load_balancer", {}).get("id"))
-    ]
+    # === AJUSTE AQUI: usar find_display_name_by_id ===
+    select_options = []
+    for c in config["containers"]:
+        ctype_id = c["type"]
+        if (not has_load_balancer and ctype_id == lb_id) or (has_load_balancer and ctype_id != lb_id):
+            display_name = find_display_name_by_id(container_types, ctype_id)
+            select_options.append({
+                "name": c["name"],
+                "display_name": display_name
+            })
 
     if request.method == "POST":
+        # Processa criação
         container_name = request.form.get("container_name")
         container_data = next((c for c in config["containers"] if c["name"] == container_name), None)
         container_type = container_data["type"] if container_data else None
         image = container_data["image"] if container_data else None
-        quantity = 1 if container_type == container_types.get("load_balancer", {}).get("id") else int(request.form.get("quantity", 1))
+        quantity = 1 if container_type == lb_id else int(request.form.get("quantity", 1))
 
         if not image:
-            print(f"Imagem não encontrada para {container_name}. Verifique a configuração.")
+            print(f"[ERRO] Imagem não encontrada para o contêiner '{container_name}'.")
             return redirect(url_for("manage_containers", bairro=bairro))
 
-        print(f"Iniciando criação do container '{container_name}' com a imagem '{image}'")
+        print(f"[INFO] Iniciando criação do contêiner '{container_name}' com a imagem '{image}'.")
 
-        # Criação do Load Balancer
-        if container_type == container_types.get("load_balancer", {}).get("id") and not has_load_balancer:
+        # Se for load_balancer e ainda não existir
+        if container_type == lb_id and not has_load_balancer:
             http_port, coap_port = create_load_balancer(bairro, container_name, image, container_types)
             if http_port and coap_port:
                 load_balancer_http_port = http_port
                 load_balancer_coap_port = coap_port
                 has_load_balancer = True
             else:
-                print("Erro ao criar o Load Balancer.")
+                print("[ERRO] Falha ao criar o Load Balancer.")
                 return redirect(url_for("manage_containers", bairro=bairro))
 
-        # Criação dos Medidores
-        if has_load_balancer:
+        # Se já existe LB e esse contêiner for medidor (ou outro tipo)
+        if has_load_balancer and container_type != lb_id:
             create_measurement_nodes(
-                bairro, container_name, image, quantity, load_balancer_http_port, load_balancer_coap_port, container_types
+                bairro, container_name, image, quantity,
+                load_balancer_http_port, load_balancer_coap_port, container_types
             )
 
         return redirect(url_for("manage_containers", bairro=bairro))
 
+    # Agrupa contêineres para exibição
     grouped_containers = group_containers_for_display(containers, container_types)
+
+    # Logs de debug
+    for group_key, group in grouped_containers.items():
+        print(f"[DEBUG] Grupo: {group.get('display_name', 'Sem Nome')} ({group_key})")
+        for container in group["containers"]:
+            print(f" - {container['name']} (Status: {container['status']})")
 
     return render_template(
         "manage_containers.html",
@@ -215,12 +226,12 @@ def stop_all(bairro):
 def stop_group(container_type, bairro):
     """Para e remove todos os contêineres de um tipo específico em um bairro."""
     if not container_type or container_type == "null":
-        print("Erro: Tipo de contêiner não fornecido.")
+        print("[ERRO] Tipo de contêiner não fornecido.")
         return "Tipo de contêiner não fornecido.", 400
 
     containers = list_containers(filters={"label": f"type={container_type}"})
     if not containers:
-        print(f"Nenhum contêiner encontrado para o tipo {container_type} no bairro {bairro}.")
+        print(f"[INFO] Nenhum contêiner encontrado para o tipo {container_type} no bairro {bairro}.")
         return redirect(url_for("manage_containers", bairro=bairro))
 
     for container in containers:
@@ -228,9 +239,10 @@ def stop_group(container_type, bairro):
             if container.status in ["running", "paused"]:
                 container.stop()
             container.remove()
-            print(f"Contêiner {container.name} do tipo {container_type} removido com sucesso.")
+            print(f"[SUCESSO] Contêiner {container.name} do tipo {container_type} removido com sucesso.")
         except Exception as e:
-            print(f"Erro ao remover o contêiner {container.name}: {e}")
+            print(f"[ERRO] Falha ao remover o contêiner {container.name}: {e}")
+
     return redirect(url_for("manage_containers", bairro=bairro))
 
 @app.route("/start_container/<container_id>/<bairro>", methods=["POST"])
