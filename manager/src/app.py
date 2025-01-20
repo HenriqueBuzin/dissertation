@@ -131,16 +131,21 @@ def config_imagens():
     if request.method == "POST":
         container_name = request.form.get("name")
         image = request.form.get("image")
-        container_type = request.form.get("type")
-        if container_name and image and container_type:
+        container_type_key = request.form.get("type")
+        if container_name and image and container_type_key:
+            # Pega o ID numérico pelo 'key'
+            type_id = container_types[container_type_key]["id"]
             new_container = {
                 "name": container_name,
                 "image": image,
-                "type": container_type,
+                "type": type_id,
             }
             config["containers"].append(new_container)
             save_json(CONFIG_FILE, config)
         return redirect(url_for("config_imagens"))
+
+    for c in config["containers"]:
+        c["type_display"] = find_display_name_by_id(container_types, c["type"])
 
     return render_template(
         "config_imagens.html",

@@ -23,7 +23,7 @@ __all__ = [
     "create_measurement_nodes",
     "normalize_container_name",
     "group_containers_for_display",
-    "get_load_balancer_ports", 
+    "get_load_balancer_ports",
     "get_docker_client",
     "find_display_name_by_id"
 ]
