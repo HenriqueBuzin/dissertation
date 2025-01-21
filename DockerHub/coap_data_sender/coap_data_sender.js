@@ -1,3 +1,5 @@
+// coap_data_sender.js 
+
 const coap = require('coap');
 const axios = require('axios');
 
@@ -39,16 +41,25 @@ async function downloadCsv(url) {
         console.log(`Baixando CSV de ${url}...`);
         const response = await axios.get(url);
         const lines = response.data.split("\n");
-        const headers = lines.shift().split(",");
+
+        // Depuração: Imprimir as primeiras linhas para verificar o delimitador
+        console.log("Primeiras 5 linhas do CSV baixado:", flush=true);
+        for (let i = 0; i < Math.min(5, lines.length); i++) {
+            console.log(lines[i]);
+        }
+
+        // Usar o delimitador correto ';'
+        const headers = lines.shift().split(";").map(header => header.trim());
         const data = lines
             .filter((line) => line.trim())
             .map((line) => {
-                const values = line.split(",");
+                const values = line.split(";").map(value => value.trim());
                 return headers.reduce((acc, header, index) => {
-                    acc[header.trim()] = values[index]?.trim();
+                    acc[header] = values[index] || null;
                     return acc;
                 }, {});
             });
+
         console.log("CSV processado com sucesso:", data);
         return data;
     } catch (error) {
@@ -85,6 +96,12 @@ async function main() {
     const dataList = await downloadCsv(CSV_URL);
 
     for (const data of dataList) {
+        // Verificar se os campos esperados estão presentes
+        if (!data.date || !data.time) {
+            console.warn("Aviso: Linha com dados incompletos ignorada:", data);
+            continue;
+        }
+
         const dataToSend = {
             type: "consumption",
             id: uniqueId,

@@ -41,7 +41,7 @@ def get_available_port(start_port=5000, end_port=6000):
     Raises:
         RuntimeError: Se nenhuma porta estiver disponível no intervalo especificado.
     """
-     
+    
     for port in range(start_port, end_port):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             if sock.connect_ex(('localhost', port)) != 0:

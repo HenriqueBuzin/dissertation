@@ -1,37 +1,56 @@
+# coap_server.py
+
 import asyncio
 from aiocoap import Context, Message, resource, Code
 import logging
 
-# Configuração de log
+# Import the HTTP distribution function
+from http_server import distribute_data_via_http
+
+# Configure logging
 logging.basicConfig(level=logging.INFO)
 
-# Recurso para lidar com /receive_data no servidor CoAP
-class CoAPServerResource(resource.Resource):
+# Resource to handle /receive_data on CoAP server
+class CoAPReceiveDataResource(resource.Resource):
+    def __init__(self, available_nodes):
+        super().__init__()
+        self.available_nodes = available_nodes
+
     async def render_post(self, request):
         try:
-            # Decodifica o payload recebido
+            # Decode the received payload
             payload = request.payload.decode("utf-8")
-            logging.info(f"CoAP: Dados recebidos: {payload}")
-            
-            # Retorna resposta de sucesso
-            return Message(payload=b"CoAP: Dados recebidos com sucesso", code=Code.CONTENT)
-        except Exception as e:
-            logging.error(f"Erro no servidor CoAP: {e}")
-            
-            # Retorna resposta de erro interno
-            return Message(payload=b"Erro no servidor CoAP", code=Code.INTERNAL_SERVER_ERROR)
+            data = json.loads(payload)
+            data_type = data.get("type")
 
-# Inicia o servidor CoAP
-async def start_coap_server(port):
+            if not data_type:
+                logging.warning("CoAP: Data received without specified type.")
+                return Message(payload=b"Error: Data type not specified.", code=Code.BAD_REQUEST)
+
+            logging.info(f"CoAP: Data received: {data}")
+
+            # Delegate data distribution via HTTP
+            await distribute_data_via_http(data_type, data, self.available_nodes)
+
+            # Return success response
+            return Message(payload=b"CoAP: Data received successfully", code=Code.CONTENT)
+        except Exception as e:
+            logging.error(f"CoAP Server Error: {e}")
+            # Return internal server error response
+            return Message(payload=b"CoAP Server Error", code=Code.INTERNAL_SERVER_ERROR)
+
+# Start the CoAP server
+async def start_coap_server(port, available_nodes):
     try:
         root = resource.Site()
-        root.add_resource(("receive_data",), CoAPServerResource())
-        
-        # Configura o servidor CoAP para escutar na porta especificada
-        logging.info(f"CoAP: Servidor rodando na porta {port}...")
+        receive_data_resource = CoAPReceiveDataResource(available_nodes)
+        root.add_resource(("receive_data",), receive_data_resource)
+
+        # Configure the CoAP server to listen on the specified port
+        logging.info(f"CoAP: Server running on port {port}...")
         await Context.create_server_context(root, bind=("0.0.0.0", port))
-        
-        # Mantém o servidor rodando
+
+        # Keep the server running
         await asyncio.get_event_loop().create_future()
     except Exception as e:
-        logging.error(f"Erro ao iniciar o servidor CoAP: {e}")
+        logging.error(f"Error starting CoAP server: {e}")

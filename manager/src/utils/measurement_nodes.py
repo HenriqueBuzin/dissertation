@@ -7,6 +7,7 @@ from .config import load_json
 from .general import normalize_container_name
 from .docker_utils import client, list_containers
 from .network import get_available_port, create_or_get_bairro_network
+import docker  # Assegure-se de ter importado o módulo docker
 
 # Carregar variáveis do arquivo .env
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../.env"))
@@ -21,7 +22,6 @@ if not CONFIG_FILE or not BAIRROS_MEDIDORES_FILE or not DOWNLOAD_URLS_FILE:
     raise ValueError("As variáveis CONFIG_FILE, BAIRROS_MEDIDORES_FILE e DOWNLOAD_URLS_FILE precisam estar definidas no .env.")
 
 def create_measurement_node(bairro, full_container_name, image, environment, labels):
-    
     """
     Cria um nó de medição (medidor) em uma rede Docker associada a um bairro.
 
@@ -42,20 +42,12 @@ def create_measurement_node(bairro, full_container_name, image, environment, lab
     Raises:
         docker.errors.APIError: Caso ocorra um erro durante a criação ou execução do contêiner.
     """
-
     try:
         http_port = get_available_port()
         coap_port = get_available_port(http_port + 1)
 
         # Criar/obter a rede do bairro
         network_name = create_or_get_bairro_network(bairro)
-
-        # Verificar e remover contêineres antigos com o mesmo nome
-        existing_containers = client.containers.list(all=True, filters={"name": full_container_name})
-        for container in existing_containers:
-            print(f"Removendo contêiner antigo: {full_container_name}")
-            container.stop()
-            container.remove()
 
         # Criar o contêiner
         client.containers.run(
@@ -80,7 +72,6 @@ def create_measurement_node(bairro, full_container_name, image, environment, lab
 def create_measurement_nodes(
     bairro, container_name, image, quantity, load_balancer_http_port, load_balancer_coap_port
 ):
-    
     """
     Cria múltiplos nós de medição e os conecta ao Load Balancer do bairro.
 
@@ -98,17 +89,11 @@ def create_measurement_nodes(
 
     Raises:
         ValueError: Caso alguma configuração ou URL necessária não seja encontrada.
-
-    Behavior:
-        1. Carrega os dados do arquivo de configuração (`config.json`) e as URLs de download.
-        2. Verifica contêineres existentes para evitar duplicação de IDs.
-        3. Gera nomes exclusivos para cada novo nó e monta as configurações necessárias.
-        4. Cria os nós de medição chamando a função `create_measurement_node`.
     """
-    
     # Carregar os dados de configuração e URLs
     config_data = load_json(CONFIG_FILE, default={})
     data_urls = load_json(DOWNLOAD_URLS_FILE, default={})
+    bairros_medidores = load_json(BAIRROS_MEDIDORES_FILE, default={})
 
     # URLs do Load Balancer
     load_balancer_http_url = f"http://host.docker.internal:{load_balancer_http_port}/receive_data"
@@ -118,44 +103,82 @@ def create_measurement_nodes(
     # Buscar o contêiner correspondente no config.json
     container_data = next((c for c in config_data.get("containers", []) if c["name"] == container_name), None)
     if not container_data:
-        raise ValueError(f"Erro: Contêiner {container_name} não encontrado em {CONFIG_FILE}.")
+        raise ValueError(f"Erro: Contêiner '{container_name}' não encontrado em {CONFIG_FILE}.")
 
     # Obter o data_id do contêiner
     data_id = container_data.get("data_id")
     if not data_id:
-        raise ValueError(f"Erro: Nenhum 'data_id' configurado para o contêiner {container_name}.")
+        raise ValueError(f"Erro: Nenhum 'data_id' configurado para o contêiner '{container_name}'.")
 
     # Buscar a URL correspondente ao data_id
     download_url = data_urls.get(data_id)
     if not download_url:
-        raise ValueError(f"Erro: Nenhuma URL encontrada para 'data_id'={data_id} no contêiner {container_name}.")
+        raise ValueError(f"Erro: Nenhuma URL encontrada para 'data_id'={data_id} no contêiner '{container_name}'.")
 
     # Verificar contêineres existentes
-    existing_containers = list_containers(filters={"name": f"{normalize_container_name(bairro)}_{container_name}_"})
+    normalized_bairro = normalize_container_name(bairro)
+    existing_containers = list_containers(filters={"name": f"{normalized_bairro}_{container_name}_"})
     existing_ids = {
         int(container.name.split("_")[-1])
         for container in existing_containers
-        if container.name.startswith(f"{normalize_container_name(bairro)}_{container_name}_")
+        if container.name.startswith(f"{normalized_bairro}_{container_name}_")
     }
 
     # Determinar o tipo para os labels
     container_type = container_data.get("type", "unknown")
 
-    # Criar múltiplos nós
-    for _ in range(quantity):
-        # Encontrar o próximo ID disponível
-        node_id = next(x for x in range(1, quantity + len(existing_ids) + 1) if x not in existing_ids)
+    # Verificar se o bairro existe no bairros_medidores
+    if bairro not in bairros_medidores:
+        raise ValueError(f"Erro: Bairro '{bairro}' não encontrado em {BAIRROS_MEDIDORES_FILE}.")
+
+    # Obter os nós do bairro
+    nodes = bairros_medidores[bairro].get("nodes", {})
+    if not nodes:
+        raise ValueError(f"Erro: Nenhum nó encontrado para o bairro '{bairro}' em {BAIRROS_MEDIDORES_FILE}.")
+
+    # Selecionar os nós que ainda não foram criados
+    selected_nodes = []
+    for node_key, node_info in sorted(nodes.items(), key=lambda x: int(x[0])):
+        node_id = node_info.get("id")
+        street = node_info.get("street")
+
+        if node_id is None or street is None:
+            print(f"[AVISO] Nó '{node_key}' do bairro '{bairro}' está faltando 'id' ou 'street'. Ignorando...", flush=True)
+            continue
+
+        if node_id in existing_ids:
+            print(f"[AVISO] Nó com 'id'={node_id} já existe. Ignorando...", flush=True)
+            continue
+
+        selected_nodes.append((node_key, node_info))
+        if len(selected_nodes) == quantity:
+            break
+
+    if not selected_nodes:
+        print(f"[INFO] Nenhum nó disponível para criar no bairro '{bairro}'.", flush=True)
+        return
+
+    if len(selected_nodes) < quantity:
+        print(f"[INFO] Apenas {len(selected_nodes)} nós disponíveis para criar no bairro '{bairro}'.", flush=True)
+
+    for node_key, node_info in selected_nodes:
+        node_id = node_info.get("id")
+        street = node_info.get("street")
+
         existing_ids.add(node_id)
 
-        full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{node_id}"
-        print(f"[DEBUG] Criando nó {full_container_name} com URL de download {download_url}")
+        full_container_name = f"{normalized_bairro}_{container_name}_{node_id}"
+        print(f"[DEBUG] Criando nó '{full_container_name}' com URL de download '{download_url}'")
 
         # Montar environment
         environment = {
             "HTTP_SERVER_URL": load_balancer_http_url,
             "COAP_SERVER_URL": load_balancer_coap_url,
             "CSV_URL": download_url,
-            "INSTANCE_DATA": json.dumps({"node_id": str(node_id)}),
+            "INSTANCE_DATA": json.dumps({
+                "id": node_id,      # ID único para o medidor
+                "street": street    # Endereço do medidor
+            }),
             "BAIRRO": bairro,
             "NODE_ID": str(node_id),
         }

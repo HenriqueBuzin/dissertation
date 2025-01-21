@@ -34,13 +34,6 @@ def create_load_balancer(bairro, container_name, image, container_types):
         # Normalizar o nome do contêiner
         full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
 
-        # Verificar e remover contêineres antigos com o mesmo nome
-        existing_containers = client.containers.list(all=True, filters={"name": full_container_name})
-        for container in existing_containers:
-            print(f"Removendo contêiner antigo: {full_container_name}")
-            container.stop()
-            container.remove()
-
         # Criar o Load Balancer
         client.containers.run(
             image,

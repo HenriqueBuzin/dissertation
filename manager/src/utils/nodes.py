@@ -6,7 +6,7 @@ from .general import normalize_container_name
 from .network import get_available_port, create_or_get_bairro_network
 
 def create_node(bairro, container_name, image, container_types, load_balancer_url):
-    
+
     """
     Cria um nó de névoa e o conecta ao Load Balancer do bairro.
 
@@ -28,12 +28,6 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
         network_name = create_or_get_bairro_network(bairro)
 
         full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
-
-        existing_containers = client.containers.list(all=True, filters={"name": full_container_name})
-        for container in existing_containers:
-            print(f"Removendo contêiner antigo: {full_container_name}")
-            container.stop()
-            container.remove()
 
         client.containers.run(
             image,
