@@ -25,6 +25,7 @@ COPY . /app
 
 # Instala dependências Python
 RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
 RUN pip install -r processing/requirements.txt
 RUN pip install -r protocols/requirements.txt
 RUN pip install -r service/requirements.txt
