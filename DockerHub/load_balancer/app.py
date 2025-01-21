@@ -16,8 +16,8 @@ async def main():
 
     # Initialize the structure to track available nodes
     available_nodes = {
-        "consumption_kwh_per_hour": [],
         "consumption_m3_per_hour": [],
+        "consumption_kwh_per_hour": [],
         # Adicione outros tipos específicos conforme necessário
     }
 

@@ -3,12 +3,21 @@
 import asyncio
 from aiocoap import Context, Message, resource, Code
 import logging
+import json
 
 # Import the HTTP distribution function
 from http_server import distribute_data_via_http
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
+
+# Função para determinar o tipo de dado com base no último campo de consumo
+def determine_data_type(data):
+    keys = list(data.keys())
+    last_key = keys[-1] if keys else None
+    if last_key and last_key.startswith('consumption_'):
+        return last_key
+    return None
 
 # Resource to handle /receive_data on CoAP server
 class CoAPReceiveDataResource(resource.Resource):
@@ -21,11 +30,13 @@ class CoAPReceiveDataResource(resource.Resource):
             # Decode the received payload
             payload = request.payload.decode("utf-8")
             data = json.loads(payload)
-            data_type = data.get("type")
+            
+            # Determinar o tipo de dado com base no último campo de consumo
+            data_type = determine_data_type(data)
 
             if not data_type:
-                logging.warning("CoAP: Data received without specified type.")
-                return Message(payload=b"Error: Data type not specified.", code=Code.BAD_REQUEST)
+                logging.warning("CoAP: Data received without determined type.")
+                return Message(payload=b"Error: Data type not determined.", code=Code.BAD_REQUEST)
 
             logging.info(f"CoAP: Data received: {data}")
 

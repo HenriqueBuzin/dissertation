@@ -8,6 +8,14 @@ import asyncio
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
+# Função para determinar o tipo de dado com base no último campo de consumo
+def determine_data_type(data):
+    keys = list(data.keys())
+    last_key = keys[-1] if keys else None
+    if last_key and last_key.startswith('consumption_'):
+        return last_key
+    return None
+
 # Função para distribuir dados via HTTP usando round-robin
 async def distribute_data_via_http(data_type, data, available_nodes, max_retries=3):
     nodes = available_nodes.get(data_type, [])
@@ -40,12 +48,13 @@ async def distribute_data_via_http(data_type, data, available_nodes, max_retries
 async def handle_receive_data(request, available_nodes):
     try:
         data = await request.json()
-        data_type = data.get("type")
-        data_content = data.get("data")
 
-        if not data_type or not data_content:
-            logging.warning("HTTP: Dados ou tipo ausente nos dados recebidos.")
-            return web.json_response({"status": "Erro: Dados ou tipo ausente."}, status=400)
+        # Determinar o tipo de dado com base no último campo de consumo
+        data_type = determine_data_type(data)
+
+        if not data_type:
+            logging.warning("HTTP: Tipo de dado não determinado a partir dos campos de consumo.")
+            return web.json_response({"status": "Erro: Tipo de dado não determinado."}, status=400)
 
         logging.info(f"HTTP: Dados recebidos: {data}")
 

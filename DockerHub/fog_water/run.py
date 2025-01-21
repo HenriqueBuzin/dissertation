@@ -11,14 +11,15 @@ def register_node():
     lb_url = os.getenv("LOAD_BALANCER_URL")      # ex: http://canasvieiras_load_balancer_1:5000
     node_id = os.getenv("FOG_NODE_NAME")         # ex: canasvieiras_nodo_energy_1
     data_type = os.getenv("NODE_TYPE", "consumption_m3_per_hour")   # ou "energy"; defina uma env ou use valor fixo
-    node_port = os.getenv("HTTP_PORT", "8000")   # porta interna onde o nó escuta requisições
+    # node_port = os.getenv("HTTP_PORT", "8000")   # porta interna onde o nó escuta requisições
+    node__internal_port = os.getenv("NODE_HTTP_PORT", "8000")
 
     if not lb_url or not node_id:
         print("Variáveis LOAD_BALANCER_URL ou FOG_NODE_NAME não definidas. Pulando registro...")
         return
 
     # Constrói a URL completa do endpoint de recepção de dados do nó
-    node_endpoint = f"http://{node_id}:{node_port}/receive_data"  # Assegure-se de que o Load Balancer pode resolver esse endpoint
+    node_endpoint = f"http://{node_id}:{node__internal_port}/receive_data"  # Assegure-se de que o Load Balancer pode resolver esse endpoint
 
     # Constrói os dados para enviar
     data = {

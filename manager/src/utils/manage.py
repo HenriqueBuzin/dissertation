@@ -66,6 +66,7 @@ def handle_manage_post(
     
     # Se já existe LB, vamos ver o que mais precisa criar
     if has_load_balancer and container_type != lb_id:
+        
         if container_type == medidor_id:
             create_measurement_nodes(
                 bairro, 
@@ -75,6 +76,7 @@ def handle_manage_post(
                 lb_http_port, 
                 lb_coap_port
             )
+            
         elif container_type == nodo_id:
             # Supondo que o LB foi criado como f"{normalize_container_name(bairro)}_load_balancer_1"
             lb_container_name = f"{normalize_container_name(bairro)}_load_balancer_1"
@@ -89,8 +91,10 @@ def handle_manage_post(
                 container_types=container_types,
                 load_balancer_url=lb_url
             )
+
         # elif container_type == aggregator_id:
         #     create_aggregator(...) # Exemplo
+
         else:
             print(f"[AVISO] Tipo {container_type} não mapeado para criação.")
         

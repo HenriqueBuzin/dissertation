@@ -31,13 +31,13 @@ async def run_http_server(protocol_layer):
             print("Processando dados de consumo...", flush=True)
             # Salva na camada de protocolo (Mongo ou Redis)
             protocol_layer.save_message(message)
-            return web.Response(text="HTTP: Consumption data received")
+            return web.Response(status=200, text="HTTP: Consumption data received")
 
         elif message_type == 'ftp':
             print("Processando detalhes do FTP...", flush=True)
             # Se handle_sftp_details_and_send for assíncrono:
             await handle_sftp_details_and_send(message)
-            return web.Response(text="HTTP: FTP details received")
+            return web.Response(status=200, text="HTTP: FTP details received")
 
         else:
             return web.Response(status=400, text="HTTP: Unknown message type")

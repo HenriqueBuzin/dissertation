@@ -96,18 +96,9 @@ def start_sending_data_http(data_list, http_url, unique_id, street):
     try:
         while True:  # Loop infinito
             for data in data_list:
-                # Determinar o tipo específico de consumo
-                consumption_type = None
-                for key in data.keys():
-                    if key.startswith("consumption_"):
-                        consumption_type = key
-                        break
-                if not consumption_type:
-                    print("Nenhum tipo de consumo encontrado no dado:", data, flush=True)
-                    continue
-
+                # Definir o tipo fixo como 'consumption'
                 data_to_send = {
-                    "type": consumption_type,  # Tipo específico
+                    "type": "consumption",  # Tipo fixo reconhecido pelo nó
                     "id": unique_id,
                     "street": street,
                     **data  # Incluir os dados de consumo específicos
