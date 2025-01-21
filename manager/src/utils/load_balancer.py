@@ -6,7 +6,23 @@ from .network import get_available_port, create_or_get_bairro_network  # <-- Imp
 from .general import normalize_container_name
 
 def create_load_balancer(bairro, container_name, image, container_types):
-    """Cria o Load Balancer com suporte a HTTP e CoAP."""
+
+    """
+    Cria um Load Balancer com suporte a HTTP e CoAP para o bairro especificado.
+
+    Args:
+        bairro (str): Nome do bairro para o qual o Load Balancer será criado.
+        container_name (str): Nome base do contêiner do Load Balancer.
+        image (str): Imagem Docker a ser usada para o Load Balancer.
+        container_types (dict): Dicionário contendo os tipos de contêineres e seus IDs.
+
+    Returns:
+        tuple: Um par contendo as portas HTTP e CoAP atribuídas ao Load Balancer ou (None, None) em caso de erro.
+
+    Raises:
+        docker.errors.APIError: Caso ocorra um erro ao interagir com a API do Docker.
+    """
+    
     try:
         # Obter portas disponíveis para HTTP e CoAP
         http_port = get_available_port()
@@ -36,8 +52,8 @@ def create_load_balancer(bairro, container_name, image, container_types):
                 "LOAD_BALANCER_COAP_PORT": str(coap_port),
             },
             ports={
-                "5000/tcp": http_port,  # Mapeia para acessar externamente via Host (opcional)
-                "5683/udp": coap_port,  # idem
+                "5000/tcp": http_port,
+                "5683/udp": coap_port,
             },
             labels={"type": str(container_types["load_balancer"]["id"])},
         )

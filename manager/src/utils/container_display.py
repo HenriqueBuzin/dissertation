@@ -1,6 +1,18 @@
 # utils/container_display.py
 
 def group_containers_for_display(containers, container_types):
+    
+    """
+    Agrupa contêineres para exibição com base em seus tipos.
+
+    Args:
+        containers (list): Lista de objetos de contêineres Docker.
+        container_types (dict): Dicionário mapeando os tipos de contêineres e suas informações.
+
+    Returns:
+        dict: Um dicionário onde cada grupo de contêineres é identificado por um tipo, com seus dados organizados.
+    """
+
     grouped_containers = {}
 
     # reverse_map: "1" -> {"key": "load_balancer", "display_name": "Load Balancer"}
@@ -38,7 +50,18 @@ def group_containers_for_display(containers, container_types):
     return grouped_containers
 
 def find_display_name_by_id(container_types, type_id):
-    """Busca o display_name cujo 'id' seja igual a type_id (numérico)."""
+
+    """
+    Busca o nome de exibição (`display_name`) de um tipo de contêiner com base em seu ID.
+
+    Args:
+        container_types (dict): Dicionário com os tipos de contêineres e suas informações.
+        type_id (int): ID do tipo de contêiner.
+
+    Returns:
+        str: Nome de exibição correspondente ao ID, ou "Desconhecido" se não encontrado.
+    """
+     
     for key, info in container_types.items():
         if info["id"] == type_id:
             return info["display_name"]

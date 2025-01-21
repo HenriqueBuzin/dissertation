@@ -1,8 +1,38 @@
+import os
+import requests
 import multiprocessing
 import signal
 from processing.main import main as processing_main
 from protocols.main import main as protocols_main
 from service.main import main as service_main
+
+def register_node():
+    """Registra o nó no Load Balancer, caso as variáveis de ambiente estejam definidas."""
+    lb_url = os.getenv("LOAD_BALANCER_URL")      # ex: http://canasvieiras_load_balancer_1:5000
+    node_name = os.getenv("FOG_NODE_NAME")       # ex: canasvieiras_nodo_energy_1
+    node_type = os.getenv("NODE_TYPE", "energy") # ou "agua"; defina uma env ou use valor fixo
+    node_port = os.getenv("HTTP_PORT", "8000")   # porta interna onde o nó escuta requisições
+
+    if not lb_url or not node_name:
+        print("Variáveis LOAD_BALANCER_URL ou FOG_NODE_NAME não definidas. Pulando registro...")
+        return
+
+    # Constrói os dados para enviar
+    data = {
+        "node_name": node_name,
+        "node_type": node_type,
+        "port": node_port
+    }
+
+    try:
+        # Supondo que o LB tenha a rota /register_node
+        r = requests.post(lb_url + "/register_node", json=data, timeout=5)
+        if r.status_code == 200:
+            print(f"[INFO] Registro do nó '{node_name}' no LB com sucesso!")
+        else:
+            print(f"[ERRO] Falha ao registrar no LB: {r.status_code} - {r.text}")
+    except Exception as e:
+        print(f"[ERRO] Exceção ao registrar no LB: {e}")
 
 def start_service(service_main, service_name):
     print(f"{service_name} iniciando...", flush=True)
@@ -28,6 +58,8 @@ def stop_services(processes):
 
 if __name__ == "__main__":
     try:
+        register_node()
+
         processes = {
             "Camada de Processamento": multiprocessing.Process(
                 target=start_service, args=(processing_main, "Camada de Processamento")

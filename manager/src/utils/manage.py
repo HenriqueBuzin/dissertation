@@ -3,9 +3,8 @@
 from flask import request, redirect, url_for
 from .load_balancer import create_load_balancer
 from .measurement_nodes import create_measurement_nodes
-from .docker_utils import list_containers
-from .network import get_load_balancer_ports
-# ... e o que mais você precisar
+from .nodes import create_node
+from .general import normalize_container_name
 
 def handle_manage_post(
     bairro,
@@ -15,10 +14,23 @@ def handle_manage_post(
     lb_http_port,
     lb_coap_port
 ):
+    
     """
-    Lida com o formulário POST enviado em /manage/<bairro>.
-    Decide se cria LB, medidores, nós, agregadores etc.
+    Lida com o formulário POST enviado em /manage/<bairro>. 
+    Decide a criação de diferentes tipos de contêineres, incluindo Load Balancer, medidores e nós.
+
+    Args:
+        bairro (str): Nome do bairro em que as ações serão executadas.
+        config (dict): Configurações carregadas do arquivo de configuração (geralmente `config.json`).
+        container_types (dict): Tipos de contêineres e seus respectivos IDs.
+        has_load_balancer (bool): Indica se o Load Balancer já foi criado para o bairro.
+        lb_http_port (int): Porta HTTP do Load Balancer.
+        lb_coap_port (int): Porta CoAP do Load Balancer.
+
+    Returns:
+        flask.Response: Redireciona para a página de gerenciamento de contêineres do bairro.
     """
+
     container_name = request.form.get("container_name")
     container_data = next(
         (c for c in config["containers"] if c["name"] == container_name), 
@@ -74,9 +86,19 @@ def handle_manage_post(
             )
 
         elif container_type == nodo_id:
-            # Chamar algo como create_fog_nodes(...) 
-            # ou sua função create_node(...) + environment para "nodo_nevoa"
-            pass
+            # Supondo que o LB foi criado como f"{normalize_container_name(bairro)}_load_balancer_1"
+            lb_container_name = f"{normalize_container_name(bairro)}_load_balancer_1"
+            # A porta interna do LB é 5000 (por convenção do LB).
+            lb_url = f"http://{lb_container_name}:5000"
+
+            # Agora chamamos a função create_node, passando lb_url
+            create_node(
+                bairro=bairro,
+                container_name=container_name,   # ex: "nodo_water"
+                image=image,
+                container_types=container_types,
+                load_balancer_url=lb_url
+            )
 
         # elif container_type == aggregator_id:
         #     create_aggregator(...) # Exemplo

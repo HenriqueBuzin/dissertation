@@ -6,31 +6,43 @@ from .general import normalize_container_name
 from .network import get_available_port, create_or_get_bairro_network
 
 def create_node(bairro, container_name, image, container_types, load_balancer_url):
+    
     """
     Cria um nó de névoa e o conecta ao Load Balancer do bairro.
+
+    Args:
+        bairro (str): Nome do bairro onde o nó será criado.
+        container_name (str): Nome base do contêiner.
+        image (str): Imagem Docker para o nó.
+        container_types (dict): Tipos de contêineres disponíveis no sistema.
+        load_balancer_url (str): URL do Load Balancer ao qual o nó será conectado.
+
+    Returns:
+        tuple: Um par contendo a porta HTTP e a porta CoAP atribuídas ao nó, ou (None, None) em caso de erro.
+
+    Raises:
+        docker.errors.APIError: Caso ocorra um erro ao interagir com a API do Docker.
     """
+
     try:
         http_port = get_available_port()
         coap_port = get_available_port(http_port + 1)
 
-        # Criar/obter rede do bairro
         network_name = create_or_get_bairro_network(bairro)
 
         full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
 
-        # Remover contêineres antigos
         existing_containers = client.containers.list(all=True, filters={"name": full_container_name})
         for container in existing_containers:
             print(f"Removendo contêiner antigo: {full_container_name}")
             container.stop()
             container.remove()
 
-        # Criar o nó de névoa
         client.containers.run(
             image,
             name=full_container_name,
             detach=True,
-            network=network_name,  # <-- Conecta na mesma rede
+            network=network_name,
             environment={
                 "LOAD_BALANCER_URL": load_balancer_url,
                 "FOG_NODE_NAME": full_container_name,
@@ -38,7 +50,7 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
                 "COAP_PORT": str(coap_port),
             },
             ports={
-                "8000/tcp": http_port,  # Se quiser expor externamente, senão pode remover
+                "8000/tcp": http_port,
                 "5683/udp": coap_port,
             },
             labels={"type": str(container_types["nodo_nevoa"]["id"])}
