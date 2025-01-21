@@ -2,7 +2,7 @@
 
 import docker
 from .docker_utils import client
-from .network import get_available_port
+from .network import get_available_port, create_or_get_bairro_network  # <-- Importar sua função de rede
 from .general import normalize_container_name
 
 def create_load_balancer(bairro, container_name, image, container_types):
@@ -11,6 +11,9 @@ def create_load_balancer(bairro, container_name, image, container_types):
         # Obter portas disponíveis para HTTP e CoAP
         http_port = get_available_port()
         coap_port = get_available_port(http_port + 1)
+
+        # Criar/obter rede do bairro
+        network_name = create_or_get_bairro_network(bairro)
 
         # Normalizar o nome do contêiner
         full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
@@ -27,13 +30,14 @@ def create_load_balancer(bairro, container_name, image, container_types):
             image,
             name=full_container_name,
             detach=True,
+            network=network_name,  # <-- Adiciona o contêiner nesta rede
             environment={
                 "LOAD_BALANCER_HTTP_PORT": str(http_port),
                 "LOAD_BALANCER_COAP_PORT": str(coap_port),
             },
             ports={
-                "5000/tcp": http_port,  # Porta HTTP
-                "5683/udp": coap_port,  # Porta CoAP
+                "5000/tcp": http_port,  # Mapeia para acessar externamente via Host (opcional)
+                "5683/udp": coap_port,  # idem
             },
             labels={"type": str(container_types["load_balancer"]["id"])},
         )

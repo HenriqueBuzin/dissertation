@@ -6,8 +6,6 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_socketio import SocketIO
 from dotenv import load_dotenv
 from utils import (
-    create_load_balancer,
-    create_measurement_nodes,
     list_containers,
     load_json,
     save_json,
@@ -15,7 +13,8 @@ from utils import (
     group_containers_for_display,
     get_load_balancer_ports,
     get_docker_client,
-    find_display_name_by_id
+    find_display_name_by_id,
+    handle_manage_post
 )
 
 # Carregar variáveis do arquivo .env
@@ -47,64 +46,43 @@ def bairros():
 @app.route("/manage/<bairro>", methods=["GET", "POST"])
 def manage_containers(bairro):
     """Gerencia os contêineres de um bairro específico."""
-    # Carrega configurações e tipos
     config = load_json(CONFIG_FILE, default={"containers": []})
     container_types = load_json(CONTAINER_TYPES_FILE, default={})
+    
     containers = list_containers(filters={"name": normalize_container_name(bairro)})
 
     # Verifica se já existe LB
     load_balancer_http_port, load_balancer_coap_port = get_load_balancer_ports(containers)
-    has_load_balancer = load_balancer_http_port is not None and load_balancer_coap_port is not None
+    has_load_balancer = (load_balancer_http_port is not None and load_balancer_coap_port is not None)
     
     # Descobre qual ID corresponde ao "load_balancer"
     lb_id = container_types.get("load_balancer", {}).get("id")
 
-    # === AJUSTE AQUI: usar find_display_name_by_id ===
+    # Monta as opções do <select>
     select_options = []
     for c in config["containers"]:
         ctype_id = c["type"]
+        display_name = find_display_name_by_id(container_types, ctype_id)
+        
+        # Regra: se não há LB, só mostra LB. Se há LB, mostra todos os outros
         if (not has_load_balancer and ctype_id == lb_id) or (has_load_balancer and ctype_id != lb_id):
-            display_name = find_display_name_by_id(container_types, ctype_id)
             select_options.append({
                 "name": c["name"],
                 "display_name": display_name
             })
 
+    # --- Se chegou um POST, delega para handle_manage_post ---
     if request.method == "POST":
-        # Processa criação
-        container_name = request.form.get("container_name")
-        container_data = next((c for c in config["containers"] if c["name"] == container_name), None)
-        container_type = container_data["type"] if container_data else None
-        image = container_data["image"] if container_data else None
-        quantity = 1 if container_type == lb_id else int(request.form.get("quantity", 1))
+        return handle_manage_post(
+            bairro=bairro,
+            config=config,
+            container_types=container_types,
+            has_load_balancer=has_load_balancer,
+            lb_http_port=load_balancer_http_port,
+            lb_coap_port=load_balancer_coap_port
+        )
 
-        if not image:
-            print(f"[ERRO] Imagem não encontrada para o contêiner '{container_name}'.")
-            return redirect(url_for("manage_containers", bairro=bairro))
-
-        print(f"[INFO] Iniciando criação do contêiner '{container_name}' com a imagem '{image}'.")
-
-        # Se for load_balancer e ainda não existir
-        if container_type == lb_id and not has_load_balancer:
-            http_port, coap_port = create_load_balancer(bairro, container_name, image, container_types)
-            if http_port and coap_port:
-                load_balancer_http_port = http_port
-                load_balancer_coap_port = coap_port
-                has_load_balancer = True
-            else:
-                print("[ERRO] Falha ao criar o Load Balancer.")
-                return redirect(url_for("manage_containers", bairro=bairro))
-
-        # Se já existe LB e esse contêiner for medidor (ou outro tipo)
-        if has_load_balancer and container_type != lb_id:
-            create_measurement_nodes(
-                bairro, container_name, image, quantity,
-                load_balancer_http_port, load_balancer_coap_port, container_types
-            )
-
-        return redirect(url_for("manage_containers", bairro=bairro))
-
-    # Agrupa contêineres para exibição
+    # Se GET, apenas exibe a página
     grouped_containers = group_containers_for_display(containers, container_types)
 
     # Logs de debug
