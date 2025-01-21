@@ -21,9 +21,28 @@ if not CONFIG_FILE or not BAIRROS_MEDIDORES_FILE or not DOWNLOAD_URLS_FILE:
     raise ValueError("As variáveis CONFIG_FILE, BAIRROS_MEDIDORES_FILE e DOWNLOAD_URLS_FILE precisam estar definidas no .env.")
 
 def create_measurement_node(bairro, full_container_name, image, environment, labels):
+    
     """
-    Cria efetivamente um contêiner de medição (medidor) na rede do bairro.
+    Cria um nó de medição (medidor) em uma rede Docker associada a um bairro.
+
+    Esta função cria e inicia um contêiner Docker representando um medidor de dados. Ele é conectado
+    à rede Docker do bairro, configurado com as variáveis de ambiente fornecidas e mapeado para
+    portas disponíveis para comunicação via HTTP e CoAP.
+
+    Args:
+        bairro (str): Nome do bairro associado ao nó.
+        full_container_name (str): Nome completo do contêiner no formato "<bairro>_<nome>_<id>".
+        image (str): Imagem Docker a ser utilizada para o contêiner.
+        environment (dict): Variáveis de ambiente a serem configuradas no contêiner.
+        labels (dict): Labels para identificação do contêiner.
+
+    Returns:
+        tuple: Par de portas (http_port, coap_port) atribuídas ao contêiner. Retorna (None, None) em caso de erro.
+
+    Raises:
+        docker.errors.APIError: Caso ocorra um erro durante a criação ou execução do contêiner.
     """
+
     try:
         http_port = get_available_port()
         coap_port = get_available_port(http_port + 1)
@@ -61,9 +80,32 @@ def create_measurement_node(bairro, full_container_name, image, environment, lab
 def create_measurement_nodes(
     bairro, container_name, image, quantity, load_balancer_http_port, load_balancer_coap_port
 ):
+    
     """
-    Cria múltiplos nós de medição e os conecta ao Load Balancer.
+    Cria múltiplos nós de medição e os conecta ao Load Balancer do bairro.
+
+    Esta função gerencia a criação de vários contêineres Docker que atuam como medidores. Cada medidor
+    é configurado para enviar dados a um Load Balancer via HTTP e CoAP, utilizando URLs e informações
+    especificadas nos arquivos de configuração.
+
+    Args:
+        bairro (str): Nome do bairro associado aos nós de medição.
+        container_name (str): Nome base dos contêineres a serem criados.
+        image (str): Imagem Docker utilizada para os nós de medição.
+        quantity (int): Número de nós de medição a serem criados.
+        load_balancer_http_port (int): Porta HTTP do Load Balancer para envio de dados.
+        load_balancer_coap_port (int): Porta CoAP do Load Balancer para envio de dados.
+
+    Raises:
+        ValueError: Caso alguma configuração ou URL necessária não seja encontrada.
+
+    Behavior:
+        1. Carrega os dados do arquivo de configuração (`config.json`) e as URLs de download.
+        2. Verifica contêineres existentes para evitar duplicação de IDs.
+        3. Gera nomes exclusivos para cada novo nó e monta as configurações necessárias.
+        4. Cria os nós de medição chamando a função `create_measurement_node`.
     """
+    
     # Carregar os dados de configuração e URLs
     config_data = load_json(CONFIG_FILE, default={})
     data_urls = load_json(DOWNLOAD_URLS_FILE, default={})
