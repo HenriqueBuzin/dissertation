@@ -14,7 +14,6 @@ def handle_manage_post(
     lb_http_port,
     lb_coap_port
 ):
-    
     """
     Lida com o formulário POST enviado em /manage/<bairro>. 
     Decide a criação de diferentes tipos de contêineres, incluindo Load Balancer, medidores e nós.
@@ -30,7 +29,6 @@ def handle_manage_post(
     Returns:
         flask.Response: Redireciona para a página de gerenciamento de contêineres do bairro.
     """
-
     container_name = request.form.get("container_name")
     container_data = next(
         (c for c in config["containers"] if c["name"] == container_name), 
@@ -43,9 +41,12 @@ def handle_manage_post(
     container_type = container_data["type"]
     image = container_data["image"]
     
-    # Descobre o ID do LB
+    # Descobre os IDs dos tipos
     lb_id = container_types.get("load_balancer", {}).get("id")
-    
+    medidor_id = container_types.get("medidor", {}).get("id")
+    nodo_id    = container_types.get("nodo_nevoa", {}).get("id")
+    # Se tiver "agregador", aggregator_id = container_types.get("aggregator", {}).get("id") etc.
+
     # Pega a quantidade (se for LB, forçamos 1)
     quantity = 1 if container_type == lb_id else int(request.form.get("quantity", 1))
 
@@ -65,15 +66,6 @@ def handle_manage_post(
     
     # Se já existe LB, vamos ver o que mais precisa criar
     if has_load_balancer and container_type != lb_id:
-        # Observação: aqui você pode criar um dicionário de handlers se quiser
-        # Por exemplo: handlers = { medidor_id: create_measurement_nodes, nodo_id: create_fog_node, etc. }
-        # E então chamaria: handlers[container_type](...)
-        # Mas por simplicidade, use if/elif/else:
-        
-        medidor_id = container_types.get("medidor", {}).get("id")
-        nodo_id    = container_types.get("nodo_nevoa", {}).get("id")
-        # Se tiver "agregador", aggregator_id = container_types.get("aggregator", {}).get("id") etc.
-
         if container_type == medidor_id:
             create_measurement_nodes(
                 bairro, 
@@ -81,10 +73,8 @@ def handle_manage_post(
                 image, 
                 quantity,
                 lb_http_port, 
-                lb_coap_port, 
-                container_types
+                lb_coap_port
             )
-
         elif container_type == nodo_id:
             # Supondo que o LB foi criado como f"{normalize_container_name(bairro)}_load_balancer_1"
             lb_container_name = f"{normalize_container_name(bairro)}_load_balancer_1"
@@ -99,10 +89,8 @@ def handle_manage_post(
                 container_types=container_types,
                 load_balancer_url=lb_url
             )
-
         # elif container_type == aggregator_id:
         #     create_aggregator(...) # Exemplo
-
         else:
             print(f"[AVISO] Tipo {container_type} não mapeado para criação.")
         

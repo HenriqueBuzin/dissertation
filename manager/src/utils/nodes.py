@@ -6,7 +6,6 @@ from .general import normalize_container_name
 from .network import get_available_port, create_or_get_bairro_network
 
 def create_node(bairro, container_name, image, container_types, load_balancer_url):
-    
     """
     Cria um nó de névoa e o conecta ao Load Balancer do bairro.
 
@@ -19,11 +18,7 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
 
     Returns:
         tuple: Um par contendo a porta HTTP e a porta CoAP atribuídas ao nó, ou (None, None) em caso de erro.
-
-    Raises:
-        docker.errors.APIError: Caso ocorra um erro ao interagir com a API do Docker.
     """
-
     try:
         http_port = get_available_port()
         coap_port = get_available_port(http_port + 1)
