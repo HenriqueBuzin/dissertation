@@ -114,7 +114,7 @@ def create_measurement_nodes(
     existing_ids = {
         int(container.name.split("_")[-1])
         for container in existing_containers
-        if container.name.startswith(f"{normalized_bairro}_{container_name}_") and container.name.split("_")[-1].isdigit()
+        if container.name.startswith(f"{normalized_bairro}_{container_name}_")
     }
 
     container_type = container_data.get("type", "unknown")
@@ -150,30 +150,13 @@ def create_measurement_nodes(
     if len(selected_nodes) < quantity:
         print(f"[INFO] Apenas {len(selected_nodes)} nós disponíveis para criar no bairro '{bairro}'.", flush=True)
 
-    def get_next_sequential_number(normalized_bairro, container_name):
-        prefix = f"{normalized_bairro}_{container_name}_"
-        existing_containers = list_containers(filters={"name": f"{prefix}*"})
-    
-        seq_numbers = []
-        for container in existing_containers:
-            parts = container.name.split('_')
-            if len(parts) >= 4:
-                try:
-                    seq_num = int(parts[-2])
-                    seq_numbers.append(seq_num)
-                except ValueError:
-                    continue
-        return max(seq_numbers, default=0) + 1
-
-    next_seq_num = get_next_sequential_number(normalized_bairro, container_name)
-
     for node_key, node_info in selected_nodes:
         node_id = node_info.get("id")
         street = node_info.get("street")
 
         existing_ids.add(node_id)
 
-        full_container_name = f"{normalized_bairro}_{container_name}_{next_seq_num}"
+        full_container_name = f"{normalized_bairro}_{container_name}_{node_id}"
         print(f"[DEBUG] Criando nó '{full_container_name}' com URL de download '{download_url}'")
 
         environment = {
@@ -184,6 +167,8 @@ def create_measurement_nodes(
                 "id": node_id,
                 "street": street
             }),
+            "BAIRRO": bairro,
+            "NODE_ID": str(node_id),
         }
 
         labels = {
@@ -193,5 +178,3 @@ def create_measurement_nodes(
         create_measurement_node(
             bairro, full_container_name, image, environment, labels
         )
-        
-        next_seq_num += 1
