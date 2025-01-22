@@ -6,7 +6,6 @@
     <h2>Configuração de Imagens Docker</h2>
     <p>Defina um nome para cada imagem Docker utilizada.</p>
 
-    <!-- Formulário para Adicionar Nova Configuração -->
     <div class="card my-4">
         <div class="card-header bg-primary text-white">Adicionar Nova Configuração de Imagem</div>
         <div class="card-body">
@@ -45,7 +44,6 @@
         </div>
     </div>
 
-    <!-- Tabela de Configurações Existentes -->
     <h3 class="mt-4">Configurações de Imagens Existentes</h3>
     <div class="card my-4">
         <div class="card-body p-0">
@@ -96,11 +94,11 @@
 
         if (this.value === "medidor") {
             dataField.style.display = "block";
-            dataIdSelect.setAttribute('required', 'required'); // Torna obrigatório
+            dataIdSelect.setAttribute('required', 'required');
         } else {
             dataField.style.display = "none";
-            dataIdSelect.removeAttribute('required'); // Remove a obrigatoriedade
-            dataIdSelect.value = ""; // Reseta o valor selecionado
+            dataIdSelect.removeAttribute('required');
+            dataIdSelect.value = "";
         }
     });
 
@@ -109,8 +107,8 @@
         const dataIdSelect = document.getElementById('data_id');
 
         if (typeSelect.value === "medidor" && !dataIdSelect.value) {
-            e.preventDefault(); // Impede o envio do formulário
-            alert("Por favor, selecione um tipo de dados para o medidor."); // Exibe alerta
+            e.preventDefault();
+            alert("Por favor, selecione um tipo de dados para o medidor.");
         }
     });
 </script>

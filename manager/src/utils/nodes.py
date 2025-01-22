@@ -28,7 +28,7 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
         network_name = create_or_get_bairro_network(bairro)
         existing_containers = list_containers(filters={"name": f"{normalize_container_name(bairro)}_{container_name}"})
 
-        count = len(existing_containers) + 1  # Define o ponto inicial para os novos contêineres
+        count = len(existing_containers) + 1
 
         for _ in range(quantity):
             http_port = get_available_port()
@@ -57,7 +57,7 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
             )
             print(f"Nó de névoa '{full_container_name}' criado com sucesso. HTTP: {http_port}, CoAP: {coap_port}")
             created_nodes.append((http_port, coap_port))
-            count += 1  # Incrementa o contador para o próximo nó
+            count += 1
 
     except docker.errors.APIError as e:
         print(f"Erro na API Docker: {e}")

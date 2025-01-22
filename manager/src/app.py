@@ -1,6 +1,5 @@
 # app.py
 
-# Importações padrão
 import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_socketio import SocketIO
@@ -17,16 +16,13 @@ from utils import (
     handle_manage_post
 )
 
-# Carregar variáveis do arquivo .env
 load_dotenv()
 
-# Configurações globais usando .env
 CONFIG_FILE = os.getenv("CONFIG_FILE")
 BAIRROS_MEDIDORES_FILE = os.getenv("BAIRROS_MEDIDORES_FILE")
 DOWNLOAD_URLS_FILE = os.getenv("DOWNLOAD_URLS_FILE")
 CONTAINER_TYPES_FILE = os.getenv("CONTAINER_TYPES_FILE")
 
-# Verificação de variáveis essenciais
 if not all([CONFIG_FILE, BAIRROS_MEDIDORES_FILE, DOWNLOAD_URLS_FILE, CONTAINER_TYPES_FILE]):
     raise ValueError("As variáveis CONFIG_FILE, BAIRROS_MEDIDORES_FILE, DOWNLOAD_URLS_FILE e CONTAINER_TYPES_FILE precisam estar definidas no arquivo .env.")
 
@@ -51,27 +47,22 @@ def manage_containers(bairro):
     
     containers = list_containers(filters={"name": normalize_container_name(bairro)})
 
-    # Verifica se já existe LB
     load_balancer_http_port, load_balancer_coap_port = get_load_balancer_ports(containers)
     has_load_balancer = (load_balancer_http_port is not None and load_balancer_coap_port is not None)
     
-    # Descobre qual ID corresponde ao "load_balancer"
     lb_id = container_types.get("load_balancer", {}).get("id")
 
-    # Monta as opções do <select>
     select_options = []
     for c in config["containers"]:
         ctype_id = c["type"]
         display_name = find_display_name_by_id(container_types, ctype_id)
         
-        # Regra: se não há LB, só mostra LB. Se há LB, mostra todos os outros
         if (not has_load_balancer and ctype_id == lb_id) or (has_load_balancer and ctype_id != lb_id):
             select_options.append({
                 "name": c["name"],
                 "display_name": display_name
             })
 
-    # --- Se chegou um POST, delega para handle_manage_post ---
     if request.method == "POST":
         return handle_manage_post(
             bairro=bairro,
@@ -82,10 +73,8 @@ def manage_containers(bairro):
             lb_coap_port=load_balancer_coap_port
         )
 
-    # Se GET, apenas exibe a página
     grouped_containers = group_containers_for_display(containers, container_types)
 
-    # Logs de debug
     for group_key, group in grouped_containers.items():
         print(f"[DEBUG] Grupo: {group.get('display_name', 'Sem Nome')} ({group_key})")
         for container in group["containers"]:
@@ -111,7 +100,6 @@ def config_imagens():
         image = request.form.get("image")
         container_type_key = request.form.get("type")
         if container_name and image and container_type_key:
-            # Pega o ID numérico pelo 'key'
             type_id = container_types[container_type_key]["id"]
             new_container = {
                 "name": container_name,
@@ -231,7 +219,7 @@ def stop_group(container_type, bairro):
 @app.route("/start_container/<container_id>/<bairro>", methods=["POST"])
 def start_container(container_id, bairro):
     """Inicia um contêiner especificado."""
-    client = get_docker_client()  # Obtém o cliente Docker
+    client = get_docker_client()
     try:
         container = client.containers.get(container_id)
         if container.status == "paused":
@@ -246,10 +234,10 @@ def start_container(container_id, bairro):
 @app.route("/pause_container/<container_id>/<bairro>", methods=["POST"])
 def pause_container(container_id, bairro):
     """Pausa um contêiner especificado."""
-    client = get_docker_client()  # Obtém o cliente Docker
+    client = get_docker_client()
     try:
-        container = client.containers.get(container_id)  # Obtém o contêiner
-        if container.status == "running":  # Verifica o status do contêiner
+        container = client.containers.get(container_id)
+        if container.status == "running":
             container.pause()
             print(f"Contêiner {container.name} pausado com sucesso.")
         else:
@@ -261,17 +249,14 @@ def pause_container(container_id, bairro):
 @app.route("/stop_container/<container_id>/<bairro>", methods=["POST"])
 def stop_container(container_id, bairro):
     """Para e remove um contêiner."""
-    client = get_docker_client()  # Obtém o cliente Docker
+    client = get_docker_client()
     try:
-        # Obtém o contêiner com base no ID fornecido
         container = client.containers.get(container_id)
 
-        # Verifica o status do contêiner e executa as ações apropriadas
         if container.status in ["running", "paused"]:
             container.stop()
             print(f"Contêiner {container.name} parado com sucesso.")
 
-        # Remove o contêiner
         container.remove()
         print(f"Contêiner {container.name} removido com sucesso.")
     except Exception as e:
@@ -290,10 +275,10 @@ def monitoramento():
 def handle_get_logs(data):
     """Obtém os logs do contêiner e envia ao cliente."""
     container_id = data.get("container_id")
-    client = get_docker_client()  # Certifique-se de usar o cliente Docker correto
+    client = get_docker_client()
     try:
         container = client.containers.get(container_id)
-        logs = container.logs(tail=50).decode("utf-8")  # Obtém os últimos 50 logs
+        logs = container.logs(tail=50).decode("utf-8")
         socketio.emit("log_update", {"container_id": container_id, "logs": logs})
     except Exception as e:
         print(f"Erro ao obter logs do contêiner {container_id}: {e}")

@@ -15,7 +15,6 @@ def group_containers_for_display(containers, container_types):
 
     grouped_containers = {}
 
-    # reverse_map: "1" -> {"key": "load_balancer", "display_name": "Load Balancer"}
     reverse_map = {}
     for container_type_key, type_info in container_types.items():
         str_id = str(type_info["id"])
@@ -28,9 +27,8 @@ def group_containers_for_display(containers, container_types):
         label_id = container.attrs.get("Config", {}).get("Labels", {}).get("type", "")
         
         if label_id in reverse_map:
-            # Em vez de group_key ser a *string* "medidor", use o *próprio ID*:
-            group_key = label_id  # "2"
-            display_name = reverse_map[label_id]["display_name"]  # "Medidor"
+            group_key = label_id
+            display_name = reverse_map[label_id]["display_name"]
         else:
             group_key = "desconhecido"
             display_name = "Desconhecido"

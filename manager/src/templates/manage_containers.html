@@ -7,7 +7,6 @@
 
     <h2>Gerenciamento de Contêineres - {{ bairro | capitalize }}</h2>
 
-    <!-- Formulário para adicionar novos contêineres -->
     <div class="card my-4">
         <div class="card-header bg-primary text-white">Adicionar Novos Contêineres</div>
         <div class="card-body">
@@ -36,7 +35,6 @@
         </div>
     </div>
 
-    <!-- Botão para parar todos os contêineres -->
     {% if grouped_containers %}
         <div class="row mb-4">
             <div class="col text-end">
@@ -47,11 +45,9 @@
         </div>
     {% endif %}
 
-    <!-- Tabelas de contêineres agrupados por tipo -->
     {% for group_key, group in grouped_containers.items() %}
-        <h4 class="mt-3">Grupo: {{ group.display_name }}</h4> <!-- Exibe o display_name do grupo -->
+        <h4 class="mt-3">Grupo: {{ group.display_name }}</h4>
 
-         <!-- Botão para parar todos os contêineres de um grupo -->
         <div class="mb-3">
             <form method="POST" action="{{ url_for('stop_group', container_type=group_key, bairro=bairro) }}" class="d-inline-block">
                 <button type="submit" class="btn btn-warning">
@@ -103,7 +99,6 @@
 
 <script>
     function fetchLogs(containerId) {
-        // Redireciona para a página de monitoramento com o ID do contêiner
         window.location.href = `/monitoramento?container_id=${containerId}`;
     }
 </script>
