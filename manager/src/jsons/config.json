@@ -38,6 +38,11 @@
             "name": "nodo_energy",
             "image": "henriqueabv/fog_energy",
             "type": 2
+        },
+        {
+            "name": "aggregator",
+            "image": "henriqueabv/aggregator_node",
+            "type": 4
         }
     ]
 }

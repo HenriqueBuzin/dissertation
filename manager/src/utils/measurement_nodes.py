@@ -1,13 +1,13 @@
 # utils/measurement_nodes.py
 
-import os
-import json
+from .network import get_available_port, create_or_get_bairro_network
+from .docker_utils import client, list_containers
+from .general import normalize_container_name
 from dotenv import load_dotenv
 from .config import load_json
-from .general import normalize_container_name
-from .docker_utils import client, list_containers
-from .network import get_available_port, create_or_get_bairro_network
 import docker
+import json
+import os
 
 load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), "../.env"))
 

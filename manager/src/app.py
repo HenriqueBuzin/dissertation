@@ -1,20 +1,20 @@
 # app.py
 
-import os
 from flask import Flask, render_template, request, redirect, url_for
 from flask_socketio import SocketIO
 from dotenv import load_dotenv
 from utils import (
+    group_containers_for_display,
+    normalize_container_name,
+    get_load_balancer_ports,
+    find_display_name_by_id,
+    handle_manage_post,
+    get_docker_client,
     list_containers,
     load_json,
-    save_json,
-    normalize_container_name,
-    group_containers_for_display,
-    get_load_balancer_ports,
-    get_docker_client,
-    find_display_name_by_id,
-    handle_manage_post
+    save_json
 )
+import os
 
 load_dotenv()
 

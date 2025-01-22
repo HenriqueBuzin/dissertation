@@ -1,9 +1,9 @@
 # utils/nodes.py
 
-import docker
+from .network import get_available_port, create_or_get_bairro_network
 from .docker_utils import client, list_containers
 from .general import normalize_container_name
-from .network import get_available_port, create_or_get_bairro_network
+import docker
 
 def create_node(bairro, container_name, image, container_types, load_balancer_url, quantity):
 

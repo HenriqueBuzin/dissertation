@@ -1,9 +1,9 @@
 # utils/load_balancer.py
 
-import docker
-from .docker_utils import client
 from .network import get_available_port, create_or_get_bairro_network
 from .general import normalize_container_name
+from .docker_utils import client
+import docker
 
 def create_load_balancer(bairro, container_name, image, container_types):
 

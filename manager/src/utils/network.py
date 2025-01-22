@@ -1,8 +1,8 @@
 # utils/netowrk.py
 
-import socket
-from .docker_utils import client
 from .general import normalize_container_name
+from .docker_utils import client
+import socket
 
 def create_or_get_bairro_network(bairro):
     
