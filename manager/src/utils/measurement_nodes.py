@@ -19,7 +19,6 @@ if not CONFIG_FILE or not BAIRROS_MEDIDORES_FILE or not DOWNLOAD_URLS_FILE:
     raise ValueError("As variáveis CONFIG_FILE, BAIRROS_MEDIDORES_FILE e DOWNLOAD_URLS_FILE precisam estar definidas no .env.")
 
 def create_measurement_node(bairro, full_container_name, image, environment, labels):
-    
     """
     Cria um nó de medição (medidor) em uma rede Docker associada a um bairro.
 
@@ -40,7 +39,6 @@ def create_measurement_node(bairro, full_container_name, image, environment, lab
     Raises:
         docker.errors.APIError: Caso ocorra um erro durante a criação ou execução do contêiner.
     """
-    
     try:
         http_port = get_available_port()
         coap_port = get_available_port(http_port + 1)
@@ -69,7 +67,6 @@ def create_measurement_node(bairro, full_container_name, image, environment, lab
 def create_measurement_nodes(
     bairro, container_name, image, quantity, load_balancer_http_port, load_balancer_coap_port
 ):
-    
     """
     Cria múltiplos nós de medição e os conecta ao Load Balancer do bairro.
 
@@ -88,7 +85,6 @@ def create_measurement_nodes(
     Raises:
         ValueError: Caso alguma configuração ou URL necessária não seja encontrada.
     """
-    
     config_data = load_json(CONFIG_FILE, default={})
     data_urls = load_json(DOWNLOAD_URLS_FILE, default={})
     bairros_medidores = load_json(BAIRROS_MEDIDORES_FILE, default={})
@@ -110,12 +106,19 @@ def create_measurement_nodes(
         raise ValueError(f"Erro: Nenhuma URL encontrada para 'data_id'={data_id} no contêiner '{container_name}'.")
 
     normalized_bairro = normalize_container_name(bairro)
-    existing_containers = list_containers(filters={"name": f"{normalized_bairro}_{container_name}_"})
-    existing_ids = {
-        int(container.name.split("_")[-1])
-        for container in existing_containers
-        if container.name.startswith(f"{normalized_bairro}_{container_name}_") and container.name.split("_")[-1].isdigit()
-    }
+    prefix = f"{normalized_bairro}_{container_name}_"
+    existing_containers = list_containers(filters={"name": f"{prefix}*"})
+
+    # Extrair os números sequenciais existentes
+    existing_seq_numbers = set()
+    for container in existing_containers:
+        if container.name.startswith(prefix):
+            parts = container.name.split('_')
+            try:
+                seq_num = int(parts[-1])  # Extrai o último segmento como seq_num
+                existing_seq_numbers.add(seq_num)
+            except ValueError:
+                continue
 
     container_type = container_data.get("type", "unknown")
 
@@ -135,9 +138,8 @@ def create_measurement_nodes(
             print(f"[AVISO] Nó '{node_key}' do bairro '{bairro}' está faltando 'id' ou 'street'. Ignorando...", flush=True)
             continue
 
-        if node_id in existing_ids:
-            print(f"[AVISO] Nó com 'id'={node_id} já existe. Ignorando...", flush=True)
-            continue
+        # Se você precisar garantir que node_id seja único, considere manter um registro separado
+        # ou incluir node_id no nome do contêiner novamente. Para este exemplo, omitiremos essa verificação.
 
         selected_nodes.append((node_key, node_info))
         if len(selected_nodes) == quantity:
@@ -150,38 +152,38 @@ def create_measurement_nodes(
     if len(selected_nodes) < quantity:
         print(f"[INFO] Apenas {len(selected_nodes)} nós disponíveis para criar no bairro '{bairro}'.", flush=True)
 
-    def get_next_sequential_number(normalized_bairro, container_name):
-        prefix = f"{normalized_bairro}_{container_name}_"
-        existing_containers = list_containers(filters={"name": f"{prefix}*"})
-    
-        seq_numbers = []
-        for container in existing_containers:
-            parts = container.name.split('_')
-            if len(parts) >= 4:
-                try:
-                    seq_num = int(parts[-2])
-                    seq_numbers.append(seq_num)
-                except ValueError:
-                    continue
-        return max(seq_numbers, default=0) + 1
+    def get_next_sequential_number(existing_seq_numbers):
+        """
+        Determina o próximo número sequencial disponível para nomear os contêineres.
 
-    next_seq_num = get_next_sequential_number(normalized_bairro, container_name)
+        Args:
+            existing_seq_numbers (set): Conjunto de números sequenciais já existentes.
+
+        Returns:
+            int: Próximo número sequencial disponível.
+        """
+        return max(existing_seq_numbers, default=0) + 1
+
+    # Obter o próximo número sequencial inicial
+    next_seq_num = get_next_sequential_number(existing_seq_numbers)
 
     for node_key, node_info in selected_nodes:
         node_id = node_info.get("id")
         street = node_info.get("street")
 
-        existing_ids.add(node_id)
-
+        # Construir o nome completo do contêiner com o número sequencial
         full_container_name = f"{normalized_bairro}_{container_name}_{next_seq_num}"
         print(f"[DEBUG] Criando nó '{full_container_name}' com URL de download '{download_url}'")
+
+        # Gerar um identificador único baseado no seq_num
+        unique_id = 1000 + next_seq_num  # Exemplo: 1001, 1002, ...
 
         environment = {
             "HTTP_SERVER_URL": load_balancer_http_url,
             "COAP_SERVER_URL": load_balancer_coap_url,
             "CSV_URL": download_url,
             "INSTANCE_DATA": json.dumps({
-                "id": node_id,
+                "id": unique_id,  # Use unique_id em vez de node_id
                 "street": street
             }),
         }
@@ -194,4 +196,5 @@ def create_measurement_nodes(
             bairro, full_container_name, image, environment, labels
         )
         
+        # Incrementar o número sequencial para o próximo contêiner
         next_seq_num += 1
