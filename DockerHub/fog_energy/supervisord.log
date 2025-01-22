@@ -444,3 +444,10 @@
 2025-01-22 14:12:59,287 INFO success: fog_energy entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2025-01-22 14:12:59,288 INFO success: mongodb entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 2025-01-22 14:12:59,288 INFO success: redis entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2025-01-22 14:50:55,572 WARN received SIGINT indicating exit request
+2025-01-22 14:50:55,573 INFO waiting for fog_energy, mongodb, redis to die
+2025-01-22 14:50:55,665 INFO stopped: redis (exit status 0)
+2025-01-22 14:50:55,741 WARN received SIGINT indicating exit request
+2025-01-22 14:50:55,761 INFO stopped: mongodb (exit status 0)
+2025-01-22 14:50:56,406 WARN received SIGINT indicating exit request
+2025-01-22 14:50:57,407 INFO stopped: fog_energy (exit status 0)

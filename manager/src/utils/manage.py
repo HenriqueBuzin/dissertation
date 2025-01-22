@@ -89,7 +89,8 @@ def handle_manage_post(
                 container_name=container_name,   # ex: "nodo_water"
                 image=image,
                 container_types=container_types,
-                load_balancer_url=lb_url
+                load_balancer_url=lb_url,
+                quantity=quantity
             )
 
         # elif container_type == aggregator_id:
