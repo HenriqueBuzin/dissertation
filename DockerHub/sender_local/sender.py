@@ -7,8 +7,8 @@ import sys
 # Variáveis Fixas
 HTTP_SERVER_URL = "http://127.0.0.1:8000/receive_data"  # URL local do servidor Flask
 SEND_INTERVAL = 2  # Intervalo de envio em segundos
-# CSV_URL = "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/data/data_energy.csv"
-CSV_URL = "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/data/data_water.csv"
+CSV_URL = "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/data/data_energy.csv"
+# CSV_URL = "https://raw.githubusercontent.com/HenriqueBuzin/dissertation/main/data/data_water.csv"
 INSTANCE_DATA = '{"id": 1001, "street": "Rua da Praia, XXXX"}'
 
 print("Variáveis Fixas Utilizadas:", flush=True)

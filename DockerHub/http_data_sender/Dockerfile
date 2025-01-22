@@ -1,6 +1,6 @@
 # Dockerfile
 
-FROM python:3.13.1
+FROM python:3.11.1-bullseye
 WORKDIR /app
 COPY http_data_sender.py /app
 RUN pip install requests

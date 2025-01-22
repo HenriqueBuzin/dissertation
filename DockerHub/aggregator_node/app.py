@@ -1,99 +1,95 @@
+# app.py
+
 import os
-import csv
 import asyncio
-from pathlib import Path
-import paramiko
-import concurrent.futures
+import logging
+from dotenv import load_dotenv
+from utils import aggregate_files, send_file_sftp
+import datetime
 
-# Configurações
-INCOMING_DIR = "/home/aggregator_user/data/incoming"
-AGGREGATED_DIR = "/home/aggregator_user/data/aggregated"
-OUTGOING_FILE = os.path.join(AGGREGATED_DIR, "aggregated.csv")
-AGGREGATION_INTERVAL = int(os.getenv("AGGREGATION_INTERVAL", 600))
+# Carrega variáveis de ambiente do .env, caso ainda não estejam definidas
+load_dotenv()
 
-# Configurações de SFTP para envio
-SFTP_HOST = os.getenv("SFTP_HOST", "sftp_server")  # Use o nome do serviço Docker Compose
-SFTP_PORT = int(os.getenv("SFTP_PORT", 22))
-SFTP_USER = os.getenv("SFTP_USER", "aggregator_user")
-SFTP_PASS = os.getenv("SFTP_PASS", "aggregator_pass")
-SFTP_REMOTE_PATH = os.getenv("SFTP_REMOTE_PATH", "/home/aggregator_user/data/incoming/consumption_energy_20070101.csv")
+# Lista de variáveis obrigatórias
+REQUIRED_ENV_VARS = [
+    "AGGREGATION_INTERVAL", "INCOMING_DIR", "AGGREGATED_DIR", "OUTGOING_FILE",
+    "SFTP_HOST", "SFTP_PORT", "SFTP_USER", "SFTP_PASS"
+]
 
-def aggregate_files():
-    """Agrupa todos os arquivos recebidos em um único arquivo CSV."""
-    os.makedirs(Path(AGGREGATED_DIR), exist_ok=True)
-    os.makedirs(Path(INCOMING_DIR), exist_ok=True)
-    all_rows = []
-    print("Iniciando agregação de arquivos...", flush=True)
-    
-    for file_path in Path(INCOMING_DIR).glob("*.csv"):
-        try:
-            with open(file_path, 'r', encoding='utf-8') as f:
-                reader = csv.reader(f)
-                all_rows.extend(list(reader))
-            os.remove(file_path)
-            print(f"Arquivo processado e removido: {file_path}", flush=True)
-        except Exception as e:
-            print(f"Erro ao processar {file_path}: {e}", flush=True)
+# Configuração do Logger
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[logging.StreamHandler()]
+)
+logger = logging.getLogger(__name__)
 
-    if all_rows:
-        try:
-            with open(OUTGOING_FILE, 'w', encoding='utf-8', newline='') as f:
-                writer = csv.writer(f)
-                writer.writerows(all_rows)
-            print(f"Arquivo agregado criado: {OUTGOING_FILE}", flush=True)
-        except Exception as e:
-            print(f"Erro ao criar o arquivo agregado: {e}", flush=True)
-    else:
-        print("Nenhum arquivo para agregar.", flush=True)
+# Valida e carrega as variáveis de ambiente
+logger.info("Validando e carregando variáveis de ambiente...")
+config = {}
+for var in REQUIRED_ENV_VARS:
+    value = os.getenv(var)
+    if not value:
+        logger.error(f"Variável de ambiente obrigatória não definida: {var}")
+        raise ValueError(f"Variável de ambiente obrigatória não definida: {var}")
+    config[var] = value
+    logger.info(f"{var} = {value}")
 
-def send_file_sftp(local_file, remote_file):
-    """Envia o arquivo 'local_file' para 'remote_file' via SFTP."""
-    try:
-        transport = paramiko.Transport((SFTP_HOST, SFTP_PORT))
-        transport.connect(username=SFTP_USER, password=SFTP_PASS)
-        sftp = paramiko.SFTPClient.from_transport(transport)
+# Converte AGGREGATION_INTERVAL e SFTP_PORT para inteiros
+config["AGGREGATION_INTERVAL"] = int(config["AGGREGATION_INTERVAL"])
+config["SFTP_PORT"] = int(config["SFTP_PORT"])
 
-        print(f"Enviando {local_file} para {SFTP_HOST}:{remote_file} via SFTP...", flush=True)
-        sftp.put(local_file, remote_file)
+# Valida se os diretórios existem
+for dir_path in [config["INCOMING_DIR"], config["AGGREGATED_DIR"]]:
+    if not os.path.isdir(dir_path):
+        os.makedirs(dir_path, exist_ok=True)
+        logger.info(f"Diretório criado: {dir_path}")
 
-        sftp.close()
-        transport.close()
-        print("Arquivo enviado com sucesso via SFTP!", flush=True)
-    except Exception as e:
-        print(f"Erro ao enviar arquivo via SFTP: {e}", flush=True)
+def generate_remote_path(base_path, prefix="aggregated"):
+    """Gera um nome dinâmico para o arquivo remoto."""
+    timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+    filename = f"{prefix}_{timestamp}.csv"
+    return os.path.join(base_path, filename)
 
-async def send_file_sftp_async(local_file, remote_file):
-    """Envia o arquivo via SFTP em um executor para não bloquear o loop assíncrono."""
-    loop = asyncio.get_event_loop()
-    with concurrent.futures.ThreadPoolExecutor() as pool:
-        await loop.run_in_executor(pool, send_file_sftp, local_file, remote_file)
-
-async def aggregator_main():
+async def aggregator_main(config):
     """Loop principal do agregador."""
     while True:
         try:
-            # Agrega os arquivos
-            aggregate_files()
+            aggregate_files(
+                incoming_dir=config["INCOMING_DIR"],
+                aggregated_dir=config["AGGREGATED_DIR"],
+                outgoing_file=config["OUTGOING_FILE"]
+            )
 
-            # Envia o arquivo agregado para outro servidor
-            if Path(OUTGOING_FILE).exists():
-                await send_file_sftp_async(OUTGOING_FILE, SFTP_REMOTE_PATH)
-                # Opcional: remover o arquivo após o envio bem-sucedido
-                # os.remove(OUTGOING_FILE)
+            if os.path.exists(config["OUTGOING_FILE"]):
+                remote_file_path = generate_remote_path(config["INCOMING_DIR"])
+                logger.info(f"Preparando para enviar arquivo agregado: {config['OUTGOING_FILE']} para {remote_file_path}")
+                success = send_file_sftp(
+                    local_file=config["OUTGOING_FILE"],
+                    remote_file=remote_file_path,
+                    host=config["SFTP_HOST"],
+                    port=config["SFTP_PORT"],
+                    user=config["SFTP_USER"],
+                    password=config["SFTP_PASS"]
+                )
+                if success:
+                    os.remove(config["OUTGOING_FILE"])
+                    logger.info(f"Arquivo agregado removido após envio: {config['OUTGOING_FILE']}")
+                else:
+                    logger.error("Falha ao enviar o arquivo agregado via SFTP.")
             else:
-                print("Nenhum arquivo agregado para enviar.", flush=True)
+                logger.info("Nenhum arquivo agregado disponível para envio.")
 
-            # Aguardar o próximo ciclo
-            await asyncio.sleep(AGGREGATION_INTERVAL)
+            await asyncio.sleep(config["AGGREGATION_INTERVAL"])
         except Exception as e:
-            print(f"Erro no ciclo do agregador: {e}", flush=True)
-            await asyncio.sleep(AGGREGATION_INTERVAL)  # Garantir que o loop continue
+            logger.error(f"Erro no ciclo do agregador: {e}")
+            await asyncio.sleep(config["AGGREGATION_INTERVAL"])
 
 if __name__ == "__main__":
-    print("Iniciando agregador (SFTP deve estar rodando em paralelo)...", flush=True)
+    logger.info("Iniciando agregador (SFTP deve estar rodando em paralelo)...")
     try:
-        asyncio.run(aggregator_main())
+        asyncio.run(aggregator_main(config))
     except KeyboardInterrupt:
-        print("\nAgregador encerrado com sucesso.", flush=True)
+        logger.info("Agregador encerrado com sucesso.")
     except Exception as e:
-        print(f"Erro inesperado: {e}", flush=True)
+        logger.error(f"Erro inesperado: {e}")
