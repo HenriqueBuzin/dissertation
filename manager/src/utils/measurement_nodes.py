@@ -193,9 +193,7 @@ def create_measurement_nodes(
             "INSTANCE_DATA": json.dumps({
                 "id": node_id,
                 "street": street
-            }),
-            "BAIRRO": bairro,
-            "NODE_ID": str(node_id),
+            })
         }
         print(f"[DEBUG] Ambiente configurado: {environment}")
 
