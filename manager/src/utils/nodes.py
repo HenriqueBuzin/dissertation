@@ -40,9 +40,7 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
         )
         if not aggregator_container:
             raise ValueError(f"Agregador para o bairro '{bairro}' não encontrado.")
-
-        aggregator_url = f"sftp://{aggregator_name}:2222"
-
+        
         existing_containers = list_containers(filters={"name": f"{normalize_container_name(bairro)}_{container_name}"})
         count = len(existing_containers) + 1
 
@@ -61,10 +59,14 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
                 network=network_name,
                 environment={
                     "LOAD_BALANCER_URL": load_balancer_url,
-                    "AGGREGATOR_URL": aggregator_url,
                     "FOG_NODE_NAME": full_container_name,
                     "HTTP_PORT": str(http_port),
                     "COAP_PORT": str(coap_port),
+                    "SFTP_HOST": aggregator_name,
+                    "SFTP_PORT": "22",
+                    "SFTP_USER": "aggregator_user",
+                    "SFTP_PASS": "aggregator_pass",
+                    "SFTP_REMOTE_PATH": "/home/aggregator_user/data/incoming",
                 },
                 ports={
                     "8000/tcp": http_port,

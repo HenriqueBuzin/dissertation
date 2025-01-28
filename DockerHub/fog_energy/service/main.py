@@ -1,30 +1,21 @@
 # service/main.py
 
+import os
 import asyncio
 from service.data_fetcher import fetch_all_consumption
 
 def main():
     async def orchestration_task():
-        # uri = 'http://localhost:8766/graphql'
-        # protocols_url = 'http://localhost:8000'
-        # interval = 10
-        # delay = 5
-        # sftp_host = 'sftp_server'
-        # sftp_port = 22
-        # sftp_username = 'hpccdemo'
-        # sftp_password = 'hpccdemo'
-        # remote_path = '/var/lib/HPCCSystems/mydropzone'
-        # start_date = '2007-01-01'
-
+        
         uri = 'http://localhost:8766/graphql'
         protocols_url = 'http://localhost:8000/receive_data'
         interval = 10
         delay = 5
-        sftp_host = 'sftp_server'
-        sftp_port = 22
-        sftp_username = 'aggregator_user'
-        sftp_password = 'aggregator_pass'
-        remote_path = '/home/aggregator_user/data/incoming'
+        sftp_host = os.getenv("SFTP_HOST")
+        sftp_port = int(os.getenv("SFTP_PORT"))
+        sftp_username = os.getenv("SFTP_USER")
+        sftp_password = os.getenv("SFTP_PASS")
+        remote_path = os.getenv("SFTP_REMOTE_PATH")        
         start_date = '2007-01-01'
 
         print("Camada de Serviço iniciada.", flush=True)
