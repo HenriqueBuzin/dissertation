@@ -50,18 +50,38 @@ def manage_containers(bairro):
     load_balancer_http_port, load_balancer_coap_port = get_load_balancer_ports(containers)
     has_load_balancer = (load_balancer_http_port is not None and load_balancer_coap_port is not None)
     
+    aggregator_name = f"{bairro}_aggregator"
+    has_aggregator = any(c.name == aggregator_name for c in containers)
+
     lb_id = container_types.get("load_balancer", {}).get("id")
+    aggregator_id = container_types.get("aggregator", {}).get("id")
 
     select_options = []
     for c in config["containers"]:
         ctype_id = c["type"]
         display_name = find_display_name_by_id(container_types, ctype_id)
-        
-        if (not has_load_balancer and ctype_id == lb_id) or (has_load_balancer and ctype_id != lb_id):
+
+        # Passo 1: Exibe apenas o Load Balancer caso ele ainda não tenha sido criado
+        if not has_load_balancer and ctype_id == lb_id:
             select_options.append({
                 "name": c["name"],
                 "display_name": display_name
             })
+
+        # Passo 2: Após o Load Balancer ser criado, exibe os outros tipos (incluindo o Agregador)
+        if has_load_balancer and ctype_id != lb_id:
+            # O Agregador é exibido apenas se ainda não foi criado
+            if ctype_id == aggregator_id and not has_aggregator:
+                select_options.append({
+                    "name": c["name"],
+                    "display_name": display_name
+                })
+            elif ctype_id != aggregator_id:
+                # Exibe outros tipos (Nodo de Névoa e Medidor)
+                select_options.append({
+                    "name": c["name"],
+                    "display_name": display_name
+                })
 
     if request.method == "POST":
         return handle_manage_post(
