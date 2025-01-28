@@ -1,3 +1,5 @@
+# init_mongo_user.py
+
 import os
 from pymongo import MongoClient
 from dotenv import load_dotenv
