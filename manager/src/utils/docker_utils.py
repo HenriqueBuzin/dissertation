@@ -1,8 +1,15 @@
 # utils/docker_utils.py
 
 import docker
+from docker.errors import DockerException
 
-client = docker.from_env()
+try:
+    client = docker.from_env()
+except DockerException:
+    print("\n\033[91m[ERRO] Não foi possível se conectar ao Docker.\033[0m")
+    print("\033[93mCertifique-se de que o Docker está instalado, em execução e acessível.\033[0m")
+    print("\033[94mDica: Tente executar 'docker ps' no terminal para verificar o status do Docker.\033[0m\n")
+    exit(1)
 
 def list_containers(filters=None):
 
@@ -63,4 +70,4 @@ def get_docker_client():
         docker.DockerClient: Instância do cliente Docker.
     """
 
-    return docker.from_env()
+    return client
