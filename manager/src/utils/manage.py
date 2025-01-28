@@ -4,6 +4,7 @@ from .measurement_nodes import create_measurement_nodes
 from .load_balancer import create_load_balancer
 from .general import normalize_container_name
 from flask import request, redirect, url_for
+from .aggregator import create_aggregator
 from .nodes import create_node
 
 def handle_manage_post(
@@ -46,7 +47,7 @@ def handle_manage_post(
     lb_id = container_types.get("load_balancer", {}).get("id")
     medidor_id = container_types.get("medidor", {}).get("id")
     nodo_id    = container_types.get("nodo_nevoa", {}).get("id")
-    # aggregator_id = container_types.get("aggregator", {}).get("id").
+    aggregator_id = container_types.get("aggregator", {}).get("id")
 
     quantity = 1 if container_type == lb_id else int(request.form.get("quantity", 1))
 
@@ -87,8 +88,12 @@ def handle_manage_post(
                 quantity=quantity
             )
 
-        # elif container_type == aggregator_id:
-        #     create_aggregator(...) # Exemplo
+        elif container_type == aggregator_id:
+            create_aggregator(
+                bairro=bairro, 
+                image=image,
+                container_types=container_types
+            )
 
         else:
             print(f"[AVISO] Tipo {container_type} não mapeado para criação.")
