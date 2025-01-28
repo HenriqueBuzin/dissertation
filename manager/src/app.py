@@ -61,27 +61,23 @@ def manage_containers(bairro):
         ctype_id = c["type"]
         display_name = find_display_name_by_id(container_types, ctype_id)
 
-        # Passo 1: Exibe apenas o Load Balancer caso ele ainda não tenha sido criado
         if not has_load_balancer and ctype_id == lb_id:
             select_options.append({
                 "name": c["name"],
                 "display_name": display_name
             })
 
-        # Passo 2: Após o Load Balancer ser criado, exibe os outros tipos (incluindo o Agregador)
-        if has_load_balancer and ctype_id != lb_id:
-            # O Agregador é exibido apenas se ainda não foi criado
-            if ctype_id == aggregator_id and not has_aggregator:
-                select_options.append({
-                    "name": c["name"],
-                    "display_name": display_name
-                })
-            elif ctype_id != aggregator_id:
-                # Exibe outros tipos (Nodo de Névoa e Medidor)
-                select_options.append({
-                    "name": c["name"],
-                    "display_name": display_name
-                })
+        elif has_load_balancer and not has_aggregator and ctype_id == aggregator_id:
+            select_options.append({
+                "name": c["name"],
+                "display_name": display_name
+            })
+
+        elif has_load_balancer and has_aggregator and ctype_id not in [lb_id, aggregator_id]:
+            select_options.append({
+                "name": c["name"],
+                "display_name": display_name
+            })
 
     if request.method == "POST":
         return handle_manage_post(
