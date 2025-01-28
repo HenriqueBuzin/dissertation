@@ -27,13 +27,12 @@ def create_aggregator(bairro, image, container_types):
     try:
         print(f"[INFO] Tentando criar o agregador '{container_name}' na rede '{network_name}'...")
 
-        # Criação do contêiner Docker
         client.containers.run(
             image,
             name=container_name,
             network=network_name,
             detach=True,
-            ports={"8000/tcp": None},
+            ports={"22/tcp": 2222},
             environment={"BAIRRO": bairro},
             labels={"type": str(container_types["aggregator"]["id"])}
         )
