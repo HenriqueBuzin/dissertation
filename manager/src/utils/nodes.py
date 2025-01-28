@@ -34,7 +34,6 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
     try:
         network_name = create_or_get_bairro_network(bairro)
 
-        # Localiza o agregador
         aggregator_name = f"{normalize_container_name(bairro)}_aggregator"
         aggregator_container = next(
             (c for c in list_containers(filters={"name": aggregator_name})), None
@@ -44,7 +43,6 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
 
         aggregator_url = f"sftp://{aggregator_name}:2222"
 
-        # Localiza contêineres existentes
         existing_containers = list_containers(filters={"name": f"{normalize_container_name(bairro)}_{container_name}"})
         count = len(existing_containers) + 1
 
