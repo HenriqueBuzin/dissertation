@@ -3,7 +3,24 @@
 from utils.docker_utils import client
 
 def create_aggregator(bairro, image, container_types):
-    """Cria o agregador para um bairro."""
+
+    """
+    Cria um agregador para o bairro especificado.
+
+    Args:
+        bairro (str): Nome do bairro para o qual o agregador será criado.
+        image (str): Imagem Docker a ser usada para o agregador.
+        container_types (dict): Dicionário contendo os tipos de contêineres e seus IDs.
+
+    Returns:
+        None
+
+    Raises:
+        docker.errors.APIError: Caso ocorra um erro ao interagir com a API do Docker.
+        docker.errors.ContainerError: Caso o contêiner não seja iniciado corretamente.
+        docker.errors.ImageNotFound: Caso a imagem Docker especificada não seja encontrada.
+    """
+
     network_name = f"{bairro}_network"
     container_name = f"{bairro}_aggregator"
 
