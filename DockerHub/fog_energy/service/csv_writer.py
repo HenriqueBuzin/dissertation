@@ -1,8 +1,7 @@
 # service/csv_writer.py
 
-import aiofiles
 import csv
-from datetime import datetime
+import aiofiles
 
 async def write_to_csv(data, filename):
     print(f"Iniciando a escrita no arquivo CSV: {filename}", flush=True)

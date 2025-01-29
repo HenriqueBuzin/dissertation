@@ -1,38 +1,44 @@
 # utils/sftp_client.py
 
-import paramiko
-import logging
-import time
 import os
+import time
+import logging
+import paramiko
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-def send_file_sftp(local_file, remote_file, host, port, user, password, retries=3, delay=5):
-    """Envia o arquivo 'local_file' para 'remote_file' via SFTP."""
-    if not local_file or not os.path.exists(local_file):
-        logger.error(f"Arquivo local não encontrado: {local_file}")
-        raise FileNotFoundError(f"Arquivo local não encontrado: {local_file}")
+SFTP_HOST = os.environ["SFTP_HOST"]
+SFTP_PORT = int(os.environ["SFTP_PORT"])
+SFTP_USER = os.environ["SFTP_USER"]
+SFTP_PASS = os.environ["SFTP_PASS"]
 
-    attempt = 0
-    while attempt < retries:
+def send_file_sftp(local_file: Path, remote_file: str) -> bool:
+    """
+    Envia local_file -> remote_file via SFTP.
+    Faz até 3 tentativas, retornando True (sucesso) ou False (falha).
+    """
+    if not local_file.exists():
+        logger.error(f"SFTP: Arquivo não encontrado: {local_file}")
+        return False
+
+    retries = 3
+    delay = 5
+    for attempt in range(1, retries + 1):
         try:
-            transport = paramiko.Transport((host, port))
-            transport.connect(username=user, password=password)
-            sftp = paramiko.SFTPClient.from_transport(transport)
+            with paramiko.Transport((SFTP_HOST, SFTP_PORT)) as transport:
+                transport.connect(username=SFTP_USER, password=SFTP_PASS)
+                with paramiko.SFTPClient.from_transport(transport) as sftp:
+                    logger.info(f"SFTP: Enviando {local_file} para {SFTP_HOST}:{remote_file} (tentativa {attempt})")
+                    sftp.put(str(local_file), remote_file)
 
-            logger.info(f"Enviando {local_file} para {host}:{remote_file} via SFTP...")
-            sftp.put(local_file, remote_file)
-
-            sftp.close()
-            transport.close()
-            logger.info("Arquivo enviado com sucesso via SFTP!")
+            logger.info("SFTP: Envio concluído com sucesso.")
             return True
         except Exception as e:
-            attempt += 1
-            logger.error(f"Erro ao enviar arquivo via SFTP na tentativa {attempt}: {e}")
+            logger.error(f"SFTP: Erro na tentativa {attempt}: {e}")
             if attempt < retries:
-                logger.info(f"Retentando em {delay} segundos...")
+                logger.info(f"SFTP: Retentando em {delay}s...")
                 time.sleep(delay)
             else:
-                logger.error("Falha ao enviar arquivo via SFTP após múltiplas tentativas.")
+                logger.error("SFTP: Falhou após múltiplas tentativas.")
                 return False

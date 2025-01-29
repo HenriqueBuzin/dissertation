@@ -1,8 +1,8 @@
 # protocols/coap_protocol.py
 
-import aiocoap.resource as resource
-import aiocoap
 import json
+import aiocoap
+import aiocoap.resource as resource
 
 class CoAPServerResource(resource.Resource):
     def __init__(self, protocol_layer):

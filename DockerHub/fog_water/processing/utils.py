@@ -1,8 +1,8 @@
 # processing/utils.py
 
 import json
-from processing.database import mongo_collection, redis_client
 from processing import config
+from processing.database import mongo_collection, redis_client
 
 def save_message(message):
     if config.PROCESSING_PERSIST == 1:

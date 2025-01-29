@@ -3,53 +3,54 @@
 # Usa a imagem base Python com Debian Bullseye
 FROM python:3.11.1-bullseye
 
-# Instala dependências do sistema
+# Instala pacotes do sistema
 RUN apt-get update && apt-get install -y \
     openssh-server supervisor \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Configurações do SSHD
+# Configura SSHD
 RUN mkdir /var/run/sshd
 
-# Cria um usuário "aggregator_user" e define senha
+# Cria usuário aggregator_user
 RUN useradd -m aggregator_user \
     && echo "aggregator_user:aggregator_pass" | chpasswd
 
-# Configura SSHD para autenticação por senha e nível de log detalhado
+# Ajusta SSHD
 RUN echo "LogLevel VERBOSE" >> /etc/ssh/sshd_config \
     && sed -i 's/UsePAM yes/UsePAM no/' /etc/ssh/sshd_config \
     && sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
-# Cria diretórios para dados e logs, ajusta permissões
+# Cria diretórios para dados e logs
 RUN mkdir -p /home/aggregator_user/data/incoming \
     && mkdir -p /home/aggregator_user/data/aggregated \
     && mkdir -p /home/aggregator_user/logs \
+    && mkdir -p /remote_path \
     && chown -R aggregator_user:aggregator_user /home/aggregator_user/data \
     && chown -R aggregator_user:aggregator_user /home/aggregator_user/logs \
+    && chown aggregator_user:aggregator_user /remote_path \
     && chmod -R 755 /home/aggregator_user/data \
-    && chmod -R 755 /home/aggregator_user/logs
+    && chmod -R 755 /home/aggregator_user/logs \
+    && chmod 755 /remote_path
 
-# Instala dependências Python
+# Define o diretório de trabalho /app
+WORKDIR /app
+
+# Copia e instala dependências
 COPY requirements.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r /app/requirements.txt
 
-# Copia os arquivos do projeto
-WORKDIR /app
+# Copia o restante dos arquivos do projeto (app.py, utils/, supervisord.conf, etc.)
 COPY . /app/
 
-# Garante que o arquivo supervisord.conf seja movido para o local correto
+# Gera chaves SSH
+RUN ssh-keygen -A
+
+# Copia o supervisord.conf para /etc/supervisor/conf.d/
 RUN mkdir -p /etc/supervisor/conf.d \
     && cp /app/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Gera chaves SSH (Necessário para SSHD)
-RUN ssh-keygen -A
-
-# Define o usuário padrão como root para o supervisord funcionar corretamente
-USER root
-
-# Expor a porta 22 para o SFTP
+# Expondo a porta 22 (para SFTP/SSH)
 EXPOSE 22
 
-# Inicia o Supervisor
+# Comando padrão: inicia o Supervisor, que por sua vez inicia o SSHD e a app
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

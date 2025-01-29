@@ -1,9 +1,9 @@
 # protocols/sftp_handler.py
 
+import os
 import base64
 import paramiko
 import aiofiles
-import os
 
 async def handle_sftp_details_and_send(message):
     try:

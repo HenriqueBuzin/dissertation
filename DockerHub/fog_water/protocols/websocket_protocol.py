@@ -1,10 +1,10 @@
 # protocols/websocket_protocol.py
 
-import asyncio
 import json
+import redis
+import asyncio
 import websockets
 from pymongo import MongoClient
-import redis
 from protocols.utils import load_env
 
 class WebSocketProtocol:

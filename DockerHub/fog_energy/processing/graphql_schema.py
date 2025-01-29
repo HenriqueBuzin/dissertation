@@ -68,7 +68,6 @@ class Query(graphene.ObjectType):
                     consumptionKwhPerHour=str(item['consumption_kwh_per_hour'])
                 ))
         
-        # Debug: Print the result before returning
         for res in result:
             print(f"GraphQL Result Item: {res}", flush=True)
 
@@ -85,12 +84,11 @@ class Query(graphene.ObjectType):
         else:
             query['consumption_m3_per_hour'] = {'$exists': True}
 
-        print(f"Query: {query}", flush=True)  # Debug: Print the query being used
+        print(f"Query: {query}", flush=True)
 
         data_query = mongo_collection.find(query)
         items = list(data_query)
 
-        # Debug: Print the retrieved data from MongoDB
         for item in items:
             print(f"MongoDB Item: {item}", flush=True)
         
@@ -104,7 +102,6 @@ class Query(graphene.ObjectType):
             ) for item in items
         ]
 
-        # Debug: Print the result before returning
         for res in result:
             print(f"GraphQL Result Item: {res}", flush=True)
 

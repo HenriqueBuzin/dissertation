@@ -1,10 +1,10 @@
 # service/http_sender.py
 
-import aiohttp
-import aiofiles
+import os
 import base64
 import asyncio
-import os
+import aiohttp
+import aiofiles
 
 async def send_file_and_data_http(file_path, sftp_host, sftp_port, sftp_username, sftp_password, remote_path, url, delay):
     print(f"Iniciando o envio do arquivo: {file_path}", flush=True)

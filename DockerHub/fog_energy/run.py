@@ -1,29 +1,25 @@
 # run.py
 
 import os
+import signal
 import requests
 import multiprocessing
-import signal
-from processing.main import main as processing_main
-from protocols.main import main as protocols_main
 from service.main import main as service_main
+from protocols.main import main as protocols_main
+from processing.main import main as processing_main
 
 def register_node():
-    """Registra o nó no Load Balancer, caso as variáveis de ambiente estejam definidas."""
-    lb_url = os.getenv("LOAD_BALANCER_URL")      # ex: http://canasvieiras_load_balancer_1:5000
-    node_id = os.getenv("FOG_NODE_NAME")         # ex: canasvieiras_nodo_energy_1
-    data_type = os.getenv("NODE_TYPE", "consumption_kwh_per_hour")   # ou "water"; defina uma env ou use valor fixo
-    # node_port = os.getenv("HTTP_PORT", "8000")   # porta interna onde o nó escuta requisições
-    node__internal_port = os.getenv("NODE_HTTP_PORT", "8000")
+    lb_url = os.getenv("LOAD_BALANCER_URL")
+    node_id = os.getenv("FOG_NODE_NAME")
+    data_type = os.getenv("NODE_TYPE", "consumption_kwh_per_hour")
+    node_internal_port = os.getenv("NODE_HTTP_PORT", "8000")
 
     if not lb_url or not node_id:
         print("Variáveis LOAD_BALANCER_URL ou FOG_NODE_NAME não definidas. Pulando registro...")
         return
 
-    # Constrói a URL completa do endpoint de recepção de dados do nó
-    node_endpoint = f"http://{node_id}:{node__internal_port}/receive_data"  # Assegure-se de que o Load Balancer pode resolver esse endpoint
+    node_endpoint = f"http://{node_id}:{node_internal_port}/receive_data"
 
-    # Constrói os dados para enviar
     data = {
         "node_id": node_id,
         "data_type": data_type,
@@ -31,7 +27,6 @@ def register_node():
     }
 
     try:
-        # Supondo que o LB tenha a rota /register_node
         r = requests.post(lb_url + "/register_node", json=data, timeout=5)
         if r.status_code == 200:
             print(f"[INFO] Registro do nó '{node_id}' no LB com sucesso!")
@@ -82,7 +77,6 @@ if __name__ == "__main__":
             stop_services(processes)
             raise SystemExit(0)
 
-        # Registra sinais de interrupção
         signal.signal(signal.SIGINT, signal_handler)
         signal.signal(signal.SIGTERM, signal_handler)
 
