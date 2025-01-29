@@ -14,10 +14,12 @@ SFTP_USER = os.environ["SFTP_USER"]
 SFTP_PASS = os.environ["SFTP_PASS"]
 
 def send_file_sftp(local_file: Path, remote_file: str) -> bool:
+    
     """
     Envia local_file -> remote_file via SFTP.
     Faz até 3 tentativas, retornando True (sucesso) ou False (falha).
     """
+    
     if not local_file.exists():
         logger.error(f"SFTP: Arquivo não encontrado: {local_file}")
         return False
