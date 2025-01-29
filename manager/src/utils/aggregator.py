@@ -1,6 +1,6 @@
 # utils/aggregator.py
 
-from utils.docker_utils import client
+from utils.docker_utils import get_docker_client
 
 def create_aggregator(bairro, image, container_types):
 
@@ -21,6 +21,7 @@ def create_aggregator(bairro, image, container_types):
         docker.errors.ImageNotFound: Caso a imagem Docker especificada não seja encontrada.
     """
 
+    client = get_docker_client()
     network_name = f"{bairro}_network"
     container_name = f"{bairro}_aggregator"
 
@@ -34,7 +35,8 @@ def create_aggregator(bairro, image, container_types):
             detach=True,
             ports={"22/tcp": 2222},
             environment={"BAIRRO": bairro},
-            labels={"type": str(container_types["aggregator"]["id"])}
+            labels={"type": str(container_types["aggregator"]["id"])},
+            extra_hosts={"sftp_host": "192.168.1.115"}
         )
         
         print(f"[SUCESSO] Agregador '{container_name}' criado com sucesso para o bairro '{bairro}'.")

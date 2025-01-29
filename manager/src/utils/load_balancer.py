@@ -2,8 +2,7 @@
 
 from .network import get_available_port, create_or_get_bairro_network
 from .general import normalize_container_name
-from .docker_utils import client
-import docker
+from .docker_utils import get_docker_client, get_docker_errors
 
 def create_load_balancer(bairro, container_name, image, container_types):
 
@@ -22,7 +21,9 @@ def create_load_balancer(bairro, container_name, image, container_types):
     Raises:
         docker.errors.APIError: Caso ocorra um erro ao interagir com a API do Docker.
     """
-    
+    client = get_docker_client()
+    APIError = get_docker_errors()[2]
+
     try:
         
         http_port = get_available_port()
@@ -50,6 +51,6 @@ def create_load_balancer(bairro, container_name, image, container_types):
         print(f"Load Balancer criado com sucesso. HTTP: {http_port}, CoAP: {coap_port}")
         return http_port, coap_port
 
-    except docker.errors.APIError as e:
-        print(f"Erro ao criar Load Balancer: {e}")
+    except APIError as e:
+        print(f"[ERRO] Falha ao criar o Load Balancer '{full_container_name}': {e}")
         return None, None

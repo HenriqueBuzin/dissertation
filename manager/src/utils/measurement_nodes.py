@@ -1,11 +1,10 @@
 # utils/measurement_nodes.py
 
 from .network import get_available_port, create_or_get_bairro_network
-from .docker_utils import client, list_containers
+from .docker_utils import get_docker_client, list_containers, get_docker_errors
 from .general import normalize_container_name
 from dotenv import load_dotenv
 from .config import load_json
-import docker
 import json
 import os
 
@@ -37,6 +36,9 @@ def create_measurement_node(bairro, full_container_name, image, environment, lab
         docker.errors.APIError: Caso ocorra um erro durante a criação ou execução do contêiner.
     """
 
+    client = get_docker_client()
+    APIError = get_docker_errors()[2]
+
     try:
 
         print(f"[DEBUG] Ambiente para '{full_container_name}': {environment}")
@@ -61,7 +63,7 @@ def create_measurement_node(bairro, full_container_name, image, environment, lab
         print(f"[SUCESSO] Medidor '{full_container_name}' criado. HTTP: {http_port}, CoAP: {coap_port}")
         return http_port, coap_port
 
-    except docker.errors.APIError as e:
+    except APIError as e:
         print(f"[ERRO] Falha ao criar o medidor {full_container_name}: {e}")
         return None, None
 

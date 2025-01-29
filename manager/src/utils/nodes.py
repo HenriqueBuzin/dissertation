@@ -1,9 +1,8 @@
 # utils/nodes.py
 
 from .network import get_available_port, create_or_get_bairro_network
-from .docker_utils import client, list_containers
+from .docker_utils import get_docker_client, list_containers, get_docker_errors
 from .general import normalize_container_name
-import docker
 
 def create_node(bairro, container_name, image, container_types, load_balancer_url, quantity):
     
@@ -28,6 +27,9 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
         ValueError: Caso o agregador do bairro não seja encontrado.
         Exception: Para qualquer outro erro inesperado.
     """
+
+    client = get_docker_client()
+    ContainerError, ImageNotFound, APIError = get_docker_errors()
 
     created_nodes = []
 
@@ -80,11 +82,11 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
             created_nodes.append((http_port, coap_port))
             count += 1
 
-    except docker.errors.ContainerError as e:
+    except ContainerError as e:
         print(f"[ERRO] O contêiner '{container_name}' encontrou um erro ao ser executado: {e}")
-    except docker.errors.ImageNotFound:
+    except ImageNotFound:
         print(f"[ERRO] Imagem '{image}' não encontrada.")
-    except docker.errors.APIError as e:
+    except APIError as e:
         print(f"[ERRO] Erro na API Docker: {e}")
     except ValueError as ve:
         print(f"[ERRO] {ve}")

@@ -1,7 +1,7 @@
 # utils/docker_utils.py
 
 import docker
-from docker.errors import DockerException
+from docker.errors import DockerException, ContainerError, ImageNotFound, APIError
 
 try:
     client = docker.from_env()
@@ -71,3 +71,17 @@ def get_docker_client():
     """
 
     return client
+
+def get_docker_errors():
+
+    """
+    Retorna as classes de erro do Docker para serem utilizadas em outros módulos.
+
+    Returns:
+        tuple: Uma tupla contendo as classes de exceção do Docker:
+            - `docker.errors.ContainerError`: Levantado quando um contêiner falha durante a execução.
+            - `docker.errors.ImageNotFound`: Levantado quando a imagem Docker especificada não é encontrada no sistema local ou no repositório.
+            - `docker.errors.APIError`: Levantado quando há uma falha na comunicação com a API do Docker.
+    """
+    
+    return ContainerError, ImageNotFound, APIError
