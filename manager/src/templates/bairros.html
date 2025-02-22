@@ -3,14 +3,14 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container-fluid mt-4">
-    <h2>Seleção de Bairros</h2>
-    <p>Escolha um bairro para gerenciar os contêineres específicos.</p>
+    <h2>Neighborhood Selection</h2>
+    <p>Select a neighborhood to manage specific containers.</p>
     
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>Bairro</th>
-                <th>Ações</th>
+                <th>Neighborhood</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +18,7 @@
             <tr>
                 <td>{{ bairro }}</td>
                 <td>
-                    <a href="{{ url_for('manage_containers', bairro=bairro) }}" class="btn btn-primary btn-sm">Gerenciar</a>
+                    <a href="{{ url_for('manage_containers', bairro=bairro) }}" class="btn btn-primary btn-sm">Manage</a>
                 </td>
             </tr>
             {% endfor %}

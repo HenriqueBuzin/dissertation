@@ -1,18 +1,18 @@
 {
     "load_balancer": {
         "id": 1,
-        "display_name": "Load Balancer"
+        "display_name": "Primary Fog Node"
     },
     "nodo_nevoa": {
         "id": 2,
-        "display_name": "Nodo de N\u00e9voa"
+        "display_name": "Fog Node"
     },
     "medidor": {
         "id": 3,
-        "display_name": "Medidor"
+        "display_name": "Meter"
     },
     "aggregator": {
         "id": 4,
-        "display_name": "Agregador"
+        "display_name": "Aggregator"
     }
 }

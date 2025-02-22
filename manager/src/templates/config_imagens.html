@@ -3,23 +3,23 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container-fluid mt-4">
-    <h2>Configuração de Imagens Docker</h2>
-    <p>Defina um nome para cada imagem Docker utilizada.</p>
+    <h2>Docker Image Configuration</h2>
+    <p>Define a name for each Docker image used.</p>
 
     <div class="card my-4">
-        <div class="card-header bg-primary text-white">Adicionar Nova Configuração de Imagem</div>
+        <div class="card-header bg-primary text-white">Add New Image Configuration</div>
         <div class="card-body">
             <form action="{{ url_for('config_imagens') }}" method="post" class="row g-3">
                 <div class="col-md-6">
-                    <label for="name" class="form-label">Nome do Contêiner</label>
+                    <label for="name" class="form-label">Container Name</label>
                     <input type="text" name="name" id="name" class="form-control" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="image" class="form-label">Imagem Docker</label>
+                    <label for="image" class="form-label">Docker Image</label>
                     <input type="text" name="image" id="image" class="form-control" required>
                 </div>
                 <div class="col-md-3">
-                    <label for="type" class="form-label">Tipo de Contêiner</label>
+                    <label for="type" class="form-label">Container Type</label>
                     <select name="type" id="type" class="form-control" required onchange="toggleDataField()">
                         {% for key, type_info in container_types.items() %}
                             <option value="{{ key }}">{{ type_info.display_name }}</option>
@@ -28,9 +28,9 @@
                 </div>                
 
                 <div class="col-md-12" id="dataField" style="display:none;">
-                    <label for="data_id" class="form-label">Tipo de Dados</label>
+                    <label for="data_id" class="form-label">Data Type</label>
                     <select name="data_id" id="data_id" class="form-control">
-                        <option value="">Selecione um tipo de dados</option>
+                        <option value="">Select a data type</option>
                         {% for data_id, data_url in data_mapping.items() %}
                             <option value="{{ data_id }}">{{ data_id }} ({{ data_url }})</option>
                         {% endfor %}
@@ -38,23 +38,23 @@
                 </div>
 
                 <div class="col-12 d-flex justify-content-end">
-                    <button type="submit" class="btn btn-primary">Adicionar Configuração</button>
+                    <button type="submit" class="btn btn-primary">Add Configuration</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <h3 class="mt-4">Configurações de Imagens Existentes</h3>
+    <h3 class="mt-4">Existing Image Configurations</h3>
     <div class="card my-4">
         <div class="card-body p-0">
             <table class="table table-striped table-hover mb-0">
                 <thead class="table-primary">
                     <tr>
-                        <th>Nome do Contêiner</th>
-                        <th>Imagem</th>
-                        <th>Tipo</th>
-                        <th>Data Nome</th>
-                        <th>Ações</th>
+                        <th>Container Name</th>
+                        <th>Image</th>
+                        <th>Type</th>
+                        <th>Data Name</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,7 +64,7 @@
                         <td>{{ item.image }}</td>
                         
                         <td>
-                            {{ item.type_display if item.type_display else "Tipo não encontrado: " ~ item.type }}
+                            {{ item.type_display if item.type_display else "Type not found: " ~ item.type }}
                         </td>                        
                                                                               
                         <td>
@@ -76,7 +76,7 @@
                         </td>                        
                         <td>
                             <form action="{{ url_for('delete_config_imagem', name=item.name) }}" method="post" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
                         </td>
                     </tr>

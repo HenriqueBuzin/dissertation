@@ -36,7 +36,7 @@ def create_aggregator(bairro, image, container_types):
             ports={"22/tcp": 2222},
             environment={"BAIRRO": bairro},
             labels={"type": str(container_types["aggregator"]["id"])},
-            extra_hosts={"sftp_host": "192.168.1.115"}
+            extra_hosts={"sftp_host": "192.168.1.124"}
         )
         
         print(f"[SUCESSO] Agregador '{container_name}' criado com sucesso para o bairro '{bairro}'.")
