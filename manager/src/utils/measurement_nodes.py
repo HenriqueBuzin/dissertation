@@ -48,7 +48,7 @@ def create_measurement_node(bairro, full_container_name, image, environment, lab
 
         network_name = create_or_get_bairro_network(bairro)
 
-        client.containers.run(
+        container = client.containers.run(
             image,
             name=full_container_name,
             detach=True,
@@ -60,6 +60,7 @@ def create_measurement_node(bairro, full_container_name, image, environment, lab
             },
             labels=labels
         )
+
         print(f"[SUCESSO] Medidor '{full_container_name}' criado. HTTP: {http_port}, CoAP: {coap_port}")
         return http_port, coap_port
 
@@ -95,8 +96,10 @@ def create_measurement_nodes(
     bairros_medidores = load_json(BAIRROS_MEDIDORES_FILE, default={})
     print(f"[DEBUG] Bairros Medidores: {bairros_medidores}")
 
-    load_balancer_http_url = f"http://host.docker.internal:{load_balancer_http_port}/receive_data"
-    load_balancer_coap_url = f"coap://host.docker.internal:{load_balancer_coap_port}/receive_data"
+    load_balancer_name = f"{normalize_container_name(bairro)}_load_balancer_1"
+    load_balancer_http_url = f"http://{load_balancer_name}:5000/receive_data"
+    load_balancer_coap_url = f"coap://{load_balancer_name}:5683/receive_data"
+
     print(f"[DEBUG] URLs do Load Balancer: HTTP: {load_balancer_http_url}, CoAP: {load_balancer_coap_url}")
 
     container_data = next((c for c in config_data.get("containers", []) if c["name"] == container_name), None)
@@ -130,6 +133,7 @@ def create_measurement_nodes(
                 print(f"[AVISO] Não foi possível extrair seq_num do contêiner '{container.name}'. Ignorando...", flush=True)
         
         try:
+            client = get_docker_client()
             inspect = client.api.inspect_container(container.id)
             env_vars = inspect.get('Config', {}).get('Env', [])
             for var in env_vars:
