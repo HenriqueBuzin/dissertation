@@ -1,12 +1,33 @@
 # http_server.py
 
-from aiohttp import web
-import logging
+from registry import register_meter
 from aiohttp import ClientSession
+from aiohttp import web
+import functools
+import logging
 import asyncio
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
+
+async def handle_register_meter(request):
+    """Recebe requisições para registrar medidores (HTTP)."""
+    try:
+        data = await request.json()
+        meter_id = data.get("id")
+        street = data.get("street")
+        meter_type = data.get("type")
+
+        if not meter_id or not street or not meter_type:
+            return web.json_response({"error": "Missing required fields"}, status=400)
+
+        if register_meter(meter_id, street, meter_type):
+            return web.json_response({"message": "Meter registered successfully"}, status=200)
+        else:
+            return web.json_response({"error": "Invalid meter type"}, status=400)
+
+    except Exception as e:
+        return web.json_response({"error": str(e)}, status=500)
 
 # Função para determinar o tipo de dado com base no último campo de consumo
 def determine_data_type(data):
@@ -96,9 +117,10 @@ async def handle_register_node(request, available_nodes):
 # Iniciar o servidor HTTP
 async def start_http_server(port, available_nodes):
     app = web.Application()
-    app.router.add_post("/receive_data", lambda request: handle_receive_data(request, available_nodes))
-    app.router.add_post("/register_node", lambda request: handle_register_node(request, available_nodes))
-
+    app.router.add_post("/receive_data", functools.partial(handle_receive_data, available_nodes=available_nodes))
+    app.router.add_post("/register_node", functools.partial(handle_register_node, available_nodes=available_nodes))
+    app.router.add_post("/receive_data/register_meter", handle_register_meter)
+    
     logging.info(f"HTTP: Servidor rodando na porta {port}...")
     runner = web.AppRunner(app)
     await runner.setup()
