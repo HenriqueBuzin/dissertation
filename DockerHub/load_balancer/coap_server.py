@@ -5,14 +5,14 @@ from aiocoap import Context, Message, resource, Code
 import logging
 import json
 
-# Importa funções para distribuir dados e registrar medidores
+# Import functions to distribute data and register meters
 from http_server import distribute_data_via_http
 from registry import register_meter
 
-# Configuração do logging
+# Logging configuration
 logging.basicConfig(level=logging.INFO)
 
-# Função para determinar o tipo de dado com base no último campo de consumo
+# Function to determine the data type based on the last consumption field
 def determine_data_type(data):
     keys = list(data.keys())
     last_key = keys[-1] if keys else None
@@ -20,7 +20,7 @@ def determine_data_type(data):
         return last_key
     return None
 
-# Recurso CoAP para receber dados em /receive_data
+# CoAP resource to receive data at /receive_data
 class CoAPReceiveDataResource(resource.Resource):
     def __init__(self, available_nodes):
         super().__init__()
@@ -31,47 +31,57 @@ class CoAPReceiveDataResource(resource.Resource):
             payload = request.payload.decode("utf-8")
             data = json.loads(payload)
 
-            # Determinar o tipo de dado baseado nos campos de consumo
+            # Determine the data type based on consumption fields
             data_type = determine_data_type(data)
 
             if not data_type:
-                logging.warning("CoAP: Dados recebidos sem tipo determinado.")
-                return Message(payload="Erro: Tipo de dado não determinado.".encode("utf-8"), code=Code.BAD_REQUEST)
+                logging.warning("CoAP: Received data without a determined type.")
+                return Message(payload="Error: Data type not determined.".encode("utf-8"), code=Code.BAD_REQUEST)
 
-            logging.info(f"CoAP: Dados recebidos: {data}")
+            logging.info(f"CoAP: Received data: {data}")
 
-            # Distribuir os dados via HTTP
+            # Distribute data via HTTP
             await distribute_data_via_http(data_type, data, self.available_nodes)
 
-            return Message(payload="CoAP: Dados recebidos com sucesso".encode("utf-8"), code=Code.CONTENT)
+            return Message(payload="CoAP: Data successfully received".encode("utf-8"), code=Code.CONTENT)
         except Exception as e:
-            logging.error(f"Erro no Servidor CoAP: {e}")
-            return Message(payload="Erro no Servidor CoAP".encode("utf-8"), code=Code.INTERNAL_SERVER_ERROR)
+            logging.error(f"CoAP Server Error: {e}")
+            return Message(payload="CoAP Server Error".encode("utf-8"), code=Code.INTERNAL_SERVER_ERROR)
 
-# Recurso CoAP para registrar medidores em /register_meter
+# CoAP resource to register meters at /register_meter
 class CoAPRegisterMeterResource(resource.Resource):
     async def render_post(self, request):
         try:
             payload = request.payload.decode("utf-8")
             data = json.loads(payload)
 
-            meter_id = data.get("id")
-            street = data.get("street")
-            meter_type = data.get("type")
+            # Determine the data type based on consumption fields
+            data_type = determine_data_type(data)
 
-            if not meter_id or not street or not meter_type:
-                return Message(payload="Erro: Campos obrigatórios ausentes.".encode("utf-8"), code=Code.BAD_REQUEST)
+            if not data_type:
+                logging.warning("CoAP: Received data without a determined type.")
+                return Message(payload="Error: Data type not determined.".encode("utf-8"), code=Code.BAD_REQUEST)
 
-            # Registrar o medidor usando a função do `registry.py`
-            if register_meter(meter_id, street, meter_type):
-                logging.info(f"CoAP: Medidor {meter_id} ({meter_type}) registrado com sucesso.")
-                return Message(payload="CoAP: Medidor registrado com sucesso".encode("utf-8"), code=Code.CONTENT)
-            else:
-                return Message(payload="Erro: Tipo de medidor inválido ou já registrado.".encode("utf-8"), code=Code.BAD_REQUEST)
+            logging.info(f"CoAP: Received data: {data}")
 
+            # Converte os dados para o formato que os nós de névoa esperam
+            value = data.get("consumption_kwh_per_hour") or data.get("consumption_m3_per_hour")
+            converted_data = {
+                "type": "consumption",
+                "id": data.get("id"),
+                "street": data.get("street"),
+                "value": value,
+                "date": data.get("date"),
+                "time": data.get("time")
+            }
+
+            # Distribute data via HTTP com formato convertido
+            await distribute_data_via_http(data_type, converted_data, self.available_nodes)
+
+            return Message(payload="CoAP: Data successfully received".encode("utf-8"), code=Code.CONTENT)
         except Exception as e:
-            logging.error(f"Erro ao registrar medidor via CoAP: {e}")
-            return Message(payload="Erro no registro de medidor CoAP".encode("utf-8"), code=Code.INTERNAL_SERVER_ERROR)
+            logging.error(f"CoAP Server Error: {e}")
+            return Message(payload="CoAP Server Error".encode("utf-8"), code=Code.INTERNAL_SERVER_ERROR)
 
 # Start the CoAP server
 async def start_coap_server(port, available_nodes):
@@ -83,7 +93,7 @@ async def start_coap_server(port, available_nodes):
         logging.info(f"CoAP: Server running on port {port}...")
         await Context.create_server_context(root, bind=("0.0.0.0", port))
 
-        # Mantém o servidor rodando
+        # Keep the server running
         await asyncio.get_event_loop().create_future()
     except Exception as e:
-        logging.error(f"Erro ao iniciar o servidor CoAP: {e}")
+        logging.error(f"Error starting CoAP server: {e}")
