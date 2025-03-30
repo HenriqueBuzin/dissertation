@@ -1,8 +1,10 @@
 # utils/netowrk.py
 
+from .docker_utils import get_docker_client, get_docker_errors
 from .general import normalize_container_name
 from .docker_utils import get_docker_client
 import socket
+import docker
 
 def create_or_get_bairro_network(bairro):
     
@@ -29,24 +31,25 @@ def create_or_get_bairro_network(bairro):
     return network_name
 
 def create_or_get_lb_network():
-    
-    """
-    Cria (se não existir) e retorna o nome da rede Docker exclusiva para os Load Balancers.
-
-    Returns:
-        str: Nome da rede Docker criada ou existente.
-    """
-
     client = get_docker_client()
-    
+    _, _, _, NotFound = get_docker_errors()
     network_name = "load_balancers_network"
 
-    existing_networks = client.networks.list(names=[network_name])
-    if not existing_networks:
-        client.networks.create(network_name, driver="bridge")
-        print(f"Rede '{network_name}' criada para Load Balancers.")
-    else:
+    try:
+        client.networks.get(network_name)
         print(f"Rede '{network_name}' já existe.")
+    except NotFound:
+        ipam_pool = docker.types.IPAMPool(subnet="172.25.0.0/16")
+        ipam_config = docker.types.IPAMConfig(pool_configs=[ipam_pool])
+
+        client.networks.create(
+            name=network_name,
+            driver="bridge",
+            attachable=True,
+            ipam=ipam_config
+        )
+        print(f"Rede '{network_name}' criada para Load Balancers.")
+
     return network_name
 
 def get_available_port(start_port=5000, end_port=6000):

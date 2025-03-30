@@ -2,6 +2,7 @@
 
 import docker
 from docker.errors import DockerException, ContainerError, ImageNotFound, APIError
+from docker.errors import DockerException, ContainerError, ImageNotFound, APIError, NotFound
 
 try:
     client = docker.from_env()
@@ -79,9 +80,10 @@ def get_docker_errors():
 
     Returns:
         tuple: Uma tupla contendo as classes de exceção do Docker:
-            - `docker.errors.ContainerError`: Levantado quando um contêiner falha durante a execução.
-            - `docker.errors.ImageNotFound`: Levantado quando a imagem Docker especificada não é encontrada no sistema local ou no repositório.
-            - `docker.errors.APIError`: Levantado quando há uma falha na comunicação com a API do Docker.
+            - ContainerError
+            - ImageNotFound
+            - APIError
+            - NotFound
     """
-    
-    return ContainerError, ImageNotFound, APIError
+
+    return ContainerError, ImageNotFound, APIError, NotFound

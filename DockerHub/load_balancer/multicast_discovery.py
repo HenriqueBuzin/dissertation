@@ -19,12 +19,15 @@ known_primary_nodes = {}
 
 def send_multicast_announce(node_id, http_port, coap_port, meter_count, node_count):
     """Envia um anúncio multicast para divulgar este nó primário."""
+    hostname = socket.gethostname()  # Nome do container, funciona como DNS interno
+
     message = {
         "node_id": node_id,
         "http_port": http_port,
         "coap_port": coap_port,
         "meters": meter_count,
-        "nodes": node_count
+        "nodes": node_count,
+        "host": hostname  # Envia o hostname, não mais o IP
     }
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
@@ -38,6 +41,8 @@ def send_multicast_announce(node_id, http_port, coap_port, meter_count, node_cou
 
 def listen_multicast():
     """Escuta mensagens multicast para descobrir outros nós primários."""
+    print("[BROADCAST] Escutando mensagens multicast...", flush=True)
+
     global known_primary_nodes
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
@@ -46,7 +51,7 @@ def listen_multicast():
 
     mreq = struct.pack("4sl", socket.inet_aton(MULTICAST_GROUP), socket.INADDR_ANY)
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
-    sock.settimeout(5.0)  # Timeout para evitar travar no recv
+    sock.settimeout(5.0)
 
     logging.info("Escutando mensagens multicast...")
 
@@ -65,14 +70,15 @@ def listen_multicast():
                 "coap_port": message["coap_port"],
                 "meters": message["meters"],
                 "nodes": message["nodes"],
-                "ip": addr[0],
+                "host": message.get("host", addr[0]),  # Usa host se estiver presente
                 "last_seen": time.time()
             }
 
             logging.info(f"Nó primário descoberto/atualizado: {node_id} - {known_primary_nodes[node_id]}")
 
+            print(f"[BROADCAST] Nó descoberto: {node_id} — HOST {known_primary_nodes[node_id]['host']} — HTTP: {message['http_port']} — CoAP: {message['coap_port']} — Medidores: {message['meters']} — Nós: {message['nodes']}", flush=True)
+
         except socket.timeout:
-            # Apenas para manter o loop rodando sem travar
             continue
         except Exception as e:
             logging.error(f"Erro ao processar multicast: {e}")
@@ -88,4 +94,4 @@ async def multicast_heartbeat(node_id, http_port, coap_port):
         meter_count = sum(len(v) for v in available_nodes.values())
         node_count = len(available_nodes)
         send_multicast_announce(node_id, http_port, coap_port, meter_count, node_count)
-        await asyncio.sleep(10)  # Reanuncia a cada 10 segundos
+        await asyncio.sleep(10)
