@@ -10,22 +10,28 @@ import asyncio
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 
+# http_server.py
+
 async def handle_register_meter(request):
-    """Handles requests to register meters (HTTP)."""
+    """
+    Recebe JSON:
+      { "id": 1001, "street": "Rua da Praia", "type": "energy" }
+    e registra no registry.py
+    """
     try:
         data = await request.json()
         meter_id = data.get("id")
         street = data.get("street")
-        meter_type = data.get("type")
+        meter_type = data.get("type")  # "energy" ou "water"
 
         if not meter_id or not street or not meter_type:
             return web.json_response({"error": "Missing required fields"}, status=400)
 
+        # Chama a função register_meter do registry.py
         if register_meter(meter_id, street, meter_type):
             return web.json_response({"message": "Meter registered successfully"}, status=200)
         else:
-            return web.json_response({"error": "Invalid meter type"}, status=400)
-
+            return web.json_response({"error": "Invalid meter type or already registered"}, status=400)
     except Exception as e:
         return web.json_response({"error": str(e)}, status=500)
 
@@ -127,9 +133,13 @@ async def handle_register_node(request, available_nodes):
         logging.error(f"Error in HTTP Node Registration: {e}")
         return web.json_response({"status": "Error in HTTP Node Registration"}, status=500)
 
+async def handle_root(request):
+    return web.Response(text="Olá, sou o Load Balancer!", status=200)
+
 # Start the HTTP server
 async def start_http_server(port, available_nodes):
     app = web.Application()
+    app.router.add_get("/", handle_root)
     app.router.add_post("/receive_data", functools.partial(handle_receive_data, available_nodes=available_nodes))
     app.router.add_post("/register_node", functools.partial(handle_register_node, available_nodes=available_nodes))
     app.router.add_post("/receive_data/register_meter", handle_register_meter)

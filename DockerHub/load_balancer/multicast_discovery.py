@@ -1,6 +1,5 @@
 # multicast_discovery.py
 
-from registry import get_available_nodes
 import threading
 import logging
 import asyncio
@@ -9,25 +8,38 @@ import struct
 import json
 import time
 
-# Configurações do Multicast
+known_primary_nodes = {}
+
 MULTICAST_GROUP = "239.0.0.1"
 MULTICAST_PORT = 5007
 BUFFER_SIZE = 1024
 
-# Lista para armazenar informações dos nós primários conhecidos
-known_primary_nodes = {}
-
-def send_multicast_announce(node_id, http_port, coap_port, meter_count, node_count):
-    """Envia um anúncio multicast para divulgar este nó primário."""
-    hostname = socket.gethostname()  # Nome do container, funciona como DNS interno
+def send_multicast_announce(node_id, http_port, coap_port, stats):
+    """
+    stats: dict com:
+      - 'registered_meters'
+      - 'fog_nodes_agua'
+      - 'fog_nodes_energia'
+      - 'specialties_count'
+      etc.
+    """
+    
+    ip = get_local_ip()  # Pega IP do container
 
     message = {
         "node_id": node_id,
         "http_port": http_port,
         "coap_port": coap_port,
-        "meters": meter_count,
-        "nodes": node_count,
-        "host": hostname  # Envia o hostname, não mais o IP
+        "registered_meters": stats["registered_meters"],
+
+        # Exemplo: se quiser exibir contadores separados
+        "energy_meters": stats["energy_meters"],
+        "water_meters":  stats["water_meters"],
+
+        "fog_nodes_energia": stats["fog_nodes_energy"],
+        "fog_nodes_agua":    stats["fog_nodes_water"],
+
+        "ip": ip
     }
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
@@ -40,7 +52,6 @@ def send_multicast_announce(node_id, http_port, coap_port, meter_count, node_cou
         sock.close()
 
 def listen_multicast():
-    """Escuta mensagens multicast para descobrir outros nós primários."""
     print("[BROADCAST] Escutando mensagens multicast...", flush=True)
 
     global known_primary_nodes
@@ -68,15 +79,26 @@ def listen_multicast():
             known_primary_nodes[node_id] = {
                 "http_port": message["http_port"],
                 "coap_port": message["coap_port"],
-                "meters": message["meters"],
-                "nodes": message["nodes"],
-                "host": message.get("host", addr[0]),  # Usa host se estiver presente
+                # mudamos 'meters' => 'registered_meters', etc.
+                "registered_meters": message.get("registered_meters", 0),
+                "fog_nodes_agua": message.get("fog_nodes_agua", 0),
+                "fog_nodes_energia": message.get("fog_nodes_energia", 0),
+                "specialties_count": message.get("specialties_count", 0),
+                "ip": message["ip"],
                 "last_seen": time.time()
             }
 
             logging.info(f"Nó primário descoberto/atualizado: {node_id} - {known_primary_nodes[node_id]}")
 
-            print(f"[BROADCAST] Nó descoberto: {node_id} — HOST {known_primary_nodes[node_id]['host']} — HTTP: {message['http_port']} — CoAP: {message['coap_port']} — Medidores: {message['meters']} — Nós: {message['nodes']}", flush=True)
+            print(
+                f"[BROADCAST] Nó descoberto: {node_id} — IP {message['ip']}"
+                f" — HTTP: {message['http_port']} — CoAP: {message['coap_port']}"
+                f" — Medidores: {message.get('registered_meters', 0)}"
+                f" — Fog Água: {message.get('fog_nodes_agua', 0)}"
+                f" — Fog Energia: {message.get('fog_nodes_energia', 0)}"
+                f" — Especialidades: {message.get('specialties_count', 0)}",
+                flush=True
+            )
 
         except socket.timeout:
             continue
@@ -84,14 +106,29 @@ def listen_multicast():
             logging.error(f"Erro ao processar multicast: {e}")
 
 def start_multicast_listener():
-    """Inicia a escuta multicast em uma thread separada."""
     thread = threading.Thread(target=listen_multicast, daemon=True)
     thread.start()
 
 async def multicast_heartbeat(node_id, http_port, coap_port):
+    from registry import get_available_nodes
+    from app import gather_stats
+
     while True:
+        # Recalcula stats a cada batida
         available_nodes = get_available_nodes()
-        meter_count = sum(len(v) for v in available_nodes.values())
-        node_count = len(available_nodes)
-        send_multicast_announce(node_id, http_port, coap_port, meter_count, node_count)
+        stats = gather_stats(available_nodes)
+
+        # Agora chamamos com stats
+        send_multicast_announce(node_id, http_port, coap_port, stats)
         await asyncio.sleep(10)
+
+def get_local_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.connect(("10.255.255.255", 1))
+        ip = s.getsockname()[0]
+    except Exception:
+        ip = "127.0.0.1"
+    finally:
+        s.close()
+    return ip

@@ -29,7 +29,7 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
     """
 
     client = get_docker_client()
-    ContainerError, ImageNotFound, APIError = get_docker_errors()
+    ContainerError, ImageNotFound, APIError, _ = get_docker_errors()
 
     created_nodes = []
 

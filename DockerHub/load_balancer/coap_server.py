@@ -55,33 +55,23 @@ class CoAPRegisterMeterResource(resource.Resource):
             payload = request.payload.decode("utf-8")
             data = json.loads(payload)
 
-            # Determine the data type based on consumption fields
-            data_type = determine_data_type(data)
+            # Pega {id, street, type}
+            meter_id = data.get("id")
+            street = data.get("street")
+            meter_type = data.get("type")
 
-            if not data_type:
-                logging.warning("CoAP: Received data without a determined type.")
-                return Message(payload="Error: Data type not determined.".encode("utf-8"), code=Code.BAD_REQUEST)
+            if not meter_id or not street or not meter_type:
+                return Message(payload=b"Error: Missing required fields.", code=Code.BAD_REQUEST)
 
-            logging.info(f"CoAP: Received data: {data}")
+            # Chama register_meter do registry.py
+            if register_meter(meter_id, street, meter_type):
+                return Message(payload=b"CoAP: Meter successfully registered", code=Code.CONTENT)
+            else:
+                return Message(payload=b"Error: Invalid meter type or meter already registered.", code=Code.BAD_REQUEST)
 
-            # Converte os dados para o formato que os nós de névoa esperam
-            value = data.get("consumption_kwh_per_hour") or data.get("consumption_m3_per_hour")
-            converted_data = {
-                "type": "consumption",
-                "id": data.get("id"),
-                "street": data.get("street"),
-                "value": value,
-                "date": data.get("date"),
-                "time": data.get("time")
-            }
-
-            # Distribute data via HTTP com formato convertido
-            await distribute_data_via_http(data_type, converted_data, self.available_nodes)
-
-            return Message(payload="CoAP: Data successfully received".encode("utf-8"), code=Code.CONTENT)
         except Exception as e:
-            logging.error(f"CoAP Server Error: {e}")
-            return Message(payload="CoAP Server Error".encode("utf-8"), code=Code.INTERNAL_SERVER_ERROR)
+            logging.error(f"CoAP RegisterMeter Error: {e}")
+            return Message(payload=b"Error in CoAP meter registration", code=Code.INTERNAL_SERVER_ERROR)
 
 # Start the CoAP server
 async def start_coap_server(port, available_nodes):
