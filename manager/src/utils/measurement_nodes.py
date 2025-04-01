@@ -117,12 +117,10 @@ def create_measurement_nodes(
     normalized_bairro = normalize_container_name(bairro)
     prefix = f"{normalized_bairro}_{container_name}_"
 
-    existing_containers = list_containers(filters={"name": f"{prefix}*"})
-    print(f"[DEBUG] Contêineres existentes com prefixo '{prefix}': {[c.name for c in existing_containers]}")
-
+    existing_containers = list_containers()
     existing_seq_numbers = set()
     existing_node_ids = set()
-
+    
     for container in existing_containers:
         if container.name.startswith(prefix):
             parts = container.name.split('_')
@@ -131,7 +129,7 @@ def create_measurement_nodes(
                 existing_seq_numbers.add(seq_num)
             except ValueError:
                 print(f"[AVISO] Não foi possível extrair seq_num do contêiner '{container.name}'. Ignorando...", flush=True)
-        
+
         try:
             client = get_docker_client()
             inspect = client.api.inspect_container(container.id)
@@ -146,7 +144,8 @@ def create_measurement_nodes(
         except Exception as e:
             print(f"[ERRO] Falha ao inspecionar o contêiner '{container.name}': {e}", flush=True)
 
-    print(f"[DEBUG] Números sequenciais existentes: {existing_seq_numbers}")
+    print(f"[DEBUG] Contêineres existentes com prefixo '{prefix}': {[c.name for c in existing_containers if c.name.startswith(prefix)]}")
+    print(f"[DEBUG] Números sequenciais existentes para esse tipo: {existing_seq_numbers}")
     print(f"[DEBUG] node_id's existentes: {existing_node_ids}")
 
     container_type = container_data.get("type", "unknown")
@@ -189,7 +188,13 @@ def create_measurement_nodes(
         node_id = node_info.get("id")
         street = node_info.get("street")
 
-        full_container_name = f"{prefix}{next_seq_num}"
+        while True:
+            full_container_name = f"{prefix}{next_seq_num}"
+            existing_names = [c.name for c in list_containers()]
+            if full_container_name not in existing_names:
+                break
+            next_seq_num += 1
+
         print(f"[DEBUG] Criando nó '{full_container_name}' com URL de download '{download_url}' e ID {node_id}")
 
         environment = {
@@ -201,7 +206,8 @@ def create_measurement_nodes(
                 "street": street
             })
         }
-        print(f"[DEBUG] Ambiente configurado: {environment}")
+
+        print(f"[DEBUG] Ambiente configurado para '{full_container_name}': {environment}", flush=True)
 
         labels = {
             "type": str(container_type)
@@ -210,5 +216,5 @@ def create_measurement_nodes(
         create_measurement_node(
             bairro, full_container_name, image, environment, labels
         )
-        
+
         next_seq_num += 1
