@@ -21,7 +21,7 @@ def main():
 
         uri = 'http://localhost:8766/graphql'
         protocols_url = 'http://localhost:8000/receive_data'
-        interval = 10
+        interval = 50
         delay = 5
         sftp_host = os.getenv("SFTP_HOST")
         sftp_port = int(os.getenv("SFTP_PORT"))

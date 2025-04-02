@@ -1,5 +1,6 @@
 # protocols/http_protocol.py
 
+import time
 import asyncio
 from aiohttp import web
 from protocols.sftp_handler import handle_sftp_details_and_send
@@ -26,7 +27,14 @@ async def run_http_server(protocol_layer):
 
         elif message_type == 'ftp':
             print("Processando detalhes do FTP...", flush=True)
+
+            start = time.time()
             await handle_sftp_details_and_send(message)
+            end = time.time()
+
+            elapsed = end - start
+            print(f"[MÉTRICA] Tempo de envio para o aggregator via SFTP: {elapsed:.4f}s", flush=True)
+
             return web.Response(status=200, text="HTTP: FTP details received")
 
         else:

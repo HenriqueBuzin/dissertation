@@ -4,6 +4,7 @@ import asyncio
 from aiocoap import Context, Message, resource, Code
 import logging
 import json
+import time
 
 # Import functions to distribute data and register meters
 from http_server import distribute_data_via_http
@@ -28,8 +29,13 @@ class CoAPReceiveDataResource(resource.Resource):
 
     async def render_post(self, request):
         try:
+
+            start = time.time()  # Início da medição do tempo
+
             payload = request.payload.decode("utf-8")
             data = json.loads(payload)
+
+            logging.info(f"CoAP: Received data: {data}")
 
             # Determine the data type based on consumption fields
             data_type = determine_data_type(data)
@@ -38,10 +44,12 @@ class CoAPReceiveDataResource(resource.Resource):
                 logging.warning("CoAP: Received data without a determined type.")
                 return Message(payload="Error: Data type not determined.".encode("utf-8"), code=Code.BAD_REQUEST)
 
-            logging.info(f"CoAP: Received data: {data}")
-
             # Distribute data via HTTP
             await distribute_data_via_http(data_type, data, self.available_nodes)
+
+            end = time.time()  # Fim da medição do tempo
+            elapsed = end - start
+            logging.info(f"[MÉTRICA] Tempo de processamento no Load Balancer: {elapsed:.3f}s")
 
             return Message(payload="CoAP: Data successfully received".encode("utf-8"), code=Code.CONTENT)
         except Exception as e:

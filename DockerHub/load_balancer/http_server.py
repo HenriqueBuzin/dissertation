@@ -6,6 +6,7 @@ from aiohttp import web
 import functools
 import logging
 import asyncio
+import time
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -44,7 +45,6 @@ def determine_data_type(data):
     return None
 
 # Function to distribute data via HTTP using round-robin
-# Função para distribuir os dados via HTTP usando round-robin
 async def distribute_data_via_http(data_type, data, available_nodes, max_retries=3):
     nodes = available_nodes.get(data_type, [])
     if not nodes:
@@ -52,19 +52,30 @@ async def distribute_data_via_http(data_type, data, available_nodes, max_retries
         return
 
     for attempt in range(max_retries):
-        # Seleciona o próximo nó de forma round-robin
         node = nodes.pop(0)
-        nodes.append(node)  # Reinsere o nó no final da lista
+        nodes.append(node)
 
         node_endpoint = node["node_endpoint"]
 
-        # Converte o dado para o formato aceito pelos nós de névoa
-        value = data.get("consumption_kwh_per_hour") or data.get("consumption_m3_per_hour")
+        # Detecta o campo correto de consumo
+        if "consumption_kwh_per_hour" in data:
+            # consumption_field = "consumptionKwhPerHour"
+            consumption_field = "consumption_kwh_per_hour"
+            value = data["consumption_kwh_per_hour"]
+        elif "consumption_m3_per_hour" in data:
+            # consumption_field = "consumptionM3PerHour"
+            consumption_field = "consumption_m3_per_hour"
+            value = data["consumption_m3_per_hour"]
+        else:
+            logging.warning("HTTP: Nenhum campo de consumo encontrado no dado recebido.")
+            return
+
+        # Monta os dados com o campo correto
         converted_data = {
             "type": "consumption",
             "id": data.get("id"),
             "street": data.get("street"),
-            "value": value,
+            consumption_field: value,  # campo correto aqui
             "date": data.get("date"),
             "time": data.get("time")
         }
@@ -89,6 +100,10 @@ async def handle_receive_data(request, available_nodes):
     try:
         data = await request.json()
 
+        logging.info(f"HTTP: Data received: {data}")
+
+        start = time.time()
+
         # Determine the data type based on the last consumption field
         data_type = determine_data_type(data)
 
@@ -96,12 +111,15 @@ async def handle_receive_data(request, available_nodes):
             logging.warning("HTTP: Data type could not be determined from consumption fields.")
             return web.json_response({"status": "Error: Data type not determined."}, status=400)
 
-        logging.info(f"HTTP: Data received: {data}")
-
         # Distribute data to an appropriate node via HTTP
         await distribute_data_via_http(data_type, data, available_nodes)
 
+        end = time.time()
+        elapsed = end - start
+        logging.info(f"[MÉTRICA] Tempo de processamento no Load Balancer: {elapsed:.3f}s")
+
         return web.json_response({"status": "HTTP: Data successfully received"})
+
     except Exception as e:
         logging.error(f"HTTP Server Error: {e}")
         return web.json_response({"status": "HTTP Server Error"}, status=500)

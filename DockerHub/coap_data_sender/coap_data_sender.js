@@ -115,14 +115,19 @@ function sendDataCoap(data) {
     const req = coap.request({
         method: "POST",
         hostname: coapUrl.hostname,
-        pathname: "/receive_data",  // 🔧 CORRIGIDO!
-        port: coapUrl.port, 
+        pathname: "/receive_data",
+        port: coapUrl.port,
     });
 
     req.setOption("Content-Format", "application/json");
-    req.write(JSON.stringify(data));
+    const payload = JSON.stringify(data);
+    req.write(payload);
+
+    const startTime = Date.now(); // ⏱️ Início da medição
 
     req.on("response", (res) => {
+        const elapsed = (Date.now() - startTime) / 1000; // segundos
+        console.log(`[MÉTRICA] Tempo de transmissão (CoAP): ${elapsed.toFixed(4)} segundos`);
         console.log(`Resposta recebida: ${res.code} - ${res.payload.toString()}`);
     });
 

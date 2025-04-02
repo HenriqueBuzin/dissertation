@@ -105,7 +105,12 @@ def send_data_http(data, http_url):
     payload = json.dumps(data)
     headers = {'Content-Type': 'application/json'}
     try:
+        start_time = time.time()
         response = requests.post(http_url, data=payload, headers=headers)
+        end_time = time.time()
+        elapsed = end_time - start_time
+
+        print(f"[MÉTRICA] Tempo de transmissão: {elapsed:.4f} segundos", flush=True)
         print(f"Dados enviados: {data}, Resposta: {response.status_code}, {response.text}", flush=True)
     except Exception as e:
         print(f"Erro ao enviar dados: {e}", flush=True)
