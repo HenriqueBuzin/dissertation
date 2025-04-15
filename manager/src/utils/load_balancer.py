@@ -4,7 +4,7 @@ from .network import get_available_port, create_or_get_bairro_network, create_or
 from .docker_utils import get_docker_client, get_docker_errors
 from .general import normalize_container_name
 
-def create_load_balancer(bairro, container_name, image, container_types, peers):
+def create_load_balancer(bairro, container_name, image, container_types):
 
     """
     Cria um Load Balancer com suporte a HTTP e CoAP para o bairro especificado.
@@ -33,9 +33,6 @@ def create_load_balancer(bairro, container_name, image, container_types, peers):
         lb_network = create_or_get_lb_network()
 
         full_container_name = f"{normalize_container_name(bairro)}_{container_name}_1"
-       
-        # Converte a lista de peers para uma string CSV
-        peers_str = ",".join(peers) if peers else ""
 
         client.containers.run(
             image,
@@ -45,7 +42,6 @@ def create_load_balancer(bairro, container_name, image, container_types, peers):
             environment={
                 "LOAD_BALANCER_HTTP_PORT": str(http_port),
                 "LOAD_BALANCER_COAP_PORT": str(coap_port),
-                "LB_PEERS": peers_str
             },
             ports={
                 "5000/tcp": http_port,

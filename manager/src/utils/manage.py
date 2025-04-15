@@ -7,8 +7,6 @@ from flask import request, redirect, url_for
 from .aggregator import create_aggregator
 from .nodes import create_node
 
-ALL_LOAD_BALANCERS = []
-
 def handle_manage_post(
     bairro,
     config,
@@ -61,15 +59,10 @@ def handle_manage_post(
 
     if container_type == lb_id and not has_load_balancer:
         
-        peers = ALL_LOAD_BALANCERS
-        
-        http_port, coap_port = create_load_balancer(bairro, container_name, image, container_types, peers=peers)
+        http_port, coap_port = create_load_balancer(bairro, container_name, image, container_types)
         
         if not (http_port and coap_port):
             print("[ERRO] Falha ao criar o LB")
-        else: 
-            new_lb_name = f"{normalize_container_name(bairro)}_{container_name}_1"
-            ALL_LOAD_BALANCERS.append(new_lb_name)
         
         return redirect(url_for("manage_containers", bairro=bairro))
     
