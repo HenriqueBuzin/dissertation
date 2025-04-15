@@ -3,6 +3,12 @@
 from .network import get_available_port, create_or_get_bairro_network
 from .docker_utils import get_docker_client, list_containers, get_docker_errors
 from .general import normalize_container_name
+from dotenv import load_dotenv
+from pathlib import Path
+import os
+
+env_path = Path(__file__).resolve().parent.parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
 def create_node(bairro, container_name, image, container_types, load_balancer_url, quantity):
     
@@ -64,11 +70,12 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
                     "FOG_NODE_NAME": full_container_name,
                     "HTTP_PORT": str(http_port),
                     "COAP_PORT": str(coap_port),
-                    "SFTP_HOST": aggregator_name,
-                    "SFTP_PORT": "22",
-                    "SFTP_USER": "aggregator_user",
-                    "SFTP_PASS": "aggregator_pass",
-                    "SFTP_REMOTE_PATH": "/home/aggregator_user/data/incoming",
+                    "AGGREGATOR_HOST": aggregator_name,
+                    "AGGREGATOR_PORT": os.environ["AGGREGATOR_PORT"],
+                    "AGGREGATOR_USER": os.environ["AGGREGATOR_USER"],
+                    "AGGREGATOR_PASS": os.environ["AGGREGATOR_PASS"],
+                    "AGGREGATOR_INCOMING_DIR": os.environ["AGGREGATOR_INCOMING_DIR"],
+                    "NODE_SEND_INTERVAL": os.environ["NODE_SEND_INTERVAL"],
                 },
                 ports={
                     "8000/tcp": http_port,

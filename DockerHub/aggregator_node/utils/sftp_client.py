@@ -8,10 +8,10 @@ from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
-SFTP_HOST = os.environ["SFTP_HOST"]
-SFTP_PORT = int(os.environ["SFTP_PORT"])
-SFTP_USER = os.environ["SFTP_USER"]
-SFTP_PASS = os.environ["SFTP_PASS"]
+HPCC_HOST = "HPCC_HOST"
+HPCC_PORT = int(os.environ["HPCC_PORT"])
+HPCC_USER = os.environ["HPCC_USER"]
+HPCC_PASS = os.environ["HPCC_PASS"]
 
 def send_file_sftp(local_file: Path, remote_file: str) -> bool:
     
@@ -28,11 +28,17 @@ def send_file_sftp(local_file: Path, remote_file: str) -> bool:
     delay = 5
     for attempt in range(1, retries + 1):
         try:
-            with paramiko.Transport((SFTP_HOST, SFTP_PORT)) as transport:
-                transport.connect(username=SFTP_USER, password=SFTP_PASS)
+            with paramiko.Transport((HPCC_HOST, HPCC_PORT)) as transport:
+                transport.connect(username=HPCC_USER, password=HPCC_PASS)
                 with paramiko.SFTPClient.from_transport(transport) as sftp:
-                    logger.info(f"SFTP: Enviando {local_file} para {SFTP_HOST}:{remote_file} (tentativa {attempt})")
+                    logger.info(f"SFTP: Enviando {local_file} para {HPCC_HOST}:{remote_file} (tentativa {attempt})")
+                    
+                    start = time.time()
                     sftp.put(str(local_file), remote_file)
+                    end = time.time()
+
+                    elapsed = end - start
+                    logger.info(f"[MÉTRICA] Tempo de envio SFTP: {elapsed:.4f} segundos")
 
             logger.info("SFTP: Envio concluído com sucesso.")
             return True

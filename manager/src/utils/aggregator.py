@@ -1,6 +1,12 @@
 # utils/aggregator.py
 
 from utils.docker_utils import get_docker_client
+from dotenv import load_dotenv
+from pathlib import Path
+import os
+
+env_path = Path(__file__).resolve().parent.parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
 def create_aggregator(bairro, image, container_types):
 
@@ -34,9 +40,17 @@ def create_aggregator(bairro, image, container_types):
             network=network_name,
             detach=True,
             ports={"22/tcp": 2222},
-            environment={"BAIRRO": bairro},
+            environment={
+                "AGGREGATOR_INCOMING_DIR": os.environ["AGGREGATOR_INCOMING_DIR"],
+                "AGGREGATOR_AGGREGATED_DIR": os.environ["AGGREGATOR_AGGREGATED_DIR"],
+                "AGGREGATOR_AGGREGATION_INTERVAL": os.environ["AGGREGATOR_AGGREGATION_INTERVAL"],
+                "HPCC_PORT": os.environ["HPCC_PORT"],
+                "HPCC_USER": os.environ["HPCC_USER"],
+                "HPCC_PASS": os.environ["HPCC_PASS"],
+                "HPCC_REMOTE_PATH": os.environ["HPCC_REMOTE_PATH"],
+            },
             labels={"type": str(container_types["aggregator"]["id"])},
-            extra_hosts={"sftp_host": "192.168.1.124"}
+            extra_hosts={"HPCC_HOST": os.environ["HPCC_HOST"]}
         )
         
         print(f"[SUCESSO] Agregador '{container_name}' criado com sucesso para o bairro '{bairro}'.")

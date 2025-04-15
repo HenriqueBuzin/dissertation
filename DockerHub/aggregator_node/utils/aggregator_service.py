@@ -11,10 +11,10 @@ from .aggregator import identify_type, extract_date_from_filename
 
 logger = logging.getLogger(__name__)
 
-INCOMING_DIR = os.environ["INCOMING_DIR"]
-AGGREGATED_DIR = os.environ["AGGREGATED_DIR"]
-AGGREGATION_INTERVAL = int(os.environ["AGGREGATION_INTERVAL"])
-REMOTE_PATH = os.environ["REMOTE_PATH"]
+AGGREGATOR_INCOMING_DIR = os.environ["AGGREGATOR_INCOMING_DIR"]
+AGGREGATOR_AGGREGATED_DIR = os.environ["AGGREGATOR_AGGREGATED_DIR"]
+AGGREGATOR_AGGREGATION_INTERVAL = int(os.environ["AGGREGATOR_AGGREGATION_INTERVAL"])
+HPCC_REMOTE_PATH = os.environ["HPCC_REMOTE_PATH"]
 
 async def aggregator_task():
 
@@ -26,15 +26,15 @@ async def aggregator_task():
     Mantém o mesmo cabeçalho dos arquivos recebidos e soma valores por ID.
     """
 
-    Path(INCOMING_DIR).mkdir(parents=True, exist_ok=True)
-    Path(AGGREGATED_DIR).mkdir(parents=True, exist_ok=True)
+    Path(AGGREGATOR_INCOMING_DIR).mkdir(parents=True, exist_ok=True)
+    Path(AGGREGATOR_AGGREGATED_DIR).mkdir(parents=True, exist_ok=True)
 
     while True:
         try:
-            files = list(Path(INCOMING_DIR).glob("*.csv"))
+            files = list(Path(AGGREGATOR_INCOMING_DIR).glob("*.csv"))
             if not files:
                 logger.info("[AGGREGATOR_TASK] Nenhum arquivo disponível.")
-                await asyncio.sleep(AGGREGATION_INTERVAL)
+                await asyncio.sleep(AGGREGATOR_AGGREGATION_INTERVAL)
                 continue
 
             data_by_type_and_date = {
@@ -109,7 +109,7 @@ async def aggregator_task():
             for dt_type, dates_map in data_by_type_and_date.items():
                 for dt_date, row_map in dates_map.items():
                     out_name = f"aggregated_{dt_type}_{dt_date}.csv"
-                    out_path = Path(AGGREGATED_DIR) / out_name
+                    out_path = Path(AGGREGATOR_AGGREGATED_DIR) / out_name
 
                     if dt_type == "energy":
                         fieldnames = ["id", "street", "date", "consumption_kwh_per_day"]
@@ -134,7 +134,7 @@ async def aggregator_task():
                     aggregated_files.append(out_path)
 
             for agg_file in aggregated_files:
-                remote_file = os.path.join(REMOTE_PATH, agg_file.name)
+                remote_file = os.path.join(HPCC_REMOTE_PATH, agg_file.name)
                 logger.info(f"Enviando {agg_file} -> {remote_file}")
 
                 success = send_file_sftp(agg_file, remote_file)
@@ -147,4 +147,4 @@ async def aggregator_task():
         except Exception as e:
             logger.error(f"Erro no loop do agregador: {e}")
 
-        await asyncio.sleep(AGGREGATION_INTERVAL)
+        await asyncio.sleep(AGGREGATOR_AGGREGATION_INTERVAL)
