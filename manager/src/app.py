@@ -301,4 +301,4 @@ def handle_get_logs(data):
         socketio.emit("log_update", {"container_id": container_id, "logs": "Erro ao obter logs."})
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    socketio.run(app, host="0.0.0.0", port=5000, debug=True, allow_unsafe_werkzeug=True)

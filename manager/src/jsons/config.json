@@ -24,6 +24,18 @@
             "data_id": "data_water"
         },
         {
+            "name": "medidor_mqtt_energia",
+            "image": "henriqueabv/mqtt_data_sender",
+            "type": 3,
+            "data_id": "data_energy"
+        },
+        {
+            "name": "medidor_mqtt_agua",
+            "image": "henriqueabv/mqtt_data_sender",
+            "type": 3,
+            "data_id": "data_water"
+        },
+        {
             "name": "medidor_coap_agua",
             "image": "henriqueabv/coap_data_sender",
             "type": 3,

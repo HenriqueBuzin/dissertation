@@ -1,0 +1,5 @@
+aiohttp==3.12.2
+aiocoap==0.4.14
+requests==2.32.3
+docker==7.1.0
+paho-mqtt==2.1.0

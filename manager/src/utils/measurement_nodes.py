@@ -101,7 +101,7 @@ def create_measurement_nodes(
     load_balancer_name = f"{normalize_container_name(bairro)}_load_balancer_1"
     load_balancer_http_url = f"http://{load_balancer_name}:5000/receive_data"
     load_balancer_coap_url = f"coap://{load_balancer_name}:5683/receive_data"
-
+    
     print(f"[DEBUG] URLs do Load Balancer: HTTP: {load_balancer_http_url}, CoAP: {load_balancer_coap_url}")
 
     container_data = next((c for c in config_data.get("containers", []) if c["name"] == container_name), None)
