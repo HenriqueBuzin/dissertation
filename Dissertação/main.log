@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.7)  10 AUG 2025 15:25
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.7)  10 AUG 2025 15:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/henrique-buzin/Desktop/Dissertação/main.tex
-(/Users/henrique-buzin/Desktop/Dissertação/main.tex
+**/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.tex
+(/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/abntex2/abntex2.cls
@@ -542,7 +542,7 @@ Sidefootvsep and sidefootheight: 14.5pt and 590.14995pt
 \ABNTEXsignwidth=\skip199
 \ABNTEXsignthickness=\skip256
 \ABNTEXsignskip=\skip257
-) (/Users/henrique-buzin/Desktop/Dissertação/setup/ufscthesisA4-alf.sty (/usr/local/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
+) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/setup/ufscthesisA4-alf.sty (/usr/local/texlive/2025/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
 ) (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/helvet.sty
 Package: helvet 2020/03/25 PSNFSS-v9.3 (WaS) 
@@ -1702,7 +1702,7 @@ Package csquotes Info: Redefining alias 'default' -> 'brazil'.
 LaTeX Font Info:    Trying to load font information for T1+phv on input line 219.
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
-) (/Users/henrique-buzin/Desktop/Dissertação/main.aux (/Users/henrique-buzin/Desktop/Dissertação/chapters/1-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/2-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/3-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/4-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/5-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/6-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/7-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/8-chapter.aux))
+) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.aux (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/1-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/3-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/4-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/5-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/6-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/7-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/8-chapter.aux))
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 219.
@@ -1881,10 +1881,10 @@ Package biblatex Info: Automatic encoding selection.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
- (/Users/henrique-buzin/Desktop/Dissertação/main.bbl)
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.bbl)
 Package biblatex Info: Reference section=0 on input line 219.
 Package biblatex Info: Reference segment=0 on input line 219.
- (/Users/henrique-buzin/Desktop/Dissertação/beforetext/beforetext.tex
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/beforetext/beforetext.tex
 <setup/vertical_sigla_fundo_claro.pdf, id=4, 327.2225pt x 449.68pt>
 File: setup/vertical_sigla_fundo_claro.pdf Graphic file (type pdf)
 <use setup/vertical_sigla_fundo_claro.pdf>
@@ -1894,7 +1894,7 @@ Package pdftex.def Info: setup/vertical_sigla_fundo_claro.pdf  used on input lin
 
 [1
 
-{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc} </Users/henrique-buzin/Desktop/Dissertação/setup/vertical_sigla_fundo_claro.pdf>]
+{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc} </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/setup/vertical_sigla_fundo_claro.pdf>]
 LaTeX Font Info:    Trying to load font information for TS1+phv on input line 13.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ts1phv.fd
 File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
@@ -1960,7 +1960,7 @@ Package pdftex.def Info: beforetext/Ficha_Catalografica.pdf , page1 used on inpu
 (pdftex.def)             Requested size: 597.57834pt x 845.23425pt.
 [2
 
- </Users/henrique-buzin/Desktop/Dissertação/beforetext/Ficha_Catalografica.pdf>]
+ </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/beforetext/Ficha_Catalografica.pdf>]
 Underfull \hbox (badness 10000) in paragraph at lines 49--50
 
  []
@@ -2022,15 +2022,15 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 
 [8
 
-] (/Users/henrique-buzin/Desktop/Dissertação/main.lof)
+] (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.lof)
 
 [9
 
-] (/Users/henrique-buzin/Desktop/Dissertação/main.loq)
+] (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.loq)
 
 [10
 
-] (/Users/henrique-buzin/Desktop/Dissertação/main.lot)
+] (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.lot)
 
 [11
 
@@ -2054,7 +2054,7 @@ Package glossaries Warning: Empty glossary for \printnoidxglossary[type={simbolo
 
 
 
-] (/Users/henrique-buzin/Desktop/Dissertação/main.toc
+] (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.toc
 
 [14
 
@@ -2063,7 +2063,7 @@ Package glossaries Warning: Empty glossary for \printnoidxglossary[type={simbolo
 [15])
 \openout2 = `chapters/1-chapter.aux'.
 
- (/Users/henrique-buzin/Desktop/Dissertação/chapters/1-chapter.tex
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/1-chapter.tex
 <images/arquitetura_basica.png, id=225, 570.13pt x 347.2975pt>
 File: images/arquitetura_basica.png Graphic file (type png)
 <use images/arquitetura_basica.png>
@@ -2077,12 +2077,12 @@ Package pdftex.def Info: images/arquitetura_basica.png  used on input line 16.
 
 ]
 
-[17 </Users/henrique-buzin/Desktop/Dissertação/images/arquitetura_basica.png>])
+[17 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_basica.png>])
 
 [18]
 \openout2 = `chapters/2-chapter.aux'.
 
- (/Users/henrique-buzin/Desktop/Dissertação/chapters/2-chapter.tex
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.tex
 
 [19
 
@@ -2105,7 +2105,7 @@ Overfull \hbox (0.42091pt too wide) in paragraph at lines 39--40
 [23]
 \openout2 = `chapters/3-chapter.aux'.
 
- (/Users/henrique-buzin/Desktop/Dissertação/chapters/3-chapter.tex
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/3-chapter.tex
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <5> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 10.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
@@ -2128,7 +2128,7 @@ LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
 [28]
 \openout2 = `chapters/4-chapter.aux'.
 
- (/Users/henrique-buzin/Desktop/Dissertação/chapters/4-chapter.tex
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/4-chapter.tex
 <images/arquitetura_proposta.png, id=317, 891.33pt x 363.3575pt>
 File: images/arquitetura_proposta.png Graphic file (type png)
 <use images/arquitetura_proposta.png>
@@ -2141,7 +2141,7 @@ Package pdftex.def Info: images/arquitetura_proposta.png  used on input line 18.
 
 
 
- </Users/henrique-buzin/Desktop/Dissertação/images/arquitetura_proposta.png>]
+ </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_proposta.png>]
 <images/camada_protocolos.png, id=324, 419.5675pt x 321.2pt>
 File: images/camada_protocolos.png Graphic file (type png)
 <use images/camada_protocolos.png>
@@ -2162,12 +2162,12 @@ Overfull \hbox (22.19046pt too wide) in paragraph at lines 73--74
 
 )
 
-[31 </Users/henrique-buzin/Desktop/Dissertação/images/camada_protocolos.png>]
+[31 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/camada_protocolos.png>]
 
-[32 </Users/henrique-buzin/Desktop/Dissertação/images/camada_processamento.png>]
+[32 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/camada_processamento.png>]
 \openout2 = `chapters/5-chapter.aux'.
 
- (/Users/henrique-buzin/Desktop/Dissertação/chapters/5-chapter.tex
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/5-chapter.tex
 
 [33
 
@@ -2179,7 +2179,7 @@ Overfull \hbox (22.19046pt too wide) in paragraph at lines 73--74
 [34]
 \openout2 = `chapters/6-chapter.aux'.
 
- (/Users/henrique-buzin/Desktop/Dissertação/chapters/6-chapter.tex)
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/6-chapter.tex)
 
 [35
 
@@ -2189,7 +2189,7 @@ Overfull \hbox (22.19046pt too wide) in paragraph at lines 73--74
 ]
 \openout2 = `chapters/7-chapter.aux'.
 
- (/Users/henrique-buzin/Desktop/Dissertação/chapters/7-chapter.tex)
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/7-chapter.tex)
 
 [36
 
@@ -2199,7 +2199,7 @@ Overfull \hbox (22.19046pt too wide) in paragraph at lines 73--74
 ]
 \openout2 = `chapters/8-chapter.aux'.
 
- (/Users/henrique-buzin/Desktop/Dissertação/chapters/8-chapter.tex)
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/8-chapter.tex)
 
 [37
 
@@ -2225,7 +2225,7 @@ Overfull \hbox (22.19046pt too wide) in paragraph at lines 73--74
 \tf@toc=\write9
 \openout9 = `main.toc'.
 
- (/Users/henrique-buzin/Desktop/Dissertação/main.aux (/Users/henrique-buzin/Desktop/Dissertação/chapters/1-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/2-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/3-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/4-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/5-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/6-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/7-chapter.aux) (/Users/henrique-buzin/Desktop/Dissertação/chapters/8-chapter.aux))
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.aux (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/1-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/3-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/4-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/5-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/6-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/7-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/8-chapter.aux))
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2020/03/25>
@@ -2240,14 +2240,14 @@ Package logreq Info: Writing requests to 'main.run.xml'.
  ) 
 Here is how much of TeX's memory you used:
  41377 strings out of 473190
- 763638 string characters out of 5715801
+ 765266 string characters out of 5715801
  1910409 words of memory out of 5000000
  63722 multiletter control sequences out of 15000+600000
  611374 words of font info for 212 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,17n,117p,2469b,4447s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 108i,17n,117p,2491b,4447s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on /Users/henrique-buzin/Desktop/Dissertação/main.pdf (39 pages, 308437 bytes).
+Output written on /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.pdf (39 pages, 308485 bytes).
 PDF statistics:
  588 PDF objects out of 1000 (max. 8388607)
  521 compressed objects within 6 object streams

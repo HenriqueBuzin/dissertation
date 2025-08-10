@@ -1,0 +1,19 @@
+[0] Config.pm:308> INFO - This is Biber 2.20
+[0] Config.pm:311> INFO - Logfile is '/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.blg'
+[32] biber-darwin:340> INFO - === Sun Aug 10, 2025, 15:28:48
+[121] Biber.pm:420> INFO - Reading '/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.bcf'
+[154] Biber.pm:994> INFO - Found 11 citekeys in bib section 0
+[160] Biber.pm:4463> INFO - Processing section 0
+[166] Biber.pm:4654> INFO - Looking for bibtex file 'aftertext/references.bib' for section 0
+[169] bibtex.pm:1713> INFO - LaTeX decoding ...
+[175] bibtex.pm:1519> INFO - Found BibTeX data source 'aftertext/references.bib'
+[239] UCollate.pm:68> INFO - Overriding locale 'pt-BR' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[239] UCollate.pm:68> INFO - Overriding locale 'pt-BR' defaults 'variable = shifted' with 'variable = non-ignorable'
+[239] Biber.pm:4283> INFO - Sorting list 'nty/global//global/global/global' of type 'entry' with template 'nty' and locale 'pt-BR'
+[239] Biber.pm:4289> INFO - No sort tailoring available for locale 'pt-BR'
+[245] bbl.pm:676> INFO - Writing '/Users/henrique-buzin/Documents/GitHub/dissertation/DissertaÃ§Ã£o/main.bbl' with encoding 'UTF-8'
+[248] bbl.pm:779> INFO - Output to /Users/henrique-buzin/Documents/GitHub/dissertation/DissertaÃ§Ã£o/main.bbl
+[248] Biber.pm:131> WARN - legacy month field 'July' in entry 'markakis2017' is not an integer - this will probably not sort properly.
+[248] Biber.pm:131> WARN - legacy month field 'March-April' in entry 'bormann2012' is not an integer - this will probably not sort properly.
+[248] Biber.pm:131> WARN - ISBN '978-6586057956' in entry 'silveira2019' is invalid - run biber with '--validate_datamodel' for details.
+[248] Biber.pm:133> INFO - WARNINGS: 3
