@@ -1,0 +1,101 @@
+% ----------------------------------------------------------
+\chapter{Revisão Bibliográfica}
+% ----------------------------------------------------------
+
+Para esse trabalho, foram realizadas pesquisas nas bases de dados de artigos científicos, utilizando as seguintes palavras-chaves: 'fog', 'fog' AND 'architecture', e aplicado um filtro para os últimos 5 anos, ou seja, de 2020 até 2024, e obtivemos a quantidade de artigos que podemos visualizar na Tabela~\ref{tab:Tab_ArtigosFog}.
+
+\begin{table}[htb]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:Tab_ArtigosFog}Quantidade de artigos por palavra-chave e base de dados}
+	\begin{tabular}{@{}p{6.5cm}p{3.5cm}p{4cm}@{}}
+		\toprule
+		\textbf{Palavra-chave} & \textbf{Banco de Dados} & \textbf{Quantidade de Artigos} \\ \midrule
+		\multirow[c]{2}{*}{\textbf{\textit{'fog'}}} 
+		    & Scopus & 18.970 \\
+		    & IEEE   & 6.925  \\ \midrule
+		\multirow[c]{2}{*}{\textbf{\textit{'fog' AND 'architecture'}}} 
+		    & Scopus & 3.144 \\
+		    & IEEE   & 1.749 \\ \midrule
+	\end{tabular}
+	\fonte{Do autor.}
+\end{table}
+
+Com base nos dados da tabela fornecida, observamos que o Scopus lidera com a maior coleção de artigos indexados. Em contraste, o IEEE apresenta uma quantidade relativamente menor.
+
+% ----------------------------------------------------------
+\section{Trabalhos Correlatos}\label{cap:trabalhos_relacionados}
+% ----------------------------------------------------------
+
+Foram lidos títulos e resumo de 125 artigos, dos quais 25 foram lidos completamente, e desses foram selecionados 5 que apresentam propostas semelhantes à proposta deste trabalho e por isso serão detalhados nas subseções seguintes.
+
+% ----------------------------------------------------------
+\subsection{Inter-container Communication Aware Container Placement in Fog Computing}
+% ----------------------------------------------------------
+
+Neste trabalho, os autores propõem um algoritmo genético para a colocação de contêineres, destacando a abordagem via RDMA (Remote Direct Memory Access) por sua capacidade de reduzir significativamente a latência de rede e a utilização da CPU do host. O RDMA permite acesso direto à memória de outro host sem envolvimento do sistema operacional, resultando em uma comunicação mais rápida e eficiente. Comparado com os modos Host e Overlay, a comunicação RDMA oferece vantagens significativas em termos de desempenho e redução de latência. Além disso, o artigo aborda a importância do isolamento adequado entre contêineres para garantir a estabilidade e segurança do sistema, aspectos críticos em ambientes de computação em névoa onde múltiplos contêineres compartilham os mesmos recursos físicos.
+
+Os resultados das simulações mostram que a inclusão de RDMA pode melhorar substancialmente o desempenho das aplicações, destacando a importância de selecionar a tecnologia de comunicação inter-contêiner mais adequada para cada situação. Cada contêiner pode utilizar o protocolo de comunicação que melhor se adapta às suas necessidades específicas, proporcionando maior eficiência e flexibilidade na comunicação entre contêineres. Isso permite que os sistemas de computação em névoa mantenham a eficiência e a performance ao lidar com a comunicação entre diversos protocolos, assegurando que cada contêiner opere com o protocolo mais apropriado para suas funções.
+
+% ----------------------------------------------------------
+\subsection{EXEGESIS: Extreme Edge Resource Harvesting for a Virtualized Fog Environment}
+% ----------------------------------------------------------
+
+Neste trabalho, os autores propõem a arquitetura EXEGESIS, que aborda os desafios de comunicação e processamento de dados na névoa. A arquitetura de três camadas inclui a camada "mist", composta por dispositivos interconectados que formam vizinhanças locais; a camada "vFog", que permite interconexões dinâmicas entre essas vizinhanças; e a camada de nuvem, que oferece recursos abundantes e facilita a interconexão dos elementos vFog. Esta estrutura modular e hierárquica visa otimizar a utilização de recursos, reduzir a latência e melhorar a eficiência do sistema, permitindo a conversão e integração de protocolos diversos.
+
+No contexto da comunicação com diversos protocolos, EXEGESIS propõe uma plataforma de orquestração que facilita a interoperabilidade entre dispositivos utilizando diferentes padrões e tecnologias. A camada "vFog" age como um intermediário virtual, coordenando os recursos e a comunicação entre as névoas e a nuvem, garantindo que dados críticos sejam processados e armazenados onde podem agregar mais valor.
+
+% ----------------------------------------------------------
+\subsection{Extending Scalability of IoT/M2M Platforms with Fog Computing}
+% ----------------------------------------------------------
+
+Neste trabalho, os autores propõem a migração do oneM2M, uma plataforma global de IoT/M2M, para uma arquitetura de névoa baseada em contêineres hierárquicos. Esta abordagem visa resolver os problemas de escalabilidade e latência ao trazer a capacidade de processamento e armazenamento para mais perto dos dispositivos finais.
+
+Para garantir a comunicação eficiente entre os diversos componentes da arquitetura, o oneM2M suporta a ligação de suas interfaces de comunicação aos protocolos HTTP e CoAP, fornecendo APIs Restful sobre todas essas interfaces. Isso permite que diferentes tipos de dispositivos e serviços se comuniquem de maneira eficaz, utilizando o protocolo mais adequado para cada caso. Por exemplo, HTTP pode ser usado para comunicação de dados mais robusta e complexa, enquanto o CoAP é ideal para dispositivos com restrições de recursos e necessidade de comunicação leve.
+
+% ----------------------------------------------------------
+\subsection{Privacy preserving data aggregation with fault tolerance in fog-enabled smart grids}
+% ----------------------------------------------------------
+
+Neste trabalho, os autores propõem um esquema de agregação de dados seguro e tolerante a falhas para grades inteligentes (SG) habilitadas por computação em névoa. O estudo aborda os desafios de privacidade e segurança em SG, onde os medidores inteligentes (SM) coletam dados de consumo de eletricidade dos usuários e os transmitem para os provedores. Para garantir a privacidade, o esquema utiliza o criptossistema Boneh-Goh-Nissam (BGN) para criptografar os dados de medição e o algoritmo de assinatura digital de curva elíptica (ECDSA) para autenticação da fonte. A tolerância a falhas é assegurada ao permitir que os nós de névoa (FN) substituam os dados dos medidores com falha pelos últimos dados válidos armazenados, sem a necessidade de comunicação adicional com autoridades confiáveis.
+
+O estudo também destaca a importância de proteger os dados dos consumidores em grades inteligentes, onde a agregação segura de dados é crucial para evitar a divulgação de informações sensíveis. A arquitetura baseada em névoa permite a agregação de dados próximo aos usuários finais, reduzindo a latência e os custos de comunicação. A utilização de criptografia homomórfica permite operações sobre dados criptografados, mantendo a privacidade dos usuários. A abordagem adotada assegura que, mesmo em presença de medidores defeituosos, a agregação de dados continua eficaz e eficiente, fornecendo resultados estimativos precisos para a gestão de eletricidade nas grades inteligentes.
+
+% ----------------------------------------------------------
+\subsection{FPDA: Fault-Tolerant and Privacy-Enhanced Data Aggregation Scheme in Fog-Assisted Smart Grid}
+% ----------------------------------------------------------
+
+Neste trabalho, os autores propõem a agregação de dados em redes inteligentes (SG) com foco na preservação da privacidade e tolerância a falhas. O FPDA propõe um método de agregação de dados que permite a disponibilidade de dados e a preservação da privacidade simultaneamente. A tolerância a falhas garante que a descriptografia possa ser realizada com sucesso mesmo que alguns medidores inteligentes (SMs) falhem, sem a necessidade de uma autoridade confiável centralizada ou atualizações de chaves após cada recuperação de falha.
+
+A abordagem FPDA utiliza uma criptografia homomórfica aditiva, onde a descriptografia do texto cifrado agregado é equivalente à soma direta de todas as leituras em texto claro. O esquema é projetado para operar eficientemente em uma arquitetura assistida por névoa (fog), onde os nós de névoa (FNs) realizam a agregação de dados antes de transmiti-los ao centro de controle (CC). Quando alguns SMs falham, os FNs iniciam interações adicionais de solicitação-resposta com um número limitado de SMs para reconstruir as chaves parciais necessárias. Esse método, baseado em um esquema de compartilhamento de segredo de limite (tSSS) estendido, permite que os SMs reconstruam segredos subsequentes sem revelar suas ações originais, mantendo assim a privacidade e a segurança.
+
+% ----------------------------------------------------------
+\section{Comparativo com Trabalhos Correlatos}
+% ----------------------------------------------------------
+
+A tabela 2 apresenta um comparativo entre as propostas apresentadas na literatura e a proposta deste trabalho, destacando as características atendidas por cada uma. A proposta deste trabalho se diferencia das demais por algumas razões. Primeiramente, a arquitetura modular proposta para cada nó da névoa inclui múltiplas camadas, cada uma com funções específicas que facilitam a manutenção e a flexibilidade do sistema. Isso contrasta com outras propostas que geralmente utilizam uma aplicação monolítica ou o uso de containers. A abordagem monolítica, embora simplificada em termos de implantação inicial, apresenta desafios em termos de manutenção e escalabilidade. Já o uso de containers, apesar de proporcionar uma certa modularidade, pode enfrentar problemas relacionados ao empacotamento e à sobrecarga de gerenciamento de múltiplos containers.
+
+\begin{table}[htb]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:Tab_ComparativoPorCaracteristica}Características atendidas por proposta}
+	\begin{tabular}{@{}p{6.5cm}p{7.5cm}@{}}
+		\toprule
+		\textbf{Característica} & \textbf{Propostas que atendem} \\ \midrule
+		Uso de RDMA                     & Proposta 1 \\ \midrule
+		Uso de Contêineres             & Proposta 1; Proposta 2; Proposta 3 \\ \midrule
+		Arquitetura Modular            & Este Trabalho \\ \midrule
+		Suporte a Múltiplos Protocolos & Proposta 1; Proposta 2; Proposta 3; Este Trabalho \\ \midrule
+		Camada de Serviço Flexível     & Este Trabalho \\ \midrule
+		Comunicação entre Névoas       & Este Trabalho \\ \midrule
+		Criptografia Homomórfica       & Proposta 4 \\ \midrule
+		A aplicação no nó é monolítica & Proposta 4; Proposta 5 \\ \bottomrule
+	\end{tabular}
+	\fonte{Do autor.}
+\end{table}
+
+Na arquitetura proposta nesse trabalho, o fluxo de dados inicia na borda, onde o nó primário da névoa atua como ponto de entrada, registrando os medidores conectados, realizando o balanceamento de carga e, quando necessário, redirecionando solicitações excedentes para outros domínios de névoa que disponham de maior capacidade de processamento.
+
+Cada nó da névoa é estruturado em três camadas. A camada de protocolos é responsável por receber e transmitir dados em diferentes formatos. A camada de processamento gerencia os elementos essenciais para a operação do nó, realizando armazenamento temporário e interações internas necessárias para manter o funcionamento contínuo. Já a camada de serviço executa aplicações configuráveis que processam os dados conforme a lógica da aplicação, preparando-os para as próximas etapas.
+
+Após o processamento nos nós especializados, as informações seguem para um nó agregador, que consolida dados provenientes de múltiplas névoas em arquivos estruturados, otimizando o tráfego antes do envio à nuvem e preparando o material para análises em larga escala.
+
+Conforme apresentado anteriormente, essa proposta apresenta alguns diferenciais em relação aos trabalhos correlatos. A arquitetura proposta para a comunicação entre névoas será explicada em detalhes a seguir.

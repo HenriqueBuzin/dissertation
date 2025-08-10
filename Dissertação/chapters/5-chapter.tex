@@ -1,0 +1,60 @@
+% ----------------------------------------------------------
+\chapter{Metodologia}
+% ----------------------------------------------------------
+
+\section{Tipo de Pesquisa}
+Este trabalho caracteriza-se como uma pesquisa aplicada, de natureza tecnológica, com abordagem predominantemente qualitativa na fase de levantamento e definição de requisitos, e quantitativa na etapa de definição dos critérios de avaliação. O objetivo central é propor e modelar uma arquitetura modular de computação em névoa com suporte à comunicação entre múltiplas névoas.
+
+\section{Procedimentos Metodológicos}
+
+\subsection{Definição de Requisitos da Arquitetura}
+A partir das lacunas identificadas na literatura (conforme discutido no Capítulo~\ref{cap:trabalhos_relacionados}), foram definidos requisitos funcionais e não funcionais, como:
+\begin{itemize}
+    \item Suporte à comunicação entre diferentes domínios de névoa;
+    \item Capacidade de integração de dispositivos heterogêneos;
+    \item Modularidade para implementação de múltiplos serviços;
+    \item Balanceamento de carga e distribuição dinâmica de tarefas;
+    \item Redução de latência e otimização do tráfego de rede.
+\end{itemize}
+
+\subsection{Modelagem da Arquitetura Modular}
+A arquitetura proposta foi estruturada em três camadas principais:
+\begin{itemize}
+    \item \textbf{Nó Primário}: responsável pelo registro de dispositivos, balanceamento de carga entre nós locais e outros nós primários, e redirecionamento de tarefas.
+    \item \textbf{Nós de Névoa}: responsáveis pela execução de serviços, pré-processamento e armazenamento temporário de dados.
+    \item \textbf{Nó Agregador}: responsável por consolidar informações e preparar os dados para envio otimizado à nuvem.
+\end{itemize}
+Diagramas conceituais e funcionais foram elaborados para representar os componentes, fluxos de dados e protocolos de comunicação.
+
+\subsection{Implementação em Ambiente Controlado}
+A arquitetura foi implementada em ambiente local utilizando contêineres Docker, simulando medidores, nós de névoa e agregadores. Protocolos como HTTP e CoAP foram empregados para comunicação, e o gerenciamento de serviços foi desenvolvido em Python e Node.js. Essa configuração permitiu avaliar a viabilidade técnica e a escalabilidade horizontal da proposta.
+
+\subsection{Definição dos Critérios de Avaliação}
+Embora a validação experimental completa não tenha sido realizada no escopo deste trabalho, foram definidos critérios para avaliação futura:
+\begin{itemize}
+    \item Tempo de resposta (ms);
+    \item Latência média (ms);
+    \item Taxa de entrega de pacotes (\%);
+    \item Escalabilidade (número de nós e dispositivos suportados).
+\end{itemize}
+
+\section{Ambiente e Ferramentas Utilizadas}
+A implementação e simulação utilizaram os seguintes recursos:
+\begin{itemize}
+    \item Linguagens e frameworks: Python, Node.js;
+    \item Infraestrutura de virtualização: Docker;
+    \item Protocolos: HTTP, CoAP;
+    \item Hardware: ambiente local com suporte a múltiplos contêineres e rede simulada;
+    \item Ferramentas de modelagem: draw.io e ferramentas de diagramação compatíveis com \LaTeX.
+\end{itemize}
+
+\section{Fluxo Metodológico}
+%A Figura~\ref{fig:fluxo_metodologia} apresenta o fluxo metodológico adotado, desde a definição dos requisitos até a implementação e definição dos critérios de avaliação.
+
+%\begin{figure}[htb]
+%	\caption{\label{fig:fluxo_metodologia}Fluxo metodológico do trabalho.}
+%	\begin{center}
+%		\includegraphics[width=0.9\linewidth]{images/fluxo_metodologia.png}
+%	\end{center}
+%	\fonte{Do autor.}
+%\end{figure}

@@ -1,0 +1,73 @@
+% ----------------------------------------------------------
+\chapter{Fundamentação Teórica}
+% ----------------------------------------------------------
+
+Primeiramente, para que se possa compreender o contexto deste trabalho, é necessária a revisão de alguns conceitos fundamentais. Desta forma, iniciamos com a conceituação do que é computação distribuída e em névoa e avançamos nos conceitos pertinentes a este trabalho.
+
+% ----------------------------------------------------------
+\section{Computação em Nuvem}
+% ----------------------------------------------------------
+
+A computação em nuvem é uma tecnologia que permite o acesso remoto a recursos computacionais, como servidores, armazenamento de dados, redes e software, através da internet. Essa abordagem oferece uma maneira eficiente de fornecer serviços de TI sob demanda, proporcionando flexibilidade, escalabilidade e redução de custos. A computação em nuvem envolve a utilização de data centers distribuídos para fornecer esses recursos, permitindo que os usuários acessem e utilizem capacidades computacionais de acordo com suas necessidades, sem a necessidade de investir em hardware próprio \cite{tanenbaum2015}.
+
+Os modelos de serviço da computação em nuvem são geralmente classificados em três categorias principais: Infraestrutura como Serviço (IaaS), Plataforma como Serviço (PaaS) e Software como Serviço (SaaS). No modelo IaaS, os provedores de nuvem oferecem recursos virtualizados, como servidores e armazenamento, que os clientes podem configurar e gerenciar conforme suas necessidades. Esse modelo é ideal para empresas que necessitam de controle sobre a infraestrutura e desejam a flexibilidade de escalar seus recursos conforme a demanda. Exemplos de IaaS incluem Amazon Web Services (AWS) e Microsoft Azure.
+
+No modelo PaaS, a nuvem fornece uma plataforma que permite aos desenvolvedores criar, testar e implantar aplicações sem se preocupar com a gestão da infraestrutura subjacente. Tanenbaum e Bos destacam que o PaaS simplifica o processo de desenvolvimento ao fornecer um ambiente integrado com ferramentas e serviços necessários para a construção de aplicações. Exemplos de PaaS incluem Google App Engine e Heroku.
+
+O modelo SaaS oferece aplicações de software através da internet, eliminando a necessidade de instalação e manutenção de software localmente nos dispositivos dos usuários. As aplicações SaaS são acessíveis via navegador web, proporcionando uma experiência de uso simplificada e atualizações automáticas. Exemplos populares de SaaS incluem Google Workspace, Microsoft Office 365 e Salesforce.
+
+Tanenbaum e Bos enfatizam que a computação em nuvem também proporciona vantagens significativas em termos de continuidade de negócios e recuperação de desastres. Ao armazenar dados e executar aplicações em data centers distribuídos geograficamente, a nuvem garante que as operações possam ser retomadas rapidamente em caso de falhas locais, aumentando a resiliência e a segurança das operações.
+
+% ----------------------------------------------------------
+\section{Computação em Névoa}
+% ----------------------------------------------------------
+
+A computação em névoa, também conhecida como fog computing, surge como uma extensão do paradigma de computação em nuvem, oferecendo uma solução para as limitações de latência e largura de banda enfrentadas na nuvem centralizada. Diferente da computação em nuvem, onde os dados são processados em data centers distantes, a computação em névoa distribui recursos computacionais, de armazenamento e serviços ao longo da borda da rede, mais próximos dos dispositivos finais. Esta abordagem hierárquica envolve dispositivos finais, nós de névoa e a nuvem centralizada, permitindo a distribuição eficiente de tarefas e o processamento local de dados, essencial para aplicações que exigem alta responsividade e baixa latência \cite{rahmani2018}.
+
+Entre as principais vantagens da computação em névoa, destaca-se a redução significativa da latência, crucial para aplicações em tempo real, como veículos autônomos e sistemas de saúde conectados. Além disso, a economia de largura de banda é alcançada através do pré-processamento e filtragem de dados localmente, diminuindo a quantidade de dados transmitidos para a nuvem. A segurança e privacidade dos dados são aprimoradas ao processar informações sensíveis localmente, reduzindo os riscos durante a transmissão. A alta disponibilidade e resiliência dos serviços também são beneficiadas pela distribuição de recursos em múltiplos nós de névoa, aumentando a robustez do sistema contra falhas.
+
+No contexto da Internet das Coisas (IoT), a computação em névoa revela-se particularmente relevante, suportando aplicações como cidades inteligentes, saúde conectada e a Indústria 4.0. Em cidades inteligentes, a névoa possibilita o monitoramento e controle eficientes de tráfego, energia e segurança pública. Na área da saúde, permite o monitoramento remoto de pacientes e análise de dados médicos em tempo real. Na indústria, a névoa facilita a automação, manutenção preditiva e otimização de processos, promovendo a eficiência operacional e a inovação. Esses exemplos demonstram como a computação em névoa pode transformar diversos setores, proporcionando benefícios significativos em termos de desempenho e confiabilidade.
+
+Apesar das vantagens, a computação em névoa enfrenta desafios como a heterogeneidade dos dispositivos, a complexidade na gestão de recursos distribuídos e a necessidade de padrões interoperáveis.
+
+% ----------------------------------------------------------
+\section{Protocolos}
+% ----------------------------------------------------------
+
+Os protocolos de comunicação são fundamentais para o funcionamento das redes de computadores e para a troca eficiente e segura de informações entre dispositivos. Eles definem um conjunto de regras e normas que permitem a comunicação entre diferentes sistemas, sejam eles locais ou distribuídos globalmente \cite{tanenbaum2011}. Na computação em névoa, os protocolos são usados para garantir a comunicação eficiente e segura entre dispositivos e servidores locais, permitindo a troca de informações de forma robusta e confiável.
+
+HTTP (Hypertext Transfer Protocol) é um protocolo de requisição-resposta usado principalmente para a troca de informações na web. Ele opera sobre a camada de transporte TCP/IP e permite a comunicação entre clientes (navegadores web) e servidores. Os métodos mais comuns incluem GET (para recuperar dados) e POST (para enviar dados). O HTTP é sem estado, o que significa que cada requisição é independente, simplificando o design do servidor, mas pode necessitar de gerenciamento adicional para manter sessões de usuário \cite{gourley2002}.
+
+WebSocket é um protocolo de comunicação que proporciona um canal bidirecional e full-duplex sobre uma única conexão TCP. Diferente do HTTP, que segue um modelo de requisição-resposta, o WebSocket permite que dados sejam enviados e recebidos de ambos os lados a qualquer momento após a conexão inicial. Isso o torna ideal para aplicações que necessitam de atualizações em tempo real, como chats, jogos online e sistemas de trading financeiro, oferecendo menor latência e maior eficiência \cite{wang2013}.
+
+SFTP (Secure File Transfer Protocol) é um protocolo para transferência segura de arquivos que utiliza criptografia SSH para proteger a confidencialidade e integridade dos dados durante a transferência. Diferente do FTP tradicional, que transmite dados em texto claro, o SFTP encripta tanto os comandos quanto os dados, proporcionando uma camada adicional de segurança. É amplamente utilizado em ambientes que requerem troca segura de arquivos, como empresas e instituições acadêmicas, onde a proteção dos dados é crucial \cite{barrett2005}.
+
+CoAP (Constrained Application Protocol) é um protocolo projetado para dispositivos restritos e redes de baixa capacidade, típico no contexto da Internet das Coisas (IoT). Baseado no modelo de requisição-resposta do HTTP, CoAP é otimizado para operar sobre UDP, resultando em menor sobrecarga de comunicação e melhor desempenho em redes de baixa capacidade. CoAP suporta mecanismos de confiabilidade e é interoperável com HTTP, facilitando a integração entre dispositivos IoT e a web tradicional \cite{bormann2012}.
+
+% ----------------------------------------------------------
+\section{GraphQL}
+% ----------------------------------------------------------
+
+GraphQL é uma linguagem de consulta e manipulação de dados para APIs que foi desenvolvida pelo Facebook em 2012 e lançada como um projeto de código aberto em 2015. Em contraste com o tradicional modelo REST (Representational State Transfer), GraphQL permite que os clientes solicitem exatamente os dados de que precisam, sem a necessidade de receber informações excedentes. Essa capacidade de seleção pode reduzir o volume de dados transferidos pela rede, resultando em uma maior eficiência tanto na comunicação quanto no desempenho geral das aplicações \cite{silveira2019}.
+
+Uma das principais vantagens do GraphQL é sua flexibilidade na recuperação de dados. Enquanto a arquitetura REST requer múltiplas requisições para diferentes endpoints para compilar dados relacionados, o GraphQL permite que todas essas informações sejam obtidas através de uma única consulta. Isso é possível porque o cliente especifica exatamente quais campos e relacionamentos deseja recuperar, e o servidor responde com os dados estruturados conforme solicitado. Esse modelo de consulta única não apenas simplifica o processo de desenvolvimento, mas também minimiza o tempo de resposta e a carga na rede.
+
+Além disso, o GraphQL facilita a evolução das APIs. No modelo REST, a adição de novos campos ou a alteração da estrutura de dados pode exigir a criação de novas versões de endpoints para garantir a compatibilidade retroativa. Com GraphQL, as APIs podem evoluir de maneira mais fluida. Novos campos podem ser adicionados às respostas sem impactar os clientes existentes, pois cada cliente continua a solicitar apenas os dados específicos de que precisa.
+
+Adicionalmente, a abordagem de GraphQL também melhora a experiência de desenvolvimento ao fornecer uma documentação mais clara e precisa. A própria estrutura da linguagem e as ferramentas associadas, como o GraphiQL, permitem que os desenvolvedores explorem e testem as APIs de maneira interativa. Isso contrasta com a documentação tradicional de APIs REST, que pode ser menos intuitiva e exigir mais esforço para ser mantida e compreendida.
+
+% ----------------------------------------------------------
+\section{HPCC Systems}
+% ----------------------------------------------------------
+
+O HPCC Systems (\textit{High Performance Computing Cluster}) é uma plataforma de processamento massivamente paralelo, de código aberto, desenvolvida pela divisão HPCC Systems da LexisNexis Risk Solutions. Seu objetivo é lidar com grandes volumes de dados, desde a ingestão até a entrega de produtos de dados, com tempos de resposta reduzidos. Criado antes da popularização do Hadoop, não se baseia no paradigma \textit{map-reduce}, possuindo uma arquitetura própria \cite{taylor2022}.
+
+A plataforma é composta por diversos servidores de infraestrutura responsáveis por funções como compilação de código, gerenciamento distribuído de dados e execução de trabalhos (\textit{workunits}). O processamento é realizado por dois tipos de clusters: Thor e ROXIE.
+
+O Thor é voltado para operações intensivas em grandes conjuntos de dados, realizando tarefas como transformação, limpeza, integração e análise em larga escala. É utilizado como ferramenta de \textit{back office}, transformando dados brutos em produtos finais e executando análises complexas.
+
+O ROXIE (\textit{Rapid Online Xml Inquiry Engine}) é destinado a consultas rápidas e atendimento a solicitações de usuários finais, buscando oferecer respostas em tempos muito reduzidos, frequentemente inferiores a um segundo. É, portanto, o componente voltado ao acesso e entrega de dados processados.
+
+Ambos os clusters utilizam a linguagem ECL (\textit{Enterprise Control Language}), de natureza declarativa. Nessa abordagem, o programador especifica o que deve ser feito, enquanto o sistema determina a forma mais eficiente de execução. Isso contribui para simplificar o desenvolvimento e reduzir a possibilidade de erros.
+
+A arquitetura do HPCC Systems foi concebida para permitir escalabilidade progressiva e operação integrada, incorporando desde a ingestão e transformação de dados até a disponibilização dos resultados, sem depender de ferramentas externas para compor o ambiente de produção. Por ser de código aberto, pode ser implantado tanto em ambientes físicos com hardware convencional quanto em configurações baseadas em contêineres, adaptando-se às necessidades de diferentes cenários de processamento de dados.

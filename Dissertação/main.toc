@@ -1,0 +1,61 @@
+\changetocdepth {4}
+\babel@toc {brazil}{}\relax 
+\babel@toc {brazil}{}\relax 
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase []{Introdução}}{16}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Objetivos}{17}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Objetivo Geral}{17}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Objetivos Específicos}{17}{subsection.1.1.2}%
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase []{Fundamentação Teórica}}{19}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Computação em Nuvem}{19}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Computação em Névoa}{20}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Protocolos}{20}{section.2.3}%
+\contentsline {section}{\numberline {2.4}GraphQL}{21}{section.2.4}%
+\contentsline {section}{\numberline {2.5}HPCC Systems}{22}{section.2.5}%
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {3}\MakeTextUppercase []{Revisão Bibliográfica}}{24}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Trabalhos Correlatos}{24}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Inter-container Communication Aware Container Placement in Fog Computing}{24}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}EXEGESIS: Extreme Edge Resource Harvesting for a Virtualized Fog Environment}{25}{subsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.1.3}Extending Scalability of IoT/M2M Platforms with Fog Computing}{25}{subsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.1.4}Privacy preserving data aggregation with fault tolerance in fog-enabled smart grids}{26}{subsection.3.1.4}%
+\contentsline {subsection}{\numberline {3.1.5}FPDA: Fault-Tolerant and Privacy-Enhanced Data Aggregation Scheme in Fog-Assisted Smart Grid}{26}{subsection.3.1.5}%
+\contentsline {section}{\numberline {3.2}Comparativo com Trabalhos Correlatos}{27}{section.3.2}%
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase []{Proposta}}{29}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Visão Geral}{29}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Componentes}{29}{section.4.2}%
+\contentsline {subsection}{\numberline {4.2.1}Nó Primário}{30}{subsection.4.2.1}%
+\contentsline {subsection}{\numberline {4.2.2}Nós de Névoa}{30}{subsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.2.3}Nó Agregador}{31}{subsection.4.2.3}%
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{Metodologia}}{33}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Tipo de Pesquisa}{33}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Procedimentos Metodológicos}{33}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Definição de Requisitos da Arquitetura}{33}{subsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.2.2}Modelagem da Arquitetura Modular}{33}{subsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.2.3}Implementação em Ambiente Controlado}{33}{subsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.2.4}Definição dos Critérios de Avaliação}{34}{subsection.5.2.4}%
+\contentsline {section}{\numberline {5.3}Ambiente e Ferramentas Utilizadas}{34}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Fluxo Metodológico}{34}{section.5.4}%
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Testes}}{35}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Contextualização do Problema}{35}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Computação em Névoa}{35}{section.6.2}%
+\contentsline {section}{\numberline {6.3}Protocolos}{35}{section.6.3}%
+\contentsline {section}{\numberline {6.4}GRAPHQL}{35}{section.6.4}%
+\contentsline {section}{\numberline {6.5}HPCC Systems}{35}{section.6.5}%
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Resultados}}{36}{chapter.7}%
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {8}\MakeTextUppercase []{Conclusão}}{37}{chapter.8}%
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\contentsline {chapter}{Refer\^encias}{38}{section*.24}%
