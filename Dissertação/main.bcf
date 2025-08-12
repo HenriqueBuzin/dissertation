@@ -2497,6 +2497,10 @@
     <bcf:citekey order="9" intorder="1">bormann2012</bcf:citekey>
     <bcf:citekey order="10" intorder="1">silveira2019</bcf:citekey>
     <bcf:citekey order="11" intorder="1">taylor2022</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">uci_energy</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">greek_water</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">openfog2018</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">exegesis2021</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

@@ -1,60 +1,40 @@
 % ----------------------------------------------------------
-\chapter{Metodologia}
+\chapter{Metodologia}\label{cap:metodologia}
 % ----------------------------------------------------------
 
-\section{Tipo de Pesquisa}
-Este trabalho caracteriza-se como uma pesquisa aplicada, de natureza tecnológica, com abordagem predominantemente qualitativa na fase de levantamento e definição de requisitos, e quantitativa na etapa de definição dos critérios de avaliação. O objetivo central é propor e modelar uma arquitetura modular de computação em névoa com suporte à comunicação entre múltiplas névoas.
+Este capítulo descreve o conjunto de etapas e procedimentos adotados para o desenvolvimento da arquitetura modular de computação em névoa, desde a concepção até a validação experimental. O objetivo é apresentar, de forma sequencial e organizada, como o trabalho foi conduzido, abordando desde a análise inicial até a execução dos testes.
 
-\section{Procedimentos Metodológicos}
+% ----------------------------------------------------------
+\section{Planejamento e Análise Inicial}
+% ----------------------------------------------------------
 
-\subsection{Definição de Requisitos da Arquitetura}
-A partir das lacunas identificadas na literatura (conforme discutido no Capítulo~\ref{cap:trabalhos_relacionados}), foram definidos requisitos funcionais e não funcionais, como:
+O trabalho foi iniciado com uma análise do estado da arte em computação em névoa, comunicação entre névoas e interoperabilidade de protocolos. Esta etapa permitiu identificar abordagens já utilizadas e lacunas existentes, servindo de base para a definição dos requisitos funcionais e estruturais da arquitetura.
+
+% ----------------------------------------------------------
+\section{Definição da Arquitetura}
+% ----------------------------------------------------------
+
+Com base nos requisitos levantados, foi elaborada a arquitetura modular, especificando os papéis de cada tipo de nó (primário, de névoa e agregador) e a organização interna dos componentes. Nesta fase, também foram definidos os mecanismos de comunicação e as interações entre nós de diferentes névoas.
+
+% ----------------------------------------------------------
+\section{Implementação dos Componentes}
+% ----------------------------------------------------------
+
+A implementação foi conduzida em etapas, de forma a permitir testes incrementais e ajustes contínuos:
+\begin{enumerate}
+    \item Desenvolvimento do nó primário, com funções de registro, balanceamento e encaminhamento de requisições.
+    \item Implementação dos nós de névoa, estruturados em camadas para suportar diferentes protocolos, processamento interno e execução de serviços.
+    \item Construção do nó agregador, responsável pela consolidação e envio de dados à nuvem.
+\end{enumerate}
+
+% ----------------------------------------------------------
+\section{Procedimentos de Teste}
+% ----------------------------------------------------------
+
+Após a implementação, serão realizados testes com foco em:
 \begin{itemize}
-    \item Suporte à comunicação entre diferentes domínios de névoa;
-    \item Capacidade de integração de dispositivos heterogêneos;
-    \item Modularidade para implementação de múltiplos serviços;
-    \item Balanceamento de carga e distribuição dinâmica de tarefas;
-    \item Redução de latência e otimização do tráfego de rede.
+    \item \textbf{Interoperabilidade}: verificar a capacidade da arquitetura de lidar com diferentes formatos e protocolos de comunicação.
+    \item \textbf{Balanceamento de carga}: avaliar o comportamento do nó primário na distribuição das requisições entre os nós de névoa, incluindo cenários de encaminhamento para outras névoas.
+    \item \textbf{Agregação de dados}: analisar a consolidação realizada pelo nó agregador e seu impacto na redução de requisições à nuvem.
+    \item \textbf{Escalabilidade}: observar a resposta do sistema ao aumento do número de nós e dispositivos.
 \end{itemize}
-
-\subsection{Modelagem da Arquitetura Modular}
-A arquitetura proposta foi estruturada em três camadas principais:
-\begin{itemize}
-    \item \textbf{Nó Primário}: responsável pelo registro de dispositivos, balanceamento de carga entre nós locais e outros nós primários, e redirecionamento de tarefas.
-    \item \textbf{Nós de Névoa}: responsáveis pela execução de serviços, pré-processamento e armazenamento temporário de dados.
-    \item \textbf{Nó Agregador}: responsável por consolidar informações e preparar os dados para envio otimizado à nuvem.
-\end{itemize}
-Diagramas conceituais e funcionais foram elaborados para representar os componentes, fluxos de dados e protocolos de comunicação.
-
-\subsection{Implementação em Ambiente Controlado}
-A arquitetura foi implementada em ambiente local utilizando contêineres Docker, simulando medidores, nós de névoa e agregadores. Protocolos como HTTP e CoAP foram empregados para comunicação, e o gerenciamento de serviços foi desenvolvido em Python e Node.js. Essa configuração permitiu avaliar a viabilidade técnica e a escalabilidade horizontal da proposta.
-
-\subsection{Definição dos Critérios de Avaliação}
-Embora a validação experimental completa não tenha sido realizada no escopo deste trabalho, foram definidos critérios para avaliação futura:
-\begin{itemize}
-    \item Tempo de resposta (ms);
-    \item Latência média (ms);
-    \item Taxa de entrega de pacotes (\%);
-    \item Escalabilidade (número de nós e dispositivos suportados).
-\end{itemize}
-
-\section{Ambiente e Ferramentas Utilizadas}
-A implementação e simulação utilizaram os seguintes recursos:
-\begin{itemize}
-    \item Linguagens e frameworks: Python, Node.js;
-    \item Infraestrutura de virtualização: Docker;
-    \item Protocolos: HTTP, CoAP;
-    \item Hardware: ambiente local com suporte a múltiplos contêineres e rede simulada;
-    \item Ferramentas de modelagem: draw.io e ferramentas de diagramação compatíveis com \LaTeX.
-\end{itemize}
-
-\section{Fluxo Metodológico}
-%A Figura~\ref{fig:fluxo_metodologia} apresenta o fluxo metodológico adotado, desde a definição dos requisitos até a implementação e definição dos critérios de avaliação.
-
-%\begin{figure}[htb]
-%	\caption{\label{fig:fluxo_metodologia}Fluxo metodológico do trabalho.}
-%	\begin{center}
-%		\includegraphics[width=0.9\linewidth]{images/fluxo_metodologia.png}
-%	\end{center}
-%	\fonte{Do autor.}
-%\end{figure}

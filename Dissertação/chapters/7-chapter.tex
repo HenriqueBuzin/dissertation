@@ -1,6 +1,159 @@
 % ----------------------------------------------------------
-\chapter{Resultados}
+\chapter{Resultados}\label{cap:resultados}
 % ----------------------------------------------------------
 
-Este \textit{template} contém algumas seções criadas na tentativa de facilitar seu uso. No entanto, não há um limite máximo ou mínimo de seção a ser utilizado no trabalho. Cabe a cada autor definir a quantidade que melhor atenda à sua 
-necessidade.
+Esta seção apresenta as métricas obtidas nos testes da arquitetura proposta.  
+Para cada métrica, é mostrado o cálculo realizado com base nos valores coletados e, em seguida, um parágrafo explicando seu significado e comentando o valor obtido.
+
+% ----------------------------------------------------------
+\section{Valores Medidos}
+% ----------------------------------------------------------
+
+Os valores apresentados nas Tabelas~\ref{tab:latencias} e~\ref{tab:memoria} foram obtidos a partir de \textit{timestamps} registrados nos pontos de entrada e saída de cada componente, bem como de medições de consumo de memória realizadas durante o envio de mensagens.  
+
+A Tabela~\ref{tab:latencias} mostra as latências médias unidirecionais para cada segmento do fluxo, abrangendo desde a recepção inicial no \textit{Load Balancer} até o envio final ao HPCC Systems, enquanto a Tabela~\ref{tab:memoria} apresenta o consumo médio de memória por componente.  
+
+Observa-se que o maior tempo de transmissão ocorre no trajeto entre o Agregador e o HPCC Systems, indicando que esta etapa concentra a maior parte da latência no fluxo de dados. Em relação ao uso de memória, verifica-se que os nós de névoa demandam mais recursos, devido às tarefas de pré-processamento e armazenamento temporário, enquanto os componentes de controle, como o \textit{Load Balancer} e o Agregador, apresentam consumo significativamente menor.
+
+\begin{table}[htb]
+    \caption{\label{tab:latencias}Latências médias unidirecionais medidas}
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+            \textbf{Caminho} & \textbf{Latência (ms)} \\
+        \hline
+            Medidor $\rightarrow$ Load Balancer & 4,6 \\
+            Load Balancer $\rightarrow$ Nó de Névoa & 2,0 \\
+            Nó de Névoa $\rightarrow$ Agregador & 2,4 \\
+            Agregador $\rightarrow$ HPCC Systems & 6,6 \\
+        \hline
+    \end{tabular}
+    \fonte{Do autor.}
+\end{table}
+
+\begin{table}[htb]
+    \caption{\label{tab:memoria}Consumo médio de memória por componente}
+    \centering
+    \begin{tabular}{|l|c|}
+        \hline
+            \textbf{Componente} & \textbf{Memória (MiB)} \\
+        \hline
+            Load Balancer & 37,37 \\
+            Agregador & 40,14 \\
+            Nó de Névoa (Energia) & 276,60 \\
+            Simulador de Medidor HTTP & 19,97 \\
+        \hline
+    \end{tabular}
+    \fonte{Do autor.}
+\end{table}
+
+% ----------------------------------------------------------
+\section{Latência ponta a ponta}
+% ----------------------------------------------------------
+
+\[
+L_t = L_{ml} + L_{ln} + L_{na} + L_{ah}
+\]
+
+Onde:  
+\begin{itemize}
+    \item \(L_{ml}\) = latência do Medidor → Load Balancer = \(4{,}6\ \text{ms}\)
+    \item \(L_{ln}\) = latência do Load Balancer → Nó de Névoa = \(2{,}0\ \text{ms}\)
+    \item \(L_{na}\) = latência do Nó de Névoa → Agregador = \(2{,}4\ \text{ms}\)
+    \item \(L_{ah}\) = latência do Agregador → HPCC Systems = \(6{,}6\ \text{ms}\)
+\end{itemize}
+
+\[
+L_t = 4{,}6 + 2{,}0 + 2{,}4 + 6{,}6 = 15{,}6 \ \text{ms}
+\]
+
+O cálculo considera a soma das latências médias unidirecionais medidas para cada segmento do fluxo de transmissão.
+
+% ----------------------------------------------------------
+\section{Throughput}
+% ----------------------------------------------------------
+
+\[
+\text{Throughput} = \frac{M_p}{T}
+\]
+
+Onde:  
+\begin{itemize}
+    \item \(N_d\) = número de dispositivos = \(120\)
+    \item \(F_m\) = frequência de envio de mensagens (mensagens por hora) = \(1\)
+    \item \(T\) = duração total do experimento = \(48\ \text{h}\)
+    \item \(M_p\) = total de mensagens processadas = \(5{,}760\)
+\end{itemize}
+
+\[
+\text{Throughput} = \frac{5{,}760}{48} = 120\ \text{msgs/h}
+\]
+
+O cálculo considera a quantidade de mensagens processadas dividida pelo tempo total do experimento, resultando no número médio de mensagens processadas por hora.
+
+% ----------------------------------------------------------
+\section{Taxa de entrega}
+% ----------------------------------------------------------
+
+\[
+M_e = N_d \times F_m \times T = 120 \times 1 \times 48 = 5{,}760
+\]
+
+\[
+\text{Taxa de entrega} = \frac{M_r}{M_e} \times 100
+\]
+
+Onde:  
+\begin{itemize}
+    \item \(M_r\) = quantidade total de mensagens recebidas = \(5{,}760\)
+    \item \(M_e\) = quantidade total de mensagens esperadas = \(5{,}760\)
+\end{itemize}
+
+\[
+\text{Taxa de entrega} = \frac{5{,}760}{5{,}760} \times 100 = 100\%
+\]
+
+O cálculo considera a razão entre a quantidade de mensagens recebidas e o total esperado no período do experimento.
+
+% ----------------------------------------------------------
+\section{Fator de agregação}
+% ----------------------------------------------------------
+
+\[
+\rho = \frac{M_r}{M_n}
+\]
+
+Onde:  
+\begin{itemize}
+    \item \(M_r\) = mensagens recebidas pelo agregador em dois dias = \(2 \times 2880 = 5760\)
+    \item \(M_n\) = mensagens enviadas à nuvem pelo agregador no mesmo período = \(2\)
+\end{itemize}
+
+\[
+\rho = \frac{5760}{2} = 2880
+\]
+
+O cálculo considera a razão entre a quantidade de mensagens recebidas pelo agregador e o número de mensagens enviadas à nuvem em um mesmo intervalo de tempo.
+
+% ----------------------------------------------------------
+\section{Redução de requisições à nuvem}
+% ----------------------------------------------------------
+
+\[
+\text{Redução}(\%) = \frac{(N_d \times M_d \times 2) - M_a}{N_d \times M_d \times 2} \times 100
+\]
+
+Onde:  
+\begin{itemize}
+    \item \(N_d\) = número de dispositivos = \(120\)
+    \item \(M_d\) = mensagens enviadas por dispositivo/dia = \(24\)
+    \item \(M_a\) = mensagens enviadas via agregador no total de dois dias = \(2\)
+\end{itemize}
+
+\[
+\text{Redução}(\%) = \frac{(120 \times 24 \times 2) - 2}{120 \times 24 \times 2} \times 100
+= \frac{5760 - 2}{5760} \times 100
+\approx 99{,}97\%
+\]
+
+O cálculo considera a quantidade total de mensagens enviadas diretamente pelos dispositivos no período de dois dias, comparada ao número de mensagens transmitidas via agregador no mesmo período.

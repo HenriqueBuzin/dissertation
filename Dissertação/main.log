@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.7)  10 AUG 2025 15:29
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.7)  11 AUG 2025 22:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1881,7 +1881,15 @@ Package biblatex Info: Automatic encoding selection.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
- (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.bbl)
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.bbl
+
+Package biblatex Warning: The following entry could not be found
+(biblatex)                in the database:
+(biblatex)                exegesis2021
+(biblatex)                Please verify the spelling and rerun
+(biblatex)                LaTeX afterwards.
+
+)
 Package biblatex Info: Reference section=0 on input line 219.
 Package biblatex Info: Reference segment=0 on input line 219.
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/beforetext/beforetext.tex
@@ -2036,7 +2044,7 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 
 ]
 
-Package glossaries Warning: Empty glossary for \printnoidxglossary[type={acronym}]. Rerun may be required (or you may have forgotten to use commands like \gls) on input line 185.
+Package glossaries Warning: Empty glossary for \printnoidxglossary[type={acronym}]. Rerun may be required (or you may have forgotten to use commands like \gls) on input line 186.
 
 
 
@@ -2046,7 +2054,7 @@ Package glossaries Warning: Empty glossary for \printnoidxglossary[type={acronym
 
 ]
 
-Package glossaries Warning: Empty glossary for \printnoidxglossary[type={simbolos}]. Rerun may be required (or you may have forgotten to use commands like \gls) on input line 191.
+Package glossaries Warning: Empty glossary for \printnoidxglossary[type={simbolos}]. Rerun may be required (or you may have forgotten to use commands like \gls) on input line 192.
 
 
 
@@ -2064,7 +2072,7 @@ Package glossaries Warning: Empty glossary for \printnoidxglossary[type={simbolo
 \openout2 = `chapters/1-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/1-chapter.tex
-<images/arquitetura_basica.png, id=225, 570.13pt x 347.2975pt>
+<images/arquitetura_basica.png, id=243, 570.13pt x 347.2975pt>
 File: images/arquitetura_basica.png Graphic file (type png)
 <use images/arquitetura_basica.png>
 Package pdftex.def Info: images/arquitetura_basica.png  used on input line 16.
@@ -2129,7 +2137,7 @@ LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
 \openout2 = `chapters/4-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/4-chapter.tex
-<images/arquitetura_proposta.png, id=317, 891.33pt x 363.3575pt>
+<images/arquitetura_proposta.png, id=335, 891.33pt x 363.3575pt>
 File: images/arquitetura_proposta.png Graphic file (type png)
 <use images/arquitetura_proposta.png>
 Package pdftex.def Info: images/arquitetura_proposta.png  used on input line 18.
@@ -2142,7 +2150,7 @@ Package pdftex.def Info: images/arquitetura_proposta.png  used on input line 18.
 
 
  </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_proposta.png>]
-<images/camada_protocolos.png, id=324, 419.5675pt x 321.2pt>
+<images/camada_protocolos.png, id=342, 419.5675pt x 321.2pt>
 File: images/camada_protocolos.png Graphic file (type png)
 <use images/camada_protocolos.png>
 Package pdftex.def Info: images/camada_protocolos.png  used on input line 52.
@@ -2150,7 +2158,7 @@ Package pdftex.def Info: images/camada_protocolos.png  used on input line 52.
 
 
 [30]
-<images/camada_processamento.png, id=331, 458.71375pt x 361.35pt>
+<images/camada_processamento.png, id=349, 458.71375pt x 361.35pt>
 File: images/camada_processamento.png Graphic file (type png)
 <use images/camada_processamento.png>
 Package pdftex.def Info: images/camada_processamento.png  used on input line 62.
@@ -2179,7 +2187,13 @@ Overfull \hbox (22.19046pt too wide) in paragraph at lines 73--74
 [34]
 \openout2 = `chapters/6-chapter.aux'.
 
- (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/6-chapter.tex)
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/6-chapter.tex
+<images/container_manager.png, id=376, 1504.62125pt x 720.6925pt>
+File: images/container_manager.png Graphic file (type png)
+<use images/container_manager.png>
+Package pdftex.def Info: images/container_manager.png  used on input line 30.
+(pdftex.def)             Requested size: 455.0pt x 217.93593pt.
+
 
 [35
 
@@ -2187,32 +2201,93 @@ Overfull \hbox (22.19046pt too wide) in paragraph at lines 73--74
 
 
 ]
+
+[36 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/container_manager.png>]
+
+[37]
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+
+Overfull \hbox (8.224pt too wide) in paragraph at lines 103--104
+\T1/phv/m/n/12 (-10) ces-sa-mento ape-nas as in-for-ma-��es es-tri-ta-mente ne-ces-s�-rias para o pr�-processamento,
+ []
+
+<images/hpcc_landing_zone.png, id=395, 380.92313pt x 424.58624pt>
+File: images/hpcc_landing_zone.png Graphic file (type png)
+<use images/hpcc_landing_zone.png>
+Package pdftex.def Info: images/hpcc_landing_zone.png  used on input line 118.
+(pdftex.def)             Requested size: 318.49861pt x 355.0174pt.
+)
+
+[38{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}]
+
+[39 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/hpcc_landing_zone.png>]
 \openout2 = `chapters/7-chapter.aux'.
 
- (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/7-chapter.tex)
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/7-chapter.tex
 
-[36
+[40
 
 
 
 
 ]
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family phv in TS1 encoding.
+            Default family used instead on input line 60.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmss' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmss' (encoding: TS1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family phv in TS1 encoding.
+            Default family used instead on input line 61.
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family phv in TS1 encoding.
+            Default family used instead on input line 62.
+LaTeX Info: Symbol \textrightarrow not provided by
+            font family phv in TS1 encoding.
+            Default family used instead on input line 63.
+
+
+[41{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}])
+
+[42{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/epigrafica/epigraficahellenic.enc}]
 \openout2 = `chapters/8-chapter.aux'.
 
- (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/8-chapter.tex)
+ (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/8-chapter.tex
 
-[37
+LaTeX Warning: Citation 'exegesis2021' on page 43 undefined on input line 11.
 
+)
+
+[43
+
+
+
+
+]
+
+[44]
+
+Package biblatex Warning: No driver for 'standard'.
+(biblatex)                Using fallback driver on input line 308.
+
+
+
+[45
 
 
 
 ]
 
-[38
-
-
-
-]
+[46]
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
@@ -2239,18 +2314,18 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 41377 strings out of 473190
- 765266 string characters out of 5715801
- 1910409 words of memory out of 5000000
- 63722 multiletter control sequences out of 15000+600000
- 611374 words of font info for 212 fonts, out of 8000000 for 9000
+ 41511 strings out of 473190
+ 767789 string characters out of 5715801
+ 1912285 words of memory out of 5000000
+ 63798 multiletter control sequences out of 15000+600000
+ 615096 words of font info for 235 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,17n,117p,2491b,4447s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.pdf (39 pages, 308485 bytes).
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/epigrafica/Epigrafica-Reonta.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sfss1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.pdf (47 pages, 800349 bytes).
 PDF statistics:
- 588 PDF objects out of 1000 (max. 8388607)
- 521 compressed objects within 6 object streams
- 128 named destinations out of 1000 (max. 500000)
- 63969 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 706 PDF objects out of 1000 (max. 8388607)
+ 618 compressed objects within 7 object streams
+ 151 named destinations out of 1000 (max. 500000)
+ 65547 words of extra memory for PDF output out of 74296 (max. 10000000)
 

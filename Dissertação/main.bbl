@@ -226,6 +226,70 @@
       \field{title}{HTTP: The Definitive Guide}
       \field{year}{2002}
     \endentry
+    \entry{greek_water}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=0b49cce8cc3a788bca45008c03d17d33}{%
+           family={{Hellenic Data Service}},
+           familyi={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{fullhash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{fullhashraw}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{bibnamehash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{authorbibnamehash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{authornamehash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{authorfullhash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{authorfullhashraw}{0b49cce8cc3a788bca45008c03d17d33}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labeldatesource}{nodate}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://data.hellenicdataservice.gr/dataset/78776f38-a58b-4a2a-a8f9-85b964fe5c95}}
+      \field{note}{Acesso em: 11 ago. 2025}
+      \field{title}{Water Consumption Dataset}
+    \endentry
+    \entry{uci_energy}{misc}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=bf1150c8f55589adc5c78f085dc2bf81}{%
+           family={Hernández},
+           familyi={H\bibinitperiod},
+           given={Héctor},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{fullhash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{fullhashraw}{0050d48dba2cf568d4aead699d5043be}
+      \strng{bibnamehash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{authorbibnamehash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{authornamehash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{authorfullhash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{authorfullhashraw}{0050d48dba2cf568d4aead699d5043be}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labeldatesource}{nodate}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption}}
+      \field{note}{Acesso em: 11 ago. 2025}
+      \field{title}{Individual household electric power consumption Data Set}
+    \endentry
+    \entry{openfog2018}{standard}{}{}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Std 1934-2018}
+      \field{title}{IEEE Standard for Adoption of OpenFog Reference Architecture for Fog Computing}
+      \field{year}{2018}
+      \field{pages}{1\bibrangedash 176}
+      \range{pages}{176}
+      \keyw{IEEE Standards,Information technology,Edge computing,Communications technology,adoption,communication technology IEEE 1934™,information technology,OpenFog,operational technology}
+    \endentry
     \entry{markakis2017}{article}{}{}
       \name{author}{6}{}{%
         {{un=0,uniquepart=base,hash=79aa10bbc85f14fc9f4f9783f8688502}{%
@@ -555,6 +619,7 @@
       \range{pages}{6}
     \endentry
   \enddatalist
+  \missing{exegesis2021}
 \endrefsection
 \endinput
 
