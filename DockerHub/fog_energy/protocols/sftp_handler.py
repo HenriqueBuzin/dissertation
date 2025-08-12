@@ -1,6 +1,7 @@
 # protocols/sftp_handler.py
 
 import os
+import time
 import base64
 import paramiko
 import aiofiles
@@ -38,7 +39,12 @@ async def send_via_sftp(sftp_details, file_path):
         sftp = paramiko.SFTPClient.from_transport(transport)
         
         print(f"Enviando arquivo {file_path} para {sftp_details['remote_path']}", flush=True)
+        
+        start = time.time()
         sftp.put(file_path, sftp_details['remote_path'])
+        end = time.time()
+        elapsed = end - start
+        print(f"[MÉTRICA] Tempo de envio para o aggregator via SFTP: {elapsed:.4f}s", flush=True)
         
         print(f"Arquivo {file_path} enviado com sucesso para {sftp_details['remote_path']}.", flush=True)
         
