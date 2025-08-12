@@ -49,7 +49,7 @@
 \contentsline {subsection}{\numberline {6.2.1}Tecnologias e Ambiente Físico}{36}{subsection.6.2.1}%
 \contentsline {section}{\numberline {6.3}Protocolos}{36}{section.6.3}%
 \contentsline {section}{\numberline {6.4}Distribuição entre Névoas e Balanceamento de Carga}{37}{section.6.4}%
-\contentsline {section}{\numberline {6.5}GraphQL}{38}{section.6.5}%
+\contentsline {section}{\numberline {6.5}GraphQL}{37}{section.6.5}%
 \contentsline {section}{\numberline {6.6}HPCC Systems na Camada de Nuvem}{38}{section.6.6}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Resultados}}{40}{chapter.7}%

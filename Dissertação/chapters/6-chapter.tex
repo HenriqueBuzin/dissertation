@@ -65,11 +65,9 @@ No ambiente de testes, o nó primário é responsável por receber dados utiliza
 
 Dentro de um nó de névoa, a comunicação entre a camada de protocolos e a camada de processamento ocorre por meio de \textit{WebSocket}, mantendo a conexão aberta para evitar o custo de abertura e fechamento contínuo de conexões. Essa abordagem reduz a sobrecarga e melhora o tempo de resposta.
 
-A partir do nó de névoa, os dados já passam a ser organizados em estrutura \textit{CSV}, formada a partir das informações recebidas em \textit{JSON}. Essa etapa permite preparar os dados para compatibilidade com o formato aceito pela nuvem. A transmissão do nó de névoa para o nó agregador é realizada via \textit{SFTP}, garantindo a entrega confiável e preservando a integridade dos arquivos.
+A partir do nó de névoa, os dados já passam a ser organizados em estrutura \textit{CSV}, formada a partir das informações recebidas em \textit{JSON}. Essa etapa permite preparar os dados para compatibilidade com o formato aceito pela nuvem. A transmissão do nó de névoa para o nó agregador é realizada via \textit{SFTP}.
 
 No nó agregador, os arquivos \textit{CSV} recebidos de diferentes nós de névoa são consolidados em um único arquivo antes de serem enviados para a camada de nuvem, também via \textit{SFTP}, para a zona de entrada (\textit{landing zone}) do \textit{HPCC Systems}.
-
-Essa configuração busca compatibilidade entre os diferentes componentes, confiabilidade na entrega das mensagens e otimização do tráfego de rede.
 
 % ----------------------------------------------------------
 \section{Distribuição entre Névoas e Balanceamento de Carga}
