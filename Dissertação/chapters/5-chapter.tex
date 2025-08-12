@@ -1,0 +1,40 @@
+% ----------------------------------------------------------
+\chapter{Metodologia}\label{cap:metodologia}
+% ----------------------------------------------------------
+
+Este capítulo descreve o conjunto de etapas e procedimentos adotados para o desenvolvimento da arquitetura modular de computação em névoa, desde a concepção até a validação experimental. O objetivo é apresentar, de forma sequencial e organizada, como o trabalho foi conduzido, abordando desde a análise inicial até a execução dos testes.
+
+% ----------------------------------------------------------
+\section{Planejamento e Análise Inicial}
+% ----------------------------------------------------------
+
+O trabalho foi iniciado com uma análise do estado da arte em computação em névoa, comunicação entre névoas e interoperabilidade de protocolos. Esta etapa permitiu identificar abordagens já utilizadas e lacunas existentes, servindo de base para a definição dos requisitos funcionais e estruturais da arquitetura.
+
+% ----------------------------------------------------------
+\section{Definição da Arquitetura}
+% ----------------------------------------------------------
+
+Com base nos requisitos levantados, foi elaborada a arquitetura modular, especificando os papéis de cada tipo de nó (primário, de névoa e agregador) e a organização interna dos componentes. Nesta fase, também foram definidos os mecanismos de comunicação e as interações entre nós de diferentes névoas.
+
+% ----------------------------------------------------------
+\section{Implementação dos Componentes}
+% ----------------------------------------------------------
+
+A implementação foi conduzida em etapas, de forma a permitir testes incrementais e ajustes contínuos:
+\begin{enumerate}
+    \item Desenvolvimento do nó primário, com funções de registro, balanceamento e encaminhamento de requisições.
+    \item Implementação dos nós de névoa, estruturados em camadas para suportar diferentes protocolos, processamento interno e execução de serviços.
+    \item Construção do nó agregador, responsável pela consolidação e envio de dados à nuvem.
+\end{enumerate}
+
+% ----------------------------------------------------------
+\section{Procedimentos de Teste}
+% ----------------------------------------------------------
+
+Após a implementação, serão realizados testes com foco em:
+\begin{itemize}
+    \item \textbf{Interoperabilidade}: verificar a capacidade da arquitetura de lidar com diferentes formatos e protocolos de comunicação.
+    \item \textbf{Balanceamento de carga}: avaliar o comportamento do nó primário na distribuição das requisições entre os nós de névoa, incluindo cenários de encaminhamento para outras névoas.
+    \item \textbf{Agregação de dados}: analisar a consolidação realizada pelo nó agregador e seu impacto na redução de requisições à nuvem.
+    \item \textbf{Escalabilidade}: observar a resposta do sistema ao aumento do número de nós e dispositivos.
+\end{itemize}
