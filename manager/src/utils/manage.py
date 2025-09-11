@@ -1,11 +1,13 @@
 # utils/manage.py
 
-from .measurement_nodes import create_measurement_nodes
-from .load_balancer import create_load_balancer
 from .general import normalize_container_name
 from flask import request, redirect, url_for
-from .aggregator import create_aggregator
-from .nodes import create_node
+from .nodos import (
+    create_load_balancer,
+    create_measurement_nodes,
+    create_aggregator,
+    create_node,
+)
 
 def handle_manage_post(
     bairro,

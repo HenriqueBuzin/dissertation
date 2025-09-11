@@ -1,8 +1,8 @@
 # utils/load_balancer.py
 
-from .network import get_available_port, create_or_get_bairro_network, create_or_get_lb_network
-from .docker_utils import get_docker_client, get_docker_errors
-from .general import normalize_container_name
+from ..network import get_available_port, create_or_get_bairro_network, create_or_get_lb_network
+from ..docker_utils import get_docker_client, get_docker_errors
+from ..general import normalize_container_name
 
 # Portas internas fixas no container – visíveis apenas dentro da rede Docker
 INTERNAL_HTTP_PORT = 5000

@@ -1,15 +1,15 @@
 # utils/measurement_nodes.py
 
-from .network import get_available_port, create_or_get_bairro_network
-from .docker_utils import get_docker_client, list_containers, get_docker_errors
-from .general import normalize_container_name
+from ..network import get_available_port, create_or_get_bairro_network
+from ..docker_utils import get_docker_client, list_containers, get_docker_errors
+from ..general import normalize_container_name
 from dotenv import load_dotenv
-from .config import load_json
+from ..config import load_json
 from pathlib import Path
 import json
 import os
 
-env_path = Path(__file__).resolve().parent.parent / ".env"
+env_path = Path(__file__).resolve().parents[2] / ".env"
 load_dotenv(dotenv_path=env_path)
 
 CONFIG_FILE = os.getenv("CONFIG_FILE")
