@@ -50,7 +50,7 @@ def manage_containers(bairro):
     load_balancer_http_port, load_balancer_coap_port = get_load_balancer_ports(containers)
     has_load_balancer = (load_balancer_http_port is not None and load_balancer_coap_port is not None)
     
-    aggregator_name = f"{bairro}_aggregator"
+    aggregator_name = f"{bairro}_aggregator_1"
     has_aggregator = any(c.name == aggregator_name for c in containers)
 
     lb_id = container_types.get("load_balancer", {}).get("id")
