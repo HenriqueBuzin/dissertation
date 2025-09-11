@@ -29,7 +29,7 @@ def create_aggregator(bairro, image, container_types):
 
     client = get_docker_client()
     network_name = f"{bairro}_network"
-    container_name = f"{bairro}_aggregator"
+    container_name = f"{bairro}_aggregator_1"
 
     try:
         print(f"[INFO] Tentando criar o agregador '{container_name}' na rede '{network_name}'...")
