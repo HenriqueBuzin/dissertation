@@ -3,6 +3,7 @@
 from .docker_utils import get_docker_client, get_docker_errors
 from .general import normalize_container_name
 from .docker_utils import get_docker_client
+from contextlib import closing
 import socket
 import docker
 
@@ -52,27 +53,66 @@ def create_or_get_lb_network():
 
     return network_name
 
-def get_available_port(start_port=5000, end_port=6000):
-    
+def get_available_port(start_port: int = 20000, end_port: int = 40000, host: str = "0.0.0.0", proto: str = "tcp") -> int:
+
     """
-    Retorna uma porta disponível dentro do intervalo especificado.
+    Escolhe uma porta do *host* que:
+      1) NÃO esteja publicada por nenhum container Docker (via inspeção do Docker), e
+      2) passe no teste de bind local (para evitar conflito com processos fora do Docker).
 
-    Args:
-        start_port (int): Porta inicial do intervalo (inclusiva).
-        end_port (int): Porta final do intervalo (exclusiva).
-
-    Returns:
-        int: Uma porta disponível.
-
-    Raises:
-        RuntimeError: Se nenhuma porta estiver disponível no intervalo especificado.
+    Observação: ainda existe pequena janela de corrida entre escolher e o Docker publicar.
+    Para zerar a corrida, deixe o Docker escolher: passe ('127.0.0.1', None) no `ports`
+    e depois leia a porta com `container.reload().attrs["NetworkSettings"]["Ports"]`.
     """
-    
+
+    # 1) portas que o Docker já está usando para este protocolo
+    used_by_docker = _get_docker_published_host_ports(proto)
+
+    family = socket.AF_INET6 if ":" in host else socket.AF_INET
+    socktype = socket.SOCK_STREAM if proto == "tcp" else socket.SOCK_DGRAM
+    if proto not in ("tcp", "udp"):
+        raise ValueError("proto deve ser 'tcp' ou 'udp'.")
+
     for port in range(start_port, end_port):
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-            if sock.connect_ex(('localhost', port)) != 0:
+        if port in used_by_docker:
+            continue
+        # 2) teste de bind local (pega conflitos fora do Docker)
+        with closing(socket.socket(family, socktype)) as s:
+            try:
+                s.bind((host, port))
                 return port
+            except OSError:
+                continue
+
     raise RuntimeError("Não há portas disponíveis no intervalo especificado.")
+
+def _get_docker_published_host_ports(proto: str | None = None) -> set[int]:
+
+    """
+    Varre TODOS os contêineres (running e stopped) e coleta as portas do host já publicadas.
+    Se `proto` ("tcp"|"udp") for passado, filtra por protocolo.
+    """
+    
+    used: set[int] = set()
+    client = get_docker_client()
+    # all=True: inclui parados que ainda reservam publicação (Docker conserva mapeamento até remover)
+    for c in client.containers.list(all=True):
+        try:
+            ports = c.attrs.get("NetworkSettings", {}).get("Ports", {}) or {}
+            for key, bindings in ports.items():  # key ex.: "5000/tcp"
+                k_proto = key.split("/")[-1]
+                if proto and k_proto != proto:
+                    continue
+                if not bindings:
+                    continue
+                for b in bindings:
+                    hp = b.get("HostPort")
+                    if hp:
+                        used.add(int(hp))
+        except Exception:
+            # melhor ser tolerante aqui
+            continue
+    return used
 
 def get_load_balancer_ports(containers):
 

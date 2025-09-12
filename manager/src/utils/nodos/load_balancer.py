@@ -51,8 +51,8 @@ def create_load_balancer(bairro, container_name, image, container_types):
 
     try:
         # Portas aleatórias NO HOST para depuração externa (não usadas internamente)
-        host_http_port = get_available_port()
-        host_coap_port = get_available_port(host_http_port + 1)
+        host_http_port = get_available_port(proto="tcp")
+        host_coap_port = get_available_port(proto="udp")
 
         # Redes Docker
         bairro_net = create_or_get_bairro_network(bairro)

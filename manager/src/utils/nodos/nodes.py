@@ -53,8 +53,8 @@ def create_node(bairro, container_name, image, container_types, load_balancer_ur
         count = len(existing_containers) + 1
 
         for _ in range(quantity):
-            http_port = get_available_port()
-            coap_port = get_available_port(http_port + 1)
+            http_port = get_available_port(proto="tcp")
+            coap_port = get_available_port(proto="udp")
 
             full_container_name = f"{normalize_container_name(bairro)}_{container_name}_{count}"
 

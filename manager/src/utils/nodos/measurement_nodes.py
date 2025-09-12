@@ -44,9 +44,9 @@ def create_measurement_node(bairro, full_container_name, image, environment, lab
     try:
 
         print(f"[DEBUG] Ambiente para '{full_container_name}': {environment}")
-        
-        http_port = get_available_port()
-        coap_port = get_available_port(http_port + 1)
+
+        http_port = get_available_port(proto="tcp")
+        coap_port = get_available_port(proto="udp")
 
         network_name = create_or_get_bairro_network(bairro)
 
