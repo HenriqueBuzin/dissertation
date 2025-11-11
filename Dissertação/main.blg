@@ -1,20 +1,20 @@
 [0] Config.pm:328> INFO - This is Biber 2.21
 [0] Config.pm:331> INFO - Logfile is 'main.blg'
-[123] biber-MSWIN64:342> INFO - === 
-[162] Biber.pm:421> INFO - Reading 'main.bcf'
-[293] Biber.pm:1002> INFO - Found 19 citekeys in bib section 0
-[310] Biber.pm:4487> INFO - Processing section 0
-[322] Biber.pm:4678> INFO - Looking for bibtex file 'aftertext/references.bib' for section 0
-[367] bibtex.pm:1713> INFO - LaTeX decoding ...
-[397] bibtex.pm:1519> INFO - Found BibTeX data source 'aftertext/references.bib'
-[567] UCollate.pm:68> INFO - Overriding locale 'pt-BR' defaults 'variable = shifted' with 'variable = non-ignorable'
-[567] UCollate.pm:68> INFO - Overriding locale 'pt-BR' defaults 'normalization = NFD' with 'normalization = prenormalized'
-[568] Biber.pm:4307> INFO - Sorting list 'nty/global//global/global/global' of type 'entry' with template 'nty' and locale 'pt-BR'
-[568] Biber.pm:4313> INFO - No sort tailoring available for locale 'pt-BR'
-[589] bbl.pm:676> INFO - Writing 'main.bbl' with encoding 'UTF-8'
-[603] bbl.pm:779> INFO - Output to main.bbl
-[603] Biber.pm:132> WARN - legacy month field 'July' in entry 'markakis2017' is not an integer - this will probably not sort properly.
-[604] Biber.pm:132> WARN - legacy month field 'March-April' in entry 'bormann2012' is not an integer - this will probably not sort properly.
-[604] Biber.pm:132> WARN - ISBN '978-6586057956' in entry 'silveira2019' is invalid - run biber with '--validate_datamodel' for details.
-[604] Biber.pm:132> WARN - I didn't find a database entry for 'exegesis2021' (section 0)
-[604] Biber.pm:134> INFO - WARNINGS: 4
+[168] biber-MSWIN64:342> INFO - === 
+[212] Biber.pm:421> INFO - Reading 'main.bcf'
+[371] Biber.pm:1002> INFO - Found 19 citekeys in bib section 0
+[387] Biber.pm:4487> INFO - Processing section 0
+[401] Biber.pm:4678> INFO - Looking for bibtex file 'aftertext/references.bib' for section 0
+[447] bibtex.pm:1713> INFO - LaTeX decoding ...
+[479] bibtex.pm:1519> INFO - Found BibTeX data source 'aftertext/references.bib'
+[684] UCollate.pm:68> INFO - Overriding locale 'pt-BR' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[684] UCollate.pm:68> INFO - Overriding locale 'pt-BR' defaults 'variable = shifted' with 'variable = non-ignorable'
+[685] Biber.pm:4307> INFO - Sorting list 'nty/global//global/global/global' of type 'entry' with template 'nty' and locale 'pt-BR'
+[685] Biber.pm:4313> INFO - No sort tailoring available for locale 'pt-BR'
+[712] bbl.pm:676> INFO - Writing 'main.bbl' with encoding 'UTF-8'
+[732] bbl.pm:779> INFO - Output to main.bbl
+[732] Biber.pm:132> WARN - legacy month field 'July' in entry 'markakis2017' is not an integer - this will probably not sort properly.
+[732] Biber.pm:132> WARN - legacy month field 'March-April' in entry 'bormann2012' is not an integer - this will probably not sort properly.
+[732] Biber.pm:132> WARN - ISBN '978-6586057956' in entry 'silveira2019' is invalid - run biber with '--validate_datamodel' for details.
+[732] Biber.pm:132> WARN - I didn't find a database entry for 'exegesis2021' (section 0)
+[732] Biber.pm:134> INFO - WARNINGS: 4

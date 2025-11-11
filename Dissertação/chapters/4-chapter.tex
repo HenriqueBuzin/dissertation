@@ -1,103 +1,101 @@
 % ----------------------------------------------------------
-\chapter{Proposta}\label{cap:proposta}
+\chapter{Revisão Bibliográfica}\label{cap:revisao_bibliografica}
 % ----------------------------------------------------------
 
-Este capítulo descreve a arquitetura modular de computação em névoa desenvolvida ao longo deste trabalho. O conteúdo está organizado para apresentar, inicialmente, a visão geral e o papel de cada tipo de nó. Em seguida, são detalhados os componentes, a organização interna dos nós de névoa, os mecanismos de comunicação entre domínios e o fluxo de dados previsto no sistema.
+Para a realização deste trabalho, foram conduzidas pesquisas em bases de dados de artigos científicos, utilizando as seguintes palavras-chave: \textit{‘fog’} e \textit{‘fog’ AND ‘architecture’}.
+Foi aplicado um filtro temporal abrangendo os últimos cinco anos, isto é, de 2020 a 2025.
+A Tabela~\ref{tab:Tab_ArtigosFog} apresenta a quantidade de publicações encontradas em cada base de dados para os respectivos termos de busca.
+
+\begin{table}[htb]
+	\ABNTEXfontereduzida
+	\caption{\label{tab:Tab_ArtigosFog}Quantidade de artigos por palavra-chave e base de dados}
+	\begin{tabular}{@{}p{6.5cm}p{3.5cm}p{4cm}@{}}
+		\toprule
+		\textbf{Palavra-chave} & \textbf{Banco de Dados} & \textbf{Quantidade de Artigos} \\ \midrule
+		\multirow[c]{2}{*}{\textbf{\textit{'fog'}}} 
+		    & Scopus & 34.309 \\ 
+		    & IEEE   & 8.524  \\ \midrule
+		\multirow[c]{2}{*}{\textbf{\textit{'fog' AND 'architecture'}}} 
+		    & Scopus & 12.822 \\ 
+		    & IEEE   & 2.502 \\ \midrule
+	\end{tabular}
+	\fonte{Do autor.}
+\end{table}
+
+Com base nos dados apresentados, observa-se que a base Scopus possui o maior número de artigos indexados, destacando-se como a principal fonte de publicações sobre o tema.
+Por outro lado, a base IEEE Xplore apresentou uma quantidade inferior de resultados, embora ainda represente um repositório relevante para estudos na área de computação em névoa.
+
+Além disso, foram aplicados os seguintes critérios de inclusão para seleção dos estudos analisados nesta pesquisa:
+
+\begin{itemize}
+    \item Artigos de pesquisa completos;
+    \item Artigos redigidos em língua inglesa;
+    \item Publicações classificadas no sistema CAPES Qualis\footnote{A Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES) é uma agência do governo brasileiro responsável pela avaliação e fomento da pós-graduação.} entre os estratos A1 e B2;
+    \item Trabalhos revisados por pares e publicados em conferências ou periódicos científicos reconhecidos.
+\end{itemize}
 
 % ----------------------------------------------------------
-\section{Visão Geral}
+\section{Trabalhos Correlatos}\label{cap:trabalhos_relacionados}
 % ----------------------------------------------------------
 
-A arquitetura proposta é composta por três tipos de nós, cada um com responsabilidades distintas no fluxo de dados e na coordenação do processamento distribuído. O nó primário atua como ponto de entrada de um domínio de névoa, gerenciando dispositivos, distribuindo carga e coordenando a comunicação com outros domínios. Os nós de névoa executam o processamento local e oferecem serviços configuráveis para tratamento dos dados. O nó agregador consolida e organiza as informações processadas antes do envio à nuvem.
-
-A Figura~\ref{fig:arquitetura_proposta} apresenta uma visão de alto nível, mostrando o caminho percorrido pelos dados desde os dispositivos na borda até a nuvem, incluindo as interações e responsabilidades de cada tipo de nó.
-
-\begin{figure}[htb]
-    \caption{\label{fig:arquitetura_proposta}Visão geral da arquitetura proposta.}
-    \begin{center}
-        \includegraphics[width=1\linewidth]{images/arquitetura_proposta.png}
-    \end{center}
-    \fonte{Do autor.}
-\end{figure}
+Foram lidos títulos e resumo de cento e vinte e cinco artigos, dos quais vinte e cinco foram lidos completamente, e desses foram selecionados quatro que apresentam propostas semelhantes à proposta deste trabalho e por isso serão detalhados nas subseções seguintes.
 
 % ----------------------------------------------------------
-\section{Componentes}
+\subsection{Microservice instances selection and load balancing in fog computing using
+deep reinforcement learning approach}
 % ----------------------------------------------------------
 
-Esta seção apresenta, em detalhe, as funções e responsabilidades de cada tipo de nó que compõe a arquitetura: nó primário, nós de névoa e nó agregador.
+Os autores propõem uma abordagem para a seleção de instâncias de microsserviços e para o balanceamento de carga em ambientes de computação em névoa, empregando técnicas de Deep Reinforcement Learning. O estudo parte do princípio de que aplicações da Internet das Coisas podem ser estruturadas de forma modular, utilizando arquiteturas baseadas em microsserviços implantados próximos à borda da rede. Essa configuração, denominada computação fog nativa, busca superar as limitações de latência e de custo de comunicação dos modelos puramente em nuvem ao permitir o processamento distribuído de tarefas entre dispositivos, nós de névoa e servidores centrais \cite{boudieb2024}.
+
+No modelo proposto, cada aplicação é composta por um conjunto de microsserviços interdependentes organizados em planos de serviço. O desafio central é selecionar esses planos de forma dinâmica e eficiente em ambientes muito variáveis, nos quais a carga de trabalho e as condições de rede mudam constantemente. Para isso, os autores apresentam o método Microservice Instances Selection Policy, que utiliza aprendizado por reforço profundo para otimizar a alocação de microsserviços, reduzindo atrasos e distribuindo a carga de forma equilibrada entre os nós disponíveis. O algoritmo incorpora mascaramento de ações, mapeamento adaptativo de ações e um esquema de experience replay ajustado para melhorar a eficiência e a estabilidade do treinamento.
+
+Os resultados experimentais indicam que a política proposta reduz a taxa média de falhas em até sessenta e cinco por cento e melhora o balanceamento de carga em cerca de quarenta e cinco por cento em relação a algoritmos convencionais. O trabalho reforça a importância da colaboração entre névoa e nuvem para garantir escalabilidade, desempenho e resiliência em aplicações sensíveis ao tempo.
 
 % ----------------------------------------------------------
-\subsection{Dispositivos}
+\subsection{Enhancing modular application placement in a hierarchical fog computing: A
+latency and communication cost-sensitive approach}
 % ----------------------------------------------------------
 
-Os dispositivos de borda são responsáveis por coletar dados diretamente do ambiente físico, atuando como o ponto inicial do fluxo de informações dentro da arquitetura de névoa. Eles podem ser sensores, medidores inteligentes, câmeras ou outros equipamentos capazes de capturar dados em tempo real.
+Neste trabalho é proposto uma estratégia de posicionamento de aplicações modulares em uma arquitetura hierárquica de computação em névoa, denominada Least Impact X, abreviada como LI X. O estudo aborda desafios de alocação de recursos em cenários com vários níveis de névoa, buscando reduzir o tempo de resposta e o custo de comunicação em aplicações sensíveis à latência. A motivação é evitar o esgotamento de recursos nas camadas mais próximas da borda quando requisitos específicos de uma aplicação são priorizados sem considerar o efeito global na hierarquia \cite{oliveira2024}.
 
-Esses dispositivos podem ser fabricados por diferentes empresas e utilizar diversos protocolos de comunicação, o que torna essencial a existência de mecanismos de padronização e compatibilidade nos níveis superiores do sistema. Essa diversidade permite maior flexibilidade na integração de tecnologias, mas também exige que os nós de névoa consigam interpretar corretamente as informações recebidas, independentemente do protocolo utilizado.
-
-Além disso, os dispositivos mantêm comunicação constante com o nó de névoa para atualizar seu estado e garantir que os dados sejam enviados corretamente. Caso percam a conexão, podem armazenar temporariamente as informações até que a comunicação seja restabelecida.
-
-Dessa forma, os dispositivos de borda formam a base do ecossistema de computação em névoa, aproximando a coleta de dados do ambiente físico e contribuindo para a eficiência, interoperabilidade e agilidade de todo o sistema.
+A proposta distribui os módulos entre os níveis de névoa de forma a minimizar o impacto sobre recursos críticos próximos à borda e, ao mesmo tempo, reduzir o tempo de resposta e o consumo de largura de banda. O algoritmo considera métricas de qualidade de serviço para equilibrar a utilização de recursos e evitar ociosidade em níveis superiores. Em simulações no iFogSim, a abordagem supera alternativas da literatura ao apresentar menor latência média e menor custo de comunicação, além de uso mais eficiente de recursos computacionais.
 
 % ----------------------------------------------------------
-\subsection{Nó Primário}
+\subsection{A Scalable Fog Computing Solution for Industrial Predictive
+Maintenance and Customization}
 % ----------------------------------------------------------
 
-O nó primário de névoa é a porta de entrada da arquitetura, ela recebe dados dos dispositivos de borda e distribui a carga de trabalho entre os nós de névoa disponíveis, direcionando as requisições conforme a especialização de cada um.
+É apresentado uma solução de computação em névoa para manutenção preditiva industrial e para customização de sistemas de Internet das Coisas industriais. A arquitetura é modular e flexível e combina sensores Nicla Sense ME, um concentrador em Raspberry Pi e um modelo LSTM para análise preditiva em tempo quase real. O diferencial é um ambiente sandbox que permite integrar modelos de aprendizado de máquina de forma isolada, preservando a segurança e a estabilidade do núcleo da plataforma. A solução utiliza Docker para encapsular módulos e escalar para dezenas de nós sensores sem degradação perceptível de desempenho, adotando ainda práticas de segurança como autenticação multifatorial, criptografia e detecção de anomalias \cite{dagostino2025}.
 
-Quando um novo nó é iniciado, ele se registra no nó principal informando sua especialização, como água ou energia, e envia atualizações periódicas para indicar que continua ativo. Caso pare de enviar esses sinais, é removido automaticamente.
-
-A distribuição da carga é balanceada, seguindo uma abordagem parecida com o Round Robin. Cada nó processa uma requisição por vez, mas sua especialização é respeitada.
-
-Ao ser inicializado, o nó primário avisa os demais nós primários que está ativo e informa quantos nós especializados possui. Durante o funcionamento, ele monitora o número de dispositivos e requisições. Se houver desequilíbrio, verifica com outros nós primários qual tem mais capacidade disponível.
-
-Por exemplo, se houver poucos nós especializados, o nó principal pode redirecionar requisições para outro domínio com mais recursos. Quando detecta sobrecarga, ele envia uma mensagem de broadcast para os outros nós primários pedindo informações atualizadas sobre uso. Com base nas respostas, identifica o domínio menos sobrecarregado e com menor latência, e redireciona as novas requisições para ele.
+Nos experimentos, o sistema apresentou erro quadrático médio baixo e alta acurácia em laboratório e manteve desempenho consistente em ambiente industrial. O erro quadrático médio, também referido como RMSE, mede a diferença média entre valores previstos e valores observados e quanto menor melhor. A acurácia indica a proporção de previsões corretas em relação ao total. Os resultados reforçam a importância de integrar técnicas de inteligência artificial em ambientes industriais com recursos restritos para reduzir paradas, otimizar uso de recursos e permitir personalização.
 
 % ----------------------------------------------------------
-\subsection{Nós de Névoa}
+\subsection{Testbed analysis of multi fog architecture for interoperable Internet
+of Things}
 % ----------------------------------------------------------
 
-Os nós de névoa realizam o processamento distribuído e foram organizados em uma estrutura interna baseada em camadas, de forma a facilitar a manutenção e permitir a adição de novas funções sem comprometer o restante do sistema.
+Os autores investigam uma arquitetura multinévoa com interoperabilidade semântica para aplicações em tempo real, implementada e avaliada em ambiente experimental. O objetivo é permitir que nós de névoa troquem informações e serviços de forma direta e eficaz, reduzindo a dependência de processamento em nuvem. A proposta desloca para a névoa funções usuais do modelo semântico, como filtragem, anotação e mapeamento, o que permite realizar parte do processamento localmente e diminui o trânsito de dados para servidores distantes \cite{rahman2024}.
 
-A primeira camada, denominada protocolos, é responsável por receber as requisições provenientes do nó primário, realizar as verificações e validações necessárias e repassar as informações para a camada seguinte. Essa estrutura é ilustrada na Figura~\ref{fig:camada_protocolos}, onde diferentes servidores de protocolos alimentam um protocolo padrão utilizado internamente.
+No protótipo, dispositivos Raspberry Pi 2 Model B executam semântica local, armazenamento e serviços. Quando um nó está sobrecarregado, ele avalia se vale a pena repassar a tarefa para outro nó vizinho com base em tempo e energia estimados. Caso nenhum candidato seja melhor, a tarefa é encaminhada para a nuvem. A arquitetura utiliza duas camadas, chamadas L2 Fog e L1 Fog. A primeira atua como gateway para sensores e atuadores usando 6LoWPAN e a segunda concentra serviços e banco de dados com Apache e MariaDB. Há ainda sincronização hierárquica baseada em identificadores e um mecanismo de controle de fila que define quando iniciar a transferência de tarefas.
 
-\begin{figure}[htb]
-    \caption{\label{fig:camada_protocolos}Camada de protocolos de um nó de névoa.}
-    \begin{center}
-        \includegraphics[width=0.7\linewidth]{images/camada_protocolos.png}
-    \end{center}
-    \fonte{Do autor.}
-\end{figure}
+Os experimentos mostram que o tempo médio de ida e volta de uma mensagem, conhecido como Round Trip Time ou RTT, foi reduzido em cerca de trinta e sete por cento em comparação ao uso direto da nuvem. O RTT é o intervalo total que uma solicitação leva para ir do dispositivo ao destino e retornar com a resposta e é um indicador direto de responsividade. No estudo, valores médios passaram de aproximadamente duzentos e oitenta milissegundos na nuvem para aproximadamente cento e três milissegundos com a arquitetura multinévoa. Também houve redução de cerca de doze por cento no tempo de execução de tarefas quando a transferência entre nós de névoa estava ativa. O tempo de execução é o período entre o envio de uma tarefa e a conclusão do processamento. Os autores ainda registram diminuição média de dez por cento no consumo de energia dos nós em relação ao funcionamento sem transferência entre nós. O consumo de energia é a quantidade de energia elétrica utilizada pelos dispositivos para realizar as tarefas e é crucial em cenários com recursos limitados.
 
-A camada de processamento atua como núcleo de coordenação interna, gerenciando a comunicação entre as demais camadas e executando as necessidades específicas do nó de névoa. Essa camada também mantém um mecanismo para consultas internas de dados, permitindo que a camada de serviços acesse apenas as informações estritamente necessárias para seu funcionamento. Além disso, é por meio da camada de processamento que o nó de névoa realiza interações administrativas, como o registro inicial no nó primário. A Figura~\ref{fig:camada_processamento} mostra os principais componentes dessa camada.
-
-\begin{figure}[htb]
-    \caption{\label{fig:camada_processamento}Camada de processamento de um nó de névoa.}
-    \begin{center}
-        \includegraphics[width=0.7\linewidth]{images/camada_processamento.png}
-    \end{center}
-    \fonte{Do autor.}
-\end{figure}
-
-Na camada de serviços é executada a aplicação que implementa a lógica de pré-processamento dos dados. Utilizando a linguagem de consulta disponibilizada pela camada de processamento, essa camada obtém os dados necessários, executa o tratamento definido pela aplicação e devolve o resultado à camada de processamento, que, por sua vez, ajusta a saída para envio pela camada de protocolos.
+Esses ganhos são explicados pelo processamento local de parte da semântica, pela divisão de carga entre nós próximos e pelo envio à nuvem apenas quando há real vantagem.
 
 % ----------------------------------------------------------
-\subsection{Nó Agregador}
+\section{Comparativo com Trabalhos Correlatos}
 % ----------------------------------------------------------
 
-O nó agregador recebe dados pré-processados dos nós de névoa e os consolida antes de enviá-los para a nuvem. Sua função é reunir informações de vários nós, realizando conversões de formato ou protocolo quando necessário para manter a compatibilidade com o sistema em nuvem.
+Conforme apresentado nas subseções anteriores, os trabalhos analisados exploram diferentes perspectivas da computação em névoa, cada um contribuindo de maneira específica para o avanço da área. De modo geral, observa-se que as propostas anteriores tratam de aspectos pontuais, como otimização de desempenho, posicionamento de módulos e modularidade aplicada a contextos específicos, enquanto o presente trabalho reúne e amplia esses conceitos, com ênfase na interoperabilidade e comunicação entre domínios distintos de névoa.
 
-Ao receber os dados, o agregador combina as informações em um único arquivo estruturado, que pode incluir médias, totais ou dados agrupados, dependendo do contexto da aplicação.
+O trabalho de Boudieb et al.~\cite{boudieb2024} propõe o uso de aprendizado por reforço profundo para selecionar instâncias de microsserviços e realizar o balanceamento de carga de forma adaptativa. A abordagem demonstra eficiência na redução de falhas e na melhoria da distribuição de tarefas, mas permanece restrita a um único domínio de névoa, sem prever cooperação entre diferentes nós.
+Por sua vez, Oliveira et al.~\cite{oliveira2024} apresentam uma estratégia hierárquica para o posicionamento de aplicações modulares, buscando reduzir a latência e o custo de comunicação. Embora eficiente na alocação de módulos, a proposta não contempla mecanismos de interoperabilidade entre diferentes camadas ou arquiteturas de névoa.
 
-Esse processo reduz o tráfego de rede e o número de transmissões para a nuvem, melhorando o desempenho, economizando largura de banda e aumentando a eficiência. Após a consolidação, os dados são enviados para a camada de nuvem para análises mais detalhadas.
+A solução de D’Agostino, Longo e Palmieri~\cite{dagostino2025}, voltada à manutenção preditiva industrial, introduz modularidade com o uso de contêineres e integração de aprendizado de máquina em tempo quase real. Essa proposta apresenta alta escalabilidade e segurança, mas limita-se ao contexto industrial e não aborda a colaboração entre domínios de névoa.
+Já Rahman e Hussain~\cite{rahman2024} propõem uma arquitetura multinévoa com interoperabilidade semântica, permitindo que nós de névoa colaborem com base em métricas como tempo de resposta e consumo de energia. Apesar dos avanços em comunicação distribuída, o modelo ainda depende de mecanismos fixos de decisão e não incorpora uma estrutura modular interna aos nós.
 
-% ----------------------------------------------------------
-\subsection{Nuvem}
-% ----------------------------------------------------------
+A arquitetura proposta neste trabalho diferencia-se por integrar múltiplas camadas modulares dentro de cada nó de névoa, combinando flexibilidade estrutural, interoperabilidade e cooperação entre domínios. Cada camada possui responsabilidades bem definidas: a camada de protocolos realiza a comunicação com diferentes dispositivos e formatos de dados; a camada de processamento gerencia o fluxo interno, realiza o armazenamento temporário e coordena as tarefas; e a camada de serviço executa aplicações configuráveis que processam e preparam os dados para as etapas seguintes. Essa organização favorece a manutenção, a escalabilidade e a integração eficiente de novos serviços, permitindo que partes específicas do sistema sejam adaptadas sem comprometer o funcionamento geral.
 
-A camada de nuvem atua como o ponto central de processamento e gerenciamento de dados, lidando com tarefas que exigem mais poder computacional do que os nós de névoa podem oferecer.
+Além da modularidade interna, outro diferencial importante é a comunicação entre domínios de névoa, que permite o balanceamento cooperativo de carga e o redirecionamento de solicitações entre diferentes regiões conforme a disponibilidade de recursos. O nó primário atua como ponto de entrada e registro dos dispositivos conectados, garantindo distribuição equilibrada e continuidade de operação.
 
-Com uma infraestrutura robusta, ela recebe os dados pré-processados do nó agregador e executa a etapa final de análise e consolidação. Também realiza operações complexas, como aprendizado de máquina, inteligência artificial e análises preditivas, que demandam alto desempenho e grandes volumes de dados.
-
-Além disso, a nuvem garante armazenamento seguro e permanente, mantendo dados históricos que apoiam a tomada de decisões, auditorias e estudos avançados.
-
-Assim, a camada de nuvem complementa a arquitetura de névoa ao oferecer capacidade de processamento e armazenamento em larga escala.
+Com base nesses conceitos, o próximo capítulo apresenta em detalhes a arquitetura modular proposta, descrevendo suas camadas, fluxos de comunicação e mecanismos de integração entre névoas, evidenciando como essa estrutura supera as limitações identificadas nos trabalhos correlatos.

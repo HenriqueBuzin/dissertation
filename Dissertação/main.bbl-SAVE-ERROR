@@ -1,0 +1,792 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{barrett2005}{book}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=8edb5c32db8a2479ddb639a3e53671a8}{%
+           family={Barrett},
+           familyi={B\bibinitperiod},
+           given={Daniel\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f9c432a45b63b1bc9cc2ddfb2040eb5a}{%
+           family={Silverman},
+           familyi={S\bibinitperiod},
+           given={Richard\bibnamedelima E.},
+           giveni={R\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0ad646b54bd59e13a7c83a24572b66ab}{%
+           family={Byrnes},
+           familyi={B\bibinitperiod},
+           given={Robert\bibnamedelima G.},
+           giveni={R\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Sebastopol, CA}%
+      }
+      \list{publisher}{1}{%
+        {O'Reilly Media}%
+      }
+      \strng{namehash}{f3b5f3480ef8d5ae56ba88139c815bdc}
+      \strng{fullhash}{f3b5f3480ef8d5ae56ba88139c815bdc}
+      \strng{fullhashraw}{f3b5f3480ef8d5ae56ba88139c815bdc}
+      \strng{bibnamehash}{f3b5f3480ef8d5ae56ba88139c815bdc}
+      \strng{authorbibnamehash}{f3b5f3480ef8d5ae56ba88139c815bdc}
+      \strng{authornamehash}{f3b5f3480ef8d5ae56ba88139c815bdc}
+      \strng{authorfullhash}{f3b5f3480ef8d5ae56ba88139c815bdc}
+      \strng{authorfullhashraw}{f3b5f3480ef8d5ae56ba88139c815bdc}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{isbn}{978-0596008956}
+      \field{title}{SSH, The Secure Shell: The Definitive Guide}
+      \field{year}{2005}
+    \endentry
+    \entry{bormann2012}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=7fe2f98d5101608d1a28002bcb59c6d0}{%
+           family={Bormann},
+           familyi={B\bibinitperiod},
+           given={Carsten},
+           giveni={C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=baf2d3ced9064331bd9e68374e8043b6}{%
+           family={Castellani},
+           familyi={C\bibinitperiod},
+           given={Angelo\bibnamedelima P.},
+           giveni={A\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ed98cd7a76bd516b3da09ae8534c32a0}{%
+           family={Shelby},
+           familyi={S\bibinitperiod},
+           given={Zach},
+           giveni={Z\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{5bdc2dfd03bd4b866821003815477847}
+      \strng{fullhash}{5bdc2dfd03bd4b866821003815477847}
+      \strng{fullhashraw}{5bdc2dfd03bd4b866821003815477847}
+      \strng{bibnamehash}{5bdc2dfd03bd4b866821003815477847}
+      \strng{authorbibnamehash}{5bdc2dfd03bd4b866821003815477847}
+      \strng{authornamehash}{5bdc2dfd03bd4b866821003815477847}
+      \strng{authorfullhash}{5bdc2dfd03bd4b866821003815477847}
+      \strng{authorfullhashraw}{5bdc2dfd03bd4b866821003815477847}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Internet Computing}
+      \field{month}{3}
+      \field{number}{2}
+      \field{title}{CoAP: An Application Protocol for Billions of Tiny Internet Nodes}
+      \field{volume}{16}
+      \field{year}{2012}
+      \field{pages}{62\bibrangedash 67}
+      \range{pages}{6}
+    \endentry
+    \entry{boudieb2024}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=989a4c4a6c46634c8cbcc7fc6f6f1b5d}{%
+           family={Boudieb},
+           familyi={B\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=93a9a8c6c7ad42de3452d5a507cb3206}{%
+           family={Ayed},
+           familyi={A\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b24868142e5c2f0a06b61077595480c9}{%
+           family={Harous},
+           familyi={H\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{fullhash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{fullhashraw}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{bibnamehash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{authorbibnamehash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{authornamehash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{authorfullhash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{authorfullhashraw}{d294bcbd48db0d6248948f0c8a712e40}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Future Generation Computer Systems}
+      \field{title}{Microservice Instances Selection and Load Balancing in Fog Computing}
+      \field{volume}{154}
+      \field{year}{2024}
+      \field{pages}{510\bibrangedash 523}
+      \range{pages}{14}
+      \keyw{Fog Computing,Microservices,Load Balancing,Reinforcement Learning}
+    \endentry
+    \entry{cassel2024}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=3b5cc6a6fe1a7d6bf95113edc1a4ed88}{%
+           family={Cassel},
+           familyi={C\bibinitperiod},
+           given={Gustavo\bibnamedelimb André\bibnamedelima Setti},
+           giveni={G\bibinitperiod\bibinitdelim A\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=bbbdd2b9c8191025efad76d82662802f}{%
+           family={Rosa\bibnamedelima Righi},
+           familyi={R\bibinitperiod\bibinitdelim R\bibinitperiod},
+           given={Rodrigo},
+           giveni={R\bibinitperiod},
+           givenun=0,
+           prefix={da},
+           prefixi={d\bibinitperiod},
+           prefixun=0}}%
+        {{un=0,uniquepart=base,hash=d8c235a079638d5734dfed7598523a64}{%
+           family={Costa},
+           familyi={C\bibinitperiod},
+           given={Cristiano\bibnamedelima André},
+           giveni={C\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0,
+           prefix={da},
+           prefixi={d\bibinitperiod},
+           prefixun=0}}%
+        {{un=0,uniquepart=base,hash=089bc99adc7367e14852406f0ecfe110}{%
+           family={Bez},
+           familyi={B\bibinitperiod},
+           given={Marta\bibnamedelima Rosecler},
+           giveni={M\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=177e7ce08a56ba83ffc6284b46caa184}{%
+           family={Pasin},
+           familyi={P\bibinitperiod},
+           given={Marcelo},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{ee2e347323338f2ef251ad33218ba52f}
+      \strng{fullhash}{1a165c008be04c15d1ab24f0a02f04be}
+      \strng{fullhashraw}{1a165c008be04c15d1ab24f0a02f04be}
+      \strng{bibnamehash}{1a165c008be04c15d1ab24f0a02f04be}
+      \strng{authorbibnamehash}{1a165c008be04c15d1ab24f0a02f04be}
+      \strng{authornamehash}{ee2e347323338f2ef251ad33218ba52f}
+      \strng{authorfullhash}{1a165c008be04c15d1ab24f0a02f04be}
+      \strng{authorfullhashraw}{1a165c008be04c15d1ab24f0a02f04be}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Future Generation Computer Systems}
+      \field{title}{Towards providing a priority-based vital sign offloading in healthcare with serverless computing and a fog-cloud architecture}
+      \field{volume}{157}
+      \field{year}{2024}
+      \field{pages}{51\bibrangedash 66}
+      \range{pages}{16}
+    \endentry
+    \entry{dagostino2025}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=e87a5813a1f8f032012be8013b4727ff}{%
+           family={D’Agostino},
+           familyi={D\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7cf63b174792858f478dbff221a44d2f}{%
+           family={Longo},
+           familyi={L\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=995b346addd0d03dac3a91844d715335}{%
+           family={Palmieri},
+           familyi={P\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{fullhash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{fullhashraw}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{bibnamehash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{authorbibnamehash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{authornamehash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{authorfullhash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{authorfullhashraw}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Electronics}
+      \field{number}{2}
+      \field{title}{A Scalable Fog Computing Solution for Industrial Predictive Maintenance}
+      \field{volume}{14}
+      \field{year}{2025}
+      \field{pages}{1\bibrangedash 18}
+      \range{pages}{18}
+      \keyw{Fog Computing,Industrial IoT,Predictive Maintenance,Scalability}
+    \endentry
+    \entry{gourley2002}{book}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=d24b5e8a5cf8350db91a3a19a983ec5a}{%
+           family={Gourley},
+           familyi={G\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3cf16bef4043f8f1806b867adc149754}{%
+           family={Totty},
+           familyi={T\bibinitperiod},
+           given={Brian},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fe8a737adcf33bfe5eac53230aec6f8c}{%
+           family={Sayer},
+           familyi={S\bibinitperiod},
+           given={Marjorie},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=34096a64fe7dfeee6aeb5384fd78a209}{%
+           family={Reddy},
+           familyi={R\bibinitperiod},
+           given={Sailu},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e3b6452911091c34f420de092e9b8628}{%
+           family={Aggarwal},
+           familyi={A\bibinitperiod},
+           given={Anshu},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Sebastopol, CA}%
+      }
+      \list{publisher}{1}{%
+        {O'Reilly Media}%
+      }
+      \strng{namehash}{c9df5be827ac04b6ea34deb27e1e8aa3}
+      \strng{fullhash}{717f72e2a22881c8f4c4ebd8544cd447}
+      \strng{fullhashraw}{717f72e2a22881c8f4c4ebd8544cd447}
+      \strng{bibnamehash}{717f72e2a22881c8f4c4ebd8544cd447}
+      \strng{authorbibnamehash}{717f72e2a22881c8f4c4ebd8544cd447}
+      \strng{authornamehash}{c9df5be827ac04b6ea34deb27e1e8aa3}
+      \strng{authorfullhash}{717f72e2a22881c8f4c4ebd8544cd447}
+      \strng{authorfullhashraw}{717f72e2a22881c8f4c4ebd8544cd447}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1565925090}
+      \field{title}{HTTP: The Definitive Guide}
+      \field{year}{2002}
+    \endentry
+    \entry{greek_water}{misc}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=0b49cce8cc3a788bca45008c03d17d33}{%
+           family={{Hellenic Data Service}},
+           familyi={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{fullhash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{fullhashraw}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{bibnamehash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{authorbibnamehash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{authornamehash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{authorfullhash}{0b49cce8cc3a788bca45008c03d17d33}
+      \strng{authorfullhashraw}{0b49cce8cc3a788bca45008c03d17d33}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labeldatesource}{nodate}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://data.hellenicdataservice.gr/dataset/78776f38-a58b-4a2a-a8f9-85b964fe5c95}}
+      \field{note}{Acesso em: 11 ago. 2025}
+      \field{title}{Water Consumption Dataset}
+    \endentry
+    \entry{uci_energy}{misc}{}{}
+      \true{moreauthor}
+      \true{morelabelname}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=bf1150c8f55589adc5c78f085dc2bf81}{%
+           family={Hernández},
+           familyi={H\bibinitperiod},
+           given={Héctor},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{fullhash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{fullhashraw}{0050d48dba2cf568d4aead699d5043be}
+      \strng{bibnamehash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{authorbibnamehash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{authornamehash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{authorfullhash}{0050d48dba2cf568d4aead699d5043be}
+      \strng{authorfullhashraw}{0050d48dba2cf568d4aead699d5043be}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labeldatesource}{nodate}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{howpublished}{\url{https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption}}
+      \field{note}{Acesso em: 11 ago. 2025}
+      \field{title}{Individual household electric power consumption Data Set}
+    \endentry
+    \entry{openfog2018}{standard}{}{}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Std 1934-2018}
+      \field{title}{IEEE Standard for Adoption of OpenFog Reference Architecture for Fog Computing}
+      \field{year}{2018}
+      \field{pages}{1\bibrangedash 176}
+      \range{pages}{176}
+      \keyw{IEEE Standards,Information technology,Edge computing,Communications technology,adoption,communication technology IEEE 1934™,information technology,OpenFog,operational technology}
+    \endentry
+    \entry{markakis2017}{article}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=79aa10bbc85f14fc9f4f9783f8688502}{%
+           family={Markakis},
+           familyi={M\bibinitperiod},
+           given={E.\bibnamedelimi K.},
+           giveni={E\bibinitperiod\bibinitdelim K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0849b8a657f58da38ec815245b86a2fd}{%
+           family={Sideris},
+           familyi={S\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6cb1b48d9656477f1ca9fa9f34ca1971}{%
+           family={Mastorakis},
+           familyi={M\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3bbb40e4ed8b2dad5cc11006ede4cbf9}{%
+           family={Mavromoustakis},
+           familyi={M\bibinitperiod},
+           given={C.\bibnamedelimi X.},
+           giveni={C\bibinitperiod\bibinitdelim X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fa2285f4fca8e1718770530b219350b7}{%
+           family={Pallis},
+           familyi={P\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=e7fa9884e36e020e91ca4b9de2987c6d}{%
+           family={Charalabidis},
+           familyi={C\bibinitperiod},
+           given={Y.},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{9f4a23505975bf38f5f726c8a3896484}
+      \strng{fullhash}{7abe0660405632dc00b4f37b896f44bd}
+      \strng{fullhashraw}{7abe0660405632dc00b4f37b896f44bd}
+      \strng{bibnamehash}{7abe0660405632dc00b4f37b896f44bd}
+      \strng{authorbibnamehash}{7abe0660405632dc00b4f37b896f44bd}
+      \strng{authornamehash}{9f4a23505975bf38f5f726c8a3896484}
+      \strng{authorfullhash}{7abe0660405632dc00b4f37b896f44bd}
+      \strng{authorfullhashraw}{7abe0660405632dc00b4f37b896f44bd}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Communications Magazine}
+      \field{month}{7}
+      \field{number}{7}
+      \field{title}{{EXEGESIS}: Extreme Edge Resource Harvesting for a Virtualized Fog Environment}
+      \field{volume}{55}
+      \field{year}{2017}
+      \field{pages}{173\bibrangedash 179}
+      \range{pages}{7}
+    \endentry
+    \entry{oliveira2024}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=5a0d0466cc1cd5df7bb867e35642c99d}{%
+           family={Oliveira},
+           familyi={O\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3ac50219fbc6148a445901efd52c6b11}{%
+           family={Santos},
+           familyi={S\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=49fb617d7a56ef4e000b788ea9dc4105}{%
+           family={Mendes},
+           familyi={M\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{fullhash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{fullhashraw}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{bibnamehash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{authorbibnamehash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{authornamehash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{authorfullhash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{authorfullhashraw}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computer Communications}
+      \field{title}{Enhancing Modular Application Placement in Hierarchical Fog Computing}
+      \field{volume}{222}
+      \field{year}{2024}
+      \field{pages}{180\bibrangedash 194}
+      \range{pages}{15}
+      \keyw{Fog Computing,Application Placement,Hierarchical Architecture,Latency,Communication Cost}
+    \endentry
+    \entry{rahman2024}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=7f4d4de3640c56f6bb20fb1e0f2782f1}{%
+           family={Rahman},
+           familyi={R\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6ad5b5574b5463284700ecef44cf5084}{%
+           family={Hussain},
+           familyi={H\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{fullhash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{fullhashraw}{500be6d5c299720b2660375e9fa2436e}
+      \strng{bibnamehash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{authorbibnamehash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{authornamehash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{authorfullhash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{authorfullhashraw}{500be6d5c299720b2660375e9fa2436e}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Wireless Networks}
+      \field{title}{Testbed Analysis of Multi-Fog Architecture for Interoperable IoT}
+      \field{volume}{30}
+      \field{year}{2024}
+      \field{pages}{451\bibrangedash 463}
+      \range{pages}{13}
+      \keyw{Fog Computing,Multi-Fog Architecture,Interoperability,IoT,Testbed}
+    \endentry
+    \entry{rahmani2018}{article}{}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=376424a49b32221cb6626ad54809fbc7}{%
+           family={Rahmani},
+           familyi={R\bibinitperiod},
+           given={Amir\bibnamedelima M.},
+           giveni={A\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2d7ee58891dd86c78903bf77a2cedc75}{%
+           family={Gia},
+           familyi={G\bibinitperiod},
+           given={Tuan\bibnamedelima Nguyen},
+           giveni={T\bibinitperiod\bibinitdelim N\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a5d0c473ff09076e1184ce1adce9829a}{%
+           family={Negash},
+           familyi={N\bibinitperiod},
+           given={Behailu},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6d4548f4f50fff34d4d57bfc8ba34d5c}{%
+           family={Anzanpour},
+           familyi={A\bibinitperiod},
+           given={Ali},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9776def638c8b47f766e9202963b54c3}{%
+           family={Azimi},
+           familyi={A\bibinitperiod},
+           given={Iman},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8576eb1dac1fdca5745b86fcd99aad91}{%
+           family={Lagerspetz},
+           familyi={L\bibinitperiod},
+           given={Mikael},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3c7eefb476285fede4552f3032d7fcf5}{%
+           family={Liljeberg},
+           familyi={L\bibinitperiod},
+           given={Pasi},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{e1b22ee8c6d3eba05926a3e10eb96609}
+      \strng{fullhash}{a6030b7c3789cd0e66ea471fbaa03333}
+      \strng{fullhashraw}{a6030b7c3789cd0e66ea471fbaa03333}
+      \strng{bibnamehash}{a6030b7c3789cd0e66ea471fbaa03333}
+      \strng{authorbibnamehash}{a6030b7c3789cd0e66ea471fbaa03333}
+      \strng{authornamehash}{e1b22ee8c6d3eba05926a3e10eb96609}
+      \strng{authorfullhash}{a6030b7c3789cd0e66ea471fbaa03333}
+      \strng{authorfullhashraw}{a6030b7c3789cd0e66ea471fbaa03333}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Future Generation Computer Systems}
+      \field{title}{Exploiting smart e-Health gateways at the edge of healthcare Internet-of-Things: A fog computing approach}
+      \field{volume}{78}
+      \field{year}{2018}
+      \field{pages}{641\bibrangedash 658}
+      \range{pages}{18}
+    \endentry
+    \entry{silveira2019}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=bb64ef1b226b81b905dfbdfd774c0414}{%
+           family={Silveira},
+           familyi={S\bibinitperiod},
+           given={Rubens\bibnamedelima Prates},
+           giveni={R\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0,
+           prefix={da},
+           prefixi={d\bibinitperiod},
+           prefixun=0}}%
+      }
+      \list{location}{1}{%
+        {São Paulo}%
+      }
+      \list{publisher}{1}{%
+        {Casa do Código}%
+      }
+      \strng{namehash}{bb64ef1b226b81b905dfbdfd774c0414}
+      \strng{fullhash}{bb64ef1b226b81b905dfbdfd774c0414}
+      \strng{fullhashraw}{bb64ef1b226b81b905dfbdfd774c0414}
+      \strng{bibnamehash}{bb64ef1b226b81b905dfbdfd774c0414}
+      \strng{authorbibnamehash}{bb64ef1b226b81b905dfbdfd774c0414}
+      \strng{authornamehash}{bb64ef1b226b81b905dfbdfd774c0414}
+      \strng{authorfullhash}{bb64ef1b226b81b905dfbdfd774c0414}
+      \strng{authorfullhashraw}{bb64ef1b226b81b905dfbdfd774c0414}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-6586057956}
+      \field{subtitle}{A nova alternativa para criação de APIs}
+      \field{title}{GraphQL}
+      \field{year}{2019}
+    \endentry
+    \entry{tanenbaum2015}{book}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=2414455c999bc471f803cd14fdea939d}{%
+           family={Tanenbaum},
+           familyi={T\bibinitperiod},
+           given={Andrew\bibnamedelima S.},
+           giveni={A\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=02997b67b6ffe1ea8e813dd2f362f33d}{%
+           family={Bos},
+           familyi={B\bibinitperiod},
+           given={Herbert},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Boston}%
+      }
+      \list{publisher}{1}{%
+        {Pearson}%
+      }
+      \strng{namehash}{da75650913b9d6ae1cb262f4e7389a5c}
+      \strng{fullhash}{da75650913b9d6ae1cb262f4e7389a5c}
+      \strng{fullhashraw}{da75650913b9d6ae1cb262f4e7389a5c}
+      \strng{bibnamehash}{da75650913b9d6ae1cb262f4e7389a5c}
+      \strng{authorbibnamehash}{da75650913b9d6ae1cb262f4e7389a5c}
+      \strng{authornamehash}{da75650913b9d6ae1cb262f4e7389a5c}
+      \strng{authorfullhash}{da75650913b9d6ae1cb262f4e7389a5c}
+      \strng{authorfullhashraw}{da75650913b9d6ae1cb262f4e7389a5c}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{4}
+      \field{isbn}{978-0133591620}
+      \field{title}{Modern Operating Systems}
+      \field{year}{2015}
+    \endentry
+    \entry{tanenbaum2011}{book}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=2414455c999bc471f803cd14fdea939d}{%
+           family={Tanenbaum},
+           familyi={T\bibinitperiod},
+           given={Andrew\bibnamedelima S.},
+           giveni={A\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9b7a32b5d1ebc7cee1521216dd5f9f88}{%
+           family={Wetherall},
+           familyi={W\bibinitperiod},
+           given={David\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Boston}%
+      }
+      \list{publisher}{1}{%
+        {Pearson}%
+      }
+      \strng{namehash}{41d507fa0d7aa752065375344f580b25}
+      \strng{fullhash}{41d507fa0d7aa752065375344f580b25}
+      \strng{fullhashraw}{41d507fa0d7aa752065375344f580b25}
+      \strng{bibnamehash}{41d507fa0d7aa752065375344f580b25}
+      \strng{authorbibnamehash}{41d507fa0d7aa752065375344f580b25}
+      \strng{authornamehash}{41d507fa0d7aa752065375344f580b25}
+      \strng{authorfullhash}{41d507fa0d7aa752065375344f580b25}
+      \strng{authorfullhashraw}{41d507fa0d7aa752065375344f580b25}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{5}
+      \field{isbn}{978-0132126953}
+      \field{title}{Computer Networks}
+      \field{year}{2011}
+    \endentry
+    \entry{taylor2022}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=81c86ab1c64d445f72b1bb7f6a39162a}{%
+           family={Taylor},
+           familyi={T\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Function}%
+      }
+      \strng{namehash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{fullhash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{fullhashraw}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{bibnamehash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{authorbibnamehash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{authornamehash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{authorfullhash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{authorfullhashraw}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Kindle Edition}
+      \field{title}{Mastering HPCC Systems: Platform Overview and History}
+      \field{year}{2022}
+    \endentry
+    \entry{wang2013}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=e2068259fc5297e154f92a417136c922}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Quan},
+           giveni={Q\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=dcb9bfdd6ee59653374e77fa7f8c55ec}{%
+           family={Ding},
+           familyi={D\bibinitperiod},
+           given={Weiping},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fb5ce98c5a5051363e5bf214a351cfd9}{%
+           family={Xu},
+           familyi={X\bibinitperiod},
+           given={Xiaolong},
+           giveni={X\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c5654e71e66a221926fe65772e9cc1a3}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Fei},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=75d8c6fe2ae21e26dbc5eabe5f932a00}{%
+           family={Jia},
+           familyi={J\bibinitperiod},
+           given={Weijia},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a4dce556535a9cd3d6fbcf51fe9c9a92}
+      \strng{fullhash}{6d9cf4f64eec0fcdb6da8a34d3c57947}
+      \strng{fullhashraw}{6d9cf4f64eec0fcdb6da8a34d3c57947}
+      \strng{bibnamehash}{6d9cf4f64eec0fcdb6da8a34d3c57947}
+      \strng{authorbibnamehash}{6d9cf4f64eec0fcdb6da8a34d3c57947}
+      \strng{authornamehash}{a4dce556535a9cd3d6fbcf51fe9c9a92}
+      \strng{authorfullhash}{6d9cf4f64eec0fcdb6da8a34d3c57947}
+      \strng{authorfullhashraw}{6d9cf4f64eec0fcdb6da8a34d3c57947}
+      \field{sortinit}{W}
+      \field{sortinithash}{4315d78024d0cea9b57a0c6f0e35ed0d}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Proceedings of the 2013 IEEE International Conference on Industrial Technology (ICIT)}
+      \field{title}{WebSocket-based Real-time Communication for Industrial Automation}
+      \field{year}{2013}
+      \field{pages}{1080\bibrangedash 1085}
+      \range{pages}{6}
+    \endentry
+  \enddatalist
+  \missing{exegesis2021}
+\endrefsection
+\endinput
+

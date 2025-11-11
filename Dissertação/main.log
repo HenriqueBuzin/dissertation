@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.10)  11 NOV 2025 11:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.10)  11 NOV 2025 15:21
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2112,87 +2112,88 @@ Overfull \hbox (0.42091pt too wide) in paragraph at lines 39--40
 
  (chapters/3-chapter.tex
 Cap\'{\i }tulo 3.
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <5> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 12.
-LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 15.
 [24
 
 
 
 
-] [25] [26] [27]) [28]
+]) [25]
 \openout2 = `chapters/4-chapter.aux'.
 
  (chapters/4-chapter.tex
 Cap\'{\i }tulo 4.
-<images/arquitetura_proposta.png, id=350, 770.88pt x 337.26pt>
-File: images/arquitetura_proposta.png Graphic file (type png)
-<use images/arquitetura_proposta.png>
-Package pdftex.def Info: images/arquitetura_proposta.png  used on input line 18.
-(pdftex.def)             Requested size: 455.0pt x 199.05885pt.
-[29
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <5> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 12.
+LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 15.
+[26
 
 
 
 
- <./images/arquitetura_proposta.png>] [30]
-<images/camada_protocolos.png, id=361, 1541.76pt x 1027.84pt>
-File: images/camada_protocolos.png Graphic file (type png)
-<use images/camada_protocolos.png>
-Package pdftex.def Info: images/camada_protocolos.png  used on input line 66.
-(pdftex.def)             Requested size: 318.49861pt x 212.32396pt.
-<images/camada_processamento.png, id=363, 1541.76pt x 1027.84pt>
-File: images/camada_processamento.png Graphic file (type png)
-<use images/camada_processamento.png>
-Package pdftex.def Info: images/camada_processamento.png  used on input line 76.
-(pdftex.def)             Requested size: 318.49861pt x 212.32396pt.
- [31 <./images/camada_protocolos.png (PNG copy)>] [32 <./images/camada_processamento.png (PNG copy)>]) [33]
+] [27] [28] [29]) [30]
 \openout2 = `chapters/5-chapter.aux'.
 
  (chapters/5-chapter.tex
 Cap\'{\i }tulo 5.
-[34
+<images/arquitetura_proposta.png, id=362, 770.88pt x 337.26pt>
+File: images/arquitetura_proposta.png Graphic file (type png)
+<use images/arquitetura_proposta.png>
+Package pdftex.def Info: images/arquitetura_proposta.png  used on input line 18.
+(pdftex.def)             Requested size: 455.0pt x 199.05885pt.
+[31
 
 
 
 
-]) [35]
+ <./images/arquitetura_proposta.png>] [32]
+<images/camada_protocolos.png, id=372, 1541.76pt x 1027.84pt>
+File: images/camada_protocolos.png Graphic file (type png)
+<use images/camada_protocolos.png>
+Package pdftex.def Info: images/camada_protocolos.png  used on input line 66.
+(pdftex.def)             Requested size: 318.49861pt x 212.32396pt.
+ [33 <./images/camada_protocolos.png (PNG copy)>]
+<images/camada_processamento.png, id=378, 1541.76pt x 1027.84pt>
+File: images/camada_processamento.png Graphic file (type png)
+<use images/camada_processamento.png>
+Package pdftex.def Info: images/camada_processamento.png  used on input line 76.
+(pdftex.def)             Requested size: 318.49861pt x 212.32396pt.
+ [34 <./images/camada_processamento.png (PNG copy)>]) [35]
 \openout2 = `chapters/6-chapter.aux'.
 
  (chapters/6-chapter.tex
 Cap\'{\i }tulo 6.
-<images/container_manager.png, id=392, 1504.62125pt x 720.6925pt>
+<images/container_manager.png, id=392, 1504.62125pt x 704.6325pt>
 File: images/container_manager.png Graphic file (type png)
 <use images/container_manager.png>
 Package pdftex.def Info: images/container_manager.png  used on input line 30.
-(pdftex.def)             Requested size: 455.0pt x 217.93593pt.
+(pdftex.def)             Requested size: 455.0pt x 213.07942pt.
 [36
 
 
 
 
-] [37 <./images/container_manager.png>] [38]
+] [37 <./images/container_manager.png>] [38] [39]
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Overfull \hbox (8.224pt too wide) in paragraph at lines 101--102
+Overfull \hbox (8.224pt too wide) in paragraph at lines 167--168
 \T1/phv/m/n/12 (-10) ces-sa-mento ape-nas as in-for-ma-ções es-tri-ta-mente ne-ces-sá-rias para o pré-processamento,
  []
 
-<images/hpcc_landing_zone.png, id=412, 380.92313pt x 424.58624pt>
+<images/hpcc_landing_zone.png, id=417, 380.92313pt x 424.58624pt>
 File: images/hpcc_landing_zone.png Graphic file (type png)
 <use images/hpcc_landing_zone.png>
-Package pdftex.def Info: images/hpcc_landing_zone.png  used on input line 116.
+Package pdftex.def Info: images/hpcc_landing_zone.png  used on input line 184.
 (pdftex.def)             Requested size: 318.49861pt x 355.0174pt.
-) [39] [40 <./images/hpcc_landing_zone.png>]
+) [40] [41 <./images/hpcc_landing_zone.png>]
 \openout2 = `chapters/7-chapter.aux'.
 
  (chapters/7-chapter.tex
 Cap\'{\i }tulo 7.
-[41
+[42
 
 
 
@@ -2218,29 +2219,29 @@ LaTeX Info: Symbol \textrightarrow not provided by
 LaTeX Info: Symbol \textrightarrow not provided by
             font family phv in TS1 encoding.
             Default family used instead on input line 63.
- [42]) [43{C:/Users/henri/AppData/Roaming/MiKTeX/fonts/enc/dvips/epigrafica/epigraficahellenic.enc}]
+ [43]) [44{C:/Users/henri/AppData/Roaming/MiKTeX/fonts/enc/dvips/epigrafica/epigraficahellenic.enc}]
 \openout2 = `chapters/8-chapter.aux'.
 
  (chapters/8-chapter.tex
 Cap\'{\i }tulo 8.
 
-LaTeX Warning: Citation 'exegesis2021' on page 44 undefined on input line 11.
+LaTeX Warning: Citation 'exegesis2021' on page 45 undefined on input line 11.
 
-) [44
-
-
+) [45
 
 
-] [45]
+
+
+] [46]
 
 Package biblatex Warning: No driver for 'standard'.
 (biblatex)                Using fallback driver on input line 308.
 
-[46
+[47
 
 
 
-] [47]
+] [48]
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
@@ -2267,17 +2268,17 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 42175 strings out of 467871
- 788443 string characters out of 5428442
- 1888339 words of memory out of 5000000
+ 42161 strings out of 467871
+ 788319 string characters out of 5428442
+ 1887340 words of memory out of 5000000
  70067 multiletter control sequences out of 15000+600000
- 685956 words of font info for 250 fonts, out of 8000000 for 9000
+ 684855 words of font info for 240 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,17n,117p,2606b,4447s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\henri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss1200.pk> <C:\Users\henri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1200.pk><C:/Users/henri/AppData/Roaming/MiKTeX/fonts/type1/public/epigrafica/Epigrafica-Reonta.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on main.pdf (48 pages, 4021903 bytes).
+Output written on main.pdf (49 pages, 4003895 bytes).
 PDF statistics:
- 756 PDF objects out of 1000 (max. 8388607)
- 155 named destinations out of 1000 (max. 500000)
+ 761 PDF objects out of 1000 (max. 8388607)
+ 156 named destinations out of 1000 (max. 500000)
  67603 words of extra memory for PDF output out of 74296 (max. 10000000)
 

@@ -1,39 +1,103 @@
 % ----------------------------------------------------------
-\chapter{Metodologia}\label{cap:metodologia}
+\chapter{Proposta}\label{cap:proposta}
 % ----------------------------------------------------------
 
-Este capítulo descreve o conjunto de etapas e procedimentos adotados para o desenvolvimento da arquitetura modular de computação em névoa, desde a concepção até a validação experimental. O objetivo é apresentar, de forma sequencial e organizada, como o trabalho foi conduzido, abordando desde a análise inicial até a execução dos testes.
+Este capítulo descreve a arquitetura modular de computação em névoa desenvolvida ao longo deste trabalho. O conteúdo está organizado para apresentar, inicialmente, a visão geral e o papel de cada tipo de nó. Em seguida, são detalhados os componentes, a organização interna dos nós de névoa, os mecanismos de comunicação entre domínios e o fluxo de dados previsto no sistema.
 
 % ----------------------------------------------------------
-\section{Planejamento e Análise Inicial}
+\section{Visão Geral}
 % ----------------------------------------------------------
 
-O trabalho foi iniciado com uma análise do estado da arte em computação em névoa, comunicação entre névoas e interoperabilidade de protocolos. Esta etapa permitiu identificar abordagens já utilizadas e lacunas existentes, servindo de base para a definição dos requisitos funcionais e estruturais da arquitetura.
+A arquitetura proposta é composta por três tipos de nós, cada um com responsabilidades distintas no fluxo de dados e na coordenação do processamento distribuído. O nó primário atua como ponto de entrada de um domínio de névoa, gerenciando dispositivos, distribuindo carga e coordenando a comunicação com outros domínios. Os nós de névoa executam o processamento local e oferecem serviços configuráveis para tratamento dos dados. O nó agregador consolida e organiza as informações processadas antes do envio à nuvem.
+
+A Figura~\ref{fig:arquitetura_proposta} apresenta uma visão de alto nível, mostrando o caminho percorrido pelos dados desde os dispositivos na borda até a nuvem, incluindo as interações e responsabilidades de cada tipo de nó.
+
+\begin{figure}[htb]
+    \caption{\label{fig:arquitetura_proposta}Visão geral da arquitetura proposta.}
+    \begin{center}
+        \includegraphics[width=1\linewidth]{images/arquitetura_proposta.png}
+    \end{center}
+    \fonte{Do autor.}
+\end{figure}
 
 % ----------------------------------------------------------
-\section{Definição da Arquitetura}
+\section{Componentes}
 % ----------------------------------------------------------
 
-Com base nos requisitos levantados, foi elaborada a arquitetura modular, especificando os papéis de cada tipo de nó (primário, de névoa e agregador) e a organização interna dos componentes. Nesta fase, também foram definidos os mecanismos de comunicação e as interações entre nós de diferentes névoas.
+Esta seção apresenta, em detalhe, as funções e responsabilidades de cada tipo de nó que compõe a arquitetura: nó primário, nós de névoa e nó agregador.
 
 % ----------------------------------------------------------
-\section{Implementação dos Componentes}
+\subsection{Dispositivos}
 % ----------------------------------------------------------
 
-A implementação foi conduzida em etapas, de forma a permitir testes incrementais e ajustes contínuos:
-\begin{enumerate}
-    \item Desenvolvimento do nó primário, com funções de registro, balanceamento e encaminhamento de requisições.
-    \item Implementação dos nós de névoa, estruturados em camadas para suportar diferentes protocolos, processamento interno e execução de serviços.
-    \item Construção do nó agregador, responsável pela consolidação e envio de dados à nuvem.
-\end{enumerate}
+Os dispositivos de borda são responsáveis por coletar dados diretamente do ambiente físico, atuando como o ponto inicial do fluxo de informações dentro da arquitetura de névoa. Eles podem ser sensores, medidores inteligentes, câmeras ou outros equipamentos capazes de capturar dados em tempo real.
+
+Esses dispositivos podem ser fabricados por diferentes empresas e utilizar diversos protocolos de comunicação, o que torna essencial a existência de mecanismos de padronização e compatibilidade nos níveis superiores do sistema. Essa diversidade permite maior flexibilidade na integração de tecnologias, mas também exige que os nós de névoa consigam interpretar corretamente as informações recebidas, independentemente do protocolo utilizado.
+
+Além disso, os dispositivos mantêm comunicação constante com o nó de névoa para atualizar seu estado e garantir que os dados sejam enviados corretamente. Caso percam a conexão, podem armazenar temporariamente as informações até que a comunicação seja restabelecida.
+
+Dessa forma, os dispositivos de borda formam a base do ecossistema de computação em névoa, aproximando a coleta de dados do ambiente físico e contribuindo para a eficiência, interoperabilidade e agilidade de todo o sistema.
 
 % ----------------------------------------------------------
-\section{Procedimentos de Teste}
+\subsection{Nó Primário}
 % ----------------------------------------------------------
 
-Após a implementação, serão realizados testes com foco em:
-\begin{itemize}
-    \item \textbf{Interoperabilidade}: verificar a capacidade da arquitetura de lidar com diferentes protocolos de comunicação.
-    \item \textbf{Balanceamento de carga}: avaliar o comportamento do nó primário na distribuição das requisições entre os nós de névoa, incluindo cenários de encaminhamento para outras névoas.
-    \item \textbf{Agregação de dados}: analisar a consolidação realizada pelo nó agregador e seu impacto na redução de requisições à nuvem.
-\end{itemize}
+O nó primário de névoa é a porta de entrada da arquitetura, ela recebe dados dos dispositivos de borda e distribui a carga de trabalho entre os nós de névoa disponíveis, direcionando as requisições conforme a especialização de cada um.
+
+Quando um novo nó é iniciado, ele se registra no nó principal informando sua especialização, como água ou energia, e envia atualizações periódicas para indicar que continua ativo. Caso pare de enviar esses sinais, é removido automaticamente.
+
+A distribuição da carga é balanceada, seguindo uma abordagem parecida com o Round Robin. Cada nó processa uma requisição por vez, mas sua especialização é respeitada.
+
+Ao ser inicializado, o nó primário avisa os demais nós primários que está ativo e informa quantos nós especializados possui. Durante o funcionamento, ele monitora o número de dispositivos e requisições. Se houver desequilíbrio, verifica com outros nós primários qual tem mais capacidade disponível.
+
+Por exemplo, se houver poucos nós especializados, o nó principal pode redirecionar requisições para outro domínio com mais recursos. Quando detecta sobrecarga, ele envia uma mensagem de broadcast para os outros nós primários pedindo informações atualizadas sobre uso. Com base nas respostas, identifica o domínio menos sobrecarregado e com menor latência, e redireciona as novas requisições para ele.
+
+% ----------------------------------------------------------
+\subsection{Nós de Névoa}
+% ----------------------------------------------------------
+
+Os nós de névoa realizam o processamento no ambiente de névoa e foram organizados em uma estrutura interna baseada em camadas, de forma a facilitar a manutenção e permitir a adição de novas funções sem comprometer o restante do sistema.
+
+A primeira camada, denominada protocolos, é responsável por receber e os dados e requisições provenientes do nó primário, convertendo protocolos, se necessário encaminhar as informações para a camada seguinte. Essa estrutura é ilustrada na Figura~\ref{fig:camada_protocolos}, onde diferentes servidores de protocolos alimentam um protocolo padrão utilizado internamente.
+
+\begin{figure}[htb]
+    \caption{\label{fig:camada_protocolos}Camada de protocolos de um nó de névoa.}
+    \begin{center}
+        \includegraphics[width=0.7\linewidth]{images/camada_protocolos.png}
+    \end{center}
+    \fonte{Do autor.}
+\end{figure}
+
+A camada de processamento atua como núcleo de coordenação interna do nó, gerenciando a comunicação entre as demais camadas, armazenando temporariamente dados e executando as funções centrais do sistema. Além disso, mantém um mecanismo de consultas internas, permitindo que a camada de serviços acesse apenas as informações estritamente necessárias para seu funcionamento. É também por meio dessa camada que o nó de névoa realiza interações administrativas, como o registro inicial no nó primário. A Figura~\ref{fig:camada_processamento} mostra os principais componentes dessa camada.
+
+\begin{figure}[htb]
+    \caption{\label{fig:camada_processamento}Camada de processamento de um nó de névoa.}
+    \begin{center}
+        \includegraphics[width=0.7\linewidth]{images/camada_processamento.png}
+    \end{center}
+    \fonte{Do autor.}
+\end{figure}
+
+Por fim, a camada de serviços executa a aplicação que implementa a lógica de pré-processamento dos dados. Utilizando a linguagem de consulta disponibilizada pela camada de processamento, essa camada obtém os dados necessários, realiza o tratamento definido pela aplicação, aplica regras de negócio e devolve o resultado à camada de processamento, que ajusta a saída para envio pela camada de protocolos.
+
+% ----------------------------------------------------------
+\subsection{Nó Agregador}
+% ----------------------------------------------------------
+
+O nó agregador recebe dados pré-processados dos nós de névoa e os consolida antes de enviá-los para a nuvem. Sua função é reunir informações de vários nós, realizando conversões de formato ou protocolo quando necessário para manter a compatibilidade com o sistema em nuvem.
+
+Ao receber os dados, o agregador combina as informações em um único arquivo estruturado, que pode incluir médias, totais ou dados agrupados, dependendo do contexto da aplicação.
+
+Esse processo reduz o tráfego de rede e o número de transmissões para a nuvem, melhorando o desempenho, economizando largura de banda e aumentando a eficiência. Após a consolidação, os dados são enviados para a camada de nuvem para análises mais detalhadas.
+
+% ----------------------------------------------------------
+\subsection{Nuvem}
+% ----------------------------------------------------------
+
+A camada de nuvem atua como o ponto central de processamento e gerenciamento de dados, lidando com tarefas que exigem mais poder computacional do que os nós de névoa podem oferecer.
+
+Com uma infraestrutura robusta, ela recebe os dados pré-processados do nó agregador e executa a etapa final de análise e consolidação. Também realiza operações complexas, como aprendizado de máquina, inteligência artificial e análises preditivas, que demandam alto desempenho e grandes volumes de dados.
+
+Além disso, a nuvem garante armazenamento seguro e permanente, mantendo dados históricos que apoiam a tomada de decisões, auditorias e estudos avançados.
+
+Assim, a camada de nuvem complementa a arquitetura de névoa ao oferecer capacidade de processamento e armazenamento em larga escala.

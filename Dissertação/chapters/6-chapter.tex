@@ -33,62 +33,128 @@ A Figura~\ref{fig:container_manager} apresenta a tela de gerenciamento de contê
 \end{figure}
 
 % ----------------------------------------------------------
-\subsection{Tecnologias e Ambiente Físico}
+\subsection{Ambiente Físico}
 % ----------------------------------------------------------
 
-No ambiente de testes, todos os componentes da arquitetura foram implementados em \textit{Python}, com exceção do medidor compatível com o protocolo \textit{CoAP}, que foi desenvolvido em \textit{Node.js} devido à disponibilidade de bibliotecas específicas e otimização do fluxo de comunicação nesse protocolo.
+Os experimentos foram realizados em quatro máquinas físicas, cada uma com uma função específica dentro da arquitetura distribuída proposta. Cada máquina executou contêineres Docker gerenciados por uma interface web.
 
-Os experimentos foram executados em uma única máquina física, utilizada para hospedar os contêineres Docker que compõem cada instância de nó e dispositivo. A Tabela~\ref{tab:especificacoes_maquina} apresenta as especificações do equipamento utilizado.
+A Tabela~\ref{tab:especificacoes_maquinas} apresenta as especificações de hardware e a função de cada equipamento. As máquinas PC-01 e PC-02, localizadas em Florianópolis, operaram em uma mesma rede local compartilhada. Elas foram configuradas como nós de névoa completos, denominados Névoa A e Névoa B, cada uma composta por um nó primário, um nó agregador e uma quantidade variável de nós de névoa.
+
+A máquina PC-04, situada em Curitiba e conectada por uma rede independente, foi utilizada para hospedar os dispositivos medidores, simulando o envio de dados provenientes de diferentes origens geográficas.
+
+A máquina PC-03, também localizada em Florianópolis, foi dedicada à camada de nuvem, executando a aplicação HPCC Systems, o cluster de alto desempenho utilizado neste trabalho. Essa camada recebeu as informações processadas pelos nós de névoa e centralizou o armazenamento e a consolidação dos resultados.
 
 \begin{table}[htb]
-    \caption{\label{tab:especificacoes_maquina}Especificações da máquina utilizada nos testes.}
+    \caption{\label{tab:especificacoes_maquinas}Especificações das máquina utilizada nos testes.}
     \centering
-    \begin{tabular}{ll}
+    \begin{tabular}{|l|l|}
         \hline
-            \textbf{Componente} & \textbf{Especificação} \\
+            \multicolumn{2}{|c|}{\textbf{PC-01}} \\
         \hline
-            Processador & Intel Core i7-7700K @ 4.20GHz \\
-            Memória RAM & 32 GB DDR4 \\
-            Armazenamento & SSD 2 TB \\
-            Sistema Operacional & Windows 11 \\
-            Docker & v4.38.0 \\
+            City & Florianópolis \\
+        \hline
+            Network & Shared with PC-02 \\
+        \hline
+            Function & Fog A \\
+        \hline
+            Processor & Intel Core i7-7700K @ 4.20GHz \\
+        \hline
+            Memory (RAM) & 32 GB DDR4 \\
+        \hline
+            Storage & 2 TB SSD \\
+        \hline
+            Operating System & Windows 11 64-bit \\
+        \hline\hline
+
+        \multicolumn{2}{|c|}{\textbf{PC-02}} \\
+        \hline
+            City & Florianópolis \\
+        \hline
+            Network & Shared with PC-01 \\
+        \hline
+            Function & Fog B \\
+        \hline
+            Processor & Intel Core i7-7500U @ 2.70GHz \\
+        \hline
+            Memory (RAM) & 36 GB DDR4 \\
+        \hline
+            Storage & 480 GB SSD \\
+        \hline
+            Operating System & Windows 11 64-bit \\
+        \hline\hline
+
+        \multicolumn{2}{|c|}{\textbf{PC-03}} \\
+        \hline
+            City & Florianópolis \\
+        \hline
+            Network & Independent \\
+        \hline
+            Function & Cloud (HPCC Systems) \\
+        \hline
+            Processor & Intel Core i3 5005U @ 2.0GHz \\
+        \hline
+            Memory (RAM) & 8GB DDR3 \\
+        \hline
+            Storage & 240 GB SSD \\
+        \hline
+            Operating System & Windows 10 64-bit \\
+        \hline\hline
+
+        \multicolumn{2}{|c|}{\textbf{PC-04}} \\
+        \hline
+            City & Curitiba \\
+        \hline
+            Network & Independent \\
+        \hline
+            Function & Meters \\
+        \hline
+            Processor & AMD Ryzen 5 3600 @ 3.60GHz \\
+        \hline
+            Memory (RAM) & 32 GB DDR4 \\
+        \hline
+            Storage & 1TB SSD \\
+        \hline
+            Operating System & Windows 10 64-bit \\
         \hline
     \end{tabular}
     \fonte{Do autor.}
 \end{table}
 
 % ----------------------------------------------------------
-\section{Protocolos}
+\section{Tecnologias e Protocolos}
 % ----------------------------------------------------------
 
-No ambiente de testes, o nó primário é responsável por receber dados utilizando diferentes protocolos, incluindo \textit{CoAP}, \textit{MQTT} e \textit{HTTP}. Independentemente do protocolo de origem, as mensagens são convertidas para \textit{HTTP} antes de serem encaminhadas aos nós de névoa, de forma a padronizar o tráfego interno.
+Os dispositivos medidores foram desenvolvidos para operar com diferentes protocolos de comunicação, de modo a avaliar a interoperabilidade entre os componentes da arquitetura. Foram implementados quatro contêineres distintos, representando os seguintes medidores: água via \textit{HTTP}, água via \textit{CoAP}, energia via \textit{HTTP} e energia via \textit{CoAP}.
 
-Dentro de um nó de névoa, a comunicação entre a camada de protocolos e a camada de processamento ocorre por meio de \textit{WebSocket}, mantendo a conexão aberta para evitar o custo de abertura e fechamento contínuo de conexões. Essa abordagem reduz a sobrecarga e melhora o tempo de resposta.
+Os medidores baseados em \textit{HTTP} foram desenvolvidos em \textit{Python}, enquanto os medidores que utilizam o protocolo \textit{CoAP} foram implementados em \textit{Node.js}, devido ao melhor suporte e disponibilidade de bibliotecas específicas para esse protocolo no momento do desenvolvimento.
 
-A partir do nó de névoa, os dados já passam a ser organizados em estrutura \textit{CSV}, formada a partir das informações recebidas em \textit{JSON}. Essa etapa permite preparar os dados para compatibilidade com o formato aceito pela nuvem. A transmissão do nó de névoa para o nó agregador é realizada via \textit{SFTP}.
+No ambiente de execução, o nó primário é responsável por receber dados utilizando os protocolos \textit{CoAP} e \textit{HTTP}. Independentemente do protocolo de origem, as mensagens são convertidas para \textit{HTTP} antes de serem encaminhadas aos nós de névoa, padronizando o tráfego interno do sistema.
 
-No nó agregador, os arquivos \textit{CSV} recebidos de diferentes nós de névoa são consolidados em um único arquivo antes de serem enviados para a camada de nuvem, também via \textit{SFTP}, para a zona de entrada (\textit{landing zone}) do \textit{HPCC Systems}.
+Dentro de um nó de névoa, a comunicação entre a camada de protocolos e a camada de processamento ocorre por meio de \textit{WebSocket}, mantendo a conexão aberta e reduzindo o custo de abertura e fechamento contínuo de conexões. Essa abordagem minimiza a sobrecarga e melhora o tempo de resposta.
+
+Após o processamento, os dados são estruturados em formato \textit{CSV}, a partir das mensagens recebidas em \textit{JSON}. A transmissão dos arquivos do nó de névoa para o nó agregador é realizada via \textit{SFTP}. O nó agregador consolida os arquivos de diferentes nós e os encaminha, também por \textit{SFTP}, à camada de nuvem para armazenamento na zona de entrada (\textit{landing zone}) do ambiente HPCC Systems.
 
 % ----------------------------------------------------------
 \section{Distribuição entre Névoas e Balanceamento de Carga}
 % ----------------------------------------------------------
 
-Nos experimentos, os \(120\) dispositivos foram distribuídos entre dois domínios de névoa distintos, representando diferentes regiões no cenário de cidade inteligente.  
-A distribuição inicial foi a seguinte:
+Nos experimentos, os \(70\) dispositivos foram distribuídos entre dois domínios de névoa distintos, representando diferentes regiões no cenário de cidade inteligente.  
+Cada tipo de dispositivo foi instanciado diversas vezes, totalizando \(21\) medidores de energia via \textit{HTTP}, \(17\) medidores de energia via \textit{CoAP}, \(15\) medidores de água via \textit{HTTP} e \(17\) medidores de água via \textit{CoAP}.  
+Esses dispositivos transmitiram leituras reais de consumo em formato \textit{JSON}, com frequência horária, diretamente para a camada de névoa.
+
+A distribuição inicial entre as névoas foi propositalmente desigual, a fim de avaliar o comportamento do sistema sob diferentes condições de carga:
 
 \begin{itemize}
-    \item \textbf{Névoa A}: \(70\) dispositivos  
-    (\(12\) medidores de energia via \textit{HTTP}, \(12\) via \textit{CoAP}, \(12\) via \textit{MQTT}, \(12\) medidores de água via \textit{HTTP}, \(12\) via \textit{CoAP}, \(10\) via \textit{MQTT}).
-    \item \textbf{Névoa B}: \(50\) dispositivos  
-    (\(8\) medidores de energia via \textit{HTTP}, \(8\) via \textit{CoAP}, \(8\) via \textit{MQTT}, \(8\) medidores de água via \textit{HTTP}, \(8\) via \textit{CoAP}, \(10\) via \textit{MQTT}).
+    \item \textbf{Névoa A}: \(40\) dispositivos  
+    (\(12\) medidores de energia via \textit{HTTP}, \(10\) via \textit{CoAP}, \(9\) medidores de água via \textit{HTTP} e \(9\) via \textit{CoAP}).
+    \item \textbf{Névoa B}: \(30\) dispositivos  
+    (\(9\) medidores de energia via \textit{HTTP}, \(7\) via \textit{CoAP}, \(6\) medidores de água via \textit{HTTP} e \(8\) via \textit{CoAP}).
 \end{itemize}
 
-Essa distribuição propositalmente desigual permitiu avaliar o comportamento do sistema sob condições de carga diferentes entre os domínios.  
-Quando uma das névoas atingiu maior taxa de utilização, o mecanismo de balanceamento foi acionado: o nó primário da névoa mais carregada redirecionou parte das requisições para a outra, realizando a conversão para \textit{HTTP} antes do envio, independentemente do protocolo de origem (\textit{HTTP}, \textit{CoAP} ou \textit{MQTT}).
+Quando uma das névoas atingia maior taxa de utilização, o mecanismo de balanceamento era acionado: o nó primário da névoa mais sobrecarregada redirecionava parte das requisições para a outra, realizando a conversão para \textit{HTTP} antes do envio, independentemente do protocolo de origem (\textit{HTTP} ou \textit{CoAP}).
 
-Nos testes, foram simulados dois dias de operação (\(48\ \text{horas}\)), com cada dispositivo enviando leituras periódicas agregadas em janela horária de consumo.
-
-No nó agregador, as medições de cada domínio de névoa foram consolidadas em um único arquivo por dia e transmitidas para o \textit{HPCC Systems} ao final de cada dia, sem que nenhum contêiner apresentasse falhas durante a execução.
+Durante os testes, foram simuladas \(48\ \text{horas}\) de operação, resultando em um total de \(3\,360\) leituras (\(70\) dispositivos \(\times\ 48\) envios cada), com medições horárias agregadas em janelas de consumo.  
+No nó agregador, as medições de cada domínio de névoa foram consolidadas em um único arquivo por dia e transmitidas para o ambiente \textit{HPCC Systems}, sem ocorrência de falhas durante a execução dos contêineres.
 
 % ----------------------------------------------------------
 \section{GraphQL}
@@ -98,17 +164,19 @@ Nos nós de névoa, a comunicação entre a camada de serviços e a camada de pr
 
 O \textit{GraphQL} possibilita ainda a consulta a múltiplas fontes de dados de forma unificada, agregando resultados distintos em uma única resposta. Nos testes realizados, o armazenamento local temporário nos nós de névoa foi implementado com \textit{MongoDB}, escolhido por sua flexibilidade para lidar com dados em formato \texttt{JSON} e pela capacidade de inserir registros heterogêneos sem a exigência de um esquema fixo.  
 
-Com essa integração, a camada de serviços consegue solicitar à camada de processamento apenas as informações estritamente necessárias para o pré-processamento, recebendo uma resposta já filtrada e adaptada ao contexto da aplicação. Isso mantém a arquitetura modular, otimiza o fluxo de dados interno e garante maior agilidade na execução das tarefas.
+Com essa integração, a camada de serviços consegue solicitar à camada de processamento apenas as informações estritamente necessárias para o pré-processamento, recebendo uma resposta já filtrada e adaptada ao contexto da aplicação.
 
 % ----------------------------------------------------------
 \section{HPCC Systems na Camada de Nuvem}
 % ----------------------------------------------------------
 
-Na fase de testes, os dados consolidados pelos nós agregadores foram enviados para a camada de nuvem, implementada com o \textit{HPCC Systems}. Os arquivos recebidos, no formato \texttt{.csv} suportado pela plataforma, resultam da união dos pré-processamentos realizados nos diferentes nós de névoa, reunidos pelo nó agregador antes da transmissão.  
+Na fase de testes, os dados provenientes dos nós de névoa de cada domínio foram enviados para seus respectivos nós agregadores, cada um responsável de forma exclusiva pela consolidação das informações dentro do domínio ao qual pertence. Nesse processo, os arquivos no formato \texttt{.csv} gerados pelos nós de névoa foram unificados em um único arquivo consolidado. Quando necessário, o nó agregador realizou operações adicionais, como a soma de valores correspondentes.
 
-Esses arquivos foram disponibilizados na zona de entrada da plataforma (\textit{landing zone}), onde ficaram prontos para processamento e consultas.  
+Após a consolidação, cada nó agregador transmitiu o arquivo final para a camada de nuvem, implementada com o \textit{HPCC Systems}. Os arquivos recebidos no formato \texttt{.csv}, que é um dos formatos suportados de forma nativa pela plataforma, foram armazenados e processados para análise posterior, representando o resultado da integração e do pré-processamento realizados nas camadas inferiores da arquitetura.
 
-A Figura~\ref{fig:hpcc_landing_zone} apresenta o ambiente \textit{ECL Watch}, mostrando os arquivos agregados de consumo de energia, já no formato consolidado por data, prontos para serem tratados ou analisados conforme as necessidades da aplicação.
+Esses arquivos foram disponibilizados na zona de entrada da plataforma (\textit{landing zone}), permanecendo prontos para processamento e consultas conforme as necessidades da aplicação.  
+
+A Figura~\ref{fig:hpcc_landing_zone} apresenta o ambiente \textit{ECL Watch}, exibindo os arquivos agregados de consumo de energia já no formato consolidado por data, prontos para tratamento e análise no ambiente de nuvem.
 
 \begin{figure}[htb]
     \caption{\label{fig:hpcc_landing_zone}Arquivos consolidados na \textit{landing zone} do HPCC Systems.}

@@ -543,6 +543,12 @@ OUTPUT chapters\3-chapter.aux
 INPUT .\chapters\3-chapter.tex
 INPUT .\chapters\3-chapter.tex
 INPUT chapters\3-chapter.tex
+INPUT .\chapters\4-chapter.tex
+INPUT .\chapters\4-chapter.tex
+OUTPUT chapters\4-chapter.aux
+INPUT .\chapters\4-chapter.tex
+INPUT .\chapters\4-chapter.tex
+INPUT chapters\4-chapter.tex
 INPUT C:\Program Files\MiKTeX\fonts\tfm\public\amsfonts\cmextra\cmex7.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\helvetic\phvr8t.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\helvetic\phvro8t.tfm
@@ -561,39 +567,33 @@ INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\helvetic\phvbo8t.vf
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\helvetic\phvbo8r.tfm
 INPUT C:\Program Files\MiKTeX\fonts\vf\adobe\helvetic\phvr8t.vf
 INPUT C:\Program Files\MiKTeX\fonts\tfm\adobe\helvetic\phvr8r.tfm
-INPUT .\chapters\4-chapter.tex
-INPUT .\chapters\4-chapter.tex
-OUTPUT chapters\4-chapter.aux
-INPUT .\chapters\4-chapter.tex
-INPUT .\chapters\4-chapter.tex
-INPUT chapters\4-chapter.tex
-INPUT .\images\arquitetura_proposta.png
-INPUT .\images\arquitetura_proposta.png
-INPUT .\images\arquitetura_proposta.png
-INPUT .\images\arquitetura_proposta.png
-INPUT .\images\arquitetura_proposta.png
-INPUT .\images\arquitetura_proposta.png
-INPUT .\images\arquitetura_proposta.png
-INPUT .\images\camada_protocolos.png
-INPUT .\images\camada_protocolos.png
-INPUT .\images\camada_protocolos.png
-INPUT .\images\camada_protocolos.png
-INPUT .\images\camada_protocolos.png
-INPUT .\images\camada_protocolos.png
-INPUT .\images\camada_protocolos.png
-INPUT .\images\camada_processamento.png
-INPUT .\images\camada_processamento.png
-INPUT .\images\camada_processamento.png
-INPUT .\images\camada_processamento.png
-INPUT .\images\camada_processamento.png
-INPUT .\images\camada_processamento.png
-INPUT .\images\camada_processamento.png
 INPUT .\chapters\5-chapter.tex
 INPUT .\chapters\5-chapter.tex
 OUTPUT chapters\5-chapter.aux
 INPUT .\chapters\5-chapter.tex
 INPUT .\chapters\5-chapter.tex
 INPUT chapters\5-chapter.tex
+INPUT .\images\arquitetura_proposta.png
+INPUT .\images\arquitetura_proposta.png
+INPUT .\images\arquitetura_proposta.png
+INPUT .\images\arquitetura_proposta.png
+INPUT .\images\arquitetura_proposta.png
+INPUT .\images\arquitetura_proposta.png
+INPUT .\images\arquitetura_proposta.png
+INPUT .\images\camada_protocolos.png
+INPUT .\images\camada_protocolos.png
+INPUT .\images\camada_protocolos.png
+INPUT .\images\camada_protocolos.png
+INPUT .\images\camada_protocolos.png
+INPUT .\images\camada_protocolos.png
+INPUT .\images\camada_protocolos.png
+INPUT .\images\camada_processamento.png
+INPUT .\images\camada_processamento.png
+INPUT .\images\camada_processamento.png
+INPUT .\images\camada_processamento.png
+INPUT .\images\camada_processamento.png
+INPUT .\images\camada_processamento.png
+INPUT .\images\camada_processamento.png
 INPUT .\chapters\6-chapter.tex
 INPUT .\chapters\6-chapter.tex
 OUTPUT chapters\6-chapter.aux
