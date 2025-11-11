@@ -27,16 +27,30 @@ A Figura~\ref{fig:arquitetura_proposta} apresenta uma visão de alto nível, mos
 Esta seção apresenta, em detalhe, as funções e responsabilidades de cada tipo de nó que compõe a arquitetura: nó primário, nós de névoa e nó agregador.
 
 % ----------------------------------------------------------
+\subsection{Dispositivos}
+% ----------------------------------------------------------
+
+Os dispositivos de borda são responsáveis por coletar dados diretamente do ambiente físico, atuando como o ponto inicial do fluxo de informações dentro da arquitetura de névoa. Eles podem ser sensores, medidores inteligentes, câmeras ou outros equipamentos capazes de capturar dados em tempo real.
+
+Esses dispositivos podem ser fabricados por diferentes empresas e utilizar diversos protocolos de comunicação, o que torna essencial a existência de mecanismos de padronização e compatibilidade nos níveis superiores do sistema. Essa diversidade permite maior flexibilidade na integração de tecnologias, mas também exige que os nós de névoa consigam interpretar corretamente as informações recebidas, independentemente do protocolo utilizado.
+
+Além disso, os dispositivos mantêm comunicação constante com o nó de névoa para atualizar seu estado e garantir que os dados sejam enviados corretamente. Caso percam a conexão, podem armazenar temporariamente as informações até que a comunicação seja restabelecida.
+
+Dessa forma, os dispositivos de borda formam a base do ecossistema de computação em névoa, aproximando a coleta de dados do ambiente físico e contribuindo para a eficiência, interoperabilidade e agilidade de todo o sistema.
+
+% ----------------------------------------------------------
 \subsection{Nó Primário}
 % ----------------------------------------------------------
 
-O nó primário funciona como o ponto inicial de contato para dispositivos e novos nós que ingressam em uma névoa. Assim que um nó de névoa é iniciado, ele envia ao nó primário um conjunto de atributos que descrevem sua capacidade, especializações e estado atual de operação. Essas informações são registradas e mantidas para permitir a localização de recursos disponíveis na própria névoa.
+O nó primário de névoa é a porta de entrada da arquitetura, ela recebe dados dos dispositivos de borda e distribui a carga de trabalho entre os nós de névoa disponíveis, direcionando as requisições conforme a especialização de cada um.
 
-Ao receber uma requisição, o nó primário identifica os atributos necessários para o processamento e verifica, entre os nós registrados, quais correspondem ao perfil solicitado. O balanceamento entre os nós locais segue um padrão que procura alternar os destinos de forma equilibrada, em comportamento semelhante a um esquema round robin, sempre respeitando as características solicitadas por cada carga.
+Quando um novo nó é iniciado, ele se registra no nó principal informando sua especialização, como água ou energia, e envia atualizações periódicas para indicar que continua ativo. Caso pare de enviar esses sinais, é removido automaticamente.
 
-Se a análise indicar que não haverá nós suficientes na névoa local para atender à demanda, o nó primário envia uma solicitação para que todos os nós primários de outras névoas informem o estado atual de seus recursos. Esse processo lembra o funcionamento de um protocolo de fofoca, mas é otimizado para reduzir o tráfego de rede, mantendo apenas as trocas essenciais. Com base nas respostas, é selecionada uma névoa remota com disponibilidade, e a requisição é encaminhada para processamento.
+A distribuição da carga é balanceada, seguindo uma abordagem parecida com o Round Robin. Cada nó processa uma requisição por vez, mas sua especialização é respeitada.
 
-O nó primário também é capaz de lidar com diferentes tipos de protocolos, incluindo aqueles que exigem atuação como intermediário na comunicação. Em todos os casos, realiza a adequação inicial do canal recebido, interpretando o conteúdo e convertendo-o para um formato interno uniforme antes de encaminhar para um nó local ou remoto.
+Ao ser inicializado, o nó primário avisa os demais nós primários que está ativo e informa quantos nós especializados possui. Durante o funcionamento, ele monitora o número de dispositivos e requisições. Se houver desequilíbrio, verifica com outros nós primários qual tem mais capacidade disponível.
+
+Por exemplo, se houver poucos nós especializados, o nó principal pode redirecionar requisições para outro domínio com mais recursos. Quando detecta sobrecarga, ele envia uma mensagem de broadcast para os outros nós primários pedindo informações atualizadas sobre uso. Com base nas respostas, identifica o domínio menos sobrecarregado e com menor latência, e redireciona as novas requisições para ele.
 
 % ----------------------------------------------------------
 \subsection{Nós de Névoa}
@@ -70,8 +84,20 @@ Na camada de serviços é executada a aplicação que implementa a lógica de pr
 \subsection{Nó Agregador}
 % ----------------------------------------------------------
 
-O nó agregador atua como ponto central para receber os resultados pré-processados provenientes dos nós de névoa. Em vez de cada nó de névoa transmitir seus dados diretamente à nuvem, o agregador coleta e organiza essas informações, reunindo-as em um único conjunto consolidado.
+O nó agregador recebe dados pré-processados dos nós de névoa e os consolida antes de enviá-los para a nuvem. Sua função é reunir informações de vários nós, realizando conversões de formato ou protocolo quando necessário para manter a compatibilidade com o sistema em nuvem.
 
-Esse processo tem como efeito a redução da quantidade de requisições enviadas à nuvem, agrupando múltiplos envios menores em transmissões mais amplas e organizadas. Embora a redução de tráfego seja um dos resultados esperados, o principal papel do agregador é melhorar o fluxo de comunicação entre a camada de névoa e a nuvem, facilitando o controle, a rastreabilidade e a padronização dos dados enviados.
+Ao receber os dados, o agregador combina as informações em um único arquivo estruturado, que pode incluir médias, totais ou dados agrupados, dependendo do contexto da aplicação.
 
-O nó agregador também pode executar transformações adicionais sobre os dados recebidos, como ajustes de formato, enriquecimento de metadados ou aplicação de funções específicas definidas pela aplicação. Após esse tratamento, os dados são preparados em lotes ou fluxos contínuos e encaminhados à nuvem de acordo com a política de envio configurada.
+Esse processo reduz o tráfego de rede e o número de transmissões para a nuvem, melhorando o desempenho, economizando largura de banda e aumentando a eficiência. Após a consolidação, os dados são enviados para a camada de nuvem para análises mais detalhadas.
+
+% ----------------------------------------------------------
+\subsection{Nuvem}
+% ----------------------------------------------------------
+
+A camada de nuvem atua como o ponto central de processamento e gerenciamento de dados, lidando com tarefas que exigem mais poder computacional do que os nós de névoa podem oferecer.
+
+Com uma infraestrutura robusta, ela recebe os dados pré-processados do nó agregador e executa a etapa final de análise e consolidação. Também realiza operações complexas, como aprendizado de máquina, inteligência artificial e análises preditivas, que demandam alto desempenho e grandes volumes de dados.
+
+Além disso, a nuvem garante armazenamento seguro e permanente, mantendo dados históricos que apoiam a tomada de decisões, auditorias e estudos avançados.
+
+Assim, a camada de nuvem complementa a arquitetura de névoa ao oferecer capacidade de processamento e armazenamento em larga escala.

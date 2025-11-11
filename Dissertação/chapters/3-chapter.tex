@@ -2,7 +2,9 @@
 \chapter{Revisão Bibliográfica}\label{cap:revisao_bibliografica}
 % ----------------------------------------------------------
 
-Para esse trabalho, foram realizadas pesquisas nas bases de dados de artigos científicos, utilizando as seguintes palavras-chaves: 'fog', 'fog' AND 'architecture', e aplicado um filtro para os últimos 5 anos, ou seja, de 2020 até 2024, e obtivemos a quantidade de artigos que podemos visualizar na Tabela~\ref{tab:Tab_ArtigosFog}.
+Para a realização deste trabalho, foram conduzidas pesquisas em bases de dados de artigos científicos, utilizando as seguintes palavras-chave: \textit{‘fog’} e \textit{‘fog’ AND ‘architecture’}.
+Foi aplicado um filtro temporal abrangendo os últimos cinco anos, isto é, de 2020 a 2025.
+A Tabela~\ref{tab:Tab_ArtigosFog} apresenta a quantidade de publicações encontradas em cada base de dados para os respectivos termos de busca.
 
 \begin{table}[htb]
 	\ABNTEXfontereduzida
@@ -11,91 +13,89 @@ Para esse trabalho, foram realizadas pesquisas nas bases de dados de artigos cie
 		\toprule
 		\textbf{Palavra-chave} & \textbf{Banco de Dados} & \textbf{Quantidade de Artigos} \\ \midrule
 		\multirow[c]{2}{*}{\textbf{\textit{'fog'}}} 
-		    & Scopus & 18.970 \\
-		    & IEEE   & 6.925  \\ \midrule
+		    & Scopus & 34.309 \\ 
+		    & IEEE   & 8.524  \\ \midrule
 		\multirow[c]{2}{*}{\textbf{\textit{'fog' AND 'architecture'}}} 
-		    & Scopus & 3.144 \\
-		    & IEEE   & 1.749 \\ \midrule
+		    & Scopus & 12.822 \\ 
+		    & IEEE   & 2.502 \\ \midrule
 	\end{tabular}
 	\fonte{Do autor.}
 \end{table}
 
-Com base nos dados da tabela fornecida, observamos que o Scopus lidera com a maior coleção de artigos indexados. Em contraste, o IEEE apresenta uma quantidade relativamente menor.
+Com base nos dados apresentados, observa-se que a base Scopus possui o maior número de artigos indexados, destacando-se como a principal fonte de publicações sobre o tema.
+Por outro lado, a base IEEE Xplore apresentou uma quantidade inferior de resultados, embora ainda represente um repositório relevante para estudos na área de computação em névoa.
+
+Além disso, foram aplicados os seguintes critérios de inclusão para seleção dos estudos analisados nesta pesquisa:
+
+\begin{itemize}
+    \item Artigos de pesquisa completos;
+    \item Artigos redigidos em língua inglesa;
+    \item Publicações classificadas no sistema CAPES Qualis\footnote{A Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES) é uma agência do governo brasileiro responsável pela avaliação e fomento da pós-graduação.} entre os estratos A1 e B2;
+    \item Trabalhos revisados por pares e publicados em conferências ou periódicos científicos reconhecidos.
+\end{itemize}
 
 % ----------------------------------------------------------
 \section{Trabalhos Correlatos}\label{cap:trabalhos_relacionados}
 % ----------------------------------------------------------
 
-Foram lidos títulos e resumo de 125 artigos, dos quais 25 foram lidos completamente, e desses foram selecionados 5 que apresentam propostas semelhantes à proposta deste trabalho e por isso serão detalhados nas subseções seguintes.
+Foram lidos títulos e resumo de cento e vinte e cinco artigos, dos quais vinte e cinco foram lidos completamente, e desses foram selecionados quatro que apresentam propostas semelhantes à proposta deste trabalho e por isso serão detalhados nas subseções seguintes.
 
 % ----------------------------------------------------------
-\subsection{Inter-container Communication Aware Container Placement in Fog Computing}
+\subsection{Microservice instances selection and load balancing in fog computing using
+deep reinforcement learning approach}
 % ----------------------------------------------------------
 
-Neste trabalho, os autores propõem um algoritmo genético para a colocação de contêineres, destacando a abordagem via RDMA (Remote Direct Memory Access) por sua capacidade de reduzir significativamente a latência de rede e a utilização da CPU do host. O RDMA permite acesso direto à memória de outro host sem envolvimento do sistema operacional, resultando em uma comunicação mais rápida e eficiente. Comparado com os modos Host e Overlay, a comunicação RDMA oferece vantagens significativas em termos de desempenho e redução de latência. Além disso, o artigo aborda a importância do isolamento adequado entre contêineres para garantir a estabilidade e segurança do sistema, aspectos críticos em ambientes de computação em névoa onde múltiplos contêineres compartilham os mesmos recursos físicos.
+Os autores propõem uma abordagem para a seleção de instâncias de microsserviços e para o balanceamento de carga em ambientes de computação em névoa, empregando técnicas de Deep Reinforcement Learning. O estudo parte do princípio de que aplicações da Internet das Coisas podem ser estruturadas de forma modular, utilizando arquiteturas baseadas em microsserviços implantados próximos à borda da rede. Essa configuração, denominada computação fog nativa, busca superar as limitações de latência e de custo de comunicação dos modelos puramente em nuvem ao permitir o processamento distribuído de tarefas entre dispositivos, nós de névoa e servidores centrais \cite{boudieb2024}.
 
-Os resultados das simulações mostram que a inclusão de RDMA pode melhorar substancialmente o desempenho das aplicações, destacando a importância de selecionar a tecnologia de comunicação inter-contêiner mais adequada para cada situação. Cada contêiner pode utilizar o protocolo de comunicação que melhor se adapta às suas necessidades específicas, proporcionando maior eficiência e flexibilidade na comunicação entre contêineres. Isso permite que os sistemas de computação em névoa mantenham a eficiência e a performance ao lidar com a comunicação entre diversos protocolos, assegurando que cada contêiner opere com o protocolo mais apropriado para suas funções.
+No modelo proposto, cada aplicação é composta por um conjunto de microsserviços interdependentes organizados em planos de serviço. O desafio central é selecionar esses planos de forma dinâmica e eficiente em ambientes muito variáveis, nos quais a carga de trabalho e as condições de rede mudam constantemente. Para isso, os autores apresentam o método Microservice Instances Selection Policy, que utiliza aprendizado por reforço profundo para otimizar a alocação de microsserviços, reduzindo atrasos e distribuindo a carga de forma equilibrada entre os nós disponíveis. O algoritmo incorpora mascaramento de ações, mapeamento adaptativo de ações e um esquema de experience replay ajustado para melhorar a eficiência e a estabilidade do treinamento.
 
-% ----------------------------------------------------------
-\subsection{EXEGESIS: Extreme Edge Resource Harvesting for a Virtualized Fog Environment}
-% ----------------------------------------------------------
-
-Neste trabalho, os autores propõem a arquitetura EXEGESIS, que aborda os desafios de comunicação e processamento de dados na névoa. A arquitetura de três camadas inclui a camada "mist", composta por dispositivos interconectados que formam vizinhanças locais; a camada "vFog", que permite interconexões dinâmicas entre essas vizinhanças; e a camada de nuvem, que oferece recursos abundantes e facilita a interconexão dos elementos vFog. Esta estrutura modular e hierárquica visa melhorar a utilização de recursos, reduzir a latência e melhorar a eficiência do sistema, permitindo a conversão e integração de protocolos diversos.
-
-No contexto da comunicação com diversos protocolos, EXEGESIS propõe uma plataforma de orquestração que facilita a interoperabilidade entre dispositivos utilizando diferentes padrões e tecnologias. A camada "vFog" age como um intermediário virtual, coordenando os recursos e a comunicação entre as névoas e a nuvem, garantindo que dados críticos sejam processados e armazenados onde podem agregar mais valor.
+Os resultados experimentais indicam que a política proposta reduz a taxa média de falhas em até sessenta e cinco por cento e melhora o balanceamento de carga em cerca de quarenta e cinco por cento em relação a algoritmos convencionais. O trabalho reforça a importância da colaboração entre névoa e nuvem para garantir escalabilidade, desempenho e resiliência em aplicações sensíveis ao tempo.
 
 % ----------------------------------------------------------
-\subsection{Extending Scalability of IoT/M2M Platforms with Fog Computing}
+\subsection{Enhancing modular application placement in a hierarchical fog computing: A
+latency and communication cost-sensitive approach}
 % ----------------------------------------------------------
 
-Neste trabalho, os autores propõem a migração do oneM2M, uma plataforma global de IoT/M2M, para uma arquitetura de névoa baseada em contêineres hierárquicos. Esta abordagem visa resolver os problemas de escalabilidade e latência ao trazer a capacidade de processamento e armazenamento para mais perto dos dispositivos finais.
+Neste trabalho é proposto uma estratégia de posicionamento de aplicações modulares em uma arquitetura hierárquica de computação em névoa, denominada Least Impact X, abreviada como LI X. O estudo aborda desafios de alocação de recursos em cenários com vários níveis de névoa, buscando reduzir o tempo de resposta e o custo de comunicação em aplicações sensíveis à latência. A motivação é evitar o esgotamento de recursos nas camadas mais próximas da borda quando requisitos específicos de uma aplicação são priorizados sem considerar o efeito global na hierarquia \cite{oliveira2024}.
 
-Para garantir a comunicação eficiente entre os diversos componentes da arquitetura, o oneM2M suporta a ligação de suas interfaces de comunicação aos protocolos HTTP e CoAP, fornecendo APIs Restful sobre todas essas interfaces. Isso permite que diferentes tipos de dispositivos e serviços se comuniquem de maneira eficaz, utilizando o protocolo mais adequado para cada caso. Por exemplo, HTTP pode ser usado para comunicação de dados mais robusta e complexa, enquanto o CoAP é ideal para dispositivos com restrições de recursos e necessidade de comunicação leve.
-
-% ----------------------------------------------------------
-\subsection{Privacy preserving data aggregation with fault tolerance in fog-enabled smart grids}
-% ----------------------------------------------------------
-
-Neste trabalho, os autores propõem um esquema de agregação de dados seguro e tolerante a falhas para grades inteligentes (SG) habilitadas por computação em névoa. O estudo aborda os desafios de privacidade e segurança em SG, onde os medidores inteligentes (SM) coletam dados de consumo de eletricidade dos usuários e os transmitem para os provedores. Para garantir a privacidade, o esquema utiliza o criptossistema Boneh-Goh-Nissam (BGN) para criptografar os dados de medição e o algoritmo de assinatura digital de curva elíptica (ECDSA) para autenticação da fonte. A tolerância a falhas é assegurada ao permitir que os nós de névoa (FN) substituam os dados dos medidores com falha pelos últimos dados válidos armazenados, sem a necessidade de comunicação adicional com autoridades confiáveis.
-
-O estudo também destaca a importância de proteger os dados dos consumidores em grades inteligentes, onde a agregação segura de dados é crucial para evitar a divulgação de informações sensíveis. A arquitetura baseada em névoa permite a agregação de dados próximo aos usuários finais, reduzindo a latência e os custos de comunicação. A utilização de criptografia homomórfica permite operações sobre dados criptografados, mantendo a privacidade dos usuários. A abordagem adotada assegura que, mesmo em presença de medidores defeituosos, a agregação de dados continua eficaz e eficiente, fornecendo resultados estimativos precisos para a gestão de eletricidade nas grades inteligentes.
+A proposta distribui os módulos entre os níveis de névoa de forma a minimizar o impacto sobre recursos críticos próximos à borda e, ao mesmo tempo, reduzir o tempo de resposta e o consumo de largura de banda. O algoritmo considera métricas de qualidade de serviço para equilibrar a utilização de recursos e evitar ociosidade em níveis superiores. Em simulações no iFogSim, a abordagem supera alternativas da literatura ao apresentar menor latência média e menor custo de comunicação, além de uso mais eficiente de recursos computacionais.
 
 % ----------------------------------------------------------
-\subsection{FPDA: Fault-Tolerant and Privacy-Enhanced Data Aggregation Scheme in Fog-Assisted Smart Grid}
+\subsection{A Scalable Fog Computing Solution for Industrial Predictive
+Maintenance and Customization}
 % ----------------------------------------------------------
 
-Neste trabalho, os autores propõem a agregação de dados em redes inteligentes (SG) com foco na preservação da privacidade e tolerância a falhas. O FPDA propõe um método de agregação de dados que permite a disponibilidade de dados e a preservação da privacidade simultaneamente. A tolerância a falhas garante que a descriptografia possa ser realizada com sucesso mesmo que alguns medidores inteligentes (SMs) falhem, sem a necessidade de uma autoridade confiável centralizada ou atualizações de chaves após cada recuperação de falha.
+É apresentado uma solução de computação em névoa para manutenção preditiva industrial e para customização de sistemas de Internet das Coisas industriais. A arquitetura é modular e flexível e combina sensores Nicla Sense ME, um concentrador em Raspberry Pi e um modelo LSTM para análise preditiva em tempo quase real. O diferencial é um ambiente sandbox que permite integrar modelos de aprendizado de máquina de forma isolada, preservando a segurança e a estabilidade do núcleo da plataforma. A solução utiliza Docker para encapsular módulos e escalar para dezenas de nós sensores sem degradação perceptível de desempenho, adotando ainda práticas de segurança como autenticação multifatorial, criptografia e detecção de anomalias \cite{dagostino2025}.
 
-A abordagem FPDA utiliza uma criptografia homomórfica aditiva, onde a descriptografia do texto cifrado agregado é equivalente à soma direta de todas as leituras em texto claro. O esquema é projetado para operar eficientemente em uma arquitetura assistida por névoa (fog), onde os nós de névoa (FNs) realizam a agregação de dados antes de transmiti-los ao centro de controle (CC). Quando alguns SMs falham, os FNs iniciam interações adicionais de solicitação-resposta com um número limitado de SMs para reconstruir as chaves parciais necessárias. Esse método, baseado em um esquema de compartilhamento de segredo de limite (tSSS) estendido, permite que os SMs reconstruam segredos subsequentes sem revelar suas ações originais, mantendo assim a privacidade e a segurança.
+Nos experimentos, o sistema apresentou erro quadrático médio baixo e alta acurácia em laboratório e manteve desempenho consistente em ambiente industrial. O erro quadrático médio, também referido como RMSE, mede a diferença média entre valores previstos e valores observados e quanto menor melhor. A acurácia indica a proporção de previsões corretas em relação ao total. Os resultados reforçam a importância de integrar técnicas de inteligência artificial em ambientes industriais com recursos restritos para reduzir paradas, otimizar uso de recursos e permitir personalização.
+
+% ----------------------------------------------------------
+\subsection{Testbed analysis of multi fog architecture for interoperable Internet
+of Things}
+% ----------------------------------------------------------
+
+Os autores investigam uma arquitetura multinévoa com interoperabilidade semântica para aplicações em tempo real, implementada e avaliada em ambiente experimental. O objetivo é permitir que nós de névoa troquem informações e serviços de forma direta e eficaz, reduzindo a dependência de processamento em nuvem. A proposta desloca para a névoa funções usuais do modelo semântico, como filtragem, anotação e mapeamento, o que permite realizar parte do processamento localmente e diminui o trânsito de dados para servidores distantes \cite{rahman2024}.
+
+No protótipo, dispositivos Raspberry Pi 2 Model B executam semântica local, armazenamento e serviços. Quando um nó está sobrecarregado, ele avalia se vale a pena repassar a tarefa para outro nó vizinho com base em tempo e energia estimados. Caso nenhum candidato seja melhor, a tarefa é encaminhada para a nuvem. A arquitetura utiliza duas camadas, chamadas L2 Fog e L1 Fog. A primeira atua como gateway para sensores e atuadores usando 6LoWPAN e a segunda concentra serviços e banco de dados com Apache e MariaDB. Há ainda sincronização hierárquica baseada em identificadores e um mecanismo de controle de fila que define quando iniciar a transferência de tarefas.
+
+Os experimentos mostram que o tempo médio de ida e volta de uma mensagem, conhecido como Round Trip Time ou RTT, foi reduzido em cerca de trinta e sete por cento em comparação ao uso direto da nuvem. O RTT é o intervalo total que uma solicitação leva para ir do dispositivo ao destino e retornar com a resposta e é um indicador direto de responsividade. No estudo, valores médios passaram de aproximadamente duzentos e oitenta milissegundos na nuvem para aproximadamente cento e três milissegundos com a arquitetura multinévoa. Também houve redução de cerca de doze por cento no tempo de execução de tarefas quando a transferência entre nós de névoa estava ativa. O tempo de execução é o período entre o envio de uma tarefa e a conclusão do processamento. Os autores ainda registram diminuição média de dez por cento no consumo de energia dos nós em relação ao funcionamento sem transferência entre nós. O consumo de energia é a quantidade de energia elétrica utilizada pelos dispositivos para realizar as tarefas e é crucial em cenários com recursos limitados.
+
+Esses ganhos são explicados pelo processamento local de parte da semântica, pela divisão de carga entre nós próximos e pelo envio à nuvem apenas quando há real vantagem.
 
 % ----------------------------------------------------------
 \section{Comparativo com Trabalhos Correlatos}
 % ----------------------------------------------------------
 
-A tabela 2 apresenta um comparativo entre as propostas apresentadas na literatura e a proposta deste trabalho, destacando as características atendidas por cada uma. A proposta deste trabalho se diferencia das demais por algumas razões. Primeiramente, a arquitetura modular proposta para cada nó da névoa inclui múltiplas camadas, cada uma com funções específicas que facilitam a manutenção e a flexibilidade do sistema. Isso contrasta com outras propostas que geralmente utilizam uma aplicação monolítica ou o uso de containers. A abordagem monolítica, embora simplificada em termos de implantação inicial, apresenta desafios em termos de manutenção e escalabilidade. Já o uso de containers, apesar de proporcionar uma certa modularidade, pode enfrentar problemas relacionados ao empacotamento e à sobrecarga de gerenciamento de múltiplos containers.
+Conforme apresentado nas subseções anteriores, os trabalhos analisados exploram diferentes perspectivas da computação em névoa, cada um contribuindo de maneira específica para o avanço da área. De modo geral, observa-se que as propostas anteriores tratam de aspectos pontuais, como otimização de desempenho, posicionamento de módulos e modularidade aplicada a contextos específicos, enquanto o presente trabalho reúne e amplia esses conceitos, com ênfase na interoperabilidade e comunicação entre domínios distintos de névoa.
 
-\begin{table}[htb]
-	\ABNTEXfontereduzida
-	\caption{\label{tab:Tab_ComparativoPorCaracteristica}Características atendidas por proposta}
-	\begin{tabular}{@{}p{6.5cm}p{7.5cm}@{}}
-		\toprule
-		\textbf{Característica} & \textbf{Propostas que atendem} \\ \midrule
-		Uso de RDMA                     & Proposta 1 \\ \midrule
-		Uso de Contêineres             & Proposta 1; Proposta 2; Proposta 3 \\ \midrule
-		Arquitetura Modular            & Este Trabalho \\ \midrule
-		Suporte a Múltiplos Protocolos & Proposta 1; Proposta 2; Proposta 3; Este Trabalho \\ \midrule
-		Camada de Serviço Flexível     & Este Trabalho \\ \midrule
-		Comunicação entre Névoas       & Este Trabalho \\ \midrule
-		Criptografia Homomórfica       & Proposta 4 \\ \midrule
-		A aplicação no nó é monolítica & Proposta 4; Proposta 5 \\ \bottomrule
-	\end{tabular}
-	\fonte{Do autor.}
-\end{table}
+O trabalho de Boudieb et al.~\cite{boudieb2024} propõe o uso de aprendizado por reforço profundo para selecionar instâncias de microsserviços e realizar o balanceamento de carga de forma adaptativa. A abordagem demonstra eficiência na redução de falhas e na melhoria da distribuição de tarefas, mas permanece restrita a um único domínio de névoa, sem prever cooperação entre diferentes nós.
+Por sua vez, Oliveira et al.~\cite{oliveira2024} apresentam uma estratégia hierárquica para o posicionamento de aplicações modulares, buscando reduzir a latência e o custo de comunicação. Embora eficiente na alocação de módulos, a proposta não contempla mecanismos de interoperabilidade entre diferentes camadas ou arquiteturas de névoa.
 
-Na arquitetura proposta nesse trabalho, o fluxo de dados inicia na borda, onde o nó primário da névoa atua como ponto de entrada, registrando os medidores conectados, realizando o balanceamento de carga e, quando necessário, redirecionando solicitações excedentes para outros domínios de névoa que disponham de maior capacidade de processamento.
+A solução de D’Agostino, Longo e Palmieri~\cite{dagostino2025}, voltada à manutenção preditiva industrial, introduz modularidade com o uso de contêineres e integração de aprendizado de máquina em tempo quase real. Essa proposta apresenta alta escalabilidade e segurança, mas limita-se ao contexto industrial e não aborda a colaboração entre domínios de névoa.
+Já Rahman e Hussain~\cite{rahman2024} propõem uma arquitetura multinévoa com interoperabilidade semântica, permitindo que nós de névoa colaborem com base em métricas como tempo de resposta e consumo de energia. Apesar dos avanços em comunicação distribuída, o modelo ainda depende de mecanismos fixos de decisão e não incorpora uma estrutura modular interna aos nós.
 
-Cada nó da névoa é estruturado em três camadas. A camada de protocolos é responsável por receber e transmitir dados em diferentes formatos. A camada de processamento gerencia os elementos essenciais para a operação do nó, realizando armazenamento temporário e interações internas necessárias para manter o funcionamento contínuo. Já a camada de serviço executa aplicações configuráveis que processam os dados conforme a lógica da aplicação, preparando-os para as próximas etapas.
+A arquitetura proposta neste trabalho diferencia-se por integrar múltiplas camadas modulares dentro de cada nó de névoa, combinando flexibilidade estrutural, interoperabilidade e cooperação entre domínios. Cada camada possui responsabilidades bem definidas: a camada de protocolos realiza a comunicação com diferentes dispositivos e formatos de dados; a camada de processamento gerencia o fluxo interno, realiza o armazenamento temporário e coordena as tarefas; e a camada de serviço executa aplicações configuráveis que processam e preparam os dados para as etapas seguintes. Essa organização favorece a manutenção, a escalabilidade e a integração eficiente de novos serviços, permitindo que partes específicas do sistema sejam adaptadas sem comprometer o funcionamento geral.
 
-Após o processamento nos nós especializados, as informações seguem para um nó agregador, que consolida dados provenientes de múltiplas névoas em arquivos estruturados, otimizando o tráfego antes do envio à nuvem e preparando o material para análises em larga escala.
+Além da modularidade interna, outro diferencial importante é a comunicação entre domínios de névoa, que permite o balanceamento cooperativo de carga e o redirecionamento de solicitações entre diferentes regiões conforme a disponibilidade de recursos. O nó primário atua como ponto de entrada e registro dos dispositivos conectados, garantindo distribuição equilibrada e continuidade de operação.
 
-Conforme apresentado anteriormente, essa proposta apresenta alguns diferenciais em relação aos trabalhos correlatos. A arquitetura proposta para a comunicação entre névoas será explicada em detalhes a seguir.
+Com base nesses conceitos, o próximo capítulo apresenta em detalhes a arquitetura modular proposta, descrevendo suas camadas, fluxos de comunicação e mecanismos de integração entre névoas, evidenciando como essa estrutura supera as limitações identificadas nos trabalhos correlatos.

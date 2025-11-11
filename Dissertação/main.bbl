@@ -109,6 +109,49 @@
       \field{pages}{62\bibrangedash 67}
       \range{pages}{6}
     \endentry
+    \entry{boudieb2024}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=989a4c4a6c46634c8cbcc7fc6f6f1b5d}{%
+           family={Boudieb},
+           familyi={B\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=93a9a8c6c7ad42de3452d5a507cb3206}{%
+           family={Ayed},
+           familyi={A\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b24868142e5c2f0a06b61077595480c9}{%
+           family={Harous},
+           familyi={H\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{fullhash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{fullhashraw}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{bibnamehash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{authorbibnamehash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{authornamehash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{authorfullhash}{d294bcbd48db0d6248948f0c8a712e40}
+      \strng{authorfullhashraw}{d294bcbd48db0d6248948f0c8a712e40}
+      \field{sortinit}{B}
+      \field{sortinithash}{d7095fff47cda75ca2589920aae98399}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Future Generation Computer Systems}
+      \field{title}{Microservice Instances Selection and Load Balancing in Fog Computing}
+      \field{volume}{154}
+      \field{year}{2024}
+      \field{pages}{510\bibrangedash 523}
+      \range{pages}{14}
+      \keyw{Fog Computing,Microservices,Load Balancing,Reinforcement Learning}
+    \endentry
     \entry{cassel2024}{article}{}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=3b5cc6a6fe1a7d6bf95113edc1a4ed88}{%
@@ -168,6 +211,50 @@
       \field{year}{2024}
       \field{pages}{51\bibrangedash 66}
       \range{pages}{16}
+    \endentry
+    \entry{dagostino2025}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=e87a5813a1f8f032012be8013b4727ff}{%
+           family={D’Agostino},
+           familyi={D\bibinitperiod},
+           given={R.},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7cf63b174792858f478dbff221a44d2f}{%
+           family={Longo},
+           familyi={L\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=995b346addd0d03dac3a91844d715335}{%
+           family={Palmieri},
+           familyi={P\bibinitperiod},
+           given={G.},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{fullhash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{fullhashraw}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{bibnamehash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{authorbibnamehash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{authornamehash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{authorfullhash}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \strng{authorfullhashraw}{52a7cfb08bfb8a31d2161bc8edca5815}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Electronics}
+      \field{number}{2}
+      \field{title}{A Scalable Fog Computing Solution for Industrial Predictive Maintenance}
+      \field{volume}{14}
+      \field{year}{2025}
+      \field{pages}{1\bibrangedash 18}
+      \range{pages}{18}
+      \keyw{Fog Computing,Industrial IoT,Predictive Maintenance,Scalability}
     \endentry
     \entry{gourley2002}{book}{}{}
       \name{author}{5}{}{%
@@ -351,6 +438,86 @@
       \field{year}{2017}
       \field{pages}{173\bibrangedash 179}
       \range{pages}{7}
+    \endentry
+    \entry{oliveira2024}{article}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=5a0d0466cc1cd5df7bb867e35642c99d}{%
+           family={Oliveira},
+           familyi={O\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3ac50219fbc6148a445901efd52c6b11}{%
+           family={Santos},
+           familyi={S\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=49fb617d7a56ef4e000b788ea9dc4105}{%
+           family={Mendes},
+           familyi={M\bibinitperiod},
+           given={L.},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{fullhash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{fullhashraw}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{bibnamehash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{authorbibnamehash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{authornamehash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{authorfullhash}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \strng{authorfullhashraw}{2fd9af1bdfbf93cad0815685cb84b10d}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computer Communications}
+      \field{title}{Enhancing Modular Application Placement in Hierarchical Fog Computing}
+      \field{volume}{222}
+      \field{year}{2024}
+      \field{pages}{180\bibrangedash 194}
+      \range{pages}{15}
+      \keyw{Fog Computing,Application Placement,Hierarchical Architecture,Latency,Communication Cost}
+    \endentry
+    \entry{rahman2024}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=7f4d4de3640c56f6bb20fb1e0f2782f1}{%
+           family={Rahman},
+           familyi={R\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6ad5b5574b5463284700ecef44cf5084}{%
+           family={Hussain},
+           familyi={H\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{fullhash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{fullhashraw}{500be6d5c299720b2660375e9fa2436e}
+      \strng{bibnamehash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{authorbibnamehash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{authornamehash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{authorfullhash}{500be6d5c299720b2660375e9fa2436e}
+      \strng{authorfullhashraw}{500be6d5c299720b2660375e9fa2436e}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Wireless Networks}
+      \field{title}{Testbed Analysis of Multi-Fog Architecture for Interoperable IoT}
+      \field{volume}{30}
+      \field{year}{2024}
+      \field{pages}{451\bibrangedash 463}
+      \range{pages}{13}
+      \keyw{Fog Computing,Multi-Fog Architecture,Interoperability,IoT,Testbed}
     \endentry
     \entry{rahmani2018}{article}{}{}
       \name{author}{7}{}{%

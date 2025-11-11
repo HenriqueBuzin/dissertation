@@ -20,15 +20,7 @@ Na Figura~\ref{fig:arquitetura_basica}, temos ilustrado uma arquitetura básica 
 
 No entanto, a diversidade de dispositivos e protocolos de comunicação ainda representa um obstáculo à interoperabilidade plena. A ausência de um padrão universalmente aceito dificulta a comunicação eficiente entre equipamentos heterogêneos.
 
-Para abordar esses desafios, este trabalho propõe uma arquitetura de névoa modular com suporte à comunicação entre diferentes névoas, a qual é composta por três camadas principais, descritas a seguir:
-
-\begin{itemize}
-    \item \textbf{Nó de Névoa Primário:} responsável por atuar como ponto de entrada da arquitetura de névoa. Ele realiza a conversão de protocolos de comunicação, o balanceamento de carga entre os demais nós de névoa e outros nós primários, além de localizar e coordenar os nós de névoa disponíveis.
-
-    \item \textbf{Nó de Névoa:} recebe os dados encaminhados pelo nó primário, realiza o pré-processamento local conforme a lógica da aplicação, e transmite os resultados ao nó agregador.
-
-    \item \textbf{Nó Agregador:} responsável por consolidar os dados processados pelos diversos nós de névoa em um único arquivo ou estrutura de dados, facilitando sua transmissão para a nuvem.
-\end{itemize}
+Com o objetivo de mitigar as limitações de interoperabilidade identificadas, este trabalho apresenta uma arquitetura modular de névoa capaz de estabelecer comunicação entre domínios distintos e gerenciar serviços de forma adaptável e distribuída.
 
 % ----------------------------------------------------------
 \section{Objetivos}
