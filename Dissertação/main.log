@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.10)  11 NOV 2025 15:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (MiKTeX 25.4) (preloaded format=pdflatex 2025.11.10)  11 NOV 2025 23:37
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1922,15 +1922,7 @@ Package biblatex Info: Automatic encoding selection.
 
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
- (main.bbl
-
-Package biblatex Warning: The following entry could not be found
-(biblatex)                in the database:
-(biblatex)                exegesis2021
-(biblatex)                Please verify the spelling and rerun
-(biblatex)                LaTeX afterwards.
-
-)
+ (main.bbl)
 Package biblatex Info: Reference section=0 on input line 219.
 Package biblatex Info: Reference segment=0 on input line 219.
  (beforetext/beforetext.tex
@@ -2063,13 +2055,13 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 
 ]
 
-Package glossaries Warning: Empty glossary for \printnoidxglossary[type={acronym}]. Rerun may be required (or you may have forgotten to use commands like \gls) on input line 186.
+Package glossaries Warning: Empty glossary for \printnoidxglossary[type={acronym}]. Rerun may be required (or you may have forgotten to use commands like \gls) on input line 185.
 
 [12
 
 ]
 
-Package glossaries Warning: Empty glossary for \printnoidxglossary[type={simbolos}]. Rerun may be required (or you may have forgotten to use commands like \gls) on input line 192.
+Package glossaries Warning: Empty glossary for \printnoidxglossary[type={simbolos}]. Rerun may be required (or you may have forgotten to use commands like \gls) on input line 191.
 
 [13
 
@@ -2080,7 +2072,7 @@ Package glossaries Warning: Empty glossary for \printnoidxglossary[type={simbolo
 
  (chapters/1-chapter.tex
 Cap\'{\i }tulo 1.
-<images/arquitetura_basica.png, id=238, 1027.84pt x 642.4pt>
+<images/arquitetura_basica.png, id=230, 1027.84pt x 642.4pt>
 File: images/arquitetura_basica.png Graphic file (type png)
 <use images/arquitetura_basica.png>
 Package pdftex.def Info: images/arquitetura_basica.png  used on input line 16.
@@ -2136,24 +2128,24 @@ LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
 
  (chapters/5-chapter.tex
 Cap\'{\i }tulo 5.
-<images/arquitetura_proposta.png, id=362, 770.88pt x 337.26pt>
+<images/arquitetura_proposta.png, id=354, 1027.84pt x 449.68pt>
 File: images/arquitetura_proposta.png Graphic file (type png)
 <use images/arquitetura_proposta.png>
 Package pdftex.def Info: images/arquitetura_proposta.png  used on input line 18.
-(pdftex.def)             Requested size: 455.0pt x 199.05885pt.
+(pdftex.def)             Requested size: 455.0pt x 199.06058pt.
 [31
 
 
 
 
  <./images/arquitetura_proposta.png>] [32]
-<images/camada_protocolos.png, id=372, 1541.76pt x 1027.84pt>
+<images/camada_protocolos.png, id=364, 1541.76pt x 1027.84pt>
 File: images/camada_protocolos.png Graphic file (type png)
 <use images/camada_protocolos.png>
 Package pdftex.def Info: images/camada_protocolos.png  used on input line 66.
 (pdftex.def)             Requested size: 318.49861pt x 212.32396pt.
  [33 <./images/camada_protocolos.png (PNG copy)>]
-<images/camada_processamento.png, id=378, 1541.76pt x 1027.84pt>
+<images/camada_processamento.png, id=370, 1541.76pt x 1027.84pt>
 File: images/camada_processamento.png Graphic file (type png)
 <use images/camada_processamento.png>
 Package pdftex.def Info: images/camada_processamento.png  used on input line 76.
@@ -2163,7 +2155,7 @@ Package pdftex.def Info: images/camada_processamento.png  used on input line 76.
 
  (chapters/6-chapter.tex
 Cap\'{\i }tulo 6.
-<images/container_manager.png, id=392, 1504.62125pt x 704.6325pt>
+<images/container_manager.png, id=384, 1504.62125pt x 704.6325pt>
 File: images/container_manager.png Graphic file (type png)
 <use images/container_manager.png>
 Package pdftex.def Info: images/container_manager.png  used on input line 30.
@@ -2183,7 +2175,7 @@ Overfull \hbox (8.224pt too wide) in paragraph at lines 167--168
 \T1/phv/m/n/12 (-10) ces-sa-mento ape-nas as in-for-ma-ções es-tri-ta-mente ne-ces-sá-rias para o pré-processamento,
  []
 
-<images/hpcc_landing_zone.png, id=417, 380.92313pt x 424.58624pt>
+<images/hpcc_landing_zone.png, id=409, 380.92313pt x 424.58624pt>
 File: images/hpcc_landing_zone.png Graphic file (type png)
 <use images/hpcc_landing_zone.png>
 Package pdftex.def Info: images/hpcc_landing_zone.png  used on input line 184.
@@ -2193,15 +2185,9 @@ Package pdftex.def Info: images/hpcc_landing_zone.png  used on input line 184.
 
  (chapters/7-chapter.tex
 Cap\'{\i }tulo 7.
-[42
-
-
-
-
-]
 LaTeX Info: Symbol \textrightarrow not provided by
             font family phv in TS1 encoding.
-            Default family used instead on input line 60.
+            Default family used instead on input line 24.
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmss' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
@@ -2212,36 +2198,38 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             See the microtype manual for details.
 LaTeX Info: Symbol \textrightarrow not provided by
             font family phv in TS1 encoding.
-            Default family used instead on input line 61.
+            Default family used instead on input line 25.
 LaTeX Info: Symbol \textrightarrow not provided by
             font family phv in TS1 encoding.
-            Default family used instead on input line 62.
+            Default family used instead on input line 26.
 LaTeX Info: Symbol \textrightarrow not provided by
             font family phv in TS1 encoding.
-            Default family used instead on input line 63.
- [43]) [44{C:/Users/henri/AppData/Roaming/MiKTeX/fonts/enc/dvips/epigrafica/epigraficahellenic.enc}]
+            Default family used instead on input line 27.
+[42
+
+
+
+
+]) [43]
 \openout2 = `chapters/8-chapter.aux'.
 
  (chapters/8-chapter.tex
 Cap\'{\i }tulo 8.
-
-LaTeX Warning: Citation 'exegesis2021' on page 45 undefined on input line 11.
-
-) [45
+) [44
 
 
 
 
-] [46]
+]
 
 Package biblatex Warning: No driver for 'standard'.
 (biblatex)                Using fallback driver on input line 308.
 
-[47
+[45
 
 
 
-] [48]
+] [46]
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
@@ -2268,17 +2256,17 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 42161 strings out of 467871
- 788319 string characters out of 5428442
- 1887340 words of memory out of 5000000
- 70067 multiletter control sequences out of 15000+600000
- 684855 words of font info for 240 fonts, out of 8000000 for 9000
+ 42160 strings out of 467871
+ 788262 string characters out of 5428442
+ 1888345 words of memory out of 5000000
+ 70065 multiletter control sequences out of 15000+600000
+ 685081 words of font info for 245 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,17n,117p,2606b,4447s stack positions out of 10000i,1000n,20000p,200000b,200000s
- <C:\Users\henri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss1200.pk> <C:\Users\henri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1200.pk><C:/Users/henri/AppData/Roaming/MiKTeX/fonts/type1/public/epigrafica/Epigrafica-Reonta.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on main.pdf (49 pages, 4003895 bytes).
+ <C:\Users\henri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcss1200.pk> <C:\Users\henri\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt1200.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvbo8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Program Files/MiKTeX/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on main.pdf (47 pages, 3971763 bytes).
 PDF statistics:
- 761 PDF objects out of 1000 (max. 8388607)
- 156 named destinations out of 1000 (max. 500000)
- 67603 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 735 PDF objects out of 1000 (max. 8388607)
+ 150 named destinations out of 1000 (max. 500000)
+ 67571 words of extra memory for PDF output out of 74296 (max. 10000000)
 

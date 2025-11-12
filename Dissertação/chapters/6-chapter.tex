@@ -18,7 +18,7 @@ Antes da utilização nos testes, ambos os conjuntos de dados passaram por um pr
 \section{Ambiente de Testes}
 % ----------------------------------------------------------
 
-O ambiente de testes foi configurado para representar um cenário de cidade inteligente, no qual cada domínio de névoa corresponde a um bairro distinto. Cada névoa pode conter um nó primário, um nó agregador e um número variável de nós de névoa e dispositivos, de acordo com a demanda e o tipo de aplicação simulada.
+O ambiente de testes foi configurado para representar um cenário de cidade inteligente, no qual cada domínio de névoa corresponde a um bairro distinto. Cada névoa pode conter um nó primário, uma quantidade variável de nós de névoa, e um nó agregador.
 
 A implantação e o gerenciamento desses componentes foram realizados por meio de uma interface web desenvolvida para este trabalho, que interage diretamente com o Docker para criar e controlar as instâncias. Essa interface permite selecionar o bairro (névoa) no qual os componentes serão implantados, definir o tipo de contêiner e a quantidade de instâncias, além de oferecer controle individual ou em grupo para iniciar, pausar, parar e visualizar logs.
 
@@ -36,7 +36,7 @@ A Figura~\ref{fig:container_manager} apresenta a tela de gerenciamento de contê
 \subsection{Ambiente Físico}
 % ----------------------------------------------------------
 
-Os experimentos foram realizados em quatro máquinas físicas, cada uma com uma função específica dentro da arquitetura distribuída proposta. Cada máquina executou contêineres Docker gerenciados por uma interface web.
+Os experimentos foram realizados em quatro máquinas físicas, cada uma com uma função específica dentro da arquitetura distribuída proposta. Cada máquina executou contêineres Docker gerenciados por uma interface web, e todas as comunicações entre elas ocorreram por meio de túneis seguros configurados para interligar redes distintas.
 
 A Tabela~\ref{tab:especificacoes_maquinas} apresenta as especificações de hardware e a função de cada equipamento. As máquinas PC-01 e PC-02, localizadas em Florianópolis, operaram em uma mesma rede local compartilhada. Elas foram configuradas como nós de névoa completos, denominados Névoa A e Névoa B, cada uma composta por um nó primário, um nó agregador e uma quantidade variável de nós de névoa.
 
@@ -51,70 +51,70 @@ A máquina PC-03, também localizada em Florianópolis, foi dedicada à camada d
         \hline
             \multicolumn{2}{|c|}{\textbf{PC-01}} \\
         \hline
-            City & Florianópolis \\
+            Cidade & Florianópolis \\
         \hline
-            Network & Shared with PC-02 \\
+            Rede & Compartilhada com o PC-02 \\
         \hline
-            Function & Fog A \\
+            Função & Névoa A \\
         \hline
-            Processor & Intel Core i7-7700K @ 4.20GHz \\
+            Processador & Intel Core i7-7700K @ 4.20GHz \\
         \hline
-            Memory (RAM) & 32 GB DDR4 \\
+            Memória (RAM) & 32 GB DDR4 \\
         \hline
-            Storage & 2 TB SSD \\
+            Armazenamento & 2 TB SSD \\
         \hline
-            Operating System & Windows 11 64-bit \\
+            Sistema Operacional & Windows 11 64-bit \\
         \hline\hline
 
         \multicolumn{2}{|c|}{\textbf{PC-02}} \\
         \hline
-            City & Florianópolis \\
+            Cidade & Florianópolis \\
         \hline
-            Network & Shared with PC-01 \\
+            Rede & Compartilhada com o PC-01 \\
         \hline
-            Function & Fog B \\
+            Função & Névoa B \\
         \hline
-            Processor & Intel Core i7-7500U @ 2.70GHz \\
+            Processador & Intel Core i7-7500U @ 2.70GHz \\
         \hline
-            Memory (RAM) & 36 GB DDR4 \\
+            Memória (RAM) & 36 GB DDR4 \\
         \hline
-            Storage & 480 GB SSD \\
+            Armazenamento & 480 GB SSD \\
         \hline
-            Operating System & Windows 11 64-bit \\
+            Sistema Operacional & Windows 11 64-bit \\
         \hline\hline
 
         \multicolumn{2}{|c|}{\textbf{PC-03}} \\
         \hline
-            City & Florianópolis \\
+            Cidade & Florianópolis \\
         \hline
-            Network & Independent \\
+            Rede & Independente \\
         \hline
-            Function & Cloud (HPCC Systems) \\
+            Função & Nuvem (HPCC Systems) \\
         \hline
-            Processor & Intel Core i3 5005U @ 2.0GHz \\
+            Processador & Intel Core i3 5005U @ 2.0GHz \\
         \hline
-            Memory (RAM) & 8GB DDR3 \\
+            Memória (RAM) & 8GB DDR3 \\
         \hline
-            Storage & 240 GB SSD \\
+            Armazenamento & 240 GB SSD \\
         \hline
-            Operating System & Windows 10 64-bit \\
+            Sistema Operacional & Windows 10 64-bit \\
         \hline\hline
 
         \multicolumn{2}{|c|}{\textbf{PC-04}} \\
         \hline
-            City & Curitiba \\
+            Cidade & Curitiba \\
         \hline
-            Network & Independent \\
+            Rede & Independente \\
         \hline
-            Function & Meters \\
+            Função & Medidores \\
         \hline
-            Processor & AMD Ryzen 5 3600 @ 3.60GHz \\
+            Processador & AMD Ryzen 5 3600 @ 3.60GHz \\
         \hline
-            Memory (RAM) & 32 GB DDR4 \\
+            Memória (RAM) & 32 GB DDR4 \\
         \hline
-            Storage & 1TB SSD \\
+            Armazenamento & 1TB SSD \\
         \hline
-            Operating System & Windows 10 64-bit \\
+            Sistema Operacional & Windows 10 64-bit \\
         \hline
     \end{tabular}
     \fonte{Do autor.}
@@ -162,7 +162,7 @@ No nó agregador, as medições de cada domínio de névoa foram consolidadas em
 
 Nos nós de névoa, a comunicação entre a camada de serviços e a camada de processamento é realizada utilizando \textit{GraphQL} como linguagem de consulta de dados. Essa abordagem permite que a aplicação especifique exatamente quais campos e registros deseja receber, evitando transferências desnecessárias e reduzindo a sobrecarga de processamento.  
 
-O \textit{GraphQL} possibilita ainda a consulta a múltiplas fontes de dados de forma unificada, agregando resultados distintos em uma única resposta. Nos testes realizados, o armazenamento local temporário nos nós de névoa foi implementado com \textit{MongoDB}, escolhido por sua flexibilidade para lidar com dados em formato \texttt{JSON} e pela capacidade de inserir registros heterogêneos sem a exigência de um esquema fixo.  
+O \textit{GraphQL} possibilita ainda a consulta a múltiplas fontes de dados de forma unificada, agregando resultados distintos em uma única resposta. Nos testes realizados, o armazenamento local temporário nos nós de névoa foi implementado com banco de dados \textit{MongoDB}, escolhido por sua flexibilidade para lidar com dados em formato \texttt{JSON} e pela capacidade de inserir registros heterogêneos sem a exigência de um esquema fixo.  
 
 Com essa integração, a camada de serviços consegue solicitar à camada de processamento apenas as informações estritamente necessárias para o pré-processamento, recebendo uma resposta já filtrada e adaptada ao contexto da aplicação.
 

@@ -46,19 +46,15 @@
 \contentsline {section}{\numberline {6.1}Contextualização do Problema}{36}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Ambiente de Testes}{36}{section.6.2}%
 \contentsline {subsection}{\numberline {6.2.1}Ambiente Físico}{37}{subsection.6.2.1}%
-\contentsline {section}{\numberline {6.3}Tecnologias e Protocolos}{37}{section.6.3}%
+\contentsline {section}{\numberline {6.3}Tecnologias e Protocolos}{38}{section.6.3}%
 \contentsline {section}{\numberline {6.4}Distribuição entre Névoas e Balanceamento de Carga}{39}{section.6.4}%
-\contentsline {section}{\numberline {6.5}GraphQL}{39}{section.6.5}%
+\contentsline {section}{\numberline {6.5}GraphQL}{40}{section.6.5}%
 \contentsline {section}{\numberline {6.6}HPCC Systems na Camada de Nuvem}{40}{section.6.6}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Resultados}}{42}{chapter.7}%
 \contentsline {section}{\numberline {7.1}Valores Medidos}{42}{section.7.1}%
-\contentsline {section}{\numberline {7.2}Latência ponta a ponta}{43}{section.7.2}%
-\contentsline {section}{\numberline {7.3}Throughput}{43}{section.7.3}%
-\contentsline {section}{\numberline {7.4}Taxa de entrega}{43}{section.7.4}%
-\contentsline {section}{\numberline {7.5}Fator de agregação}{44}{section.7.5}%
-\contentsline {section}{\numberline {7.6}Redução de requisições à nuvem}{44}{section.7.6}%
+\contentsline {section}{\numberline {7.2}Discussão dos Resultados}{43}{section.7.2}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {8}\MakeTextUppercase []{Conclusão}}{45}{chapter.8}%
+\contentsline {chapter}{\chapternumberline {8}\MakeTextUppercase []{Conclusão}}{44}{chapter.8}%
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{Refer\^encias}{47}{section*.26}%
+\contentsline {chapter}{Refer\^encias}{45}{section*.26}%

@@ -623,9 +623,6 @@ INPUT .\chapters\7-chapter.tex
 INPUT chapters\7-chapter.tex
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\ecss1200.tfm
 INPUT C:\Program Files\MiKTeX\fonts\tfm\jknappen\ec\tcss1200.tfm
-INPUT C:\Users\henri\AppData\Roaming\MiKTeX\fonts\vf\public\epigrafica\epigraficahi7r.vf
-INPUT C:\Users\henri\AppData\Roaming\MiKTeX\fonts\tfm\public\epigrafica\epigraficahi7a.tfm
-INPUT C:\Users\henri\AppData\Roaming\MiKTeX\fonts\enc\dvips\epigrafica\epigraficahellenic.enc
 INPUT .\chapters\8-chapter.tex
 INPUT .\chapters\8-chapter.tex
 OUTPUT chapters\8-chapter.aux
@@ -667,8 +664,6 @@ INPUT C:\Users\henri\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcs
 INPUT C:\Users\henri\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\tcss1200.pk
 INPUT C:\Users\henri\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1200.pk
 INPUT C:\Users\henri\AppData\Local\MiKTeX\fonts\pk\ljfour\jknappen\ec\dpi600\ectt1200.pk
-INPUT C:\Users\henri\AppData\Roaming\MiKTeX\fonts\type1\public\epigrafica\Epigrafica-Reonta.pfb
-INPUT C:\Users\henri\AppData\Roaming\MiKTeX\fonts\type1\public\epigrafica\Epigrafica-Reonta.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\public\amsfonts\cm\cmsy10.pfb
 INPUT C:\Program Files\MiKTeX\fonts\type1\urw\helvetic\uhvb8a.pfb

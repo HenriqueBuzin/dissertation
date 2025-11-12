@@ -2508,8 +2508,12 @@
     <bcf:citekey order="19" intorder="1">rahman2024</bcf:citekey>
     <bcf:citekey order="20" intorder="1">uci_energy</bcf:citekey>
     <bcf:citekey order="21" intorder="1">greek_water</bcf:citekey>
-    <bcf:citekey order="22" intorder="1">openfog2018</bcf:citekey>
-    <bcf:citekey order="23" intorder="1">exegesis2021</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">dagostino2025</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">openfog2018</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">rahman2024</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">oliveira2024</bcf:citekey>
+    <bcf:citekey order="26" intorder="1">boudieb2024</bcf:citekey>
+    <bcf:citekey order="27" intorder="1">openfog2018</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
