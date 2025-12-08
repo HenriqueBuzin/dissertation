@@ -12,7 +12,7 @@ Além disso, sempre que aplicável, os resultados são comparados com aqueles ob
 
 Os valores apresentados nas Tabelas~\ref{tab:latencias} e~\ref{tab:memoria} foram obtidos a partir de \textit{timestamps} registrados nos pontos de entrada e saída de cada componente, bem como de medições de consumo de memória realizadas durante o envio das mensagens.  
 
-A Tabela~\ref{tab:latencias} mostra as latências mínimas, máximas e médias para cada segmento do fluxo, desde a recepção inicial no medidor até o processamento final na plataforma HPCC Systems.  
+A Tabela~\ref{tab:latencias} mostra as latências mínimas, máximas e médias para cada segmento do fluxo, desde a recepção inicial no medidor até o processamento final na plataforma \gls{HPCC} \textit{Systems}.  
 Já a Tabela~\ref{tab:memoria} apresenta o consumo médio de memória por componente do sistema, obtido durante a execução contínua de 680.000 requisições, o que garante consistência estatística para os valores apresentados.
 
 \begin{table}[htb]
@@ -21,10 +21,10 @@ Já a Tabela~\ref{tab:memoria} apresenta o consumo médio de memória por compon
     \begin{tabular}{|c|c|c|c|}
         \hline
             \textbf{Caminho} & \textbf{Mínimo (ms)} & \textbf{Máximo (ms)} & \textbf{Média (ms)} \\ \hline
-            Medidor → Nó Primário & 456 & 2455 & 1455 \\ \hline
-            Nó Primário → Nó de Névoa & 1 & 3 & 2 \\ \hline
-            Nó de Névoa → Agregador & 2 & 3 & 2,5 \\ \hline
-            Agregador → Nuvem (\gls{HPCC} \textit{Systems}) & 600 & 1600 & 1100 \\ \hline
+            Medidor $\rightarrow$ Nó Primário & 456 & 2455 & 1455 \\ \hline
+            Nó Primário $\rightarrow$ Nó de Névoa & 1 & 3 & 2 \\ \hline
+            Nó de Névoa $\rightarrow$ Agregador & 2 & 3 & 2,5 \\ \hline
+            Agregador $\rightarrow$ Nuvem (\gls{HPCC} \textit{Systems}) & 600 & 1600 & 1100 \\ \hline
     \end{tabular}
     \fonte{Do autor.}
 \end{table}
