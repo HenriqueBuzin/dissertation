@@ -21,15 +21,15 @@ Já a Tabela~\ref{tab:memoria} apresenta o consumo médio de memória por compon
     \begin{tabular}{|c|c|c|c|}
         \hline
             \textbf{Caminho} & \textbf{Mínimo (ms)} & \textbf{Máximo (ms)} & \textbf{Média (ms)} \\ \hline
-            Meter → Primary Node & 456 & 2455 & 1455 \\ \hline
-            Primary Node → Fog Nodes & 1 & 3 & 2 \\ \hline
-            Fog Nodes → Aggregator & 2 & 3 & 2,5 \\ \hline
-            Aggregator → HPCC Systems & 600 & 1600 & 1100 \\ \hline
+            Medidor → Nó Primário & 456 & 2455 & 1455 \\ \hline
+            Nó Primário → Nó de Névoa & 1 & 3 & 2 \\ \hline
+            Nó de Névoa → Agregador & 2 & 3 & 2,5 \\ \hline
+            Agregador → Nuvem (\gls{HPCC} \textit{Systems}) & 600 & 1600 & 1100 \\ \hline
     \end{tabular}
     \fonte{Do autor.}
 \end{table}
 
-A análise das latências evidencia que o maior tempo de transmissão ocorre entre o Agregador e o HPCC Systems, etapa que concentra a maior parte da latência total.
+A análise das latências evidencia que o maior tempo de transmissão ocorre entre o Agregador e o \gls{HPCC} \textit{Systems}, etapa que concentra a maior parte da latência total.
 
 \begin{table}[htb]
     \caption{\label{tab:memoria}Consumo médio de memória por componente}

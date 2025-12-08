@@ -42,7 +42,7 @@ A Tabela~\ref{tab:especificacoes_maquinas} apresenta as especificações de hard
 
 A máquina PC-04, situada em Curitiba e conectada por uma rede independente, foi utilizada para hospedar os dispositivos medidores, simulando o envio de dados provenientes de diferentes origens geográficas.
 
-A máquina PC-03, também localizada em Florianópolis, foi dedicada à camada de nuvem, executando a aplicação HPCC Systems, o cluster de alto desempenho utilizado neste trabalho. Essa camada recebeu as informações processadas pelos nós de névoa e centralizou o armazenamento e a consolidação dos resultados.
+A máquina PC-03, também localizada em Florianópolis, foi dedicada à camada de nuvem, executando a aplicação \gls{HPCC} \textit{Systems}, o cluster de alto desempenho utilizado neste trabalho. Essa camada recebeu as informações processadas pelos nós de névoa e centralizou o armazenamento e a consolidação dos resultados.
 
 \begin{table}[htb]
     \caption{\label{tab:especificacoes_maquinas}Especificações das máquina utilizada nos testes.}
@@ -59,9 +59,9 @@ A máquina PC-03, também localizada em Florianópolis, foi dedicada à camada d
         \hline
             Processador & Intel Core i7-7700K @ 4.20GHz \\
         \hline
-            Memória (RAM) & 32 GB DDR4 \\
+            Memória (\gls{RAM}) & 32 GB DDR4 \\
         \hline
-            Armazenamento & 2 TB SSD \\
+            Armazenamento & 2 TB \gls{SSD} \\
         \hline
             Sistema Operacional & Windows 11 64-bit \\
         \hline\hline
@@ -76,9 +76,9 @@ A máquina PC-03, também localizada em Florianópolis, foi dedicada à camada d
         \hline
             Processador & Intel Core i7-7500U @ 2.70GHz \\
         \hline
-            Memória (RAM) & 36 GB DDR4 \\
+            Memória (\gls{RAM}) & 36 GB DDR4 \\
         \hline
-            Armazenamento & 480 GB SSD \\
+            Armazenamento & 480 GB \gls{SSD} \\
         \hline
             Sistema Operacional & Windows 11 64-bit \\
         \hline\hline
@@ -89,13 +89,13 @@ A máquina PC-03, também localizada em Florianópolis, foi dedicada à camada d
         \hline
             Rede & Independente \\
         \hline
-            Função & Nuvem (HPCC Systems) \\
+            Função & Nuvem (\gls{HPCC} \textit{Systems}) \\
         \hline
             Processador & Intel Core i3 5005U @ 2.0GHz \\
         \hline
-            Memória (RAM) & 8GB DDR3 \\
+            Memória (\gls{RAM}) & 8GB DDR3 \\
         \hline
-            Armazenamento & 240 GB SSD \\
+            Armazenamento & 240 GB \gls{SSD} \\
         \hline
             Sistema Operacional & Windows 10 64-bit \\
         \hline\hline
@@ -110,9 +110,9 @@ A máquina PC-03, também localizada em Florianópolis, foi dedicada à camada d
         \hline
             Processador & AMD Ryzen 5 3600 @ 3.60GHz \\
         \hline
-            Memória (RAM) & 32 GB DDR4 \\
+            Memória (\gls{RAM}) & 32 GB DDR4 \\
         \hline
-            Armazenamento & 1TB SSD \\
+            Armazenamento & 1TB \gls{SSD} \\
         \hline
             Sistema Operacional & Windows 10 64-bit \\
         \hline
@@ -132,7 +132,7 @@ No ambiente de execução, o nó primário é responsável por receber dados uti
 
 Dentro de um nó de névoa, a comunicação entre a camada de protocolos e a camada de processamento ocorre por meio de \textit{WebSocket}, mantendo a conexão aberta e reduzindo o custo de abertura e fechamento contínuo de conexões. Essa abordagem minimiza a sobrecarga e melhora o tempo de resposta.
 
-Após o processamento, os dados são estruturados em formato \textit{CSV}, a partir das mensagens recebidas em \textit{JSON}. A transmissão dos arquivos do nó de névoa para o nó agregador é realizada via \textit{SFTP}. O nó agregador consolida os arquivos de diferentes nós e os encaminha, também por \textit{SFTP}, à camada de nuvem para armazenamento na zona de entrada (\textit{landing zone}) do ambiente HPCC Systems.
+Após o processamento, os dados são estruturados em formato \textit{CSV}, a partir das mensagens recebidas em \textit{JSON}. A transmissão dos arquivos do nó de névoa para o nó agregador é realizada via \textit{SFTP}. O nó agregador consolida os arquivos de diferentes nós e os encaminha, também por \textit{SFTP}, à camada de nuvem para armazenamento na zona de entrada (\textit{landing zone}) do ambiente \gls{HPCC} \textit{Systems}.
 
 % ----------------------------------------------------------
 \section{Distribuição entre Névoas e Balanceamento de Carga}
@@ -154,7 +154,7 @@ A distribuição inicial entre as névoas foi propositalmente desigual, a fim de
 Quando uma das névoas atingia maior taxa de utilização, o mecanismo de balanceamento era acionado: o nó primário da névoa mais sobrecarregada redirecionava parte das requisições para a outra, realizando a conversão para \textit{HTTP} antes do envio, independentemente do protocolo de origem (\textit{HTTP} ou \textit{CoAP}).
 
 Durante os testes, foram simuladas \(48\ \text{horas}\) de operação, resultando em um total de \(3\,360\) leituras (\(70\) dispositivos \(\times\ 48\) envios cada), com medições horárias agregadas em janelas de consumo.  
-No nó agregador, as medições de cada domínio de névoa foram consolidadas em um único arquivo por dia e transmitidas para o ambiente \textit{HPCC Systems}, sem ocorrência de falhas durante a execução dos contêineres.
+No nó agregador, as medições de cada domínio de névoa foram consolidadas em um único arquivo por dia e transmitidas para o ambiente \gls{HPCC} \textit{Systems}, sem ocorrência de falhas durante a execução dos contêineres.
 
 % ----------------------------------------------------------
 \section{GraphQL}
