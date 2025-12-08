@@ -17,8 +17,8 @@
 \contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase []{Fundamentação Teórica}}{19}{chapter.2}%
 \contentsline {section}{\numberline {2.1}Computação em Nuvem}{19}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Computação em Névoa}{20}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Protocolos}{20}{section.2.3}%
-\contentsline {section}{\numberline {2.4}GraphQL}{21}{section.2.4}%
+\contentsline {section}{\numberline {2.3}Protocolos}{21}{section.2.3}%
+\contentsline {section}{\numberline {2.4}GraphQL}{22}{section.2.4}%
 \contentsline {section}{\numberline {2.5}HPCC Systems}{22}{section.2.5}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {3}\MakeTextUppercase []{Metodologia}}{24}{chapter.3}%
