@@ -46,11 +46,11 @@ O nó primário de névoa é a porta de entrada da arquitetura, ela recebe dados
 
 Quando um novo nó é iniciado, ele se registra no nó principal informando sua especialização, como água ou energia, e envia atualizações periódicas para indicar que continua ativo. Caso pare de enviar esses sinais, é removido automaticamente.
 
-A distribuição da carga é balanceada, seguindo uma abordagem parecida com o Round Robin. Cada nó processa uma requisição por vez, mas sua especialização é respeitada.
+A distribuição da carga é balanceada, seguindo uma abordagem parecida com o \textit{Round Robin}. Cada nó processa uma requisição por vez, mas sua especialização é respeitada.
 
 Ao ser inicializado, o nó primário avisa os demais nós primários que está ativo e informa quantos nós especializados possui. Durante o funcionamento, ele monitora o número de dispositivos e requisições. Se houver desequilíbrio, verifica com outros nós primários qual tem mais capacidade disponível.
 
-Por exemplo, se houver poucos nós especializados, o nó principal pode redirecionar requisições para outro domínio com mais recursos. Quando detecta sobrecarga, ele envia uma mensagem de broadcast para os outros nós primários pedindo informações atualizadas sobre uso. Com base nas respostas, identifica o domínio menos sobrecarregado e com menor latência, e redireciona as novas requisições para ele.
+Por exemplo, se houver poucos nós especializados, o nó principal pode redirecionar requisições para outro domínio com mais recursos. Quando detecta sobrecarga, ele envia uma mensagem de \textit{broadcast} para os outros nós primários pedindo informações atualizadas sobre uso. Com base nas respostas, identifica o domínio menos sobrecarregado e com menor latência, e redireciona as novas requisições para ele.
 
 % ----------------------------------------------------------
 \subsection{Nós de Névoa}
@@ -58,7 +58,7 @@ Por exemplo, se houver poucos nós especializados, o nó principal pode redireci
 
 Os nós de névoa realizam o processamento no ambiente de névoa e foram organizados em uma estrutura interna baseada em camadas, de forma a facilitar a manutenção e permitir a adição de novas funções sem comprometer o restante do sistema.
 
-A primeira camada, denominada protocolos, é responsável por receber e os dados e requisições provenientes do nó primário, convertendo protocolos, se necessário encaminhar as informações para a camada seguinte. Essa estrutura é ilustrada na Figura~\ref{fig:camada_protocolos}, onde diferentes servidores de protocolos alimentam um protocolo padrão utilizado internamente.
+A primeira camada, denominada protocolos, é responsável por receber os dados e requisições provenientes do nó primário, convertendo protocolos, se necessário, e encaminhando as informações para a camada seguinte. Essa estrutura é ilustrada na Figura~\ref{fig:camada_protocolos}, onde diferentes servidores de protocolos alimentam um protocolo padrão utilizado internamente.
 
 \begin{figure}[htb]
     \caption{\label{fig:camada_protocolos}Camada de protocolos de um nó de névoa.}
