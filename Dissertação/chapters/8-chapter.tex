@@ -4,7 +4,7 @@
 
 Este trabalho apresentou o desenvolvimento e a avaliação de uma arquitetura modular voltada a ambientes de computação em névoa, projetada para suportar serviços configuráveis e possibilitar a comunicação entre diferentes domínios de névoa. A solução proposta foi estruturada em camadas de protocolo, processamento e serviço, permitindo a integração de sistemas heterogêneos, a coordenação autônoma entre domínios e a distribuição eficiente de tarefas em ambientes distribuídos.
 
-Os experimentos realizados com medidores de energia e água demonstraram que a arquitetura proposta mantém um fluxo de dados consistente desde a borda até a nuvem. A abstração de protocolos, aplicada entre HTTP e CoAP, simplificou a interoperabilidade entre dispositivos distintos, enquanto o uso da plataforma \gls{HPCC} \textit{Systems} na camada de nuvem possibilitou a agregação e a análise dos dados em larga escala.
+Os experimentos realizados com medidores de energia e água demonstraram que a arquitetura proposta mantém um fluxo de dados consistente desde a borda até a nuvem. A abstração de protocolos, aplicada entre \gls{HTTP} e \gls{CoAP}, simplificou a interoperabilidade entre dispositivos distintos, enquanto o uso da plataforma \gls{HPCC} \textit{Systems} na camada de nuvem possibilitou a agregação e a análise dos dados em larga escala.
 
 Os resultados evidenciaram que duas instâncias de névoa puderam operar de forma coordenada e autônoma, realizando balanceamento dinâmico de carga. Além disso, a arquitetura apresentou baixo consumo de recursos, com aproximadamente 374~MiB no total, o que representa uma redução de cerca de 69\% em relação ao consumo relatado em implementações baseadas em Docker Compose. Esse comportamento reforça o caráter leve e eficiente da solução.
 
@@ -12,4 +12,4 @@ O sistema foi desenvolvido em conformidade com os principais princípios definid
 
 De modo geral, os resultados confirmam que a arquitetura proposta alcança os principais objetivos da computação em névoa e os estende por meio da interoperabilidade entre domínios e do gerenciamento adaptativo de serviços.
 
-Como perspectivas futuras, recomenda-se a integração de novos protocolos de comunicação, como \textit{MQTT}, a adoção de mecanismos de autenticação e a criptografia ponta a ponta.
+Como perspectivas futuras, recomenda-se a integração de novos protocolos de comunicação, como \gls{MQTT}, a adoção de mecanismos de autenticação e a criptografia ponta a ponta.

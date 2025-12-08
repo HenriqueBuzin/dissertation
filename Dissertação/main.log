@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.7)  8 DEC 2025 12:21
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.8.7)  8 DEC 2025 15:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1699,7 +1699,7 @@ Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'brazil'.
-LaTeX Font Info:    Trying to load font information for T1+phv on input line 265.
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 266.
 (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 ) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.aux (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/1-chapter.aux
@@ -1707,31 +1707,31 @@ File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 ) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/3-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/4-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/5-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/6-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/7-chapter.aux) (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/8-chapter.aux))
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 265.
-LaTeX Font Info:    ... okay on input line 265.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 265.
-LaTeX Font Info:    ... okay on input line 265.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 265.
-LaTeX Font Info:    ... okay on input line 265.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 265.
-LaTeX Font Info:    ... okay on input line 265.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 265.
-LaTeX Font Info:    ... okay on input line 265.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 265.
-LaTeX Font Info:    ... okay on input line 265.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 265.
-LaTeX Font Info:    ... okay on input line 265.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 265.
-LaTeX Font Info:    ... okay on input line 265.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 265.
-LaTeX Font Info:    ... okay on input line 265.
-LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 265.
-LaTeX Font Info:    Trying to load font information for LGR+cmr on input line 265.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 266.
+LaTeX Font Info:    ... okay on input line 266.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 266.
+LaTeX Font Info:    ... okay on input line 266.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 266.
+LaTeX Font Info:    ... okay on input line 266.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 266.
+LaTeX Font Info:    ... okay on input line 266.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 266.
+LaTeX Font Info:    ... okay on input line 266.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 266.
+LaTeX Font Info:    ... okay on input line 266.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 266.
+LaTeX Font Info:    ... okay on input line 266.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 266.
+LaTeX Font Info:    ... okay on input line 266.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 266.
+LaTeX Font Info:    ... okay on input line 266.
+LaTeX Font Info:    Checking defaults for LGR/cmr/m/n on input line 266.
+LaTeX Font Info:    Trying to load font information for LGR+cmr on input line 266.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/cbfonts-fd/lgrcmr.fd
 File: lgrcmr.fd 2017/07/29 v1.2 Greek European Computer Regular
 )
-LaTeX Font Info:    ... okay on input line 265.
-Package hyperref Info: Link coloring ON on input line 265.
+LaTeX Font Info:    ... okay on input line 266.
+Package hyperref Info: Link coloring ON on input line 266.
 \myptabbox=\box74
 \myptabboxwidth=\skip319
  (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -1753,17 +1753,17 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Info: Redefining \microtypecontext on input line 265.
-Package microtype Info: Applying patch `item' on input line 265.
-Package microtype Info: Applying patch `toc' on input line 265.
+LaTeX Info: Redefining \microtypecontext on input line 266.
+Package microtype Info: Applying patch `item' on input line 266.
+Package microtype Info: Applying patch `toc' on input line 266.
 Package microtype Info: The `eqnum' patch may not be effective because you are
 (microtype)             using the mathtools package. Make sure to insert
 (microtype)             `\leftprotrusion' and `\rightprotrusion' as
 (microtype)             appropriate in mathtools's `\newtagform' command.
-Package microtype Info: Applying patch `eqnum' on input line 265.
-Package microtype Info: Applying patch `footnote' on input line 265.
-Package microtype Info: Applying patch `verbatim' on input line 265.
-LaTeX Info: Redefining \microtypesetup on input line 265.
+Package microtype Info: Applying patch `eqnum' on input line 266.
+Package microtype Info: Applying patch `footnote' on input line 266.
+Package microtype Info: Applying patch `verbatim' on input line 266.
+LaTeX Info: Redefining \microtypesetup on input line 266.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2),
 (microtype)             factor: 1100.
@@ -1771,7 +1771,7 @@ Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 10, shrink: 10, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 265.
+LaTeX Info: Redefining \showhyphens on input line 266.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -1884,8 +1884,8 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'main.bbl' found.
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.bbl)
-Package biblatex Info: Reference section=0 on input line 265.
-Package biblatex Info: Reference segment=0 on input line 265.
+Package biblatex Info: Reference section=0 on input line 266.
+Package biblatex Info: Reference segment=0 on input line 266.
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/beforetext/beforetext.tex
 <setup/vertical_sigla_fundo_claro.pdf, id=4, 327.2225pt x 449.68pt>
 File: setup/vertical_sigla_fundo_claro.pdf Graphic file (type pdf)
@@ -2039,7 +2039,7 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 ]
 
 Package glossaries Info: Preparing to sort glossary `acronym' (total number of
-(glossaries)             referenced entries: 25)
+(glossaries)             referenced entries: 29)
 
 
 
@@ -2067,7 +2067,7 @@ Package glossaries Warning: Empty glossary for \printnoidxglossary[type={simbolo
 \openout2 = `chapters/1-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/1-chapter.tex
-<images/arquitetura_basica.png, id=262, 1027.84pt x 642.4pt>
+<images/arquitetura_basica.png, id=269, 1027.84pt x 642.4pt>
 File: images/arquitetura_basica.png Graphic file (type png)
 <use images/arquitetura_basica.png>
 Package pdftex.def Info: images/arquitetura_basica.png  used on input line 16.
@@ -2099,10 +2099,10 @@ Package pdftex.def Info: images/arquitetura_basica.png  used on input line 16.
 [21])
 Runaway argument?
 {Systems| (\textit {High Performance Computing Cluster}) é uma plata\ETC.
-/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.tex:305: File ended while scanning use of \textit .
+/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.tex:306: File ended while scanning use of \textit .
 <inserted text> 
                 \par 
-l.305 \include{chapters/2-chapter}
+l.306 \include{chapters/2-chapter}
                                   
 I suspect you have forgotten a `}', causing me
 to read past where you wanted me to stop.
@@ -2150,7 +2150,7 @@ LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
 \openout2 = `chapters/5-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/5-chapter.tex
-<images/arquitetura_proposta.png, id=430, 3925.66624pt x 1627.07875pt>
+<images/arquitetura_proposta.png, id=437, 3925.66624pt x 1627.07875pt>
 File: images/arquitetura_proposta.png Graphic file (type png)
 <use images/arquitetura_proposta.png>
 Package pdftex.def Info: images/arquitetura_proposta.png  used on input line 18.
@@ -2165,12 +2165,12 @@ Package pdftex.def Info: images/arquitetura_proposta.png  used on input line 18.
  </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_proposta.png>]
 
 [31]
-<images/camada_protocolos.png, id=441, 1541.76pt x 1027.84pt>
+<images/camada_protocolos.png, id=448, 1541.76pt x 1027.84pt>
 File: images/camada_protocolos.png Graphic file (type png)
 <use images/camada_protocolos.png>
 Package pdftex.def Info: images/camada_protocolos.png  used on input line 66.
 (pdftex.def)             Requested size: 318.49861pt x 212.32396pt.
-<images/camada_processamento.png, id=443, 1541.76pt x 1027.84pt>
+<images/camada_processamento.png, id=450, 1541.76pt x 1027.84pt>
 File: images/camada_processamento.png Graphic file (type png)
 <use images/camada_processamento.png>
 Package pdftex.def Info: images/camada_processamento.png  used on input line 76.
@@ -2185,7 +2185,7 @@ Package pdftex.def Info: images/camada_processamento.png  used on input line 76.
 \openout2 = `chapters/6-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/6-chapter.tex
-<images/container_manager.png, id=461, 1504.62125pt x 704.6325pt>
+<images/container_manager.png, id=468, 1504.62125pt x 704.6325pt>
 File: images/container_manager.png Graphic file (type png)
 <use images/container_manager.png>
 Package pdftex.def Info: images/container_manager.png  used on input line 30.
@@ -2202,18 +2202,27 @@ Package pdftex.def Info: images/container_manager.png  used on input line 30.
 [36 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/container_manager.png>]
 
 [37]
+Overfull \hbox (8.2632pt too wide) in paragraph at lines 135--136
+[]\T1/phv/m/n/12 (-10) Ap�s o pro-ces-sa-mento, os da-dos s�o es-tru-tu-ra-dos em for-mato [][][]Comma-Separated
+ []
+
+
+Overfull \hbox (0.12029pt too wide) in paragraph at lines 135--136
+\T1/phv/m/n/12 (-10) Va-lues (CSV)[][], a par-tir das men-sa-gens re-ce-bi-das em [][][]Ja-vaS-cript Ob-ject No-ta-tion (JSON)[][].
+ []
+
+
 
 [38]
-Package microtype Info: Loading generic protrusion settings for font family
-(microtype)             `cmtt' (encoding: T1).
-(microtype)             For optimal results, create family-specific settings.
-(microtype)             See the microtype manual for details.
-
 Overfull \hbox (8.224pt too wide) in paragraph at lines 167--168
 \T1/phv/m/n/12 (-10) ces-sa-mento ape-nas as in-for-ma-��es es-tri-ta-mente ne-ces-s�-rias para o pr�-processamento,
  []
 
-<images/hpcc_landing_zone.png, id=499, 380.92313pt x 424.58624pt>
+Package microtype Info: Loading generic protrusion settings for font family
+(microtype)             `cmtt' (encoding: T1).
+(microtype)             For optimal results, create family-specific settings.
+(microtype)             See the microtype manual for details.
+<images/hpcc_landing_zone.png, id=525, 380.92313pt x 424.58624pt>
 File: images/hpcc_landing_zone.png Graphic file (type png)
 <use images/hpcc_landing_zone.png>
 Package pdftex.def Info: images/hpcc_landing_zone.png  used on input line 184.
@@ -2252,7 +2261,7 @@ Overfull \hbox (8.98344pt too wide) in paragraph at lines 21--29
 ]
 
 Package biblatex Warning: No driver for 'standard'.
-(biblatex)                Using fallback driver on input line 354.
+(biblatex)                Using fallback driver on input line 355.
 
 
 
@@ -2296,18 +2305,18 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 42662 strings out of 473190
- 785719 string characters out of 5715801
- 1927521 words of memory out of 5000000
- 64920 multiletter control sequences out of 15000+600000
+ 42710 strings out of 473190
+ 786444 string characters out of 5715801
+ 1928694 words of memory out of 5000000
+ 64964 multiletter control sequences out of 15000+600000
  614833 words of font info for 237 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  203i,17n,297p,2491b,4447s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.pdf (46 pages, 4632488 bytes).
+Output written on /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.pdf (46 pages, 4632460 bytes).
 PDF statistics:
- 798 PDF objects out of 1000 (max. 8388607)
- 718 compressed objects within 8 object streams
- 177 named destinations out of 1000 (max. 500000)
+ 830 PDF objects out of 1000 (max. 8388607)
+ 749 compressed objects within 8 object streams
+ 181 named destinations out of 1000 (max. 500000)
  66547 words of extra memory for PDF output out of 74296 (max. 10000000)
 
