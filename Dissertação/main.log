@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.5)  8 MAR 2026 11:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.5)  8 MAR 2026 14:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2058,59 +2058,142 @@ Package glossaries Warning: Empty glossary for \printnoidxglossary[type={simbolo
 
 [13
 
-] (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.toc [14
+] (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.toc
+
+/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.toc:19: Package glossaries-extra Error: Glossary entry `graphql' has not been defined.
+
+See the glossaries-extra package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.19 ...nguage} (\gls {graphql})}{20}{section.2.4}
+                                                  %
+You need to define a glossary entry before you can reference it.
+
+[14
 
 ]) [15])
 \openout2 = `chapters/1-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/1-chapter.tex
 Cap\'{\i }tulo 1.
-<images/arquitetura_basica.png, id=259, 1027.84pt x 642.4pt>
-File: images/arquitetura_basica.png Graphic file (type png)
-<use images/arquitetura_basica.png>
-Package pdftex.def Info: images/arquitetura_basica.png  used on input line 16.
-(pdftex.def)             Requested size: 318.49861pt x 199.06352pt.
 [16
 
 
 
-]
+])
 Package babel Info: 'brazil' activates 'portuges' shorthands.
-(babel)             Reported on input line 54.
- [17 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_basica.png>]) [18]
+(babel)             Reported on input line 300.
+ [17]
 \openout2 = `chapters/2-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.tex
 Cap\'{\i }tulo 2.
-[19
+
+LaTeX Warning: Citation 'mell2011' on page 18 undefined on input line 11.
+
+[18
 
 
 
 
-] [20] [21])
-Runaway argument?
-{Systems| (\textit {High Performance Computing Cluster}) é uma plata\ETC.
-/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.tex:306: File ended while scanning use of \textit .
-<inserted text> 
-                \par 
-l.306 \include{chapters/2-chapter}
-                                  
-I suspect you have forgotten a `}', causing me
-to read past where you wanted me to stop.
-I'll try to recover; but if the error is serious,
-you'd better type `E' or `X' now and fix your file.
+] [19] [20]
 
-[22]
+/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.tex:54: Package glossaries-extra Error: Glossary entry `graphql' has not been defined.
+
+See the glossaries-extra package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.54 ...tit{Graph Query Language} (\gls{graphql})}
+                                                  
+You need to define a glossary entry before you can reference it.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\gls' on input line 54.
+
+
+/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.tex:57: Package glossaries-extra Error: Glossary entry `graphql' has not been defined.
+
+See the glossaries-extra package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.57 \textit{Graph Query Language} (\gls{graphql})
+                                                   é uma linguagem de consu...
+You need to define a glossary entry before you can reference it.
+
+
+/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.tex:57: Package glossaries-extra Error: Glossary entry `graphql' has not been defined.
+
+See the glossaries-extra package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.57 ...ate Transfer} (\gls{REST}), \gls{graphql} 
+                                                  permite que os clientes so...
+You need to define a glossary entry before you can reference it.
+
+
+/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.tex:59: Package glossaries-extra Error: Glossary entry `graphql' has not been defined.
+
+See the glossaries-extra package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.59 ...das principais vantagens do \gls{graphql} 
+                                                  é sua flexibilidade na re...
+You need to define a glossary entry before you can reference it.
+
+[21]
+
+/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.tex:61: Package glossaries-extra Error: Glossary entry `graphql' has not been defined.
+
+See the glossaries-extra package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.61 Além disso, o \gls{graphql} 
+                                  facilita a evolução das \gls{API}s. No m...
+You need to define a glossary entry before you can reference it.
+
+
+/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.tex:63: Package glossaries-extra Error: Glossary entry `graphql' has not been defined.
+
+See the glossaries-extra package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.63 Adicionalmente, a abordagem de \gls{graphql} 
+                                                  também melhora a experiê...
+You need to define a glossary entry before you can reference it.
+
+
+LaTeX Warning: Citation 'taylor2022' on page 22 undefined on input line 69.
+
+
+/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.tex:75: Package glossaries-extra Error: Glossary entry `ROXIE' has not been defined.
+
+See the glossaries-extra package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.75 ...d Online XML Inquiry Engine} (\gls{ROXIE})
+                                                   é destinado a consultas ...
+You need to define a glossary entry before you can reference it.
+
+[22]) [23]
 \openout2 = `chapters/3-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/3-chapter.tex
 Cap\'{\i }tulo 3.
-[23
+[24
 
 
 
 
-]) [24]
+]) [25]
 \openout2 = `chapters/4-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/4-chapter.tex
@@ -2119,54 +2202,54 @@ LaTeX Font Info:    Font shape `T1/phv/m/it' in size <5> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 12.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
 (Font)              Font shape `T1/phv/b/sl' tried instead on input line 15.
-[25
+[26
 
 
 
 
-] [26] [27] [28]) [29]
+] [27] [28] [29]) [30]
 \openout2 = `chapters/5-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/5-chapter.tex
 Cap\'{\i }tulo 5.
-[30
+[31
 
 
 
 
 ]
-<images/arquitetura_proposta.png, id=433, 1228.59pt x 493.845pt>
+<images/arquitetura_proposta.png, id=469, 1228.59pt x 493.845pt>
 File: images/arquitetura_proposta.png Graphic file (type png)
 <use images/arquitetura_proposta.png>
 Package pdftex.def Info: images/arquitetura_proposta.png  used on input line 76.
 (pdftex.def)             Requested size: 455.0pt x 182.8931pt.
- [31 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_proposta.png>] [32]
-<images/camada_protocolos.png, id=445, 1541.76pt x 1027.84pt>
+ [32 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_proposta.png>] [33]
+<images/camada_protocolos.png, id=481, 1541.76pt x 1027.84pt>
 File: images/camada_protocolos.png Graphic file (type png)
 <use images/camada_protocolos.png>
 Package pdftex.def Info: images/camada_protocolos.png  used on input line 138.
 (pdftex.def)             Requested size: 318.49861pt x 212.32396pt.
-<images/camada_processamento.png, id=447, 1541.76pt x 1027.84pt>
+<images/camada_processamento.png, id=483, 1541.76pt x 1027.84pt>
 File: images/camada_processamento.png Graphic file (type png)
 <use images/camada_processamento.png>
 Package pdftex.def Info: images/camada_processamento.png  used on input line 154.
 (pdftex.def)             Requested size: 318.49861pt x 212.32396pt.
- [33 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/camada_protocolos.png (PNG copy)>]) [34 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/camada_processamento.png (PNG copy)>]
+ [34 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/camada_protocolos.png (PNG copy)>]) [35 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/camada_processamento.png (PNG copy)>]
 \openout2 = `chapters/6-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/6-chapter.tex
 Cap\'{\i }tulo 6.
-<images/container_manager.png, id=462, 1504.62125pt x 704.6325pt>
+<images/container_manager.png, id=498, 1504.62125pt x 704.6325pt>
 File: images/container_manager.png Graphic file (type png)
 <use images/container_manager.png>
 Package pdftex.def Info: images/container_manager.png  used on input line 30.
 (pdftex.def)             Requested size: 455.0pt x 213.07942pt.
-[35
+[36
 
 
 
 
-] [36 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/container_manager.png>]
+] [37 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/container_manager.png>]
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
@@ -2176,7 +2259,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 129--129
  [][] [][][]\T1/phv/m/n/10 (+10) Dispon�vel em: [][]$\T1/cmtt/m/n/10 https : / / data . hellenicdataservice . gr / dataset /
  []
 
-[37]
+[38]
 Overfull \hbox (8.2632pt too wide) in paragraph at lines 150--151
 []\T1/phv/m/n/12 (-10) Ap�s o pro-ces-sa-mento, os da-dos s�o es-tru-tu-ra-dos em for-mato [][][]Comma-Separated
  []
@@ -2186,13 +2269,13 @@ Overfull \hbox (0.12029pt too wide) in paragraph at lines 150--151
 \T1/phv/m/n/12 (-10) Va-lues (CSV)[][], a par-tir das men-sa-gens re-ce-bi-das em [][][]Ja-vaS-cript Ob-ject No-ta-tion (JSON)[][].
  []
 
-[38{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}] [39]
-<images/hpcc_landing_zone.png, id=531, 380.92313pt x 424.58624pt>
+[39{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}] [40]
+<images/hpcc_landing_zone.png, id=567, 380.92313pt x 424.58624pt>
 File: images/hpcc_landing_zone.png Graphic file (type png)
 <use images/hpcc_landing_zone.png>
 Package pdftex.def Info: images/hpcc_landing_zone.png  used on input line 224.
 (pdftex.def)             Requested size: 318.49861pt x 355.0174pt.
-) [40] [41 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/hpcc_landing_zone.png>]
+) [41] [42 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/hpcc_landing_zone.png>]
 \openout2 = `chapters/7-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/7-chapter.tex
@@ -2202,17 +2285,17 @@ Overfull \hbox (8.98344pt too wide) in paragraph at lines 21--29
  [][] 
  []
 
-[42
+[43
 
 
 
 
-]) [43]
+]) [44]
 \openout2 = `chapters/8-chapter.aux'.
 
  (/Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/8-chapter.tex
 Cap\'{\i }tulo 8.
-) [44
+) [45
 
 
 
@@ -2222,11 +2305,11 @@ Cap\'{\i }tulo 8.
 Package biblatex Warning: No driver for 'standard'.
 (biblatex)                Using fallback driver on input line 355.
 
-[45
+[46
 
 
 
-] [46]
+] [47]
 \tf@lof=\write6
 \openout6 = `main.lof'.
 
@@ -2249,50 +2332,54 @@ L3 programming layer <2020/03/25>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 
+LaTeX Warning: There were undefined references.
+
+
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
 
-Package biblatex Warning: Please rerun LaTeX.
-(biblatex)                Page breaks have changed.
+Package biblatex Warning: Please (re)run Biber on the file:
+(biblatex)                main
+(biblatex)                and rerun LaTeX afterwards.
 
 Package logreq Info: Writing requests to 'main.run.xml'.
 \openout1 = `main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 43451 strings out of 467525
- 813374 string characters out of 5418983
- 1965152 words of memory out of 5000000
- 71353 multiletter control sequences out of 15000+600000
- 684030 words of font info for 242 fonts, out of 8000000 for 9000
+ 43465 strings out of 467525
+ 813400 string characters out of 5418983
+ 1965401 words of memory out of 5000000
+ 71363 multiletter control sequences out of 15000+600000
+ 684281 words of font info for 244 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  203i,17n,295p,2613b,4447s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-pdfTeX warning (dest): name{section*.26} has been referenced but does not exist, replaced by a fixed one
+pdfTeX warning (dest): name{section*.25} has been referenced but does not exist, replaced by a fixed one
 
 
-pdfTeX warning (dest): name{table.caption.22} has been referenced but does not exist, replaced by a fixed one
+pdfTeX warning (dest): name{table.caption.21} has been referenced but does not exist, replaced by a fixed one
 
 
-pdfTeX warning (dest): name{table.caption.20} has been referenced but does not exist, replaced by a fixed one
+pdfTeX warning (dest): name{table.caption.19} has been referenced but does not exist, replaced by a fixed one
 
 
-pdfTeX warning (dest): name{table.caption.15} has been referenced but does not exist, replaced by a fixed one
+pdfTeX warning (dest): name{table.caption.14} has been referenced but does not exist, replaced by a fixed one
 
 
-pdfTeX warning (dest): name{figure.caption.18} has been referenced but does not exist, replaced by a fixed one
+pdfTeX warning (dest): name{figure.caption.17} has been referenced but does not exist, replaced by a fixed one
 
 
 pdfTeX warning (dest): name{figure.caption.16} has been referenced but does not exist, replaced by a fixed one
 
 
-pdfTeX warning (dest): name{figure.caption.14} has been referenced but does not exist, replaced by a fixed one
+pdfTeX warning (dest): name{figure.caption.15} has been referenced but does not exist, replaced by a fixed one
 
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.pdf (47 pages, 4668056 bytes).
+Output written on /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.pdf (48 pages, 4627311 bytes).
 PDF statistics:
- 828 PDF objects out of 1000 (max. 8388607)
- 743 compressed objects within 8 object streams
- 187 named destinations out of 1000 (max. 500000)
- 67019 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 864 PDF objects out of 1000 (max. 8388607)
+ 779 compressed objects within 8 object streams
+ 188 named destinations out of 1000 (max. 500000)
+ 67014 words of extra memory for PDF output out of 74296 (max. 10000000)
 

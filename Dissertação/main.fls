@@ -506,11 +506,11 @@ INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvb8t.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/helvetic/phvb8t.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/helvetic/phvro8t.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvro8r.tfm
-INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.lof
-INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.lof
-INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.lof
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/vf/adobe/helvetic/phvro8t.vf
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/adobe/helvetic/phvro8r.tfm
+INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.lof
+INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.lof
+INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.lof
 INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.loq
 INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.loq
 INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.loq
@@ -526,11 +526,6 @@ OUTPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapter
 INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/1-chapter.tex
 INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/1-chapter.tex
 INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/1-chapter.tex
-INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_basica.png
-INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_basica.png
-INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_basica.png
-INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_basica.png
-INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_basica.png
 INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.tex
 INPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.tex
 OUTPUT /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/chapters/2-chapter.aux
