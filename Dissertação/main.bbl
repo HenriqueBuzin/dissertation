@@ -439,6 +439,62 @@
       \field{pages}{173\bibrangedash 179}
       \range{pages}{7}
     \endentry
+    \entry{murley2021}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=6b4544f0bc3dbad233fc41e8f2e2d108}{%
+           family={Murley},
+           familyi={M\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc56c3d085d8042379a2aaa9f0f3e53c}{%
+           family={Ma},
+           familyi={M\bibinitperiod},
+           given={Z.},
+           giveni={Z\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7f9ad216eebadf5f13c1fca88e171485}{%
+           family={Mason},
+           familyi={M\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9bdbbdb97c630128afa9883124c7a794}{%
+           family={Bailey},
+           familyi={B\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d307e87d61bfa66a6d934631610ac852}{%
+           family={Kharraz},
+           familyi={K\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{8bbcd1a25e289785c34cbb86f5b5221e}
+      \strng{fullhash}{0b0d13667674e02aecd72fb4be4ef321}
+      \strng{fullhashraw}{0b0d13667674e02aecd72fb4be4ef321}
+      \strng{bibnamehash}{0b0d13667674e02aecd72fb4be4ef321}
+      \strng{authorbibnamehash}{0b0d13667674e02aecd72fb4be4ef321}
+      \strng{authornamehash}{8bbcd1a25e289785c34cbb86f5b5221e}
+      \strng{authorfullhash}{0b0d13667674e02aecd72fb4be4ef321}
+      \strng{authorfullhashraw}{0b0d13667674e02aecd72fb4be4ef321}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the Web Conference (WWW)}
+      \field{number}{1}
+      \field{title}{WebSocket Adoption and the Landscape of the Real-Time Web}
+      \field{volume}{2021}
+      \field{year}{2021}
+      \field{pages}{1192\bibrangedash 1203}
+      \range{pages}{12}
+      \keyw{WebSocket,Real-Time Web,Polling,Performance,Security}
+    \endentry
     \entry{oliveira2024}{article}{}{}
       \name{author}{3}{}{%
         {{un=0,uniquepart=base,hash=5a0d0466cc1cd5df7bb867e35642c99d}{%
@@ -701,36 +757,6 @@
       \field{isbn}{978-0132126953}
       \field{title}{Computer Networks}
       \field{year}{2011}
-    \endentry
-    \entry{taylor2022}{book}{}{}
-      \name{author}{1}{}{%
-        {{un=0,uniquepart=base,hash=81c86ab1c64d445f72b1bb7f6a39162a}{%
-           family={Taylor},
-           familyi={T\bibinitperiod},
-           given={Richard},
-           giveni={R\bibinitperiod},
-           givenun=0}}%
-      }
-      \list{publisher}{1}{%
-        {Function}%
-      }
-      \strng{namehash}{81c86ab1c64d445f72b1bb7f6a39162a}
-      \strng{fullhash}{81c86ab1c64d445f72b1bb7f6a39162a}
-      \strng{fullhashraw}{81c86ab1c64d445f72b1bb7f6a39162a}
-      \strng{bibnamehash}{81c86ab1c64d445f72b1bb7f6a39162a}
-      \strng{authorbibnamehash}{81c86ab1c64d445f72b1bb7f6a39162a}
-      \strng{authornamehash}{81c86ab1c64d445f72b1bb7f6a39162a}
-      \strng{authorfullhash}{81c86ab1c64d445f72b1bb7f6a39162a}
-      \strng{authorfullhashraw}{81c86ab1c64d445f72b1bb7f6a39162a}
-      \field{sortinit}{T}
-      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{note}{Kindle Edition}
-      \field{title}{Mastering HPCC Systems: Platform Overview and History}
-      \field{year}{2022}
     \endentry
     \entry{wang2013}{inproceedings}{}{}
       \name{author}{5}{}{%

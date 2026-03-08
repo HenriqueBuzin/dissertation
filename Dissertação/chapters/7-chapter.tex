@@ -54,11 +54,6 @@ Em relação ao consumo de memória, observa-se que os nós de névoa apresentam
 Os resultados obtidos demonstram que a arquitetura proposta apresenta um baixo consumo de recursos quando comparada com o estudo de D’Agostino~\textit{et al.}, no estudo relata-se que a execução de um ambiente de névoa implementado em Docker Compose consumia aproximadamente 1,2~GB de memória com apenas um contêiner ativo \cite{dagostino2025}. 
 Mesmo com todos os componentes em funcionamento, o sistema proposto manteve o consumo total em cerca de 374~MiB, o que corresponde a apenas 31\% do valor relatado naquele estudo, representando uma redução aproximada de 69\% no uso de memória. 
 
-O sistema foi desenvolvido em conformidade com os principais princípios da \textit{OpenFog Reference Architecture (IEEE Std 1934-2018)}, com ênfase na escalabilidade, abertura, autonomia, programabilidade, e hierarquia \cite{openfog2018}.
-
-A separação funcional entre as camadas de borda, névoa e nuvem segue a organização preconizada pelo modelo de referência, favorecendo o processamento distribuído e a expansão flexível da arquitetura. 
-Além disso, a abstração de protocolos contribui para a interoperabilidade entre sistemas heterogêneos, em consonância com os conceitos do OpenFog, além da coordenação entre nós primários implementa uma forma simplificada de tomada de decisão local.
-
 Quando comparado a trabalhos recentes, o sistema proposto complementa e estende abordagens existentes. 
 Rahman e Hussain~\cite{rahman2024} exploraram a interoperabilidade semântica em um \textit{testbed} com múltiplos domínios de névoa, enquanto a arquitetura aqui apresentada enfatiza a interoperabilidade de protocolos e a composição modular. 
 Oliveira~\textit{et al.}~\cite{oliveira2024} aprimoraram o posicionamento modular de aplicações, mas sem coordenação entre diferentes névoas; nossa solução amplia essa capacidade por meio de redirecionamento adaptativo de requisições entre nós primários. 

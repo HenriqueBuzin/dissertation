@@ -22,7 +22,7 @@ O ambiente de testes foi configurado para representar um cenário de cidade inte
 
 A implantação e o gerenciamento desses componentes foram realizados por meio de uma \textit{interface web} desenvolvida para este trabalho, que interage diretamente com o Docker para criar e controlar as instâncias. Essa interface permite selecionar o bairro (névoa) no qual os componentes serão implantados, definir o tipo de contêiner e a quantidade de instâncias, além de oferecer controle individual ou em grupo para iniciar, pausar, parar e visualizar logs.
 
-A Figura~\ref{fig:container_manager} apresenta a tela de gerenciamento de contêineres para o bairro Canasvieiras. Nela, observa-se a criação de um nó de névoa e de um medidor de energia, ambos em execução. O painel agrupa as instâncias por tipo de componente, permitindo visualizar rapidamente seu estado e realizar ações sobre cada grupo ou instância individual.
+A Figura~\ref{fig:container_manager} apresenta a tela de gerenciamento de contêineres para o bairro Canasvieiras, localizado no município de Florianópolis, no estado de Santa Catarina. Nela, observa-se a criação de um nó de névoa e de um medidor de energia, ambos em execução. O painel agrupa as instâncias por tipo de componente, permitindo visualizar rapidamente seu estado e realizar ações sobre cada grupo ou instância individual.
 
 \begin{figure}[htb]
     \caption{\label{fig:container_manager}Interface para gerenciamento de contêineres no ambiente de testes.}
@@ -124,15 +124,30 @@ A máquina PC-03, também localizada em Florianópolis, foi dedicada à camada d
 \section{Tecnologias e Protocolos}
 % ----------------------------------------------------------
 
-Os dispositivos medidores foram desenvolvidos para operar com diferentes protocolos de comunicação, de modo a avaliar a interoperabilidade entre os componentes da arquitetura. Foram implementados quatro contêineres distintos, representando os seguintes medidores: água via \gls{HTTP}, água via \gls{CoAP}, energia via \gls{HTTP} e energia via \gls{CoAP}.
+Os experimentos consideram dispositivos medidores responsáveis pela geração de dados de consumo de água e energia. Esses dispositivos representam sensores de borda que enviam medições para a arquitetura proposta.
+
+Para a geração dos dados utilizados pelos medidores, foram empregados conjuntos de dados públicos referentes ao consumo de energia elétrica e de água. O conjunto de dados utilizado para representar o consumo de energia elétrica foi obtido a partir de um dataset público disponibilizado pela UCI Machine Learning Repository\footnote{Disponível em: \url{https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption}.}. Já os dados utilizados para representar o consumo de água foram obtidos a partir de um dataset público disponibilizado pelo Hellenic Data Service\footnote{Disponível em: \url{https://data.hellenicdataservice.gr/dataset/78776f38-a58b-4a2a-a8f9-85b964fe5c95}.}. Ambos os conjuntos de dados passaram por um processo de pré-processamento antes de serem utilizados nos experimentos. Esse processo incluiu a padronização da frequência temporal dos registros para intervalos de uma hora, permitindo que os dados representassem um comportamento uniforme de envio de medições pelos dispositivos. Além disso, atributos e registros que não eram necessários para os experimentos foram removidos, mantendo apenas as informações relevantes para os testes realizados na arquitetura proposta.
+
+Para avaliar a interoperabilidade entre os componentes da arquitetura, os
+dispositivos medidores foram desenvolvidos para operar utilizando diferentes
+protocolos de comunicação. Foram considerados os protocolos HTTP e CoAP,
+permitindo observar o comportamento do sistema ao receber dados provenientes
+de diferentes tecnologias de comunicação.
+
+Para representar o funcionamento desses dispositivos no ambiente experimental,
+foram desenvolvidos contêineres responsáveis por encapsular o comportamento dos
+medidores. Foram implementados quatro contêineres distintos, correspondentes
+às combinações entre tipo de medidor e protocolo de comunicação: medidor de
+água via HTTP, medidor de água via CoAP, medidor de energia via HTTP e medidor
+de energia via CoAP.
 
 Os medidores baseados em \gls{HTTP} foram desenvolvidos em \textit{Python}, enquanto os medidores que utilizam o protocolo \gls{CoAP} foram implementados em \textit{Node.js}, devido ao melhor suporte e disponibilidade de bibliotecas específicas para esse protocolo no momento do desenvolvimento.
 
 No ambiente de execução, o nó primário é responsável por receber dados utilizando os protocolos \gls{CoAP} e \gls{HTTP}. Independentemente do protocolo de origem, as mensagens são convertidas para \gls{HTTP} antes de serem encaminhadas aos nós de névoa, padronizando o tráfego interno do sistema.
 
-Dentro de um nó de névoa, a comunicação entre a camada de protocolos e a camada de processamento ocorre por meio de \textit{WebSocket}, mantendo a conexão aberta e reduzindo o custo de abertura e fechamento contínuo de conexões. Essa abordagem minimiza a sobrecarga e melhora o tempo de resposta.
+Dentro de um nó de névoa, a comunicação entre a camada de protocolos e a camada de processamento ocorre por meio de \textit{WebSocket}, mantendo a conexão aberta e reduzindo o custo de abertura e fechamento contínuo de conexões. De acordo com Murley et al. \cite{murley2021}, conexões WebSocket permitem comunicação bidirecional persistente com menor overhead em comparação a abordagens baseadas em requisições HTTP repetidas, o que contribui para reduzir a sobrecarga e melhorar o tempo de resposta.
 
-Após o processamento, os dados são estruturados em formato \gls{CSV}, a partir das mensagens recebidas em \gls{JSON}. A transmissão dos arquivos do nó de névoa para o nó agregador é realizada via \gls{SFTP}. O nó agregador consolida os arquivos de diferentes nós e os encaminha, também por \gls{SFTP}, à camada de nuvem para armazenamento na zona de entrada (\textit{landing zone}) do ambiente \gls{HPCC} \textit{Systems}.
+Após o processamento, os dados são estruturados em formato \gls{CSV}, a partir das mensagens recebidas em \gls{JSON}. A transmissão dos arquivos do nó de névoa para o nó agregador é realizada via \gls{SFTP}. O nó agregador consolida os arquivos provenientes de diferentes nós e os encaminha, também por \gls{SFTP}, à camada de nuvem para armazenamento na zona de entrada (\textit{landing zone}) do ambiente \gls{HPCC} \textit{Systems}.
 
 % ----------------------------------------------------------
 \section{Distribuição entre Névoas e Balanceamento de Carga}
@@ -157,14 +172,39 @@ Durante os testes, foram simuladas 48 \text{horas} de operação, resultando em 
 No nó agregador, as medições de cada domínio de névoa foram consolidadas em um único arquivo por dia e transmitidas para o ambiente \gls{HPCC} \textit{Systems}, sem ocorrência de falhas durante a execução dos contêineres.
 
 % ----------------------------------------------------------
-\section{GraphQL}
+\section{Banco de Dados e Linguagem de Consulta de Dados}
 % ----------------------------------------------------------
 
-Nos nós de névoa, a comunicação entre a camada de serviços e a camada de processamento é realizada utilizando \textit{GraphQL} como linguagem de consulta de dados. Essa abordagem permite que a aplicação especifique exatamente quais campos e registros deseja receber, evitando transferências desnecessárias e reduzindo a sobrecarga de processamento.  
+Nos experimentos realizados, foi utilizado um banco de dados local nos nós de
+névoa para armazenamento temporário das informações recebidas dos dispositivos.
+Esse armazenamento é utilizado durante o processamento local dos dados antes
+de sua consolidação e encaminhamento para as camadas superiores da arquitetura.
 
-O \textit{GraphQL} possibilita ainda a consulta a múltiplas fontes de dados de forma unificada, agregando resultados distintos em uma única resposta. Nos testes realizados, o armazenamento local temporário nos nós de névoa foi implementado com banco de dados \textit{MongoDB}, escolhido por sua flexibilidade para lidar com dados em formato \gls{JSON} e pela capacidade de inserir registros heterogêneos sem a exigência de um esquema fixo.  
+Para essa finalidade, foi adotado o banco de dados \textit{MongoDB}. A escolha
+desse banco se deu principalmente pela sua flexibilidade no armazenamento de
+dados em formato \gls{JSON}, característica que facilita o tratamento das
+mensagens provenientes dos dispositivos. Além disso, o \textit{MongoDB} permite
+a inserção de registros heterogêneos sem a necessidade de um esquema rígido,
+o que se mostrou adequado para lidar com diferentes tipos de medições e
+estruturas de dados utilizadas nos testes.
 
-Com essa integração, a camada de serviços consegue solicitar à camada de processamento apenas as informações estritamente necessárias para o pré-processamento, recebendo uma resposta já filtrada e adaptada ao contexto da aplicação.
+A comunicação entre a subcamada de serviços e a subcamada de processamento foi
+implementada utilizando a linguagem de consulta \textit{GraphQL}. Essa tecnologia
+permite que as aplicações especifiquem exatamente quais campos e registros
+devem ser retornados, reduzindo a transferência de dados desnecessários e
+diminuindo a sobrecarga de processamento.
+
+Outra característica relevante do \textit{GraphQL} é a possibilidade de realizar
+consultas a múltiplas fontes de dados de forma unificada, agregando resultados
+distintos em uma única resposta. Dessa forma, a subcamada de serviços consegue
+solicitar apenas as informações necessárias ao processamento, recebendo uma
+resposta já filtrada e adequada ao contexto da aplicação.
+
+Cabe destacar que tanto o \textit{MongoDB} quanto o \textit{GraphQL} foram
+utilizados como tecnologias de apoio na implementação dos testes. A arquitetura
+proposta não depende especificamente dessas ferramentas, podendo utilizar
+outras tecnologias equivalentes que atendam aos requisitos funcionais
+definidos para o armazenamento e consulta de dados.
 
 % ----------------------------------------------------------
 \section{HPCC Systems na Camada de Nuvem}

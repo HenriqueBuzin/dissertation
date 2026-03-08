@@ -67,10 +67,8 @@ representa a arquitetura como um todo, incluindo suas camadas
 arquiteturais e os principais componentes presentes em cada domínio
 de névoa.
 
-A explicação apresentada nesta seção tem caráter geral e introdutório.
-Nas seções seguintes, cada camada arquitetural, bem como os
-componentes da camada de névoa e a organização interna dos nós,
-são descritos de maneira detalhada.
+A explicação apresentada até o momento, tem caráter geral e introdutório, nas seções seguintes, cada camada arquitetural, 
+bem como os componentes da camada de névoa e a organização interna dos nós,são descritos de maneira detalhada.
 
 \begin{figure}[htb]
     \caption{\label{fig:arquitetura_proposta}Visão geral da arquitetura proposta.}
@@ -95,16 +93,19 @@ os nós de névoa disponíveis, considerando a especialização de cada um.
 Dessa forma, as requisições são direcionadas conforme o tipo de dado ou
 serviço associado.
 
-Quando um novo nó é iniciado, ele realiza seu registro junto ao nó primário,
-informando sua especialização, como água ou energia. Após o registro,
-envia atualizações periódicas indicando que permanece ativo. Caso essas
-atualizações deixem de ser recebidas, o nó pode ser removido do conjunto
-de nós disponíveis no domínio.
+Quando um novo nó é iniciado, ele realiza seu registro junto ao nó primário, informando sua especialização, 
+como água ou energia. Após o registro, envia atualizações periódicas, em intervalos regulares de tempo, como 
+segundos ou minutos, indicando que permanece ativo. Caso essas atualizações deixem de ser recebidas por um determinado 
+período de tempo, também definido em intervalos regulares, como segundos ou minutos, o nó é considerado inativo e pode ser 
+removido do conjunto de nós disponíveis no domínio.
 
-A distribuição de carga segue uma lógica semelhante ao \textit{Round Robin},
-respeitando a especialização de cada nó. Cada nó processa uma requisição
-por vez dentro de sua área de atuação. Durante o funcionamento, o nó
-primário monitora o número de dispositivos conectados e o volume de
+A distribuição de carga segue uma lógica semelhante ao \textit{Round Robin}, 
+um algoritmo clássico de balanceamento no qual as requisições são distribuídas 
+sequencialmente entre os nós disponíveis. Diferentemente do \textit{Round Robin} tradicional, 
+que apenas alterna entre os nós sem considerar suas características ou funções, o modelo proposto 
+respeita a especialização de cada nó. Dessa forma, as requisições são encaminhadas apenas para nós 
+capazes de processá-las, garantindo que cada nó atue dentro de sua área de atuação e processe uma requisição por vez. 
+Durante o funcionamento do sistema, o nó primário monitora continuamente o número de dispositivos conectados e o volume de 
 requisições associadas ao domínio.
 
 Ao ser inicializado, o nó primário informa os demais nós primários sobre
@@ -130,11 +131,7 @@ Internamente, os nós de névoa são organizados em uma estrutura composta
 por três subcamadas funcionais: protocolos, processamento e serviços.
 Essa divisão descreve a organização interna das responsabilidades do nó.
 
-A subcamada de protocolos é responsável por receber os dados e requisições
-provenientes do nó primário. Quando necessário, realiza conversões de
-formato ou de protocolo, encaminhando as informações para um padrão
-interno utilizado pelo nó. A Figura~\ref{fig:camada_protocolos} apresenta
-a organização dessa subcamada.
+A subcamada de protocolos é responsável por receber os dados e requisições provenientes do nó primário. Quando necessário, realiza conversões de protocolo, encaminhando as informações para um padrão interno utilizado pelo nó. O protocolo padrão adotado internamente na subcamada é um protocolo orientado a mensagens que não exige o estabelecimento de sessão a cada comunicação, permitindo trocas de dados de forma mais eficiente e com menor sobrecarga de conexão. A Figura~\ref{fig:camada_protocolos} apresenta a organização dessa subcamada.
 
 \begin{figure}[htb]
     \centering
@@ -144,13 +141,13 @@ a organização dessa subcamada.
     \fonte{Do autor.}
 \end{figure}
 
-A subcamada de processamento atua como núcleo de coordenação interna do
-nó. Ela gerencia a comunicação entre as demais subcamadas, mantém
-armazenamento temporário dos dados e executa funções relacionadas ao
-fluxo interno das informações. Também disponibiliza um mecanismo de
-consultas internas, permitindo que a subcamada de serviços acesse apenas os
-dados necessários para sua execução. A Figura~\ref{fig:camada_processamento}
-apresenta os principais elementos dessa subcamada.
+A subcamada de processamento atua como núcleo de coordenação interna do nó. Ela organiza o fluxo de informações entre as subcamadas do nó, mantendo armazenamento temporário dos dados e executando funções relacionadas ao controle interno do processamento. Nessa subcamada também está presente um banco de dados interno responsável por armazenar configurações do domínio de névoa e manter dados temporários utilizados durante o processamento.
+
+Para permitir o acesso estruturado a essas informações, a subcamada disponibiliza uma linguagem de consulta de dados, utilizada pelas demais partes do sistema para recuperar ou registrar informações no banco interno. Esse mecanismo permite que a subcamada de serviços acesse apenas os dados necessários para sua execução, mantendo a organização do fluxo interno de informações.
+
+Além disso, essa subcamada mantém um servidor responsável pela descoberta de serviços disponíveis no nó, permitindo que aplicações ou componentes internos identifiquem funcionalidades presentes no domínio. Também controla as informações associadas ao registro do nó junto ao nó primário.
+
+A comunicação entre a subcamada de processamento e a subcamada de protocolos ocorre por meio de um protocolo interno padrão, utilizado para encaminhar requisições e respostas dentro do nó. Dessa forma, a subcamada de processamento prepara os dados e os encaminha à subcamada de protocolos, que é responsável pela comunicação externa com outros componentes do sistema. A Figura~\ref{fig:camada_processamento} apresenta os principais elementos dessa subcamada.
 
 \begin{figure}[htb]
     \centering
@@ -175,5 +172,7 @@ para manter compatibilidade com o sistema em nuvem. Ao receber os dados,
 combina as informações em um único arquivo estruturado, que pode incluir
 médias, totais ou agrupamentos, conforme o contexto da aplicação.
 
-Após a consolidação, os dados são encaminhados para a camada de nuvem,
-onde permanecem disponíveis para armazenamento e análises posteriores.
+Após a consolidação, os dados são encaminhados para a camada de nuvem, onde permanecem disponíveis para 
+armazenamento e análises posteriores. Com base nessa arquitetura e na organização de seus componentes, foram realizados 
+testes experimentais para observar o comportamento do sistema e verificar o funcionamento dos mecanismos propostos, apresentados 
+na próxima seção.
