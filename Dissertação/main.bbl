@@ -427,6 +427,44 @@
       \field{pages}{173\bibrangedash 179}
       \range{pages}{7}
     \endentry
+    \entry{mell2011}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=4d5a8359c80464d0e258300af2715f04}{%
+           family={Mell},
+           familyi={M\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=27d89de3d0b3cf276704022e90b16a79}{%
+           family={Grance},
+           familyi={G\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{fullhash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{fullhashraw}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{bibnamehash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{authorbibnamehash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{authornamehash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{authorfullhash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{authorfullhashraw}{1328827e7dd80d8b139fcf27faa34f95}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{NIST Special Publication 800-145}
+      \field{number}{145}
+      \field{title}{The NIST Definition of Cloud Computing}
+      \field{volume}{800}
+      \field{year}{2011}
+      \field{pages}{1\bibrangedash 7}
+      \range{pages}{7}
+      \keyw{Cloud Computing,NIST,Virtualization,Distributed Systems}
+    \endentry
     \entry{murley2021}{article}{}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=6b4544f0bc3dbad233fc41e8f2e2d108}{%
@@ -745,6 +783,36 @@
       \field{isbn}{978-0132126953}
       \field{title}{Computer Networks}
       \field{year}{2011}
+    \endentry
+    \entry{taylor2022}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=81c86ab1c64d445f72b1bb7f6a39162a}{%
+           family={Taylor},
+           familyi={T\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Function}%
+      }
+      \strng{namehash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{fullhash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{fullhashraw}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{bibnamehash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{authorbibnamehash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{authornamehash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{authorfullhash}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \strng{authorfullhashraw}{81c86ab1c64d445f72b1bb7f6a39162a}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{note}{Kindle Edition}
+      \field{title}{Mastering HPCC Systems: Platform Overview and History}
+      \field{year}{2022}
     \endentry
     \entry{tseng2018}{inproceedings}{}{}
       \name{author}{2}{}{%
