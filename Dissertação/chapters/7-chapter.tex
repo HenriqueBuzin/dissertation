@@ -25,13 +25,25 @@ A análise das latências evidencia que o maior tempo de transmissão ocorre ent
     \centering
     \begin{tabular}{|c|c|c|c|}
         \hline
-            \textbf{Caminho} & \textbf{Mínimo (ms)} & \textbf{Máximo (ms)} & \textbf{Média (ms)} \\ \hline
-            Medidor $\rightarrow$ Nó Primário & 456 & 2455 & 1455 \\ \hline
-            Nó Primário $\rightarrow$ Nó de Névoa & 1 & 3 & 2 \\ \hline
-            Nó Primário $\rightarrow$ Nó Primário (outra névoa) & 3 & 9 & 6 \\ \hline
-            Nó Primário $\rightarrow$ Dispositivos (outra névoa) & 25 & 85 & 48 \\ \hline
-            Nó de Névoa $\rightarrow$ Agregador & 2 & 3 & 2,5 \\ \hline
-            Agregador $\rightarrow$ Nuvem (\gls{HPCC} \textit{Systems}) & 600 & 1600 & 1100 \\ \hline
+        \textbf{Caminho} & \textbf{Mínimo (ms)} & \textbf{Máximo (ms)} & \textbf{Média (ms)} \\ 
+        \hline
+
+        \multicolumn{4}{|c|}{\textbf{Comunicação dentro do domínio de névoa}} \\ 
+        \hline
+
+        Medidor $\rightarrow$ Nó Primário & 456 & 2455 & 1455 \\ \hline
+        Nó Primário $\rightarrow$ Nó de Névoa & 1 & 3 & 2 \\ \hline
+        Nó de Névoa $\rightarrow$ Agregador & 2 & 3 & 2,5 \\ \hline
+        Agregador $\rightarrow$ Nuvem (\gls{HPCC} \textit{Systems}) & 600 & 1600 & 1100 \\ 
+        \hline
+
+        \multicolumn{4}{|c|}{\textbf{Comunicação entre domínios de névoa}} \\ 
+        \hline
+
+        Nó Primário $\rightarrow$ Nó Primário (outra névoa) & 3 & 9 & 6 \\ \hline
+        Nó Primário $\rightarrow$ Dispositivos (outra névoa) & 25 & 85 & 48 \\ 
+        \hline
+
     \end{tabular}
     \fonte{Do autor.}
 \end{table}

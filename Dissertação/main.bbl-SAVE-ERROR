@@ -152,66 +152,6 @@
       \range{pages}{14}
       \keyw{Fog Computing,Microservices,Load Balancing,Reinforcement Learning}
     \endentry
-    \entry{cassel2024}{article}{}{}
-      \name{author}{5}{}{%
-        {{un=0,uniquepart=base,hash=3b5cc6a6fe1a7d6bf95113edc1a4ed88}{%
-           family={Cassel},
-           familyi={C\bibinitperiod},
-           given={Gustavo\bibnamedelimb André\bibnamedelima Setti},
-           giveni={G\bibinitperiod\bibinitdelim A\bibinitperiod\bibinitdelim S\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=bbbdd2b9c8191025efad76d82662802f}{%
-           family={Rosa\bibnamedelima Righi},
-           familyi={R\bibinitperiod\bibinitdelim R\bibinitperiod},
-           given={Rodrigo},
-           giveni={R\bibinitperiod},
-           givenun=0,
-           prefix={da},
-           prefixi={d\bibinitperiod},
-           prefixun=0}}%
-        {{un=0,uniquepart=base,hash=d8c235a079638d5734dfed7598523a64}{%
-           family={Costa},
-           familyi={C\bibinitperiod},
-           given={Cristiano\bibnamedelima André},
-           giveni={C\bibinitperiod\bibinitdelim A\bibinitperiod},
-           givenun=0,
-           prefix={da},
-           prefixi={d\bibinitperiod},
-           prefixun=0}}%
-        {{un=0,uniquepart=base,hash=089bc99adc7367e14852406f0ecfe110}{%
-           family={Bez},
-           familyi={B\bibinitperiod},
-           given={Marta\bibnamedelima Rosecler},
-           giveni={M\bibinitperiod\bibinitdelim R\bibinitperiod},
-           givenun=0}}%
-        {{un=0,uniquepart=base,hash=177e7ce08a56ba83ffc6284b46caa184}{%
-           family={Pasin},
-           familyi={P\bibinitperiod},
-           given={Marcelo},
-           giveni={M\bibinitperiod},
-           givenun=0}}%
-      }
-      \strng{namehash}{ee2e347323338f2ef251ad33218ba52f}
-      \strng{fullhash}{1a165c008be04c15d1ab24f0a02f04be}
-      \strng{fullhashraw}{1a165c008be04c15d1ab24f0a02f04be}
-      \strng{bibnamehash}{1a165c008be04c15d1ab24f0a02f04be}
-      \strng{authorbibnamehash}{1a165c008be04c15d1ab24f0a02f04be}
-      \strng{authornamehash}{ee2e347323338f2ef251ad33218ba52f}
-      \strng{authorfullhash}{1a165c008be04c15d1ab24f0a02f04be}
-      \strng{authorfullhashraw}{1a165c008be04c15d1ab24f0a02f04be}
-      \field{sortinit}{C}
-      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
-      \field{extradatescope}{labelyear}
-      \field{labeldatesource}{}
-      \field{labelnamesource}{author}
-      \field{labeltitlesource}{title}
-      \field{journaltitle}{Future Generation Computer Systems}
-      \field{title}{Towards providing a priority-based vital sign offloading in healthcare with serverless computing and a fog-cloud architecture}
-      \field{volume}{157}
-      \field{year}{2024}
-      \field{pages}{51\bibrangedash 66}
-      \range{pages}{16}
-    \endentry
     \entry{dagostino2025}{article}{}{}
       \name{author}{3}{}{%
         {{un=0,uniquepart=base,hash=e87a5813a1f8f032012be8013b4727ff}{%
@@ -377,6 +317,54 @@
       \range{pages}{176}
       \keyw{IEEE Standards,Information technology,Edge computing,Communications technology,adoption,communication technology IEEE 1934™,information technology,OpenFog,operational technology}
     \endentry
+    \entry{khan2021}{article}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=732e8da7f52edf23020139fcb12b23e0}{%
+           family={Khan},
+           familyi={K\bibinitperiod},
+           given={H.\bibnamedelimi M.},
+           giveni={H\bibinitperiod\bibinitdelim M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5faa0905ce9e85252fbed0529647d36d}{%
+           family={Khan},
+           familyi={K\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f6581add5dc6b6e8fc59d1f896afd1bc}{%
+           family={Jabeen},
+           familyi={J\bibinitperiod},
+           given={F.},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0fa0184df577005646381bb11a984f67}{%
+           family={Rahman},
+           familyi={R\bibinitperiod},
+           given={A.\bibnamedelimi U.},
+           giveni={A\bibinitperiod\bibinitdelim U\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{745eea57c82d1122048dc85386800e40}
+      \strng{fullhash}{009a5254c3738a562d4c3dff241b3b61}
+      \strng{fullhashraw}{009a5254c3738a562d4c3dff241b3b61}
+      \strng{bibnamehash}{009a5254c3738a562d4c3dff241b3b61}
+      \strng{authorbibnamehash}{009a5254c3738a562d4c3dff241b3b61}
+      \strng{authornamehash}{745eea57c82d1122048dc85386800e40}
+      \strng{authorfullhash}{009a5254c3738a562d4c3dff241b3b61}
+      \strng{authorfullhashraw}{009a5254c3738a562d4c3dff241b3b61}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Sustainable Cities and Society}
+      \field{title}{Privacy preserving data aggregation with fault tolerance in fog-enabled smart grids}
+      \field{volume}{64}
+      \field{year}{2021}
+      \field{pages}{102522}
+      \range{pages}{1}
+    \endentry
     \entry{markakis2017}{article}{}{}
       \name{author}{6}{}{%
         {{un=0,uniquepart=base,hash=79aa10bbc85f14fc9f4f9783f8688502}{%
@@ -438,6 +426,100 @@
       \field{year}{2017}
       \field{pages}{173\bibrangedash 179}
       \range{pages}{7}
+    \endentry
+    \entry{mell2011}{article}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=4d5a8359c80464d0e258300af2715f04}{%
+           family={Mell},
+           familyi={M\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=27d89de3d0b3cf276704022e90b16a79}{%
+           family={Grance},
+           familyi={G\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{fullhash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{fullhashraw}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{bibnamehash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{authorbibnamehash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{authornamehash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{authorfullhash}{1328827e7dd80d8b139fcf27faa34f95}
+      \strng{authorfullhashraw}{1328827e7dd80d8b139fcf27faa34f95}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{NIST Special Publication 800-145}
+      \field{number}{145}
+      \field{title}{The NIST Definition of Cloud Computing}
+      \field{volume}{800}
+      \field{year}{2011}
+      \field{pages}{1\bibrangedash 7}
+      \range{pages}{7}
+      \keyw{Cloud Computing,NIST,Virtualization,Distributed Systems}
+    \endentry
+    \entry{murley2021}{article}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=6b4544f0bc3dbad233fc41e8f2e2d108}{%
+           family={Murley},
+           familyi={M\bibinitperiod},
+           given={P.},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fc56c3d085d8042379a2aaa9f0f3e53c}{%
+           family={Ma},
+           familyi={M\bibinitperiod},
+           given={Z.},
+           giveni={Z\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7f9ad216eebadf5f13c1fca88e171485}{%
+           family={Mason},
+           familyi={M\bibinitperiod},
+           given={J.},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9bdbbdb97c630128afa9883124c7a794}{%
+           family={Bailey},
+           familyi={B\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d307e87d61bfa66a6d934631610ac852}{%
+           family={Kharraz},
+           familyi={K\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{8bbcd1a25e289785c34cbb86f5b5221e}
+      \strng{fullhash}{0b0d13667674e02aecd72fb4be4ef321}
+      \strng{fullhashraw}{0b0d13667674e02aecd72fb4be4ef321}
+      \strng{bibnamehash}{0b0d13667674e02aecd72fb4be4ef321}
+      \strng{authorbibnamehash}{0b0d13667674e02aecd72fb4be4ef321}
+      \strng{authornamehash}{8bbcd1a25e289785c34cbb86f5b5221e}
+      \strng{authorfullhash}{0b0d13667674e02aecd72fb4be4ef321}
+      \strng{authorfullhashraw}{0b0d13667674e02aecd72fb4be4ef321}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Proceedings of the Web Conference (WWW)}
+      \field{number}{1}
+      \field{title}{WebSocket Adoption and the Landscape of the Real-Time Web}
+      \field{volume}{2021}
+      \field{year}{2021}
+      \field{pages}{1192\bibrangedash 1203}
+      \range{pages}{12}
+      \keyw{WebSocket,Real-Time Web,Polling,Performance,Security}
     \endentry
     \entry{oliveira2024}{article}{}{}
       \name{author}{3}{}{%
@@ -732,6 +814,41 @@
       \field{title}{Mastering HPCC Systems: Platform Overview and History}
       \field{year}{2022}
     \endentry
+    \entry{tseng2018}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=71a38695c6c69121de7476ae102dbcde}{%
+           family={Tseng},
+           familyi={T\bibinitperiod},
+           given={Chih-Lin},
+           giveni={C\bibinithyphendelim L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=822fda95575b8893f72ad0f81abae18d}{%
+           family={Lin},
+           familyi={L\bibinitperiod},
+           given={Fu-Jen},
+           giveni={F\bibinithyphendelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{bc59596e6d8f83eb3485f5ae7d28c0b4}
+      \strng{fullhash}{bc59596e6d8f83eb3485f5ae7d28c0b4}
+      \strng{fullhashraw}{bc59596e6d8f83eb3485f5ae7d28c0b4}
+      \strng{bibnamehash}{bc59596e6d8f83eb3485f5ae7d28c0b4}
+      \strng{authorbibnamehash}{bc59596e6d8f83eb3485f5ae7d28c0b4}
+      \strng{authornamehash}{bc59596e6d8f83eb3485f5ae7d28c0b4}
+      \strng{authorfullhash}{bc59596e6d8f83eb3485f5ae7d28c0b4}
+      \strng{authorfullhashraw}{bc59596e6d8f83eb3485f5ae7d28c0b4}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{2018 IEEE 4th World Forum on Internet of Things (WF-IoT)}
+      \field{title}{Extending Scalability of IoT/M2M Platforms with Fog Computing}
+      \field{year}{2018}
+      \field{pages}{825\bibrangedash 830}
+      \range{pages}{6}
+    \endentry
     \entry{wang2013}{inproceedings}{}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=e2068259fc5297e154f92a417136c922}{%
@@ -786,7 +903,6 @@
       \range{pages}{6}
     \endentry
   \enddatalist
-  \missing{exegesis2021}
 \endrefsection
 \endinput
 
