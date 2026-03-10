@@ -35,19 +35,19 @@
 \contentsline {section}{\numberline {4.4}Visão Geral}{30}{section.4.4}%
 \contentsline {subsection}{\numberline {4.4.1}Componentes da Camada de Névoa}{31}{subsection.4.4.1}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{Testes}}{35}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Contextualização do Problema}{35}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Ambiente de Testes}{35}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Ambiente Físico}{36}{subsection.5.2.1}%
-\contentsline {section}{\numberline {5.3}Tecnologias e Protocolos}{37}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Distribuição entre Névoas e Balanceamento de Carga}{39}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Banco de Dados e Linguagem de Consulta de Dados}{39}{section.5.5}%
-\contentsline {section}{\numberline {5.6}HPCC Systems na Camada de Nuvem}{40}{section.5.6}%
+\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{Testes}}{36}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Contextualização do Problema}{36}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Ambiente de Testes}{36}{section.5.2}%
+\contentsline {subsection}{\numberline {5.2.1}Ambiente Físico}{37}{subsection.5.2.1}%
+\contentsline {section}{\numberline {5.3}Tecnologias e Protocolos}{38}{section.5.3}%
+\contentsline {section}{\numberline {5.4}Distribuição entre Névoas e Balanceamento de Carga}{40}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Banco de Dados e Linguagem de Consulta de Dados}{41}{section.5.5}%
+\contentsline {section}{\numberline {5.6}HPCC Systems na Camada de Nuvem}{42}{section.5.6}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados}}{42}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Valores Medidos}{42}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Discussão dos Resultados}{43}{section.6.2}%
+\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados}}{44}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Valores Medidos}{44}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Discussão dos Resultados}{45}{section.6.2}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Conclusão}}{44}{chapter.7}%
+\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Conclusão}}{46}{chapter.7}%
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{Refer\^encias}{45}{section*.28}%
+\contentsline {chapter}{Refer\^encias}{48}{section*.28}%

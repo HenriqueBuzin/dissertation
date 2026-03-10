@@ -10,7 +10,7 @@ Este capítulo apresenta a arquitetura modular de computação em névoa propost
 
 O desenvolvimento deste trabalho foi iniciado com uma análise do estado da arte em computação em névoa, comunicação entre névoas e interoperabilidade de protocolos. Essa etapa permitiu identificar abordagens já utilizadas na literatura, bem como lacunas relacionadas à integração entre diferentes domínios de névoa e à interoperabilidade entre componentes distribuídos.
 
-Com base nos resultados dessa análise, foram definidos os requisitos funcionais e estruturais que orientaram a construção da arquitetura proposta. A partir desses requisitos, foi elaborada uma arquitetura modular, na qual são especificados os papéis de cada tipo de nó — nó primário, nós de névoa e nó agregador — bem como a organização interna dos componentes responsáveis pelo processamento e pela comunicação entre os diferentes níveis do sistema.
+Com base nos resultados dessa análise, foram definidos os requisitos funcionais e estruturais que orientaram a construção da arquitetura proposta. A partir desses requisitos, foi elaborada uma arquitetura modular, na qual são especificados os papéis de cada tipo de nó: nó primário, nós de névoa e nó agregador, bem como a organização interna dos componentes responsáveis pelo processamento e pela comunicação entre os diferentes níveis do sistema.
 
 Nessa fase também foram definidos os mecanismos de comunicação e as interações entre nós pertencentes a diferentes domínios de névoa, estabelecendo as bases para a coordenação, o encaminhamento de requisições e o fluxo de dados dentro da arquitetura proposta.
 
@@ -141,6 +141,10 @@ capazes de processá-las, garantindo que cada nó atue dentro de sua área de at
 Durante o funcionamento do sistema, o nó primário monitora continuamente o número de dispositivos conectados e o volume de 
 requisições associadas ao domínio.
 
+Com base nessas informações, o nó primário pode adotar duas estratégias de redistribuição de carga. A primeira ocorre dentro do próprio domínio de névoa, quando o nó primário identifica que um dos nós possui maior quantidade de dispositivos associados ou maior volume de requisições. Nesse caso, parte dos dispositivos pode ser redistribuída entre outros nós disponíveis do mesmo domínio, buscando manter um equilíbrio na utilização dos recursos.
+
+A segunda estratégia ocorre entre diferentes domínios de névoa. Caso o nó primário identifique que a capacidade de processamento local está próxima do limite ou que existe desequilíbrio na disponibilidade de especializações, ele pode consultar outros nós primários para verificar a disponibilidade de recursos em seus domínios. Com base nessas informações, novas requisições podem ser encaminhadas para outro domínio de névoa com maior capacidade disponível.
+
 Ao ser inicializado, o nó primário informa os demais nós primários sobre
 sua ativação e comunica a quantidade de nós especializados sob sua
 coordenação. Em situações de desequilíbrio, pode consultar outros domínios
@@ -148,6 +152,8 @@ para verificar disponibilidade de recursos. Caso identifique sobrecarga,
 envia uma mensagem de \textit{broadcast} aos demais nós primários solicitando
 informações atualizadas sobre utilização. Com base nas respostas recebidas,
 novas requisições podem ser redirecionadas para domínios com maior disponibilidade de recursos.
+
+Em situações de indisponibilidade do nó primário de um domínio, outro nó primário pode assumir temporariamente a coordenação do domínio afetado. Nesse caso, o nó primário ativo envia mensagens de controle aos dispositivos conectados, instruindo-os a redirecionar suas transmissões para o novo nó primário disponível. Esse mecanismo permite manter o fluxo de dados mesmo na ausência do nó primário originalmente responsável pelo domínio.
 
 Os nós de névoa são responsáveis pelo processamento local das informações
 recebidas do nó primário. Cada nó executa funções específicas de acordo
