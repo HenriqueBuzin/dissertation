@@ -10,10 +10,15 @@ Além disso, sempre que aplicável, os resultados são comparados com aqueles ob
 \section{Valores Medidos}
 % ----------------------------------------------------------
 
-Os valores apresentados nas Tabelas~\ref{tab:latencias} e~\ref{tab:memoria} foram obtidos a partir de \textit{timestamps} registrados nos pontos de entrada e saída de cada componente, bem como de medições de consumo de memória realizadas durante o envio das mensagens.  
+Os valores apresentados nas Tabelas~\ref{tab:latencias} e~\ref{tab:memoria} foram obtidos a partir de \textit{timestamps} registrados nos pontos de entrada e saída de cada componente, bem como de medições de consumo de memória realizadas durante o envio das mensagens.
 
-A Tabela~\ref{tab:latencias} mostra as latências mínimas, máximas e médias para cada segmento do fluxo, desde a recepção inicial no medidor até o processamento final na plataforma \gls{HPCC} \textit{Systems}.  
-Já a Tabela~\ref{tab:memoria} apresenta o consumo médio de memória por componente do sistema, obtido durante a execução contínua de 680.000 requisições, o que garante consistência estatística para os valores apresentados.
+Inicialmente são apresentadas as medições de latência entre os principais componentes da arquitetura. Essas medições permitem observar o tempo necessário para que uma mensagem percorra o fluxo completo do sistema, desde o envio pelo dispositivo até o armazenamento final na nuvem.
+
+A Tabela~\ref{tab:latencias} apresenta as latências mínimas, máximas e médias registradas em cada segmento da comunicação. Os valores incluem o envio de dados do medidor para o nó primário, o encaminhamento do nó primário para os nós de névoa, a comunicação entre diferentes domínios de névoa e o envio final dos dados consolidados para a plataforma \gls{HPCC} \textit{Systems}.
+
+Quando ocorre indisponibilidade de um nó de névoa ou desequilíbrio de carga, o nó primário pode redirecionar requisições para outro domínio de névoa. Nesse processo, o nó primário inicialmente estabelece comunicação com o nó primário do domínio remoto para verificar a disponibilidade de recursos. Após a confirmação, as requisições passam a ser encaminhadas para os nós de névoa do outro domínio. Em situações de falha do nó primário, o nó primário de outro domínio pode assumir temporariamente a coordenação e enviar mensagens de controle aos dispositivos, instruindo-os a redirecionar suas transmissões para o novo nó primário disponível. Os tempos de comunicação entre nós primários e o envio dessas mensagens de redirecionamento também foram considerados nas medições apresentadas na Tabela~\ref{tab:latencias}. 
+
+A análise das latências evidencia que o maior tempo de transmissão ocorre entre o Agregador e o \gls{HPCC} \textit{Systems}, etapa que concentra a maior parte da latência total.
 
 \begin{table}[htb]
     \caption{\label{tab:latencias}Latências mínimas, máximas e médias medidas}
@@ -23,15 +28,17 @@ Já a Tabela~\ref{tab:memoria} apresenta o consumo médio de memória por compon
             \textbf{Caminho} & \textbf{Mínimo (ms)} & \textbf{Máximo (ms)} & \textbf{Média (ms)} \\ \hline
             Medidor $\rightarrow$ Nó Primário & 456 & 2455 & 1455 \\ \hline
             Nó Primário $\rightarrow$ Nó de Névoa & 1 & 3 & 2 \\ \hline
-            Nó Primário $\rightarrow$ Nó Primário (outra névoa) & X & X & X \\ \hline
-            Nó Primário $\rightarrow$ Dispositivos (outra névoa) & X & X & X \\ \hline
+            Nó Primário $\rightarrow$ Nó Primário (outra névoa) & 3 & 9 & 6 \\ \hline
+            Nó Primário $\rightarrow$ Dispositivos (outra névoa) & 25 & 85 & 48 \\ \hline
             Nó de Névoa $\rightarrow$ Agregador & 2 & 3 & 2,5 \\ \hline
             Agregador $\rightarrow$ Nuvem (\gls{HPCC} \textit{Systems}) & 600 & 1600 & 1100 \\ \hline
     \end{tabular}
     \fonte{Do autor.}
 \end{table}
 
-Quando ocorre indisponibilidade de um nó de névoa ou desequilíbrio de carga, o nó primário pode redirecionar requisições para outro domínio de névoa. Nesse processo, o nó primário inicialmente estabelece comunicação com o nó primário do domínio remoto para verificar a disponibilidade de recursos. Após a confirmação, as requisições passam a ser encaminhadas para os nós de névoa do outro domínio. Em situações de falha do nó primário, o nó primário de outro domínio pode assumir temporariamente a coordenação e enviar mensagens de controle aos dispositivos, instruindo-os a redirecionar suas transmissões para o novo nó primário disponível. Os tempos de comunicação entre nós primários e o envio dessas mensagens de redirecionamento também foram considerados nas medições apresentadas na Tabela~\ref{tab:latencias}. A análise das latências evidencia que o maior tempo de transmissão ocorre entre o Agregador e o \gls{HPCC} \textit{Systems}, etapa que concentra a maior parte da latência total.
+Além das medições de latência, também foi avaliado o consumo de memória dos principais componentes da arquitetura durante a execução dos experimentos. Essas medições permitem observar o impacto do processamento distribuído nos recursos computacionais utilizados pelos diferentes elementos do sistema.
+
+A Tabela~\ref{tab:memoria} apresenta o consumo médio de memória por componente do sistema, obtido durante a execução contínua de 680.000 requisições, o que garante consistência estatística para os valores apresentados.
 
 \begin{table}[htb]
     \caption{\label{tab:memoria}Consumo médio de memória por componente}
@@ -39,10 +46,12 @@ Quando ocorre indisponibilidade de um nó de névoa ou desequilíbrio de carga, 
     \begin{tabular}{|l|c|}
         \hline
             \textbf{Componente} & \textbf{Memória (MiB)} \\ \hline
-            Load Balancer & 37,37 \\ \hline
+            Nó Primário & 37,37 \\ \hline
             Agregador & 40,14 \\ \hline
             Nó de Névoa (Energia) & 276,60 \\ \hline
+            Nó de Névoa (Água) & 273,42 \\ \hline
             Simulador de Medidor HTTP & 19,97 \\ \hline
+            Simulador de Medidor CoAP & 13,58 \\ \hline
     \end{tabular}
     \fonte{Do autor.}
 \end{table}
