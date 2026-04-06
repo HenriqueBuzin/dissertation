@@ -47,7 +47,7 @@ A Figura~\ref{fig:container_manager} apresenta a tela de gerenciamento de contê
 \subsection{Ambiente Físico}
 % ----------------------------------------------------------
 
-Os experimentos foram realizados em quatro máquinas físicas, cada uma com uma função específica dentro da arquitetura distribuída proposta. Cada máquina executou contêineres Docker gerenciados por uma \textit{interface web}, e todas as comunicações entre elas ocorreram por meio de túneis seguros configurados para interligar redes distintas.
+Os experimentos foram realizados em quatro máquinas físicas, cada uma com uma função específica dentro da \gls{IMSA}. Cada máquina executou contêineres Docker gerenciados por uma \textit{interface web}, e todas as comunicações entre elas ocorreram por meio de túneis seguros configurados para interligar redes distintas.
 
 A Tabela~\ref{tab:especificacoes_maquinas} apresenta as especificações de hardware e a função de cada equipamento. As máquinas PC-01 e PC-02, localizadas em Florianópolis, operaram em uma mesma rede local compartilhada. Elas foram configuradas como nós de névoa completos, denominados Névoa A e Névoa B, cada uma composta por um nó primário, um nó agregador e uma quantidade variável de nós de névoa.
 
@@ -135,9 +135,9 @@ A máquina PC-03, também localizada em Florianópolis, foi dedicada à camada d
 \section{Tecnologias e Protocolos}
 % ----------------------------------------------------------
 
-Os experimentos consideram dispositivos medidores responsáveis pela geração de dados de consumo de água e energia. Esses dispositivos representam sensores de borda que enviam medições para a arquitetura proposta.
+Os experimentos consideram dispositivos medidores responsáveis pela geração de dados de consumo de água e energia. Esses dispositivos representam sensores de borda que enviam medições para a arquitetura \gls{IMSA}.
 
-Para a geração dos dados utilizados pelos medidores, foram empregados conjuntos de dados públicos referentes ao consumo de energia elétrica e de água. O conjunto de dados utilizado para representar o consumo de energia elétrica foi obtido a partir de um dataset público disponibilizado pela UCI Machine Learning Repository\footnote{Disponível em: \url{https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption}.}. Já os dados utilizados para representar o consumo de água foram obtidos a partir de um dataset público disponibilizado pelo Hellenic Data Service\footnote{Disponível em: \url{https://data.hellenicdataservice.gr/dataset/78776f38-a58b-4a2a-a8f9-85b964fe5c95}.}. Ambos os conjuntos de dados passaram por um processo de pré-processamento antes de serem utilizados nos experimentos. Esse processo incluiu a padronização da frequência temporal dos registros para intervalos de uma hora, permitindo que os dados representassem um comportamento uniforme de envio de medições pelos dispositivos. Além disso, atributos e registros que não eram necessários para os experimentos foram removidos, mantendo apenas as informações relevantes para os testes realizados na arquitetura proposta.
+Para a geração dos dados utilizados pelos medidores, foram empregados conjuntos de dados públicos referentes ao consumo de energia elétrica e de água. O conjunto de dados utilizado para representar o consumo de energia elétrica foi obtido a partir de um dataset público disponibilizado pela UCI Machine Learning Repository\footnote{Disponível em: \url{https://archive.ics.uci.edu/dataset/235/individual+household+electric+power+consumption}.}. Já os dados utilizados para representar o consumo de água foram obtidos a partir de um dataset público disponibilizado pelo Hellenic Data Service\footnote{Disponível em: \url{https://data.hellenicdataservice.gr/dataset/78776f38-a58b-4a2a-a8f9-85b964fe5c95}.}. Ambos os conjuntos de dados passaram por um processo de pré-processamento antes de serem utilizados nos experimentos. Esse processo incluiu a padronização da frequência temporal dos registros para intervalos de uma hora, permitindo que os dados representassem um comportamento uniforme de envio de medições pelos dispositivos. Além disso, atributos e registros que não eram necessários para os experimentos foram removidos, mantendo apenas as informações relevantes para os testes realizados na arquitetura \gls{IMSA}.
 
 Para avaliar a interoperabilidade entre os componentes da arquitetura, os
 dispositivos medidores foram desenvolvidos para operar utilizando diferentes
@@ -197,7 +197,7 @@ A comunicação entre a subcamada de serviços e a subcamada de processamento fo
 
 Além disso, o uso de \gls{GRAPHQL} permite a integração de diferentes fontes de dados de forma unificada, possibilitando que a subcamada de serviços realize consultas mais específicas e receba respostas já estruturadas conforme as necessidades da aplicação.
 
-Cabe destacar que tanto o MongoDB quanto o \gls{GRAPHQL} foram utilizados como tecnologias de apoio na implementação dos experimentos. A arquitetura proposta não depende especificamente dessas ferramentas, podendo ser adaptada para a utilização de outras tecnologias equivalentes, conforme os requisitos específicos de cada aplicação.
+Cabe destacar que tanto o MongoDB quanto o \gls{GRAPHQL} foram utilizados como tecnologias de apoio na implementação dos experimentos. A arquitetura \gls{IMSA} não depende especificamente dessas ferramentas, podendo ser adaptada para a utilização de outras tecnologias equivalentes, conforme os requisitos específicos de cada aplicação.
 
 % ----------------------------------------------------------
 \section{HPCC Systems na Arquitetura}

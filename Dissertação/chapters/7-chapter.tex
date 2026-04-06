@@ -74,10 +74,21 @@ Em relação ao consumo de memória, observa-se que os nós de névoa apresentam
 \section{Discussão dos Resultados}
 % ----------------------------------------------------------
 
-Os resultados obtidos demonstram que a arquitetura proposta apresenta um baixo consumo de recursos quando comparada com o estudo de D’Agostino~\textit{et al.}, no estudo relata-se que a execução de um ambiente de névoa implementado em Docker Compose consumia aproximadamente 1,2~GB de memória com apenas um contêiner ativo \cite{dagostino2025}. 
-Mesmo com todos os componentes em funcionamento, o sistema proposto manteve o consumo total em cerca de 374~MiB, o que corresponde a apenas 31\% do valor relatado naquele estudo, representando uma redução aproximada de 69\% no uso de memória. 
+% ----------------------------------------------------------
+\section{Discussão dos Resultados}
+% ----------------------------------------------------------
+
+Os resultados obtidos demonstram que a arquitetura proposta apresenta um baixo consumo de recursos quando comparada com o estudo de D’Agostino~\textit{et al.}. No estudo relata-se que a execução de um ambiente de névoa implementado em Docker Compose consome aproximadamente 1,2~GB de memória com apenas um contêiner ativo \cite{dagostino2025}. 
+
+Mesmo com todos os componentes em funcionamento, a arquitetura \gls{IMSA} manteve o consumo total em cerca de 374~MiB, o que corresponde a apenas 31\% do valor relatado naquele estudo, representando uma redução aproximada de 69\% no uso de memória. Esse resultado evidencia que a organização modular da arquitetura e a distribuição das responsabilidades entre os componentes permitem reduzir a sobrecarga computacional, evitando a concentração de processamento em um único elemento do sistema.
 
 Quando comparado a trabalhos recentes, o sistema proposto complementa e estende abordagens existentes. 
 Rahman e Hussain~\cite{rahman2024} exploraram a interoperabilidade semântica em um \textit{testbed} com múltiplos domínios de névoa, enquanto a arquitetura aqui apresentada enfatiza a interoperabilidade de protocolos e a composição modular. 
-Oliveira~\textit{et al.}~\cite{oliveira2024} aprimoraram o posicionamento modular de aplicações, mas sem coordenação entre diferentes névoas; nossa solução amplia essa capacidade por meio de redirecionamento adaptativo de requisições entre nós primários. 
-Já Boudieb~\textit{et al.}~\cite{boudieb2024} abordaram o balanceamento dinâmico de carga com \textit{deep reinforcement learning}, ao passo que a presente proposta alcança uma distribuição adaptativa mais simples, baseada em coordenação autônoma e que consome menos recursos.
+
+Na solução proposta, a interoperabilidade é alcançada por meio da utilização de diferentes protocolos de comunicação na camada de dispositivos, como HTTP e CoAP, permitindo que dispositivos heterogêneos enviem dados utilizando tecnologias distintas. Esses dados são recebidos pelo nó primário e convertidos para um protocolo interno padronizado, garantindo consistência na comunicação entre os componentes da camada de névoa. Internamente, a troca de mensagens entre as subcamadas ocorre por meio de WebSocket, reduzindo a sobrecarga de conexões e permitindo comunicação contínua e eficiente entre os módulos do sistema. Essa abordagem evidencia como a arquitetura lida diretamente com a heterogeneidade de protocolos, promovendo interoperabilidade de forma prática e integrada ao fluxo de processamento.
+
+Oliveira~\textit{et al.}~\cite{oliveira2024} aprimoraram o posicionamento modular de aplicações, mas sem coordenação entre diferentes névoas; a solução proposta amplia essa capacidade por meio do redirecionamento adaptativo de requisições entre nós primários. Esse mecanismo permite que, ao identificar situações de sobrecarga ou desequilíbrio na distribuição de dispositivos, o nó primário consulte outros domínios de névoa e encaminhe novas requisições para aqueles com maior disponibilidade de recursos, mantendo o equilíbrio do sistema mesmo em cenários distribuídos.
+
+Já Boudieb~\textit{et al.}~\cite{boudieb2024} abordaram o balanceamento dinâmico de carga com \textit{deep reinforcement learning}, ao passo que a presente proposta alcança uma distribuição adaptativa mais simples, baseada em coordenação autônoma e que consome menos recursos. 
+
+Na arquitetura proposta, essa coordenação ocorre por meio da comunicação periódica entre os nós primários, que compartilham informações sobre o estado do sistema, como número de dispositivos conectados e carga de processamento. Com base nessas informações, decisões de redistribuição são tomadas de forma local e dinâmica, sem a necessidade de modelos de aprendizado ou treinamento prévio. O redirecionamento adaptativo é realizado tanto dentro do próprio domínio, distribuindo requisições entre nós especializados, quanto entre diferentes domínios de névoa, garantindo maior flexibilidade e continuidade do sistema. Dessa forma, a solução mantém um comportamento adaptativo com menor complexidade computacional, tornando-se mais adequada para ambientes com recursos limitados.

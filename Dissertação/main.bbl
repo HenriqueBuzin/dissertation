@@ -742,6 +742,48 @@
       \field{title}{GraphQL}
       \field{year}{2019}
     \endentry
+    \entry{sterling2024}{book}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=b49388ecb22068f005861ed9049530d8}{%
+           family={Sterling},
+           familyi={S\bibinitperiod},
+           given={Thomas},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d68781adc68ad832b0f08fdceec0cf31}{%
+           family={Brodowicz},
+           familyi={B\bibinitperiod},
+           given={Maciej},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=81a1ee7fe5360e509724fc7036704d31}{%
+           family={Anderson},
+           familyi={A\bibinitperiod},
+           given={Matthew},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Morgan Kaufmann}%
+      }
+      \strng{namehash}{ee756dee7c3a7d7fabc0fb0c70fa3161}
+      \strng{fullhash}{ee756dee7c3a7d7fabc0fb0c70fa3161}
+      \strng{fullhashraw}{ee756dee7c3a7d7fabc0fb0c70fa3161}
+      \strng{bibnamehash}{ee756dee7c3a7d7fabc0fb0c70fa3161}
+      \strng{authorbibnamehash}{ee756dee7c3a7d7fabc0fb0c70fa3161}
+      \strng{authornamehash}{ee756dee7c3a7d7fabc0fb0c70fa3161}
+      \strng{authorfullhash}{ee756dee7c3a7d7fabc0fb0c70fa3161}
+      \strng{authorfullhashraw}{ee756dee7c3a7d7fabc0fb0c70fa3161}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{2}
+      \field{title}{High Performance Computing: Modern Systems and Practices}
+      \field{year}{2024}
+    \endentry
     \entry{tanenbaum2015}{book}{}{}
       \name{author}{2}{}{%
         {{un=0,uniquepart=base,hash=2414455c999bc471f803cd14fdea939d}{%
