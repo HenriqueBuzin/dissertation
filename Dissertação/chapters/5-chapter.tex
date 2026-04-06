@@ -1,5 +1,5 @@
 % ----------------------------------------------------------
-\chapter{Proposta}\label{cap:proposta}
+\chapter{Arquitetura Modular IMSA para Computação em Névoa}\label{cap:proposta}
 % ----------------------------------------------------------
 
 Este capítulo apresenta a arquitetura modular de computação em névoa proposta neste trabalho. Inicialmente, apresenta-se uma visão geral da solução, contextualizando sua organização e o fluxo de dados entre os diferentes níveis do sistema. Em seguida, são descritas as camadas arquiteturais, os componentes da camada de névoa, a organização interna dos nós e os mecanismos de comunicação entre domínios.
@@ -10,9 +10,11 @@ Este capítulo apresenta a arquitetura modular de computação em névoa propost
 
 O desenvolvimento deste trabalho foi iniciado com uma análise do estado da arte em computação em névoa, comunicação entre névoas e interoperabilidade de protocolos. Essa etapa permitiu identificar abordagens já utilizadas na literatura, bem como lacunas relacionadas à integração entre diferentes domínios de névoa e à interoperabilidade entre componentes distribuídos.
 
-Com base nos resultados dessa análise, foram definidos os requisitos funcionais e estruturais que orientaram a construção da arquitetura proposta. A partir desses requisitos, foi elaborada uma arquitetura modular, na qual são especificados os papéis de cada tipo de nó: nó primário, nós de névoa e nó agregador, bem como a organização interna dos componentes responsáveis pelo processamento e pela comunicação entre os diferentes níveis do sistema.
+Com base nos resultados dessa análise, foram definidos os requisitos funcionais e estruturais que orientaram a construção da arquitetura proposta. A partir desses requisitos, foi elaborada a arquitetura denominada \gls{IMSA}, na qual são especificados os papéis de cada tipo de nó: nó primário, nós de névoa e nó agregador, bem como a organização interna dos componentes responsáveis pelo processamento e pela comunicação entre os diferentes níveis do sistema.
 
-Nessa fase também foram definidos os mecanismos de comunicação e as interações entre nós pertencentes a diferentes domínios de névoa, estabelecendo as bases para a coordenação, o encaminhamento de requisições e o fluxo de dados dentro da arquitetura proposta.
+A \gls{IMSA} consiste em uma arquitetura de software modular voltada para ambientes computacionais de névoa, cujo objetivo é promover a interoperabilidade entre domínios distintos, a flexibilidade estrutural dos componentes e a eficiência no processamento distribuído de dados. Sua organização em camadas permite a separação de responsabilidades, facilitando a integração de novos serviços e a adaptação da arquitetura a diferentes cenários de aplicação.
+
+Nessa fase também foram definidos os mecanismos de comunicação e as interações entre nós pertencentes a diferentes domínios de névoa, estabelecendo as bases para a coordenação, o encaminhamento de requisições e o fluxo de dados dentro da \gls{IMSA}.
 
 % ----------------------------------------------------------
 \section{Implementação dos Componentes}
@@ -26,21 +28,10 @@ A implementação foi conduzida em etapas, de forma a permitir testes incrementa
 \end{enumerate}
 
 % ----------------------------------------------------------
-\section{Metodologia de Avaliação}
+\section{Divisão Estrutural da Arquitetura}
 % ----------------------------------------------------------
 
-Após a implementação, foram realizados testes com foco em:
-\begin{itemize}
-    \item \textbf{Interoperabilidade}: avaliar a capacidade da arquitetura de lidar com diferentes protocolos de comunicação.
-    \item \textbf{Balanceamento de carga}: avaliar o comportamento do nó primário na distribuição das requisições entre os nós de névoa, incluindo cenários de encaminhamento para outras névoas.
-    \item \textbf{Agregação de dados}: analisar a consolidação realizada pelo nó agregador e seu impacto na redução de requisições à nuvem.
-\end{itemize}
-
-% ----------------------------------------------------------
-\section{Visão Geral}
-% ----------------------------------------------------------
-
-A arquitetura proposta está organizada de forma hierárquica,
+A \gls{IMSA} está organizada de forma hierárquica,
 distribuindo o processamento e o fluxo de dados entre diferentes
 níveis do sistema. Essa organização considera a coleta de informações
 na borda, o processamento intermediário na camada de névoa e o
@@ -103,7 +94,7 @@ A explicação apresentada até o momento tem caráter geral e introdutório. Na
 bem como os componentes da camada de névoa e a organização interna dos nós, são descritos de maneira detalhada.
 
 \begin{figure}[htb]
-    \caption{\label{fig:arquitetura_proposta}Visão geral da arquitetura proposta.}
+    \caption{\label{fig:arquitetura_proposta}Divisão Estrutural da \gls{IMSA}.}
     \begin{center}
         \includegraphics[width=1\linewidth]{images/arquitetura_proposta.png}
     \end{center}

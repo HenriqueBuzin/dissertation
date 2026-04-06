@@ -196,6 +196,44 @@
       \range{pages}{18}
       \keyw{Fog Computing,Industrial IoT,Predictive Maintenance,Scalability}
     \endentry
+    \entry{elmasri2019}{book}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=c7e2fe1a0e649bf469f3feb7c5aa840d}{%
+           family={Elmasri},
+           familyi={E\bibinitperiod},
+           given={Ramez},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4ae94109c6efa1688beb655559324ba2}{%
+           family={Navathe},
+           familyi={N\bibinitperiod},
+           given={Shamkant\bibnamedelima B.},
+           giveni={S\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {São Paulo}%
+      }
+      \list{publisher}{1}{%
+        {Pearson Universidades}%
+      }
+      \strng{namehash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{fullhash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{fullhashraw}{2e8829be23557c692dac07b198a7df6e}
+      \strng{bibnamehash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{authorbibnamehash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{authornamehash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{authorfullhash}{2e8829be23557c692dac07b198a7df6e}
+      \strng{authorfullhashraw}{2e8829be23557c692dac07b198a7df6e}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Sistemas de Banco de Dados}
+      \field{year}{2019}
+    \endentry
     \entry{gourley2002}{book}{}{}
       \name{author}{5}{}{%
         {{un=0,uniquepart=base,hash=d24b5e8a5cf8350db91a3a19a983ec5a}{%

@@ -1,18 +1,29 @@
 % ----------------------------------------------------------
-\chapter{Testes}\label{cap:testes}
+\chapter{Configuração e Execução dos Testes da Arquitetura IMSA}\label{cap:testes}
 % ----------------------------------------------------------
 
-Este capítulo descreve os procedimentos de teste adotados para avaliar a arquitetura proposta, abrangendo ambiente, cenários, métricas, coleta e análise dos dados.
+Este capítulo descreve os procedimentos de teste adotados para avaliar a arquitetura \gls{IMSA}, abrangendo ambiente, cenários, métricas, coleta e análise dos dados.
 
 % ----------------------------------------------------------
 \section{Contextualização do Problema}
 % ----------------------------------------------------------
 
-Para avaliar a arquitetura proposta, foi adotado um cenário inspirado em aplicações de cidades inteligentes, com foco na gestão de recursos de água e energia. Nesse contexto, foram considerados medidores inteligentes que enviam dados de consumo para uma camada de névoa, onde ocorre o pré-processamento das informações antes de seu encaminhamento à nuvem.
+Para avaliar a arquitetura \gls{IMSA}, foi adotado um cenário inspirado em aplicações de cidades inteligentes, com foco na gestão de recursos de água e energia. Nesse contexto, foram considerados medidores inteligentes que enviam dados de consumo para uma camada de névoa, onde ocorre o pré-processamento das informações antes de seu encaminhamento à nuvem.
 
 Os dados utilizados para simulação foram obtidos a partir de conjuntos públicos, sendo um relacionado ao consumo residencial de energia elétrica \cite{uci_energy} e outro referente a medições de consumo de água \cite{greek_water}.
 
 Antes da utilização nos testes, ambos os conjuntos de dados passaram por um processo de pré-processamento que incluiu a remoção de informações não essenciais e a agregação das medições em intervalos horários. Esse tratamento visou manter apenas os elementos relevantes para simular a operação contínua dos dispositivos, aproximando o comportamento dos dados ao fluxo esperado em um ambiente real de monitoramento urbano.
+
+% ----------------------------------------------------------
+\section{Metodologia de Avaliação}
+% ----------------------------------------------------------
+
+Após a implementação, foram realizados testes com foco em:
+\begin{itemize}
+    \item \textbf{Interoperabilidade}: avaliar a capacidade da \gls{IMSA} de lidar com diferentes protocolos de comunicação.
+    \item \textbf{Balanceamento de carga}: avaliar o comportamento do nó primário na distribuição das requisições entre os nós de névoa, incluindo cenários de encaminhamento para outras névoas.
+    \item \textbf{Agregação de dados}: analisar a consolidação realizada pelo nó agregador e seu impacto na redução de requisições à nuvem.
+\end{itemize}
 
 % ----------------------------------------------------------
 \section{Ambiente de Testes}
@@ -175,51 +186,36 @@ Nos experimentos também foi considerado o cenário de falha de um nó primário
 Durante os testes, foram simuladas 48 horas de operação, resultando em um total de 3.360 leituras (70 dispositivos $\times$ 48 envios cada), com medições horárias agregadas em janelas de consumo. No nó agregador, as medições de cada domínio de névoa foram consolidadas em um único arquivo por dia e transmitidas para o ambiente \gls{HPCC} \textit{Systems}, sem ocorrência de falhas durante a execução dos contêineres.
 
 % ----------------------------------------------------------
-\section{Banco de Dados e Linguagem de Consulta de Dados}
+\section{Tecnologias de Armazenamento e Consulta de Dados na Arquitetura}
 % ----------------------------------------------------------
 
-Nos experimentos realizados, foi utilizado um banco de dados local nos nós de
-névoa para armazenamento temporário das informações recebidas dos dispositivos.
-Esse armazenamento é utilizado durante o processamento local dos dados antes
-de sua consolidação e encaminhamento para as camadas superiores da arquitetura.
+Nos experimentos realizados, foi utilizado um banco de dados local nos nós de névoa para armazenamento temporário das informações recebidas dos dispositivos. Esse armazenamento é empregado durante o processamento local dos dados, antes de sua consolidação e encaminhamento para as camadas superiores da arquitetura.
 
-Para essa finalidade, foi adotado o banco de dados \textit{MongoDB}. A escolha
-desse banco se deu principalmente pela sua flexibilidade no armazenamento de
-dados em formato \gls{JSON}, característica que facilita o tratamento das
-mensagens provenientes dos dispositivos. Além disso, o \textit{MongoDB} permite
-a inserção de registros heterogêneos sem a necessidade de um esquema rígido,
-o que se mostrou adequado para lidar com diferentes tipos de medições e
-estruturas de dados utilizadas nos testes.
+Para essa finalidade, foi adotado o banco de dados MongoDB. A escolha dessa tecnologia está relacionada à sua flexibilidade na manipulação de dados em formato \gls{JSON}, o que facilita o tratamento das mensagens provenientes dos dispositivos. Além disso, a ausência de um esquema rígido permite a inserção de registros heterogêneos, característica importante para lidar com diferentes tipos de medições e estruturas de dados utilizadas nos experimentos.
 
-A comunicação entre a subcamada de serviços e a subcamada de processamento foi
-implementada utilizando a linguagem de consulta \textit{GraphQL}. Essa tecnologia
-permite que as aplicações especifiquem exatamente quais campos e registros
-devem ser retornados, reduzindo a transferência de dados desnecessários e
-diminuindo a sobrecarga de processamento.
+A comunicação entre a subcamada de serviços e a subcamada de processamento foi implementada utilizando \gls{GRAPHQL}. Nesse contexto, sua utilização possibilita a recuperação eficiente apenas dos dados necessários para cada operação, contribuindo para a redução do volume de informações trafegadas e da sobrecarga de processamento.
 
-Outra característica relevante do \textit{GraphQL} é a possibilidade de realizar
-consultas a múltiplas fontes de dados de forma unificada, agregando resultados
-distintos em uma única resposta. Dessa forma, a subcamada de serviços consegue
-solicitar apenas as informações necessárias ao processamento, recebendo uma
-resposta já filtrada e adequada ao contexto da aplicação.
+Além disso, o uso de \gls{GRAPHQL} permite a integração de diferentes fontes de dados de forma unificada, possibilitando que a subcamada de serviços realize consultas mais específicas e receba respostas já estruturadas conforme as necessidades da aplicação.
 
-Cabe destacar que tanto o \textit{MongoDB} quanto o \textit{GraphQL} foram
-utilizados como tecnologias de apoio na implementação dos testes. A arquitetura
-proposta não depende especificamente dessas ferramentas, podendo utilizar
-outras tecnologias equivalentes que atendam aos requisitos funcionais
-definidos para o armazenamento e consulta de dados.
+Cabe destacar que tanto o MongoDB quanto o \gls{GRAPHQL} foram utilizados como tecnologias de apoio na implementação dos experimentos. A arquitetura proposta não depende especificamente dessas ferramentas, podendo ser adaptada para a utilização de outras tecnologias equivalentes, conforme os requisitos específicos de cada aplicação.
 
 % ----------------------------------------------------------
-\section{HPCC Systems na Camada de Nuvem}
+\section{HPCC Systems na Arquitetura}
 % ----------------------------------------------------------
 
-Na fase de testes, os dados provenientes dos nós de névoa de cada domínio foram enviados para seus respectivos nós agregadores, cada um responsável de forma exclusiva pela consolidação das informações dentro do domínio ao qual pertence. Nesse processo, os arquivos no formato \texttt{.csv} gerados pelos nós de névoa foram unificados em um único arquivo consolidado. Quando necessário, o nó agregador realizou operações adicionais, como a soma de valores correspondentes.
+O \textit{High Performance Computing Cluster} (\gls{HPCC}) \textit{Systems} é uma plataforma de processamento massivamente paralelo, de código aberto, desenvolvida pela divisão \gls{HPCC} Systems da LexisNexis Risk Solutions. Seu objetivo é lidar com grandes volumes de dados, desde a ingestão até a entrega de produtos de dados, com tempos de resposta reduzidos. Criado antes da popularização do Hadoop, não se baseia no paradigma \textit{map-reduce}, possuindo uma arquitetura própria \cite{taylor2022}.
 
-Após a consolidação, cada nó agregador transmitiu o arquivo final para a camada de nuvem, implementada com o \gls{HPCC} \textit{Systems}. Os arquivos recebidos no formato \texttt{.csv}, que é um dos formatos suportados de forma nativa pela plataforma, foram armazenados e processados para análise posterior, representando o resultado da integração e do pré-processamento realizados nas camadas inferiores da arquitetura.
+A plataforma é composta por um conjunto de servidores responsáveis por funções como compilação de código, gerenciamento distribuído de dados e execução de trabalhos (\textit{workunits}). O processamento é realizado por dois tipos de clusters: Thor e \gls{ROXIE}.
 
-Esses arquivos foram disponibilizados na zona de entrada da plataforma (\textit{landing zone}), permanecendo prontos para processamento e consultas conforme as necessidades da aplicação.  
+O Thor é voltado para operações intensivas em grandes conjuntos de dados, realizando tarefas como transformação, limpeza, integração e análise em larga escala. Já o \gls{ROXIE} é destinado a consultas rápidas e atendimento a solicitações de usuários finais.
 
-A Figura~\ref{fig:hpcc_landing_zone} apresenta o ambiente \gls{ECL} \textit{Watch}, exibindo os arquivos agregados de consumo de energia já no formato consolidado por data, prontos para tratamento e análise no ambiente de nuvem.
+Ambos os clusters utilizam a linguagem \gls{ECL}, de natureza declarativa, permitindo que o sistema determine a forma mais eficiente de execução das operações.
+
+No contexto da \gls{IMSA}, o \gls{HPCC} \textit{Systems} é utilizado na camada de nuvem como infraestrutura para armazenamento e processamento de dados em larga escala. Durante os experimentos, os dados provenientes dos nós de névoa foram consolidados pelos nós agregadores e transmitidos para o ambiente \gls{HPCC} \textit{Systems}.
+
+Os arquivos gerados no formato \texttt{.csv} foram armazenados na \textit{landing zone} da plataforma, permanecendo disponíveis para processamento e análise conforme as necessidades da aplicação.
+
+A Figura~\ref{fig:hpcc_landing_zone} apresenta o ambiente \gls{ECL} \textit{Watch}, exibindo os arquivos agregados já no formato consolidado.
 
 \begin{figure}[htb]
     \caption{\label{fig:hpcc_landing_zone}Arquivos consolidados na \textit{landing zone} do \gls{HPCC} \textit{Systems}.}

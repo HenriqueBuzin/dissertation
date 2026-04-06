@@ -8,46 +8,42 @@
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase []{Introdução}}{16}{chapter.1}%
-\contentsline {section}{\numberline {1.1}Objetivos}{17}{section.1.1}%
-\contentsline {subsection}{\numberline {1.1.1}Objetivo Geral}{17}{subsection.1.1.1}%
-\contentsline {subsection}{\numberline {1.1.2}Objetivos Específicos}{17}{subsection.1.1.2}%
+\contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase []{Introdução}}{15}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Objetivos}{16}{section.1.1}%
+\contentsline {subsection}{\numberline {1.1.1}Objetivo Geral}{16}{subsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.1.2}Objetivos Específicos}{16}{subsection.1.1.2}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase []{Fundamentação Teórica}}{18}{chapter.2}%
-\contentsline {section}{\numberline {2.1}Computação em Nuvem}{18}{section.2.1}%
-\contentsline {section}{\numberline {2.2}Computação em Névoa}{19}{section.2.2}%
-\contentsline {section}{\numberline {2.3}Protocolos}{20}{section.2.3}%
-\contentsline {section}{\numberline {2.4}\textit {Graph Query Language} (\gls {GRAPHQL})}{21}{section.2.4}%
-\contentsline {section}{\numberline {2.5}HPCC Systems}{22}{section.2.5}%
+\contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase []{Fundamentação Teórica}}{17}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Computação em Nuvem}{17}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Computação em Névoa}{18}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Protocolos}{19}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Banco de Dados e Linguagens de Consulta de Dados}{20}{section.2.4}%
+\contentsline {section}{\numberline {2.5}HPCC Systems}{21}{section.2.5}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {3}\MakeTextUppercase []{Revisão Bibliográfica}}{24}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Trabalhos Correlatos}{24}{section.3.1}%
-\contentsline {subsection}{\numberline {3.1.1}Microservice instances selection and load balancing in fog computing using deep reinforcement learning approach}{25}{subsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.1.2}Enhancing modular application placement in a hierarchical fog computing: A latency and communication cost-sensitive approach}{25}{subsection.3.1.2}%
-\contentsline {subsection}{\numberline {3.1.3}A Scalable Fog Computing Solution for Industrial Predictive Maintenance and Customization}{26}{subsection.3.1.3}%
-\contentsline {subsection}{\numberline {3.1.4}Testbed analysis of multi fog architecture for interoperable Internet of Things}{26}{subsection.3.1.4}%
-\contentsline {section}{\numberline {3.2}Comparativo com Trabalhos Correlatos}{27}{section.3.2}%
+\contentsline {chapter}{\chapternumberline {3}\MakeTextUppercase []{Revisão Bibliográfica}}{23}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Trabalhos Correlatos}{23}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Comparativo com Trabalhos Correlatos}{26}{section.3.2}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase []{Proposta}}{29}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Planejamento e Definição da Arquitetura}{29}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Implementação dos Componentes}{29}{section.4.2}%
-\contentsline {section}{\numberline {4.3}Metodologia de Avaliação}{30}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Visão Geral}{30}{section.4.4}%
-\contentsline {subsection}{\numberline {4.4.1}Componentes da Camada de Névoa}{31}{subsection.4.4.1}%
+\contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase []{Arquitetura Modular IMSA para Computação em Névoa}}{28}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Planejamento e Definição da Arquitetura}{28}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Implementação dos Componentes}{28}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Divisão Estrutural da Arquitetura}{29}{section.4.3}%
+\contentsline {subsection}{\numberline {4.3.1}Componentes da Camada de Névoa}{30}{subsection.4.3.1}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{Testes}}{36}{chapter.5}%
-\contentsline {section}{\numberline {5.1}Contextualização do Problema}{36}{section.5.1}%
-\contentsline {section}{\numberline {5.2}Ambiente de Testes}{36}{section.5.2}%
-\contentsline {subsection}{\numberline {5.2.1}Ambiente Físico}{37}{subsection.5.2.1}%
-\contentsline {section}{\numberline {5.3}Tecnologias e Protocolos}{38}{section.5.3}%
-\contentsline {section}{\numberline {5.4}Distribuição entre Névoas e Balanceamento de Carga}{40}{section.5.4}%
-\contentsline {section}{\numberline {5.5}Banco de Dados e Linguagem de Consulta de Dados}{41}{section.5.5}%
-\contentsline {section}{\numberline {5.6}HPCC Systems na Camada de Nuvem}{42}{section.5.6}%
+\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase []{Configuração e Execução dos Testes da Arquitetura IMSA}}{35}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Contextualização do Problema}{35}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Metodologia de Avaliação}{35}{section.5.2}%
+\contentsline {section}{\numberline {5.3}Ambiente de Testes}{35}{section.5.3}%
+\contentsline {subsection}{\numberline {5.3.1}Ambiente Físico}{36}{subsection.5.3.1}%
+\contentsline {section}{\numberline {5.4}Tecnologias e Protocolos}{38}{section.5.4}%
+\contentsline {section}{\numberline {5.5}Distribuição entre Névoas e Balanceamento de Carga}{39}{section.5.5}%
+\contentsline {section}{\numberline {5.6}Tecnologias de Armazenamento e Consulta de Dados na Arquitetura}{40}{section.5.6}%
+\contentsline {section}{\numberline {5.7}HPCC Systems na Arquitetura}{41}{section.5.7}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados}}{44}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Valores Medidos}{44}{section.6.1}%
-\contentsline {section}{\numberline {6.2}Discussão dos Resultados}{45}{section.6.2}%
+\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados}}{43}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Valores Medidos}{43}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Discussão dos Resultados}{44}{section.6.2}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
-\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Conclusão}}{47}{chapter.7}%
+\contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Conclusão}}{46}{chapter.7}%
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
-\contentsline {chapter}{Refer\^encias}{49}{section*.28}%
+\contentsline {chapter}{Refer\^encias}{48}{section*.28}%
