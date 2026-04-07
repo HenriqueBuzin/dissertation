@@ -43,7 +43,6 @@
 \contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase []{Resultados}}{43}{chapter.6}%
 \contentsline {section}{\numberline {6.1}Valores Medidos}{43}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Discussão dos Resultados}{44}{section.6.2}%
-\contentsline {section}{\numberline {6.3}Discussão dos Resultados}{44}{section.6.3}%
 \setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
 \contentsline {chapter}{\chapternumberline {7}\MakeTextUppercase []{Conclusão}}{47}{chapter.7}%
 \setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}

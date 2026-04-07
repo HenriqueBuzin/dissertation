@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.25)  5 APR 2026 22:55
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.25)  7 APR 2026 15:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -2112,19 +2112,19 @@ Cap\'{\i }tulo 4.
 
 
 ] [29]
-<images/arquitetura_proposta.png, id=468, 1228.59pt x 493.845pt>
+<images/arquitetura_proposta.png, id=466, 1228.59pt x 493.845pt>
 File: images/arquitetura_proposta.png Graphic file (type png)
 <use images/arquitetura_proposta.png>
 Package pdftex.def Info: images/arquitetura_proposta.png  used on input line 99.
 (pdftex.def)             Requested size: 455.0pt x 182.8931pt.
  [30 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/arquitetura_proposta.png>] [31]
-<images/camada_protocolos.png, id=481, 1541.76pt x 1027.84pt>
+<images/camada_protocolos.png, id=479, 1541.76pt x 1027.84pt>
 File: images/camada_protocolos.png Graphic file (type png)
 <use images/camada_protocolos.png>
 Package pdftex.def Info: images/camada_protocolos.png  used on input line 170.
 (pdftex.def)             Requested size: 318.49861pt x 212.32396pt.
  [32 </Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/images/camada_protocolos.png (PNG copy)>]
-<images/camada_processamento.png, id=487, 1027.84pt x 1027.84pt>
+<images/camada_processamento.png, id=485, 1027.84pt x 1027.84pt>
 File: images/camada_processamento.png Graphic file (type png)
 <use images/camada_processamento.png>
 Package pdftex.def Info: images/camada_processamento.png  used on input line 187.
@@ -2140,7 +2140,7 @@ Cap\'{\i }tulo 5.
 
 
 ]
-<images/container_manager.png, id=511, 1504.62125pt x 704.6325pt>
+<images/container_manager.png, id=509, 1504.62125pt x 704.6325pt>
 File: images/container_manager.png Graphic file (type png)
 <use images/container_manager.png>
 Package pdftex.def Info: images/container_manager.png  used on input line 41.
@@ -2166,7 +2166,7 @@ Overfull \hbox (0.12029pt too wide) in paragraph at lines 161--162
  []
 
 [39] [40]
-<images/hpcc_landing_zone.png, id=593, 380.92313pt x 424.58624pt>
+<images/hpcc_landing_zone.png, id=591, 380.92313pt x 424.58624pt>
 File: images/hpcc_landing_zone.png Graphic file (type png)
 <use images/hpcc_landing_zone.png>
 Package pdftex.def Info: images/hpcc_landing_zone.png  used on input line 223.
@@ -2232,18 +2232,18 @@ Package logreq Info: Writing requests to 'main.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 43802 strings out of 467525
- 819405 string characters out of 5418982
- 1972508 words of memory out of 5000000
- 71701 multiletter control sequences out of 15000+600000
+ 43800 strings out of 467525
+ 819388 string characters out of 5418982
+ 1972518 words of memory out of 5000000
+ 71700 multiletter control sequences out of 15000+600000
  684184 words of font info for 242 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  203i,17n,295p,2613b,4447s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.pdf (51 pages, 4396249 bytes).
+Output written on /Users/henrique-buzin/Documents/GitHub/dissertation/Dissertação/main.pdf (51 pages, 4395843 bytes).
 PDF statistics:
- 892 PDF objects out of 1000 (max. 8388607)
- 802 compressed objects within 9 object streams
- 190 named destinations out of 1000 (max. 500000)
- 66974 words of extra memory for PDF output out of 74296 (max. 10000000)
+ 886 PDF objects out of 1000 (max. 8388607)
+ 797 compressed objects within 8 object streams
+ 189 named destinations out of 1000 (max. 500000)
+ 66966 words of extra memory for PDF output out of 74296 (max. 10000000)
 
